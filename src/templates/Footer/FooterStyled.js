@@ -16,7 +16,7 @@ export const FooterBox = styled.div`
     flex-basis: 20%;
     display: flex;
     width: 100%;
-    margin: 0 auto;
+    margin-right: 10px;
     flex-direction: column;
     flex-flow: column wrap;
     align-content: center;
@@ -37,6 +37,9 @@ export const FooterExpLink = styled(Link)`
     letter-spacing: -0.2px;
     color: #212B36;
     text-decoration: none;
+    &:hover{
+        color: #E30045;
+    }
 `;
 
 export const CopyWright = styled.div`
