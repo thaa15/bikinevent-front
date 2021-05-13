@@ -78,7 +78,7 @@ const Navbar = () => {
                             <ElementLink to="/login">
                                 <DisplayProf>Masuk/</DisplayProf>
                             </ElementLink>
-                            <ElementLink to="/">
+                            <ElementLink to="/register">
                                 <DisplayProf name>Daftar</DisplayProf>
                             </ElementLink>
                         </div>
