@@ -4,6 +4,7 @@ import Populer from "../components/Home/Populer";
 import Kategori from "../components/Home/Kategori";
 import OtherPopuler from "../components/Home/OtherPopuler";
 import BlogHome from "../components/Home/BlogHome";
+import BotBanner from "../components/Home/BotBanner";
 
 const Home = () =>{
     return(
@@ -13,6 +14,7 @@ const Home = () =>{
         <Kategori/>
         <OtherPopuler/>
         <BlogHome/>
+        <BotBanner/>
         </>
     );
 };

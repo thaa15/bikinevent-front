@@ -4,7 +4,7 @@ import { Link as LinkR } from "react-router-dom";
 
 export const Nav = styled.nav`
     background: white;
-    height: 86px;
+    min-height: 86px;
     justify-content: center;
     position: sticky;
     top: 0;

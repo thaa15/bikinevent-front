@@ -75,7 +75,7 @@ const Navbar = () => {
                                                     cursor:"pointer"}}/>
                         </ElementLink>
                         <div style={{display:"flex",flexDirection:"column"}}>
-                            <ElementLink to="/">
+                            <ElementLink to="/login">
                                 <DisplayProf>Masuk/</DisplayProf>
                             </ElementLink>
                             <ElementLink to="/">

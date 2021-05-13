@@ -12,6 +12,7 @@ import {
     BlogBoxImage,
     BlogExpHome
 } from "./BoxStyled";
+import EllipsisText from "react-ellipsis-text";
 
 const BoxHarga = ({image,city,judul,harga,rate,review}) =>{
     return(
@@ -43,8 +44,12 @@ const BlogHomeBox = ({image,titlee,desc}) => {
     return(
         <BlogBoxHome>
             <BlogBoxImage img={image}/>
-            <BlogExpHome title>{titlee}</BlogExpHome>
-            <BlogExpHome>{desc}</BlogExpHome>
+            <BlogExpHome title>
+                <EllipsisText text={titlee} length={"70"} />
+            </BlogExpHome>
+            <BlogExpHome>
+                <EllipsisText text={desc} length={"150"} />
+            </BlogExpHome>
         </BlogBoxHome>
     )
 }
