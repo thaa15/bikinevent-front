@@ -16,6 +16,7 @@ export const LoginBox = styled.div`
     background: white;
     border-radius: 10px;
     padding: 36px;
+    margin: 30px auto;
 `;
 
 export const LoginTittle = styled.div`
