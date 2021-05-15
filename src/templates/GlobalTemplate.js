@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const GlobalTemplate = styled.div`
-    margin: 0 auto;
-    margin-bottom: 25px;
+    display: flex;
+    flex-direction: ${(props) => props.row ? "row" : "column"};
+    margin: 5px auto 25px;
     max-width: 80%;
 `;

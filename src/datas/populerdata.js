@@ -132,7 +132,7 @@ export const BlogHomeData = [
     {
         "id":"2",
         "image":bloghome1,
-        "title":"Berbincang",
+        "title":"Berbincang Bersama Rekan Di Kafe",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {

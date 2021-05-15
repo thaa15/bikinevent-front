@@ -39,7 +39,7 @@ const RegisterPage = () => {
                             <TypeImage src={pembelireg}>
                                 <TypeSigned>
                                     Pembeli
-                                        <IconCheck aktif={checkreg === true}>
+                                    <IconCheck aktif={checkreg === true}>
                                         <FaCheckCircle style={{
                                             color: "#219653",
                                             fontSize: "40px",
@@ -57,7 +57,7 @@ const RegisterPage = () => {
                             <TypeImage src={vendorreg}>
                                 <TypeSigned>
                                     Vendor
-                                        <IconCheck aktif={checkreg === false}>
+                                    <IconCheck aktif={checkreg === false}>
                                         <FaCheckCircle style={{
                                             color: "#219653",
                                             fontSize: "40px",

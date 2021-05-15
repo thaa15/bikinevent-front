@@ -7,7 +7,8 @@ import Home from "./pages";
 import LoginPage from "./components/LogReg/LoginPage";
 import ScrollToTop from "./templates/ScrollToTop";
 import RegisterPage from "./components/LogReg/RegisterPage";
-import SuccessReg from "./components/LogReg/SuccessRegPage"
+import SuccessReg from "./components/LogReg/SuccessRegPage";
+import RoutedBlog from "./pages/blog";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" component={LoginPage} exact/>
           <Route path="/register" component={RegisterPage} exact/>
           <Route path="/successreg" component={SuccessReg} exact/>
+          <Route path="/blog/:id" component={RoutedBlog} exact/>
         </Switch>
         <Footer/>
       </Router>

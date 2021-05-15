@@ -4,6 +4,7 @@ import {TitleHome,ApartView,LinkTitle} from "../HomeGlobal";
 import {BlogHomeBox} from "../../../templates/Box";
 import {BlogBoxGrid} from "./BlogHomeStyled";
 import {BlogHomeData} from "../../../datas/populerdata";
+import {Link} from "react-router-dom";
 
 const BlogHome = () => {
     return(
@@ -16,14 +17,19 @@ const BlogHome = () => {
                 </TitleHome>
             </ApartView>
             <BlogBoxGrid>
-                {BlogHomeData.map((data,idx) => (
-                    <BlogHomeBox
-                    key={idx}
-                    titlee={data.title}
-                    image={data.image}
-                    desc={data.desc}
-                    />
-                ))}
+                {BlogHomeData.map((data,idx) => {
+                    return(
+                        <Link to={`/blog/${data.id}`}
+                        style={{textDecoration:"none",color:"#212B36"}}>
+                        <BlogHomeBox
+                        key={idx}
+                        titlee={data.title}
+                        image={data.image}
+                        desc={data.desc}
+                        />
+                        </Link>
+                    )
+                })}
             </BlogBoxGrid>
         </GlobalTemplate>
         </>
