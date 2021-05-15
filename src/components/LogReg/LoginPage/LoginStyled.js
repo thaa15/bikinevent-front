@@ -53,12 +53,7 @@ outline: none;
 padding: 5px;
 border-radius: ${(props) => props.pw ? "6px 0 0 6px" : "6px"};
 margin: 5px auto;
-/*&:focus,&:active {
-    border-top: 2px solid #5C5C5C;
-    border-bottom: 2px solid #5C5C5C;
-    border-left: 2px solid #5C5C5C;
-    border-right: ${(props) => props.pw ? "none" : "2px solid #5C5C5C"};
-}*/
+
 /*@media screen and (max-width: 707px) {
     width: 100%;
 }*/
@@ -134,4 +129,49 @@ export const Buttonslog = styled.button`
     &:active, &:focus {
         background-color:#a3143f;
     }
+`;
+
+export const Liner = styled.div`
+  height: 40px;
+  width: 100%;
+  background-image: url(${(props) => props.img});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 2%;
+  text-align:center;
+  margin: 10px auto 0;
+`;
+
+export const OrLine = styled.div`
+    background-color: white;
+    font-weight: 500;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 21px;
+    display: flex;
+    height: 100%;
+    padding: 8px;
+    justify-content: center;
+    text-align:center;
+    align-items: center;
+    color: #212B36;
+`;
+
+export const Buttonsgoogle = styled(Link)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2F80ED;
+    border-radius: 10px;
+    width:100%;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.2px;
+    padding: 8px 32px;
+    margin: 10px auto 0;
 `;

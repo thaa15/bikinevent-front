@@ -10,6 +10,7 @@ export const HeaderBg = styled.div`
 export const HeaderWrited = styled.div`
     max-width: 80%;
     font-size: 14px;
+    font-weight: 500;
     line-height: 21px;
     color: #212B36;
     margin: 0 auto;
