@@ -131,4 +131,5 @@ export const UploadFile = styled.div`
     box-sizing: border-box;
     border-radius: 6px;
     text-align: center;
+    margin-bottom: 15px;
 `;

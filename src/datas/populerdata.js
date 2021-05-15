@@ -124,16 +124,19 @@ export const KategoriData = [
 
 export const BlogHomeData = [
     {
+        "id":"1",
         "image":bloghome,
         "title":"Ruang Terbuka",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {
+        "id":"2",
         "image":bloghome1,
         "title":"Berbincang",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {
+        "id":"3",
         "image":bloghome,
         "title":"Lorem Ipsum",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
