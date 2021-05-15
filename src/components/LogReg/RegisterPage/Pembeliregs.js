@@ -1,91 +1,128 @@
 import React, { useState, useEffect } from "react";
 import {
-    LoginInput,
-    LogApart,
-    IconBg,
-    LoginLabel,
-    Buttonslog,
-    Buttons,
+  LoginInput,
+  LogApart,
+  IconBg,
+  LoginLabel,
+  Buttonslog,
+  Buttons,
 } from "../LoginPage/LoginStyled";
-import {
-    CheckBoxInput,
-    TermanConds,
-} from "./RegisterStyled"
+import { CheckBoxInput, TermanConds } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-
+import { authService } from "../../../services/Auth";
 const Pembeliregs = () => {
-    const [visible, setVisible] = useState(true);
-    const [typepw, setTypepw] = useState("");
+  const [visible, setVisible] = useState(true);
+  const [typepw, setTypepw] = useState("");
+  const [formData, setFormData] = useState({
+    nama_lengkap: "",
+    email: "",
+    username: "",
+    password: "",
+    phone_number: "",
+    role: "609d0717322f2d5510e1a0a7",
+  });
+  const [error, setError] = useState([]);
 
-    const toggle = () => {
-        setVisible(!visible);
-        if (visible === false) {
-            setTypepw("text");
-        } else {
-            setTypepw("password");
+  const toggle = () => {
+    setVisible(!visible);
+    if (visible === false) {
+      setTypepw("text");
+    } else {
+      setTypepw("password");
+    }
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const response = await authService.register(formData).catch((err) => {
+      return setError(err.response.data.data[0].messages[0].message);
+    });
+    return response;
+  };
+
+  useEffect(() => {
+    console.log(formData);
+    toggle();
+  }, []);
+  return (
+    <form onSubmit={submitHandler}>
+      <p style={{ color: "red" }}>{error}</p>
+      <br />
+      <LoginLabel for="name">Nama Lengkap</LoginLabel>
+      <br />
+      <LoginInput
+        type="text"
+        required
+        name="nama_lengkap"
+        onChange={(e) =>
+          setFormData({ ...formData, nama_lengkap: e.target.value })
         }
-    };
+      />
+      <br />
+      <LoginLabel for="username">Username</LoginLabel>
+      <br />
+      <LoginInput
+        type="text"
+        required
+        name="username"
+        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+      />
+      <br />
 
-    useEffect(() => {
-        toggle();
-    }, [])
-    return (
-        <form>
-            <LoginLabel for="name">Nama Lengkap</LoginLabel><br />
-            <LoginInput
-                type="text"
-                required
-                name="name" /><br />
+      <LoginLabel for="email">E-mail</LoginLabel>
+      <br />
+      <LoginInput
+        type="email"
+        required
+        name="email"
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+      />
+      <br />
 
-            <LoginLabel for="email">E-mail</LoginLabel><br />
-            <LoginInput
-                type="email"
-                required
-                name="email" /><br />
+      <LoginLabel for="password">Password</LoginLabel>
+      <br />
+      <LogApart>
+        <LoginInput
+          type={typepw}
+          required
+          name="password"
+          pw
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
+        />
+        {visible ? (
+          <IconBg>
+            <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
+          </IconBg>
+        ) : (
+          <IconBg>
+            <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
+          </IconBg>
+        )}
+      </LogApart>
 
-            <LoginLabel for="password">Password</LoginLabel><br />
-            <LogApart>
-                <LoginInput
-                    type={typepw}
-                    required
-                    name="password"
-                    pw />
-                {visible ? (
-                    <IconBg>
-                        <BsFillEyeSlashFill
-                            onClick={toggle}
-                            style={{ color: "#909DAA" }} />
-                    </IconBg>
-                ) : (
-                    <IconBg>
-                        <BsFillEyeFill
-                            onClick={toggle}
-                            style={{ color: "#909DAA" }} />
-                    </IconBg>
-                )}
-            </LogApart>
+      <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
+      <br />
+      <LoginInput
+        type="text"
+        required
+        name="phone_number"
+        onChange={(e) =>
+          setFormData({ ...formData, phone_number: e.target.value })
+        }
+      />
+      <br />
 
-            <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel><br />
-            <LoginInput
-                type="number"
-                required
-                name="num" /><br />
+      <CheckBoxInput>
+        <input type="checkbox" required style={{ marginRight: "4px" }} />
+        Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
+      </CheckBoxInput>
 
-            <CheckBoxInput>
-                <input
-                    type="checkbox"
-                    required
-                    style={{ marginRight: "4px" }}
-                />
-                        Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
-            </CheckBoxInput>
-
-            <Buttonslog type="submit">
-                <Buttons>
-                    Daftar
-                        </Buttons>
-            </Buttonslog>
-        </form>
-    )
-}
+      <Buttonslog type="submit">
+        <Buttons>Daftar</Buttons>
+      </Buttonslog>
+    </form>
+  );
+};
 export default Pembeliregs;
