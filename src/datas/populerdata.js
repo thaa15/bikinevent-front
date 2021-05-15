@@ -10,6 +10,7 @@ import jasa from "../images/jasa.png";
 import catering from "../images/catering.png";
 import dekorasi from "../images/dekorasi.png";
 import bloghome from "../images/bloghome.png";
+import bloghome1 from "../images/bloghome1.png";
 
 export const PopulerData = [
     {
@@ -124,12 +125,12 @@ export const KategoriData = [
 export const BlogHomeData = [
     {
         "image":bloghome,
-        "title":"Lorem Ipsum",
+        "title":"Ruang Terbuka",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {
-        "image":bloghome,
-        "title":"Lorem Ipsum",
+        "image":bloghome1,
+        "title":"Berbincang",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {

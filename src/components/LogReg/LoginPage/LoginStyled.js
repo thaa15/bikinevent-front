@@ -11,6 +11,7 @@ export const LoginBg = styled.div`
 `;
 
 export const LoginBox = styled.div`
+    min-width: 400px;
     width: 30%;
     min-height: 400px;
     background: white;

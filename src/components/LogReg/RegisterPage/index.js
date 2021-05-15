@@ -1,4 +1,5 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
+import Dropzone from "react-dropzone";
 import {
     LoginBg,
     LoginBox,
@@ -6,22 +7,62 @@ import {
     LogApart,
     IconBg,
     LoginLabel,
-    RadioButton,
     HaveAccountLink,
     Buttonslog,
-    Buttons
+    Buttons,
+    RadioButton
 } from "../LoginPage/LoginStyled";
 import {
     RegisterTittle,
     HaveAccount,
-    Welcomed
+    TypeChoose,
+    Welcomed,
+    TypeImage,
+    TypeApart,
+    TypeSigned,
+    Typebg,
+    IconCheck,
+    CheckBoxInput,
+    TermanConds,
+    InputCityApart,
+    DropDiv,
+    UploadFile
 } from "./RegisterStyled"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs";
+import {FaCheckCircle} from "react-icons/fa";
+import pembelireg from "../../../images/pembelireg.png";
+import vendorreg from "../../../images/vendorreg.png";
+import upfil from "../../../images/uploadfile.png";
 
 const RegisterPage = () =>{
     const [visible,setVisible] = useState(true);
     const [typepw, setTypepw] = useState("");
     const [checkreg, setCheckreg] = useState(true);
+    const [file, setFile] = useState();
+    const dropRef = useRef();
+    const [previewSrc, setPreviewSrc] = useState("");
+    const [isPreviewAvailable, setIsPreviewAvailable] = useState(false);
+
+    const onDrop = (files) => {
+        const [uploadedFile] = files;
+        setFile(uploadedFile);
+    
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          setPreviewSrc(fileReader.result);
+        };
+        fileReader.readAsDataURL(uploadedFile);
+        setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png)$/));
+        dropRef.current.style.border = "2px dashed #e9ebeb";
+    };
+
+    const updateBorder = (dragState) => {
+        if (dragState === "over") {
+          dropRef.current.style.border = "1px dashed #007BFF";
+        } else if (dragState === "leave") {
+          dropRef.current.style.border = "1px dashed #1d6dc2";
+        }
+    };
 
     const toggle = () => {
         setVisible(!visible);
@@ -45,33 +86,40 @@ const RegisterPage = () =>{
                 </HaveAccount>
                 <form>
 
-                    {/*Gambarnya blm dapet jadi ini aja dulu ya:D*/}
-                    <div style={{
-                        display:"flex",
-                        justifyContent:"space-around",
-                        width:"60%",
-                        margin:"15px auto 0"
-                        }}>
-                        <div style={{display:"flex",alignItems:"center"}}>
-                            <RadioButton 
-                            type="radio" 
-                            value="pembeli" 
-                            name="type"
-                            onClick={()=>{setCheckreg(true)}}
-                            checked 
-                            />
-                            <LoginLabel for="pembeli">Pembeli</LoginLabel>
-                        </div>
-                        <div style={{display:"flex",alignItems:"center"}}>
-                            <RadioButton 
-                            type="radio" 
-                            value="vendor" 
-                            name="type"
-                            onClick={()=>{setCheckreg(false)}}
-                            />
-                            <LoginLabel for="vendor">Vendor</LoginLabel>
-                        </div>
-                    </div>
+                    <TypeChoose>
+                        <TypeApart onClick={()=>{setCheckreg(true)}}
+                        aktif={checkreg === true}>
+                            <Typebg aktif={checkreg === true}>
+                                <TypeImage src={pembelireg}>
+                                    <TypeSigned>
+                                        Pembeli
+                                        <IconCheck aktif={checkreg === true}>
+                                            <FaCheckCircle style={{color:"#219653",
+                                                                fontSize:"40px",
+                                                                background:"white",
+                                                                borderRadius:"100%"}}/>
+                                        </IconCheck>
+                                    </TypeSigned>
+                                </TypeImage>
+                            </Typebg>
+                        </TypeApart>
+                        <TypeApart onClick={()=>{setCheckreg(false)}}
+                        aktif={checkreg === false}>
+                            <Typebg aktif={checkreg === false}>
+                                <TypeImage src={vendorreg}>
+                                    <TypeSigned>
+                                        Vendor
+                                        <IconCheck aktif={checkreg === false}>
+                                            <FaCheckCircle style={{color:"#219653",
+                                                                fontSize:"40px",
+                                                                background:"white",
+                                                                borderRadius:"100%"}}/>
+                                        </IconCheck>
+                                    </TypeSigned>
+                                </TypeImage>
+                            </Typebg>
+                        </TypeApart>
+                    </TypeChoose>
 
                     <Welcomed>
                     Selamat Datang! <br/> Mohon lengkapi data di bawah untuk daftar
@@ -118,10 +166,6 @@ const RegisterPage = () =>{
                             type="number"
                             required
                             name="num"/><br/>
-                        <LoginLabel>
-                        <input type="checkbox"/>
-                         Saya setuju dengan <a href="https://www.google.com">Syarat dan Ketentuan</a>
-                        </LoginLabel>
                         </>
                     ) : (
                         <>
@@ -171,13 +215,242 @@ const RegisterPage = () =>{
                             required
                             name="birth"/><br/>
                         
-                        <LoginLabel>
-                        <input type="checkbox"/>
-                         Saya setuju dengan <a href="https://www.google.com">Syarat dan Ketentuan</a>
-                        </LoginLabel>
+                        <LoginLabel for="gend">Jenis Kelamin</LoginLabel><br/>
+                        <div style={{display:"flex",margin:"5px auto 15px"}}>
+                            <div style={{display:"flex",alignItems:"center"}}>
+                                <RadioButton type="radio" value="pria" name="gender" checked/>
+                                <LoginLabel for="pria">Pria</LoginLabel>
+                            </div>
+                            <div style={{display:"flex",alignItems:"center",margin:"0 10px"}}>
+                                <RadioButton type="radio" value="wanita" name="gender"/>
+                                <LoginLabel for="wanita">Wanita</LoginLabel>
+                            </div>
+                        </div>
+                        
+                        <LoginLabel for="nameven">Nama Vendor (Tidak Bisa Diubah)</LoginLabel><br/>
+                        <LoginInput
+                            type="text"
+                            required
+                            name="nameven"/><br/>
+
+                        <LoginLabel for="address">Alamat Lengkap</LoginLabel><br/>
+                        <LoginInput
+                            type="text"
+                            required
+                            name="address"/><br/>
+                        
+                        <InputCityApart>
+                            <div style={{flexBasis:"58%"}}>
+                            <LoginLabel for="city">Kota/Kabupaten</LoginLabel><br/>
+                            <LoginInput
+                                type="text"
+                                required
+                                name="city"/><br/>
+                            </div>
+                            <div style={{flexBasis:"40%"}}>
+                            <LoginLabel for="pos">Kode Pos</LoginLabel><br/>
+                            <LoginInput
+                                type="number"
+                                required
+                                name="pos"/><br/>
+                            </div>
+                        </InputCityApart>
+
+                        <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel><br/>
+                        <LoginInput
+                            type="number"
+                            required
+                            name="num"/><br/>
+
+                        <LoginLabel for="rek">Nomor Rekening</LoginLabel><br/>
+                        <LoginInput
+                            type="number"
+                            required
+                            name="rek"/><br/>
+
+                        <LoginLabel for="bank">Nama Bank</LoginLabel><br/>
+                        <LoginInput
+                            type="text"
+                            required
+                            name="bank"/><br/>
+
+                        <LoginLabel for="rekan">Rekening Atas Nama</LoginLabel><br/>
+                        <LoginInput
+                            type="text"
+                            required
+                            name="rekan"/><br/>
+
+                        <LoginLabel for="wajah">Upload Foto Wajah</LoginLabel><br/>
+                        <UploadFile>
+                            <Dropzone
+                                onDrop={onDrop}
+                                onDragEnter={() => updateBorder("over")}
+                                onDragLeave={() => updateBorder("leave")}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                <div
+                                    {...getRootProps({ className: "drop-zone" })}
+                                    ref={dropRef}
+                                >
+                                    <input {...getInputProps()} required/>
+                                    {previewSrc ? (
+                                        isPreviewAvailable ? (
+                                        <div className="image-preview">
+                                            <img
+                                            className="preview-image"
+                                            src={previewSrc}
+                                            alt="Preview"
+                                            width="60%"
+                                            />
+                                        </div>
+                                        ) : (
+                                        <div className="preview-message">
+                                            <p>No preview available for this file</p>
+                                        </div>
+                                        )
+                                    ) : (
+                                        <img
+                                            className="preview-message"
+                                            src={upfil}
+                                            alt="Preview"
+                                            />
+                                    )}
+                                        </div>
+                                        )}
+                            </Dropzone>
+                        </UploadFile>
+
+                        <LoginLabel for="ktp">Upload Foto KTP</LoginLabel><br/>
+                        <UploadFile>
+                            <Dropzone
+                                onDrop={onDrop}
+                                onDragEnter={() => updateBorder("over")}
+                                onDragLeave={() => updateBorder("leave")}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                <div
+                                    {...getRootProps({ className: "drop-zone" })}
+                                    ref={dropRef}
+                                >
+                                    <input {...getInputProps()} required/>
+                                    {previewSrc ? (
+                                        isPreviewAvailable ? (
+                                        <div className="image-preview">
+                                            <img
+                                            className="preview-image"
+                                            src={previewSrc}
+                                            alt="Preview"
+                                            width="60%"
+                                            />
+                                        </div>
+                                        ) : (
+                                        <div className="preview-message">
+                                            <p>No preview available for this file</p>
+                                        </div>
+                                        )
+                                    ) : (
+                                        <img
+                                            className="preview-message"
+                                            src={upfil}
+                                            alt="Preview"
+                                            />
+                                    )}
+                                        </div>
+                                        )}
+                            </Dropzone>
+                        </UploadFile>
+
+                        <LoginLabel for="buktab">Upload Foto Buku Tabungan</LoginLabel><br/>
+                        <UploadFile>
+                            <Dropzone
+                                onDrop={onDrop}
+                                onDragEnter={() => updateBorder("over")}
+                                onDragLeave={() => updateBorder("leave")}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                <div
+                                    {...getRootProps({ className: "drop-zone" })}
+                                    ref={dropRef}
+                                >
+                                    <input {...getInputProps()} required/>
+                                    {previewSrc ? (
+                                        isPreviewAvailable ? (
+                                        <div className="image-preview">
+                                            <img
+                                            className="preview-image"
+                                            src={previewSrc}
+                                            alt="Preview"
+                                            width="60%"
+                                            />
+                                        </div>
+                                        ) : (
+                                        <div className="preview-message">
+                                            <p>No preview available for this file</p>
+                                        </div>
+                                        )
+                                    ) : (
+                                        <img
+                                            className="preview-message"
+                                            src={upfil}
+                                            alt="Preview"
+                                            />
+                                    )}
+                                        </div>
+                                        )}
+                            </Dropzone>
+                        </UploadFile>
+
+                        <LoginLabel for="fotok">Upload Foto Toko</LoginLabel><br/>
+                        <UploadFile>
+                            <Dropzone
+                                onDrop={onDrop}
+                                onDragEnter={() => updateBorder("over")}
+                                onDragLeave={() => updateBorder("leave")}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                <div
+                                    {...getRootProps({ className: "drop-zone" })}
+                                    ref={dropRef}
+                                >
+                                    <input {...getInputProps()} required/>
+                                    {previewSrc ? (
+                                        isPreviewAvailable ? (
+                                        <div className="image-preview">
+                                            <img
+                                            className="preview-image"
+                                            src={previewSrc}
+                                            alt="Preview"
+                                            width="60%"
+                                            />
+                                        </div>
+                                        ) : (
+                                        <div className="preview-message">
+                                            <p>No preview available for this file</p>
+                                        </div>
+                                        )
+                                    ) : (
+                                        <img
+                                            className="preview-message"
+                                            src={upfil}
+                                            alt="Preview"
+                                            />
+                                    )}
+                                        </div>
+                                        )}
+                            </Dropzone>
+                        </UploadFile>
                         </>
                     )}
                     
+                    <CheckBoxInput>
+                    <input 
+                    type="checkbox" 
+                    required
+                    style={{marginRight:"4px"}}
+                    />
+                        Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
+                    </CheckBoxInput>
+
                     <Buttonslog type="submit">
                         <Buttons>
                             Daftar
