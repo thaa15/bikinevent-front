@@ -36,17 +36,17 @@ const Footer = () => {
                     <FooterBox>
                         <FooterExp title row>Layanan Pelanggan</FooterExp>
                         <FooterExpLink>Blog</FooterExpLink>
-                        <FooterExpLink>FAQ</FooterExpLink>
-                        <FooterExpLink>Tentang Kami</FooterExpLink>
-                        <FooterExpLink>Panduan Pemesanan</FooterExpLink>
+                        <FooterExpLink to="/faq">FAQ</FooterExpLink>
+                        <FooterExpLink to="/tentangkami">Tentang Kami</FooterExpLink>
+                        <FooterExpLink to="/panduan">Panduan Pemesanan</FooterExpLink>
                         <FooterExpLink>Pelaporan Kejahatan</FooterExpLink>
                     </FooterBox>
 
                     <FooterBox>
                         <FooterExp title row>Legal</FooterExp>
                         <FooterExpLink>Syarat dan Ketentuan</FooterExpLink>
-                        <FooterExpLink>Kebijakan Privasi</FooterExpLink>
-                        <FooterExpLink>Kebijakan Refund</FooterExpLink>
+                        <FooterExpLink to="/privasi">Kebijakan Privasi</FooterExpLink>
+                        <FooterExpLink to="/refund">Kebijakan Refund</FooterExpLink>
                     </FooterBox>
 
                     <FooterBox>

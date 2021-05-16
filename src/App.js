@@ -9,6 +9,13 @@ import ScrollToTop from "./templates/ScrollToTop";
 import RegisterPage from "./components/LogReg/RegisterPage";
 import SuccessReg from "./components/LogReg/SuccessRegPage";
 import RoutedBlog from "./pages/blog";
+import {
+  FAQ,
+  TentangKami,
+  Panduan,
+  Privasi,
+  Refund
+} from "./pages/pelayanan";
 
 function App() {
   return (
@@ -22,6 +29,11 @@ function App() {
           <Route path="/register" component={RegisterPage} exact/>
           <Route path="/successreg" component={SuccessReg} exact/>
           <Route path="/blog/:id" component={RoutedBlog} exact/>
+          <Route path="/faq" component={FAQ} exact/>
+          <Route path="/tentangkami" component={TentangKami} exact/>
+          <Route path="/panduan" component={Panduan} exact/>
+          <Route path="/privasi" component={Privasi} exact/>
+          <Route path="/refund" component={Refund} exact/>
         </Switch>
         <Footer/>
       </Router>

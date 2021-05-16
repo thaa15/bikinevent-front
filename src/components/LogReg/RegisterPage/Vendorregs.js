@@ -23,7 +23,16 @@ const Vendorregs = () => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
   const dropRef = useRef();
+  const dropRefWajah = useRef();
+  const dropRefKTP = useRef();
+  const dropRefTab = useRef();
+  const [previewWajah, setPreviewWajah] = useState("");
+  const [previewKTP, setPreviewKTP] = useState("");
+  const [previewTab, setPreviewTab] = useState("");
   const [previewSrc, setPreviewSrc] = useState("");
+  const [isPreviewWajahAv, setIsPreviewWajahAv] = useState(false);
+  const [isPreviewKTPAv, setIsPreviewKTPAv] = useState(false);
+  const [isPreviewTabAv, setIsPreviewTabAv] = useState(false);
   const [isPreviewAvailable, setIsPreviewAvailable] = useState(false);
   const [formData, setFormData] = useState({
     nama_lengkap: "",
@@ -53,6 +62,42 @@ const Vendorregs = () => {
   });
   const [error, setError] = useState([]);
 
+  const onDropWajah = (files) => {
+    const [uploadedFile] = files;
+
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewWajah(fileReader.result);
+    };
+    fileReader.readAsDataURL(uploadedFile);
+    setIsPreviewWajahAv(uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/));
+    dropRefWajah.current.style.border = "2px dashed #e9ebeb";
+  };
+
+  const onDropKTP = (files) => {
+    const [uploadedFile] = files;
+
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewKTP(fileReader.result);
+    };
+    fileReader.readAsDataURL(uploadedFile);
+    setIsPreviewKTPAv(uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/));
+    dropRefKTP.current.style.border = "2px dashed #e9ebeb";
+  };
+
+  const onDropTab = (files) => {
+    const [uploadedFile] = files;
+
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewTab(fileReader.result);
+    };
+    fileReader.readAsDataURL(uploadedFile);
+    setIsPreviewTabAv(uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/));
+    dropRefTab.current.style.border = "2px dashed #e9ebeb";
+  };
+
   const onDrop = (files) => {
     const [uploadedFile] = files;
 
@@ -63,14 +108,6 @@ const Vendorregs = () => {
     fileReader.readAsDataURL(uploadedFile);
     setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/));
     dropRef.current.style.border = "2px dashed #e9ebeb";
-  };
-
-  const updateBorder = (dragState) => {
-    if (dragState === "over") {
-      dropRef.current.style.border = "1px dashed #007BFF";
-    } else if (dragState === "leave") {
-      dropRef.current.style.border = "1px dashed #1d6dc2";
-    }
   };
 
   const toggle = () => {
@@ -340,19 +377,17 @@ const Vendorregs = () => {
       <br />
       <UploadFile>
         <Dropzone
-          onDrop={onDrop}
-          onDragEnter={() => updateBorder("over")}
-          onDragLeave={() => updateBorder("leave")}
+          onDrop={onDropWajah}
         >
           {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
+            <div {...getRootProps({ className: "drop-zone" })} ref={dropRefWajah}>
               <input {...getInputProps()} required />
-              {previewSrc ? (
-                isPreviewAvailable ? (
+              {previewWajah ? (
+                isPreviewWajahAv ? (
                   <div className="image-preview">
                     <img
                       className="preview-image"
-                      src={previewSrc}
+                      src={previewWajah}
                       alt="Preview"
                       width="60%"
                     />
@@ -374,19 +409,17 @@ const Vendorregs = () => {
       <br />
       <UploadFile>
         <Dropzone
-          onDrop={onDrop}
-          onDragEnter={() => updateBorder("over")}
-          onDragLeave={() => updateBorder("leave")}
+          onDrop={onDropKTP}
         >
           {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
+            <div {...getRootProps({ className: "drop-zone" })} ref={dropRefKTP}>
               <input {...getInputProps()} required />
-              {previewSrc ? (
-                isPreviewAvailable ? (
+              {previewKTP ? (
+                isPreviewKTPAv ? (
                   <div className="image-preview">
                     <img
                       className="preview-image"
-                      src={previewSrc}
+                      src={previewKTP}
                       alt="Preview"
                       width="60%"
                     />
@@ -408,19 +441,17 @@ const Vendorregs = () => {
       <br />
       <UploadFile>
         <Dropzone
-          onDrop={onDrop}
-          onDragEnter={() => updateBorder("over")}
-          onDragLeave={() => updateBorder("leave")}
+          onDrop={onDropTab}
         >
           {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
+            <div {...getRootProps({ className: "drop-zone" })} ref={dropRefTab}>
               <input {...getInputProps()} required />
-              {previewSrc ? (
-                isPreviewAvailable ? (
+              {previewTab ? (
+                isPreviewTabAv ? (
                   <div className="image-preview">
                     <img
                       className="preview-image"
-                      src={previewSrc}
+                      src={previewTab}
                       alt="Preview"
                       width="60%"
                     />
@@ -443,8 +474,6 @@ const Vendorregs = () => {
       <UploadFile>
         <Dropzone
           onDrop={onDrop}
-          onDragEnter={() => updateBorder("over")}
-          onDragLeave={() => updateBorder("leave")}
         >
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
@@ -477,9 +506,16 @@ const Vendorregs = () => {
         Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
       </CheckBoxInput>
 
-      <Buttonslog type="submit">
+      <Buttonslog 
+      type="submit"
+      disabled={!(previewWajah&&previewKTP&&previewTab&&previewSrc)}
+      allowed={!(previewWajah&&previewKTP&&previewTab&&previewSrc)}
+      >
         <Buttons>Daftar</Buttons>
       </Buttonslog>
+      {formData ? (
+        <span style={{color:"#ff0000",fontSize:"12px"}}>Data belum lengkap!</span>
+      ) : (<span></span>)}
     </form>
   );
 };

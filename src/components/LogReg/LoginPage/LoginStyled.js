@@ -116,7 +116,7 @@ export const Buttonslog = styled.button`
     border-radius: 10px;
     width:100%;
     text-align:center;
-    cursor: pointer;
+    cursor: ${(props) => props.allowed ? "not-allowed" : "pointer"};
     border:0;
     outline:none;
     color: white;
