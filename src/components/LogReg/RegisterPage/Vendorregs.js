@@ -18,6 +18,7 @@ import {
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import { authService } from "../../../services/Auth";
+import axios from "axios";
 
 const Vendorregs = () => {
   const [visible, setVisible] = useState(true);
@@ -40,30 +41,28 @@ const Vendorregs = () => {
     username: "",
     password: "",
     phone_number: "",
-    informasi_vendor: {
-      NIK: 0,
-      tempat_tanggal_lahir: "",
-      jenis_kelamin: "",
-      vendor_name: "",
-      alamat_lengkap: "",
-      nama_bank: "",
-      kota_kabupaten: "",
-      nomor_hp: "",
-      nama_rekening: "",
-      no_rekening: 0,
-      kode_pos: 0,
-      deskripsi: "",
-      foto_wajah: null,
-      foto_ktp: null,
-      foto_buku_tabungan: null,
-      foto_toko: null,
-    },
+    NIK: 0,
+    tempat_tanggal_lahir: "",
+    jenis_kelamin: "",
+    nama_vendor: "",
+    alamat_lengkap: "",
+    nama_bank: "",
+    kota_kabupaten: "",
+    nomor_hp: "",
+    nama_rekening: "",
+    no_rekening: 0,
+    kode_pos: 0,
+    foto_wajah: null,
+    foto_ktp: null,
+    foto_buku_tabungan: null,
+    foto_toko: null,
     role: "609d0be1b3f24575108f0a88",
   });
   const [error, setError] = useState([]);
 
   const onDropWajah = (files) => {
     const [uploadedFile] = files;
+    setFormData({ ...formData, foto_wajah: files[0] });
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -76,6 +75,10 @@ const Vendorregs = () => {
 
   const onDropKTP = (files) => {
     const [uploadedFile] = files;
+    setFormData({
+      ...formData,
+      foto_ktp: files[0],
+    });
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -88,6 +91,10 @@ const Vendorregs = () => {
 
   const onDropTab = (files) => {
     const [uploadedFile] = files;
+    setFormData({
+      ...formData,
+      foto_buku_tabungan: files[0],
+    });
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -100,6 +107,8 @@ const Vendorregs = () => {
 
   const onDrop = (files) => {
     const [uploadedFile] = files;
+    setFormData({ ...formData, foto_toko: files[0] });
+    console.log(formData);
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -108,6 +117,78 @@ const Vendorregs = () => {
     fileReader.readAsDataURL(uploadedFile);
     setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/));
     dropRef.current.style.border = "2px dashed #e9ebeb";
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const {
+      nama_lengkap,
+      email,
+      username,
+      password,
+      phone_number,
+      role,
+      NIK,
+      tempat_tanggal_lahir,
+      jenis_kelamin,
+      nama_vendor,
+      alamat_lengkap,
+      nama_bank,
+      kota_kabupaten,
+      nama_rekening,
+      no_rekening,
+      kode_pos,
+      foto_wajah,
+      foto_ktp,
+      foto_buku_tabungan,
+      foto_toko,
+    } = formData;
+    const user = await axios.post("http://localhost:1337/auth/local/register", {
+      username,
+      email,
+      password,
+      phone_number,
+      nama_lengkap,
+      role,
+    });
+    if (user) {
+      const userData = user.data;
+      const vendorData = new FormData();
+      vendorData.append(
+        "data",
+        JSON.stringify({
+          user: userData.user._id,
+          NIK,
+          tempat_tanggal_lahir,
+          jenis_kelamin,
+          nama_vendor,
+          alamat_lengkap,
+          nama_bank,
+          kota_kabupaten,
+          nama_rekening,
+          no_rekening,
+          kode_pos,
+        })
+      );
+      vendorData.append("files.foto_toko", foto_toko, foto_toko.name);
+      vendorData.append("files.foto_wajah", foto_wajah, foto_wajah.name);
+      vendorData.append("files.foto_ktp", foto_ktp, foto_ktp.name);
+      vendorData.append(
+        "files.foto_buku_tabungan",
+        foto_buku_tabungan,
+        foto_buku_tabungan.name
+      );
+      const vendorRes = await axios.post(
+        "http://localhost:1337/vendors",
+        vendorData,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.jwt}`,
+          },
+        }
+      );
+      return vendorRes;
+    }
   };
 
   const toggle = () => {
@@ -123,7 +204,7 @@ const Vendorregs = () => {
     toggle();
   }, []);
   return (
-    <form encType="multipart/form-data">
+    <form encType="multipart/form-data" onSubmit={submitHandler}>
       <LoginLabel for="username">Username</LoginLabel>
       <br />
       <LoginInput
@@ -175,7 +256,7 @@ const Vendorregs = () => {
       <LoginInput
         type="text"
         required
-        name="name"
+        name="nama_lengkap"
         onChange={(e) => {
           setFormData({ ...formData, nama_lengkap: e.target.value });
         }}
@@ -191,7 +272,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { NIK: e.target.value },
+            NIK: e.target.value,
           });
         }}
       />
@@ -206,7 +287,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { tempat_tanggal_lahir: e.target.value },
+            tempat_tanggal_lahir: e.target.value,
           });
         }}
       />
@@ -224,7 +305,7 @@ const Vendorregs = () => {
             onClick={() => {
               setFormData({
                 ...formData,
-                informasi_vendor: { jenis_kelamin: "pria" },
+                jenis_kelamin: "pria",
               });
             }}
           />
@@ -240,7 +321,7 @@ const Vendorregs = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                informasi_vendor: { jenis_kelamin: "wanita" },
+                jenis_kelamin: "wanita",
               })
             }
           />
@@ -257,7 +338,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { vendor_name: e.target.value },
+            nama_vendor: e.target.value,
           });
         }}
       />
@@ -272,7 +353,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { alamat_lengkap: e.target.value },
+            alamat_lengkap: e.target.value,
           });
         }}
       />
@@ -289,7 +370,7 @@ const Vendorregs = () => {
             onChange={(e) => {
               setFormData({
                 ...formData,
-                informasi_vendor: { kota_kabupaten: e.target.value },
+                kota_kabupaten: e.target.value,
               });
             }}
           />
@@ -305,7 +386,7 @@ const Vendorregs = () => {
             onChange={(e) => {
               setFormData({
                 ...formData,
-                informasi_vendor: { kode_pos: e.target.value },
+                kode_pos: e.target.value,
               });
             }}
           />
@@ -316,7 +397,7 @@ const Vendorregs = () => {
       <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
       <br />
       <LoginInput
-        type="number"
+        type="text"
         required
         name="num"
         onChange={(e) => {
@@ -337,7 +418,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { no_rekening: e.target.value },
+            no_rekening: e.target.value,
           });
         }}
       />
@@ -352,7 +433,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { nama_bank: e.target.value },
+            nama_bank: e.target.value,
           });
         }}
       />
@@ -367,7 +448,7 @@ const Vendorregs = () => {
         onChange={(e) => {
           setFormData({
             ...formData,
-            informasi_vendor: { nama_rekening: e.target.value },
+            nama_rekening: e.target.value,
           });
         }}
       />
@@ -376,12 +457,13 @@ const Vendorregs = () => {
       <LoginLabel for="wajah">Upload Foto Wajah</LoginLabel>
       <br />
       <UploadFile>
-        <Dropzone
-          onDrop={onDropWajah}
-        >
+        <Dropzone onDrop={onDropWajah}>
           {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps({ className: "drop-zone" })} ref={dropRefWajah}>
-              <input {...getInputProps()} required />
+            <div
+              {...getRootProps({ className: "drop-zone" })}
+              ref={dropRefWajah}
+            >
+              <input {...getInputProps()} name="foto_wajah" />
               {previewWajah ? (
                 isPreviewWajahAv ? (
                   <div className="image-preview">
@@ -408,12 +490,10 @@ const Vendorregs = () => {
       <LoginLabel for="ktp">Upload Foto KTP</LoginLabel>
       <br />
       <UploadFile>
-        <Dropzone
-          onDrop={onDropKTP}
-        >
+        <Dropzone onDrop={onDropKTP}>
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps({ className: "drop-zone" })} ref={dropRefKTP}>
-              <input {...getInputProps()} required />
+              <input {...getInputProps()} name="foto_ktp" />
               {previewKTP ? (
                 isPreviewKTPAv ? (
                   <div className="image-preview">
@@ -440,12 +520,10 @@ const Vendorregs = () => {
       <LoginLabel for="buktab">Upload Foto Buku Tabungan</LoginLabel>
       <br />
       <UploadFile>
-        <Dropzone
-          onDrop={onDropTab}
-        >
+        <Dropzone onDrop={onDropTab}>
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps({ className: "drop-zone" })} ref={dropRefTab}>
-              <input {...getInputProps()} required />
+              <input {...getInputProps()} name="foto_tabungan" />
               {previewTab ? (
                 isPreviewTabAv ? (
                   <div className="image-preview">
@@ -472,12 +550,10 @@ const Vendorregs = () => {
       <LoginLabel for="fotok">Upload Foto Toko</LoginLabel>
       <br />
       <UploadFile>
-        <Dropzone
-          onDrop={onDrop}
-        >
+        <Dropzone onDrop={onDrop}>
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
-              <input {...getInputProps()} required />
+              <input {...getInputProps()} name="foto_toko" />
               {previewSrc ? (
                 isPreviewAvailable ? (
                   <div className="image-preview">
@@ -502,20 +578,24 @@ const Vendorregs = () => {
       </UploadFile>
 
       <CheckBoxInput>
-        <input type="checkbox" required style={{ marginRight: "4px" }} />
+        <input type="checkbox" style={{ marginRight: "4px" }} />
         Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
       </CheckBoxInput>
 
-      <Buttonslog 
-      type="submit"
-      disabled={!(previewWajah&&previewKTP&&previewTab&&previewSrc)}
-      allowed={!(previewWajah&&previewKTP&&previewTab&&previewSrc)}
+      <Buttonslog
+        type="submit"
+        disabled={!(previewWajah && previewKTP && previewTab && previewSrc)}
+        allowed={!(previewWajah && previewKTP && previewTab && previewSrc)}
       >
         <Buttons>Daftar</Buttons>
       </Buttonslog>
       {formData ? (
-        <span style={{color:"#ff0000",fontSize:"12px"}}>Data belum lengkap!</span>
-      ) : (<span></span>)}
+        <span style={{ color: "#ff0000", fontSize: "12px" }}>
+          Data belum lengkap!
+        </span>
+      ) : (
+        <span></span>
+      )}
     </form>
   );
 };
