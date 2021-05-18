@@ -143,14 +143,18 @@ const Vendorregs = () => {
       foto_buku_tabungan,
       foto_toko,
     } = formData;
-    const user = await axios.post("http://localhost:1337/auth/local/register", {
-      username,
-      email,
-      password,
-      phone_number,
-      nama_lengkap,
-      role,
-    });
+    const user = await axios
+      .post("http://localhost:1337/auth/local/register", {
+        username,
+        email,
+        password,
+        phone_number,
+        nama_lengkap,
+        role,
+      })
+      .catch((err) => {
+        return setError("Username atau Email telah didaftarkan");
+      });
     if (user) {
       const userData = user.data;
       const vendorData = new FormData();
