@@ -7,7 +7,6 @@ import {
     BlogBoxImage,
     BlogWritedContent
 } from "./BlogRouteStyled";
-import EllipsisText from "react-ellipsis-text";
 
 const BlogRoute = ({data, datas, ids}) => {
     return(
@@ -18,7 +17,7 @@ const BlogRoute = ({data, datas, ids}) => {
                         <Otwrit key={idx}
                                 aktif={item.id === ids}
                                 to={`/blog/${item.id}`}>
-                            <EllipsisText text={item.title} length={"23"}/>
+                            {item.title}
                         </Otwrit>
                     )
                 })}

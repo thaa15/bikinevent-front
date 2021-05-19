@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderSmall from "../templates/HeaderSmall";
 import BlogRoute from "../components/Blog/BlogRoute";
+import AllBlog from "../components/Blog/AllBlog";
 import { BlogHomeData } from "../datas/populerdata";
 
 const RoutedBlog = ({match}) =>{
@@ -16,4 +17,13 @@ const RoutedBlog = ({match}) =>{
     )
 }
 
-export default RoutedBlog;
+const Blogs = () =>{
+    return(
+        <>
+        <HeaderSmall text="Blog Kami"/>
+        <AllBlog datas={BlogHomeData}/>
+        </>
+    )
+}
+
+export {RoutedBlog,Blogs};

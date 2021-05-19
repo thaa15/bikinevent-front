@@ -13,11 +13,13 @@ const BlogHome = () => {
             <ApartView>
                 <TitleHome>Blog</TitleHome>
                 <TitleHome view>
-                    <LinkTitle to="/">Lihat Semua</LinkTitle>
+                    <LinkTitle to="/allblog">Lihat Semua</LinkTitle>
                 </TitleHome>
             </ApartView>
             <BlogBoxGrid>
-                {BlogHomeData.map((data,idx) => {
+                {BlogHomeData
+                .slice(0,3)
+                .map((data,idx) => {
                     return(
                         <Link to={`/blog/${data.id}`}
                         style={{textDecoration:"none",color:"#212B36"}}>

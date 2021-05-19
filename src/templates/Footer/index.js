@@ -35,7 +35,7 @@ const Footer = () => {
 
                     <FooterBox>
                         <FooterExp title row>Layanan Pelanggan</FooterExp>
-                        <FooterExpLink>Blog</FooterExpLink>
+                        <FooterExpLink to="/allblog">Blog</FooterExpLink>
                         <FooterExpLink to="/faq">FAQ</FooterExpLink>
                         <FooterExpLink to="/tentangkami">Tentang Kami</FooterExpLink>
                         <FooterExpLink to="/panduan">Panduan Pemesanan</FooterExpLink>

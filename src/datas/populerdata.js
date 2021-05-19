@@ -11,6 +11,7 @@ import catering from "../images/catering.png";
 import dekorasi from "../images/dekorasi.png";
 import bloghome from "../images/bloghome.png";
 import bloghome1 from "../images/bloghome1.png";
+import konser from "../images/konser.png";
 
 export const PopulerData = [
     {
@@ -126,19 +127,61 @@ export const BlogHomeData = [
     {
         "id":"1",
         "image":bloghome,
-        "title":"Ruang Terbuka",
+        "title":"Pameran Lampu Masa Kini Futuristik",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {
         "id":"2",
         "image":bloghome1,
-        "title":"Berbincang Bersama Rekan Di Kafe",
+        "title":"Tips Membangun Acara Bersama",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {
         "id":"3",
-        "image":bloghome,
-        "title":"Lorem Ipsum",
+        "image":konser,
+        "title":"Rasakan Euforia Konser Dari Rumah",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"4",
+        "image":bloghome,
+        "title":"Pameran Lampu Masa Kini Futuristik",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"5",
+        "image":bloghome1,
+        "title":"Tips Membangun Acara Bersama",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"6",
+        "image":konser,
+        "title":"Rasakan Euforia Konser Dari Rumah",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"7",
+        "image":bloghome,
+        "title":"Pameran Lampu Masa Kini Futuristik",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"8",
+        "image":bloghome1,
+        "title":"Tips Membangun Acara Bersama",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"9",
+        "image":konser,
+        "title":"Rasakan Euforia Konser Dari Rumah",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+    },
+    {
+        "id":"10",
+        "image":bloghome,
+        "title":"Pameran Lampu Masa Kini Futuristik",
+        "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
 ]

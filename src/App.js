@@ -8,7 +8,10 @@ import LoginPage from "./components/LogReg/LoginPage";
 import ScrollToTop from "./templates/ScrollToTop";
 import RegisterPage from "./components/LogReg/RegisterPage";
 import SuccessReg from "./components/LogReg/SuccessRegPage";
-import RoutedBlog from "./pages/blog";
+import {
+  RoutedBlog,
+  Blogs
+} from "./pages/blog";
 import {
   FAQ,
   TentangKami,
@@ -29,6 +32,7 @@ function App() {
           <Route path="/register" component={RegisterPage} exact/>
           <Route path="/successreg" component={SuccessReg} exact/>
           <Route path="/blog/:id" component={RoutedBlog} exact/>
+          <Route path="/allblog" component={Blogs} exact/>
           <Route path="/faq" component={FAQ} exact/>
           <Route path="/tentangkami" component={TentangKami} exact/>
           <Route path="/panduan" component={Panduan} exact/>
