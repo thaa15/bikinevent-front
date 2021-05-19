@@ -39,7 +39,7 @@ const AllBlog = ({ datas }) => {
                 .map((item, idx) => {
                     return (
                         <Link to={`/blog/${item.id}`}
-                            style={{ textDecoration: "none", color: "#212B36" }}>
+                            style={{ textDecoration: "none", color: "#212B36",height:"fit-content" }}>
                             <BlogHomeBox
                                 key={idx}
                                 titlee={item.title}
