@@ -17,7 +17,7 @@ export const PopulerData = [
     {
         image: wedfod,
         kota:"Depok",
-        judul:"300 px Wedding Food Course",
+        judul:"300 px Wedding Food Course Food Course Food Course",
         harga:"2.200.000",
         rating:"4.0",
         ulasan: "3"
@@ -139,7 +139,7 @@ export const BlogHomeData = [
     {
         "id":"3",
         "image":konser,
-        "title":"Rasakan Euforia Konser Dari Rumah",
+        "title":"Rasakan Euforia Konser Dari Rumah Rasakan Euforia Konser Dari Rumah Rasakan Euforia Konser Dari Rumah",
         "desc":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
     },
     {

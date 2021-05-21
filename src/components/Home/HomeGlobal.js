@@ -11,11 +11,16 @@ export const TitleHome = styled.div`
     color: ${(props) => props.view ? "#E30045" : "#212B36"};
     margin: 30px 0 25px;
     width:100%;
+    @media screen and (max-width: 506px) {
+        font-size: ${(props) => props.view ? "12px" : "16px"};
+        line-height: ${(props) => props.view ? "14px" : "24px"};
+    }
 `;
 
 export const ApartView = styled.div`
     display: flex;
     align-self:center;
+    align-items:center;
     width:100%;
 `;
 

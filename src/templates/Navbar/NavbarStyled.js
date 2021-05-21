@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import {RiArrowDropDownLine} from "react-icons/ri";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link as LinkR } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
+import { BsChatFill, BsFillPersonFill } from "react-icons/bs";
 
 export const Nav = styled.nav`
     background: white;
@@ -9,10 +11,14 @@ export const Nav = styled.nav`
     position: sticky;
     top: 0;
     z-index: 50;
+    width: 100%;
+    @media screen and (max-width: 830px) {
+        box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.15);
+    }
 `;
 
 export const NavSet = styled.div`
-    max-width: 90%;
+    width: 95%;
     margin: 0 auto;
     display: flex;
     padding: 20px;
@@ -20,14 +26,8 @@ export const NavSet = styled.div`
     align-items: center;
     color: #909DAA;
 `;
-export const NavLogo = styled.div`
-    width: 100%;
-    color: white;
-    height: fit-content;
-    background-image: url(${(props) => props.src});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+export const NavLogo = styled.img`
+    width: 157px;
 `;
 export const NavItem = styled.div`
     flex-basis: ${(props) => props.part};
@@ -37,11 +37,19 @@ export const NavItem = styled.div`
     padding: 0 10px;
     align-self: center;
     align-items:center;
+    @media screen and (max-width: 830px) {
+        display: ${(props) => props.removedl ? "none" : "flex"};
+        width: ${(props) => props.removedl ? "none" : "100%"};
+        flex-basis: 50%;
+    }
 `;
 export const Dropdownbut = styled(RiArrowDropDownLine)`
     -ms-transform: rotate(0deg);
     transform: rotate(0deg);
     transition: transform 1s;
+    @media screen and (max-width: 1116px) {
+        font-size: 10px;
+    }
 `;
 
 export const DropdownContent = styled.div`
@@ -54,6 +62,8 @@ export const DropdownContent = styled.div`
     border-radius:5px;
     z-index: 51;
     left:0;
+    transform: scaleY(0);
+    transform-origin: top;
 `;
 export const Dropdownlist = styled.div`
     font-size: 13px;
@@ -78,8 +88,7 @@ export const Cathe = styled.div`
     font-size: 12px;
     line-height: 18px;
     cursor: pointer;
-    width: fit-content;
-    transition .5s;
+    width: 90px;
     &:hover ${Dropdownbut}{
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
@@ -87,9 +96,17 @@ export const Cathe = styled.div`
     &:hover ${DropdownContent}{
         top:100%;
         display: block;
-        transition: .3s linear;
+        -webkit-transition: .3s ease-out;
+        -moz-transition: .3s ease-out;
+        -o-transition: .3s ease-out;
+        -ms-transition: .3s ease-out;
+        transition: .3s ease-out;
         opacity: 1;
         visibility: visible;
+        transform: scaleY(1);
+    }
+    @media screen and (max-width: 906px) {
+        width: 100px;
     }
 `;
 
@@ -128,9 +145,14 @@ export const ProfButton = styled.div`
 
 export const DisplayProf = styled.div`
     cursor:pointer;
-    font-size: ${(props)=>props.name ? "18px":"12px"};
-    line-height: ${(props)=>props.name ? "27px":"18px"};
-    color: ${(props)=>props.name ? "#212B36":"#909DAA"};
+    font-size: ${(props) => props.name ? "18px" : "12px"};
+    line-height: ${(props) => props.name ? "27px" : "18px"};
+    color: ${(props) => props.name ? "#212B36" : "#909DAA"};
+
+    @media screen and (max-width: 1063px) {
+        font-size: ${(props) => props.name ? "14px" : "10px"};
+        line-height: ${(props) => props.name ? "20px" : "14px"};
+    }
 `;
 
 export const ElementLink = styled(LinkR)`
@@ -140,4 +162,45 @@ export const ElementLink = styled(LinkR)`
     display: flex;
     align-items: center;
     width: 100%;
+`;
+
+export const ShoppingCartIcon = styled(FaShoppingCart)`
+    color: #909DAA;
+    font-size: 25px;
+    cursor: pointer;
+    @media screen and (max-width: 1125px) {
+        font-size: 18px;
+    }
+`;
+
+export const ChatIcon = styled(BsChatFill)`
+    color: #909DAA;
+    font-size: 25px;
+    cursor: pointer;
+    @media screen and (max-width: 1125px) {
+        font-size: 18px;
+    }
+`;
+
+export const ProfileIcon = styled(BsFillPersonFill)`
+    color: #909DAA;
+    font-size: 25px;
+    cursor: pointer;
+    @media screen and (max-width: 1125px) {
+        font-size: 18px;
+    }
+`;
+
+export const MobileIcon = styled.div`
+  display: none;
+
+  @media screen and (max-width: 830px) {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #909DAA;
+  }
 `;

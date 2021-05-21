@@ -3,23 +3,48 @@ import {Link} from "react-router-dom";
 
 export const Foot = styled.nav`
     background: #F9FAFB;
+    width:100%;
 `;
 
 export const FootSet = styled.div`
     width: 90%;
     margin: 0 auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
     padding: 45px 32px;
+    row-gap: 30px;
+    column-gap: 10px;
+    justify-content: center;
+    @media screen and (max-width: 1117px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 741px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 444px) {
+        grid-template-columns: repeat(2, 0.5fr);
+    }
+    @media screen and (max-width: 356px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export const FooterBox = styled.div`
-    flex-basis: 20%;
     display: flex;
     width: 100%;
-    margin-right: 10px;
     flex-direction: column;
     flex-flow: column wrap;
     align-content: center;
+    @media screen and (max-width: 1023px) {
+        flex-flow: column;
+    }
+`;
+
+export const ImageFooter = styled.img`
+    width: 226px;
+    @media screen and (max-width: 605px) {
+        width: 80%;
+    }
 `;
 
 export const FooterExp = styled.div`

@@ -14,7 +14,9 @@ const Populer = () => {
                 Paling Populer
             </TitleHome>
             <PopulerGrid>
-                {PopulerData.map((data,idx)=>(
+                {PopulerData
+                .slice(0,10)
+                .map((data,idx)=>(
                     <BoxHarga
                         key = {idx}
                         image = {data.image}

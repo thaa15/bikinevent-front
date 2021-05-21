@@ -14,6 +14,7 @@ import {
     TypeSigned,
     Typebg,
     IconCheck,
+    ChecklistCircle
 } from "./RegisterStyled"
 import { FaCheckCircle } from "react-icons/fa";
 import pembelireg from "../../../images/pembelireg.png";
@@ -40,12 +41,7 @@ const RegisterPage = () => {
                                 <TypeSigned>
                                     Pembeli
                                     <IconCheck aktif={checkreg === true}>
-                                        <FaCheckCircle style={{
-                                            color: "#219653",
-                                            fontSize: "40px",
-                                            background: "white",
-                                            borderRadius: "100%"
-                                        }} />
+                                        <ChecklistCircle/>
                                     </IconCheck>
                                 </TypeSigned>
                             </TypeImage>

@@ -583,7 +583,9 @@ const Vendorregs = () => {
 
       <CheckBoxInput>
         <input type="checkbox" style={{ marginRight: "4px" }} />
+        <div style={{width:"100%"}}>
         Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
+        </div>
       </CheckBoxInput>
 
       <Buttonslog

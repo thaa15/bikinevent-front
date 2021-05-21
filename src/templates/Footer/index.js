@@ -8,6 +8,7 @@ import {
     CopyWright,
     SocialIconLink,
     SocialIcons,
+    ImageFooter
 } from "./FooterStyled";
 import gambartest from "../../images/logocomp.png";
 import {
@@ -24,7 +25,7 @@ const Footer = () => {
             <div style={{width:"100%"}}>
                 <FootSet>
                     <FooterBox>
-                        <img src={gambartest} alt="logo" width="90%"/>
+                        <ImageFooter src={gambartest} alt="logo"/>
                         <FooterExp>
                             Tower C Taman Melati
                             Jl. ABC Tengah no 18 RT 04 RW 11

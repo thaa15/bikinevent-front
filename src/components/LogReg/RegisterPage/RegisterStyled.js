@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FaCheckCircle } from "react-icons/fa";
 
 export const RegisterTittle = styled.div`
     font-weight: bold;
@@ -55,6 +56,16 @@ export const Typebg = styled.div`
     height: 100%;
 `;
 
+export const ChecklistCircle = styled(FaCheckCircle)`
+    color: #219653;
+    font-size: 40px;
+    background: white;
+    border-radius: 100%;
+    @media screen and (max-width: 512px) {
+        font-size: 30px;
+    }
+`;
+
 export const TypeSigned = styled.div`
     width: 100%;
     height: 100%;
@@ -105,8 +116,7 @@ export const CheckBoxInput = styled.div`
     margin-top: 10px;
 `;
 
-export const TermanConds = styled.div`
-    display: inline;
+export const TermanConds = styled.span`
     color: #007BFF;
     cursor: pointer;
     margin-left: 4px;

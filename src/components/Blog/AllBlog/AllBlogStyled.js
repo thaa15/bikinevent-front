@@ -3,10 +3,23 @@ import styled from "styled-components";
 export const GridTempBlog = styled.div`
     display: grid;
     width: 100%;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     justify-content: space-between;
     grid-gap: 30px;
-    min-height: 830px;
+    min-height: 840px;
+    -webkit-transition: all .9s linear;
+    -moz-transition: all .9s linear;
+    -o-transition: all .9s linear;
+    -ms-transition: all .9s linear;
+    transition: all .9s linear;
+    transform: ${(props) => props.right ? "translateX(-100%)" : props.left ? "translateX(100%)" : "translateX(0)"};
+    @media screen and (max-width: 936px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 512px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 export const Pagination = styled.div`
@@ -30,9 +43,9 @@ export const PaginationNum = styled.div`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    color: ${(props)=>props.num ? "white" : "black"};
-    background: ${(props)=>props.num ? "#E30045" : "white"};
+    color: ${(props) => props.num ? "white" : "black"};
+    background: ${(props) => props.num ? "#E30045" : "white"};
     &:hover{
-        background-color: ${(props)=>props.num ? "none" : "#ddd"};
+        background-color: ${(props) => props.num ? "none" : "#ddd"};
     }
 `;

@@ -1,8 +1,9 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import {
     Nav,
     NavSet,
     NavItem,
+    NavLogo,
     Cathe,
     Dropdownbut,
     DropdownContent,
@@ -12,11 +13,15 @@ import {
     ProfButton,
     DisplayProf,
     ElementLink,
+    ShoppingCartIcon,
+    ChatIcon,
+    ProfileIcon,
+    MobileIcon
 } from "./NavbarStyled";
 import {FiSearch} from "react-icons/fi";
-import {FaShoppingCart} from "react-icons/fa";
-import {BsChatFill,BsFillPersonFill} from "react-icons/bs";
+import { FaBars } from "react-icons/fa";
 import gambartest from "../../images/logocomp.png";
+
 const Navbar = () => {
     return(
         <Nav>
@@ -24,11 +29,15 @@ const Navbar = () => {
 
                 <NavItem part="17%">
                     <ElementLink to="/">
-                        <img src={gambartest} alt="logo" width="80%"/>
+                        <NavLogo src={gambartest} alt="logo"/>
                     </ElementLink>
                 </NavItem>
+                
+                <MobileIcon>
+                    <FaBars/>
+                </MobileIcon>
 
-                <NavItem part="65%">
+                <NavItem part="65%" removedl>
                     <Cathe>Kategori <Dropdownbut/>
                         <DropdownContent>
                             <ElementLink to="/">
@@ -57,22 +66,16 @@ const Navbar = () => {
                     </SearchButton>
                 </NavItem>
 
-                <NavItem part="18%">
+                <NavItem part="18%" removedl>
                     <ProfButton>
                         <ElementLink to="/">
-                            <FaShoppingCart style={{color:"#909DAA",
-                                                    fontSize:"25px",
-                                                    cursor:"pointer"}}/>
+                            <ShoppingCartIcon/>
                         </ElementLink>
                         <ElementLink to="/">
-                            <BsChatFill style={{color:"#909DAA",
-                                                fontSize:"25px",
-                                                cursor:"pointer"}}/>
+                            <ChatIcon/>
                         </ElementLink>
                         <ElementLink to="/">
-                            <BsFillPersonFill style={{color:"#909DAA",
-                                                    fontSize:"25px",
-                                                    cursor:"pointer"}}/>
+                            <ProfileIcon/>
                         </ElementLink>
                         <div style={{display:"flex",flexDirection:"column"}}>
                             <ElementLink to="/login">

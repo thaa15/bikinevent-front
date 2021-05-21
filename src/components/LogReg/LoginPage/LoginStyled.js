@@ -18,6 +18,12 @@ export const LoginBox = styled.div`
     border-radius: 10px;
     padding: 36px;
     margin: 30px auto;
+    @media screen and (max-width: 512px) {
+        min-width: 350px;
+    }
+    @media screen and (max-width: 440px) {
+        min-width: 320px;
+    }
 `;
 
 export const LoginTittle = styled.div`

@@ -10,7 +10,8 @@ import {
     BoxKatExp,
     BlogBoxHome,
     BlogBoxImage,
-    BlogExpHome
+    BlogExpHome,
+    ApartPriced
 } from "./BoxStyled";
 import EllipsisText from "react-ellipsis-text";
 
@@ -19,10 +20,18 @@ const BoxHarga = ({image,city,judul,harga,rate,review}) =>{
         <>
         <BoxedPrice>
             <BoxImage img={image}/>
-            <BoxExp>{city}</BoxExp>
-            <BoxExp titlee>{judul}</BoxExp>
-            <Price>Rp{harga}</Price>
-            <BoxExp><Star/>{rate} / 5.0 ({review} Ulasan)</BoxExp>
+            <ApartPriced>
+                <div style={{flexBasis:"50%"}}>
+                    <BoxExp>{city}</BoxExp>
+                    <BoxExp titlee>
+                        <EllipsisText text={judul} length={"40"} />
+                    </BoxExp>
+                </div>
+                <div style={{flexBasis:"50%"}}>
+                    <Price>Rp{harga}</Price>
+                    <BoxExp><Star/>{rate} / 5.0 ({review} Ulasan)</BoxExp>
+                </div>
+            </ApartPriced>
         </BoxedPrice>
         </>
     )
@@ -45,7 +54,7 @@ const BlogHomeBox = ({image,titlee,desc}) => {
         <BlogBoxHome>
             <BlogBoxImage img={image}/>
             <BlogExpHome title>
-                <EllipsisText text={titlee} length={"70"} />
+                <EllipsisText text={titlee} length={"50"} />
             </BlogExpHome>
             <BlogExpHome>
                 <EllipsisText text={desc} length={"150"} />
