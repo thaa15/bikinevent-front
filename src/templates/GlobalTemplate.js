@@ -5,4 +5,5 @@ export const GlobalTemplate = styled.div`
     flex-direction: ${(props) => props.row ? "row" : "column"};
     margin: 5px auto 25px;
     max-width: 80%;
+    overflow: hidden;
 `;
