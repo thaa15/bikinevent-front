@@ -24,53 +24,48 @@ import {
     UserName,
     UserComment,
     UserRate,
-    StarUserRate
+    StarUserRate,
+    Shop
 } from "./TampilanStyled";
 
-const ShowAtTopProduk = ({ dataexact }) => {
+const ShowAtTopProduk = ({ image, kota, judul, vendor, rating, ulasan, harga }) => {
     return (
         <BgTop prod>
             <GlobalTemplate need>
                 <ShowedObj prod>
-                    {dataexact.map((item,idx)=>{
-                        return(
-                            <>
-                            <ImageProduk img={item.image} />
-                            <GetApart key={idx}>
-                                <BoxExp>{item.kota}</BoxExp>
-                                <BoxExp titlee>{item.judul}</BoxExp>
-                                <BoxExp><Shopping />{item.vendor}</BoxExp>
-                                <BoxExp><Star />{item.rating} / 5.0 ({item.ulasan} Ulasan)</BoxExp>
-                                <Price>Rp{item.harga}</Price>
-                                <GetButBot>
-                                    <div>
-                                        <ButtonBottom>
-                                            <CartShop />Masukkan Keranjang
+                    <ImageProduk img={image} />
+                    <GetApart>
+                        <BoxExp>{kota}</BoxExp>
+                        <BoxExp titlee>{judul}</BoxExp>
+                        <BoxExp><Shopping />{vendor}</BoxExp>
+                        <BoxExp><Star />{rating} / 5.0 ({ulasan} Ulasan)</BoxExp>
+                        <Price>Rp{harga}</Price>
+                        <GetButBot>
+                            <div>
+                                <ButtonBottom>
+                                    <CartShop />Masukkan Keranjang
                                         </ButtonBottom>
-                                        <ButtonBottom call>
-                                            <ChatShop />Hubungi Vendor
+                                <ButtonBottom call>
+                                    <ChatShop />Hubungi Vendor
                                         </ButtonBottom>
-                                    </div>
-                                </GetButBot>
-                            </GetApart>
-                            </>
-                        )
-                    })}
+                            </div>
+                        </GetButBot>
+                    </GetApart>
                 </ShowedObj>
             </GlobalTemplate>
         </BgTop>
     )
 }
 
-const ShowAtTopVendor = ({image,vendor,rate,review}) => {
+const ShowAtTopVendor = ({ fotovendor, vendor, ratingvendor, ulasanvendor }) => {
     return (
         <BgTop>
             <GlobalTemplate need>
                 <ShowedObj>
-                    <VendorPhoto img={image} />
-                    <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%" }}>
+                    <VendorPhoto img={fotovendor} />
+                    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                         <BoxExp><Shopping />{vendor}</BoxExp>
-                        <BoxExp><Star />{rate} / 5.0 ({review} Ulasan)</BoxExp>
+                        <BoxExp><Star />{ratingvendor} / 5.0 ({ulasanvendor} Ulasan)</BoxExp>
                         <ButtonBottom call>
                             <ChatShop />Hubungi Vendor
                         </ButtonBottom>
@@ -81,48 +76,44 @@ const ShowAtTopVendor = ({image,vendor,rate,review}) => {
     )
 }
 
-const PenilaianVendor = ({dataexact}) =>{
-    return(
+const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
+    return (
         <GlobalTemplate>
-            {dataexact.map((item,idx)=>{
-                return(
-                    <TampilanComments key={idx}>
-                        <VendorCommentsPhoto>
-                            <TampilanCommentsVendor>
-                                <VendorPhoto img={item.fotovendor} inComment/>
-                                <TampilanApart>
-                                    <BoxExp titlee><Shopping />{item.vendor}</BoxExp>
-                                    <BoxExp><Star />{item.rating} / 5.0 ({item.ulasan} Ulasan)</BoxExp>             
-                                </TampilanApart>
-                            </TampilanCommentsVendor>
-                            <TampilanCommentsVendor button>
-                                <TampilanApart>
-                                    <ButtonBottom need>
-                                        <CartShop />Masukkan Keranjang
+            <TampilanComments>
+                <VendorCommentsPhoto>
+                    <TampilanCommentsVendor>
+                        <VendorPhoto img={fotovendor} inComment />
+                        <TampilanApart>
+                            <BoxExp titlee><Shopping />{vendor}</BoxExp>
+                            <BoxExp><Star />{rating} / 5.0 ({ulasan} Ulasan)</BoxExp>
+                        </TampilanApart>
+                    </TampilanCommentsVendor>
+                    <TampilanCommentsVendor button>
+                        <TampilanApart>
+                            <ButtonBottom need to={`/vendor/${vendor}`}>
+                                <Shop />Kunjungi Vendor
                                     </ButtonBottom>
-                                    <ButtonBottom call>
-                                        <ChatShop />Hubungi Vendor
+                            <ButtonBottom call>
+                                <ChatShop />Hubungi Vendor
                                     </ButtonBottom>
-                                </TampilanApart>
-                            </TampilanCommentsVendor>
-                        </VendorCommentsPhoto>
-                            {item.comments.map((data,idx)=>{
-                                return(
-                                    <CommentsPart key={idx}>
-                                        <CommentProfile profile>
-                                            <UserPhoto img={data.userprofile}/>
-                                            <UserName>{data.username}</UserName>
-                                        </CommentProfile>
-                                        <CommentProfile>
-                                            <UserComment>{data.komentar}</UserComment>
-                                            <UserRate><StarUserRate/>{data.rate} / 5.0</UserRate>
-                                        </CommentProfile>
-                                    </CommentsPart>
-                                )
-                            })}
-                    </TampilanComments>
-                )
-            })}
+                        </TampilanApart>
+                    </TampilanCommentsVendor>
+                </VendorCommentsPhoto>
+                {comments.map((data, idx) => {
+                    return (
+                        <CommentsPart key={idx}>
+                            <CommentProfile profile>
+                                <UserPhoto img={data.userprofile} />
+                                <UserName>{data.username}</UserName>
+                            </CommentProfile>
+                            <CommentProfile>
+                                <UserComment>{data.komentar}</UserComment>
+                                <UserRate><StarUserRate />{data.rate} / 5.0</UserRate>
+                            </CommentProfile>
+                        </CommentsPart>
+                    )
+                })}
+            </TampilanComments>
         </GlobalTemplate>
     )
 }

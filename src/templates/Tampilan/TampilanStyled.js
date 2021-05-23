@@ -3,6 +3,7 @@ import {AiFillStar,AiFillShopping} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import {FaShoppingCart} from "react-icons/fa";
 import {BsChatFill} from "react-icons/bs";
+import {AiFillShop} from "react-icons/ai";
 
 export const BgTop = styled.div`
     background: #E5E5E5;
@@ -129,6 +130,14 @@ export const ChatShop = styled(BsChatFill)`
     color: #E30045;
     margin-right: 9px;
 `;
+
+export const Shop = styled(AiFillShop)`
+    font-weight: 500;
+    font-size: 14px;
+    color: white;
+    margin-right: 9px;
+`;
+
 export const CartShop = styled(FaShoppingCart)`
     font-weight: 500;
     font-size: 14px;

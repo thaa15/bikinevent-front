@@ -19,7 +19,10 @@ import {
   Privasi,
   Refund
 } from "./pages/pelayanan";
-import TampilanProdukPage from "./pages/tampilanprodven"
+import {
+  TampilanProdukPage,
+  TampilanVendorPage
+} from "./pages/tampilanprodven"
 
 function App() {
   return (
@@ -40,6 +43,7 @@ function App() {
           <Route path="/privasi" component={Privasi} exact/>
           <Route path="/refund" component={Refund} exact/>
           <Route path="/detailed-product/:id" component={TampilanProdukPage} exact/>
+          <Route path="/vendor/:vendor" component={TampilanVendorPage} exact/>
         </Switch>
         <Footer/>
       </Router>
