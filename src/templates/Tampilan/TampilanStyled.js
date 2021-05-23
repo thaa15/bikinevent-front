@@ -22,13 +22,20 @@ export const ShowedObj = styled.div`
     background: #FFFFFF;
     border-radius: 10px;
     width: 100%;
-    height:${(props)=>props.prod ? "406px" : "232px"};
-    min-height:${(props)=>props.prod ? "406px" : "232px"};
+    align-items: ${(props)=>props.prod ? "none" : "center"};
+    height:${(props)=>props.prod ? "406px" : "228px"};
+    min-height:${(props)=>props.prod ? "406px" : "228px"};
     @media screen and (max-width: 955px) {
+        flex-direction: ${(props)=>props.prod ? "column" : "row"};
+        -webkit-flex-direction:${(props)=>props.prod ? "column" : "row"};
+        -ms-flex-direction:${(props)=>props.prod ? "column" : "row"};
+        height:${(props)=>props.prod ? "606px" : "228px"};
+    }
+    @media screen and (max-width: 550px) {
         flex-direction: column;
         -webkit-flex-direction:column;
         -ms-flex-direction:column;
-        height:${(props)=>props.prod ? "606px" : "232px"};
+        height:${(props)=>props.prod ? "606px" : "328px"};
     }
 `;
 
@@ -54,7 +61,11 @@ export const ImageProduk = styled.div`
 export const GetApart = styled.div`
     display: flex;
     flex-direction: column;
-    height: 100% !important;
+    height: 100%;
+    justify-content:center;
+    @media screen and (max-width: 550px) {
+        height:fit-content;
+    }
 `;
 
 export const GetButBot = styled.div`
@@ -147,8 +158,8 @@ export const CartShop = styled(FaShoppingCart)`
 
 export const VendorPhoto = styled.div`
     border-radius: 100%;
-    height: ${(props)=>props.inComment ? "102px" : "156px"};
-    width: ${(props)=>props.inComment ? "102px" : "156px"};
+    height: ${(props)=>props.inComment ? "102px" : "139px"};
+    width: ${(props)=>props.inComment ? "102px" : "139px"};
     margin-right: 23px;
     background-image: url(${(props) => props.img});
     background-repeat: no-repeat;
@@ -183,6 +194,7 @@ export const TampilanComments = styled.div`
     background: #F9FAFB;
     border-radius: 10px;
     padding:32px;
+    width:100%;
 `;
 
 export const TampilanCommentsVendor = styled.div`
@@ -267,4 +279,51 @@ export const StarUserRate = styled(AiFillStar)`
     color: #F2C94C;
     line-height: 20px;
     margin-right: 9px;
+`;
+
+export const BoxExpVendor = styled.div`
+    font-weight: ${(props)=> props.titlee ? "bold":"normal"};
+    font-size: ${(props)=> props.titlee ? "20px":"14px"};
+    line-height: ${(props)=> props.titlee ? "30px":"21px"};
+    color: ${(props)=> props.titlee ? "#212B36":"#909DAA"};
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+`;
+
+export const PortofolioBox = styled.div`
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    min-height: 153px;
+    padding: 7px;
+`;
+
+export const PortofolioTitle = styled.div`
+    text-align:center;
+    width:100%;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    color: #212B36;
+    margin-bottom: 5px;
+`;
+
+export const PartOfImage = styled.div`
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    grid-gap: 4px;
+`;
+
+export const PortofolioImage = styled.div`
+    width: 100%;
+    height: 113px;
+    background-image: url(${(props) => props.src});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 `;

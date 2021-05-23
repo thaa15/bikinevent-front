@@ -31,4 +31,9 @@ export const BoxImageTampilan = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    cursor:pointer;
+`;
+
+export const Imagees = styled.img`
+  width:100%;
 `;

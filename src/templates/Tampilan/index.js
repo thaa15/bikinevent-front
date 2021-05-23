@@ -25,7 +25,12 @@ import {
     UserComment,
     UserRate,
     StarUserRate,
-    Shop
+    Shop,
+    BoxExpVendor,
+    PortofolioBox,
+    PortofolioTitle,
+    PortofolioImage,
+    PartOfImage
 } from "./TampilanStyled";
 
 const ShowAtTopProduk = ({ image, kota, judul, vendor, rating, ulasan, harga }) => {
@@ -63,13 +68,13 @@ const ShowAtTopVendor = ({ fotovendor, vendor, ratingvendor, ulasanvendor }) => 
             <GlobalTemplate need>
                 <ShowedObj>
                     <VendorPhoto img={fotovendor} />
-                    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                        <BoxExp><Shopping />{vendor}</BoxExp>
-                        <BoxExp><Star />{ratingvendor} / 5.0 ({ulasanvendor} Ulasan)</BoxExp>
+                    <GetApart>
+                        <BoxExpVendor titlee><Shopping />{vendor}</BoxExpVendor>
+                        <BoxExpVendor><Star />{ratingvendor} / 5.0 ({ulasanvendor} Ulasan)</BoxExpVendor>
                         <ButtonBottom call>
                             <ChatShop />Hubungi Vendor
                         </ButtonBottom>
-                    </div>
+                    </GetApart>
                 </ShowedObj>
             </GlobalTemplate>
         </BgTop>
@@ -118,4 +123,43 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
     )
 }
 
-export { ShowAtTopProduk, ShowAtTopVendor, PenilaianVendor };
+const PenilaianVendorVendor = ({ comments }) => {
+    return (
+        <TampilanComments>
+            {comments.map((data, idx) => {
+                return (
+                    <CommentsPart key={idx}>
+                        <CommentProfile profile>
+                            <UserPhoto img={data.userprofile} />
+                            <UserName>{data.username}</UserName>
+                        </CommentProfile>
+                        <CommentProfile>
+                            <UserComment>{data.komentar}</UserComment>
+                            <UserRate><StarUserRate />{data.rate} / 5.0</UserRate>
+                        </CommentProfile>
+                    </CommentsPart>
+                )
+            })}
+        </TampilanComments>
+    )
+}
+
+const PortofolioVendor = ({portofoliotitle,foto1,foto2}) => {
+    return(
+        <PortofolioBox>
+            <PortofolioTitle>{portofoliotitle}</PortofolioTitle>
+            <PartOfImage>
+                <PortofolioImage src={foto1}/>
+                <PortofolioImage src={foto2}/>
+            </PartOfImage>
+        </PortofolioBox>
+    )
+}
+
+export { 
+    ShowAtTopProduk, 
+    ShowAtTopVendor, 
+    PenilaianVendor, 
+    PenilaianVendorVendor,
+    PortofolioVendor
+};

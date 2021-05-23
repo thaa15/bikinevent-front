@@ -3,6 +3,7 @@ import {PopulerData,AllVendor} from "../datas/populerdata";
 import LoadingPage from "../templates/Loading";
 import { ShowAtTopProduk, ShowAtTopVendor,PenilaianVendor } from "../templates/Tampilan";
 import TampilanProduk from "../components/TampilanProdukVendor/TampilanProduk";
+import TampilanVendor from "../components/TampilanProdukVendor/TampilanVendor";
 
 const TampilanProdukPage = ({match}) =>{
     const produk = PopulerData.filter(x => x['id'] == match.params.id);
@@ -49,6 +50,7 @@ const TampilanProdukPage = ({match}) =>{
 
 const TampilanVendorPage = ({match}) =>{
     const vendor = AllVendor.filter(x => x['vendor'] == match.params.vendor);
+    const produkvendors = PopulerData.filter(x => x['vendor'] == match.params.vendor);
     const [isLoading,setIsLoading] = useState(true);
 
     setTimeout(()=>{
@@ -70,6 +72,11 @@ const TampilanVendorPage = ({match}) =>{
                     vendor={item.vendor}
                     ratingvendor={item.ratingvendor}
                     ulasanvendor={item.ulasanvendor}/>
+                <TampilanVendor
+                    descvendor={item.descvendor} 
+                    produkvendor={produkvendors}
+                    comments={item.comments}
+                    portofolio={item.portofolio}/>
                 </>
             )
         })}
