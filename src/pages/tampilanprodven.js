@@ -8,6 +8,7 @@ import {
 } from "../templates/Tampilan";
 import TampilanProduk from "../components/TampilanProdukVendor/TampilanProduk";
 import { productService } from "../services/Product";
+import TampilanVendor from "../components/TampilanProdukVendor/TampilanVendor";
 
 const TampilanProdukPage = ({ match }) => {
   const [productData, setProductData] = useState([]);
@@ -58,6 +59,9 @@ const TampilanProdukPage = ({ match }) => {
 
 const TampilanVendorPage = ({ match }) => {
   const vendor = AllVendor.filter((x) => x["vendor"] == match.params.vendor);
+  const produkvendors = PopulerData.filter(
+    (x) => x["vendor"] == match.params.vendor
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -72,10 +76,17 @@ const TampilanVendorPage = ({ match }) => {
             return (
               <>
                 <ShowAtTopVendor
+                  key={idx}
                   fotovendor={item.fotovendor}
                   vendor={item.vendor}
                   ratingvendor={item.ratingvendor}
                   ulasanvendor={item.ulasanvendor}
+                />
+                <TampilanVendor
+                  descvendor={item.descvendor}
+                  produkvendor={produkvendors}
+                  comments={item.comments}
+                  portofolio={item.portofolio}
                 />
               </>
             );

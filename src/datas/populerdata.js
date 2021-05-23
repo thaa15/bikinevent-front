@@ -24,6 +24,12 @@ import fotoproduk5 from "../images/fotoproduk5.png";
 import fotoproduk6 from "../images/fotoproduk6.png";
 import fotoproduk7 from "../images/fotoproduk7.png";
 import fotoproduk8 from "../images/fotoproduk8.png";
+import wedding1 from "../images/wedding1.png";
+import wedding2 from "../images/wedding2.png";
+import pentas1 from "../images/pentas1.png";
+import pentas2 from "../images/pentas2.png";
+import bookletsma1 from "../images/bookletsma1.png";
+import bookletsma2 from "../images/bookletsma2.png";
 
 export const PopulerData = [
     {
@@ -473,7 +479,7 @@ export const AllVendor = [
         ratingvendor:"4.0",
         ulasanvendor: "3",
         vendor:"Katering Saffan",
-        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nSpesifikasi : \nApp Name : Fitpro/HryFine\nVersi Bluetooth :  5.0\nLayar  : Warna 0,96 Inch\nSensor Optik : Mikro Epco\nBahan Host : Plastik\nBahan Gelang : TPU\nDiameter Jam : 2 cm\nMetode Operasi ： Operasi Tombol Sentuh Tunggal\nStandby selama lebih dari 5 hari\nSistem Operasi : \n-Android 5.0 or higher\n-iOS 9.0 or higher\n\nPaket sudah termasuk : \n1 x M4\n1x Charging Dock Cable\n1 x Instruksi",
+        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
         fotovendor:fotovendor,
         comments:[
             {
@@ -493,6 +499,23 @@ export const AllVendor = [
                 username:"Lana",
                 komentar:"Terima kasih, vendor amanah, kualitas dan proses terjamin, semoga sukses",
                 rate:"4.0"
+            },
+        ],
+        portofolio:[
+            {
+                portofoliotitle:"Saffan's Wedding Party",
+                foto1:wedding1,
+                foto2:wedding2
+            },
+            {
+                portofoliotitle:"Pentas Seni SMA",
+                foto1:pentas1,
+                foto2:pentas2
+            },
+            {
+                portofoliotitle:"Booklet SMA",
+                foto1:bookletsma1,
+                foto2:bookletsma2
             },
         ]
     },
@@ -500,7 +523,7 @@ export const AllVendor = [
         ratingvendor:"4.0",
         ulasanvendor: "3",
         vendor:"Mangkok Jonathan",
-        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nSpesifikasi : \nApp Name : Fitpro/HryFine\nVersi Bluetooth :  5.0\nLayar  : Warna 0,96 Inch\nSensor Optik : Mikro Epco\nBahan Host : Plastik\nBahan Gelang : TPU\nDiameter Jam : 2 cm\nMetode Operasi ： Operasi Tombol Sentuh Tunggal\nStandby selama lebih dari 5 hari\nSistem Operasi : \n-Android 5.0 or higher\n-iOS 9.0 or higher\n\nPaket sudah termasuk : \n1 x M4\n1x Charging Dock Cable\n1 x Instruksi",
+        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
         fotovendor:fotovendor,
         comments:[
             {
@@ -520,6 +543,23 @@ export const AllVendor = [
                 username:"Lana",
                 komentar:"Terima kasih, vendor amanah, kualitas dan proses terjamin, semoga sukses",
                 rate:"4.0"
+            },
+        ],
+        portofolio:[
+            {
+                portofoliotitle:"Saffan's Wedding Party",
+                foto1:wedding1,
+                foto2:wedding2
+            },
+            {
+                portofoliotitle:"Pentas Seni SMA",
+                foto1:pentas1,
+                foto2:pentas2
+            },
+            {
+                portofoliotitle:"Booklet SMA",
+                foto1:bookletsma1,
+                foto2:bookletsma2
             },
         ]
     },
@@ -527,7 +567,7 @@ export const AllVendor = [
         ratingvendor:"4.0",
         ulasanvendor: "3",
         vendor:"Puzzle Coffee",
-        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nSpesifikasi : \nApp Name : Fitpro/HryFine\nVersi Bluetooth :  5.0\nLayar  : Warna 0,96 Inch\nSensor Optik : Mikro Epco\nBahan Host : Plastik\nBahan Gelang : TPU\nDiameter Jam : 2 cm\nMetode Operasi ： Operasi Tombol Sentuh Tunggal\nStandby selama lebih dari 5 hari\nSistem Operasi : \n-Android 5.0 or higher\n-iOS 9.0 or higher\n\nPaket sudah termasuk : \n1 x M4\n1x Charging Dock Cable\n1 x Instruksi",
+        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
         fotovendor:fotovendor,
         comments:[
             {
@@ -547,6 +587,23 @@ export const AllVendor = [
                 username:"Lana",
                 komentar:"Terima kasih, vendor amanah, kualitas dan proses terjamin, semoga sukses",
                 rate:"4.0"
+            },
+        ],
+        portofolio:[
+            {
+                portofoliotitle:"Saffan's Wedding Party",
+                foto1:wedding1,
+                foto2:wedding2
+            },
+            {
+                portofoliotitle:"Pentas Seni SMA",
+                foto1:pentas1,
+                foto2:pentas2
+            },
+            {
+                portofoliotitle:"Booklet SMA",
+                foto1:bookletsma1,
+                foto2:bookletsma2
             },
         ]
     },
@@ -554,7 +611,7 @@ export const AllVendor = [
         ratingvendor:"4.0",
         ulasanvendor: "3",
         vendor:"Kutek",
-        descprod:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nSpesifikasi : \nApp Name : Fitpro/HryFine\nVersi Bluetooth :  5.0\nLayar  : Warna 0,96 Inch\nSensor Optik : Mikro Epco\nBahan Host : Plastik\nBahan Gelang : TPU\nDiameter Jam : 2 cm\nMetode Operasi ： Operasi Tombol Sentuh Tunggal\nStandby selama lebih dari 5 hari\nSistem Operasi : \n-Android 5.0 or higher\n-iOS 9.0 or higher\n\nPaket sudah termasuk : \n1 x M4\n1x Charging Dock Cable\n1 x Instruksi",
+        descprod:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
         fotovendor:fotovendor,
         comments:[
             {
@@ -574,6 +631,23 @@ export const AllVendor = [
                 username:"Lana",
                 komentar:"Terima kasih, vendor amanah, kualitas dan proses terjamin, semoga sukses",
                 rate:"4.0"
+            },
+        ],
+        portofolio:[
+            {
+                portofoliotitle:"Saffan's Wedding Party",
+                foto1:wedding1,
+                foto2:wedding2
+            },
+            {
+                portofoliotitle:"Pentas Seni SMA",
+                foto1:pentas1,
+                foto2:pentas2
+            },
+            {
+                portofoliotitle:"Booklet SMA",
+                foto1:bookletsma1,
+                foto2:bookletsma2
             },
         ]
     },
@@ -581,7 +655,7 @@ export const AllVendor = [
         ratingvendor:"4.0",
         ulasanvendor: "3",
         vendor:"Nasgor Saffan",
-        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nSpesifikasi : \nApp Name : Fitpro/HryFine\nVersi Bluetooth :  5.0\nLayar  : Warna 0,96 Inch\nSensor Optik : Mikro Epco\nBahan Host : Plastik\nBahan Gelang : TPU\nDiameter Jam : 2 cm\nMetode Operasi ： Operasi Tombol Sentuh Tunggal\nStandby selama lebih dari 5 hari\nSistem Operasi : \n-Android 5.0 or higher\n-iOS 9.0 or higher\n\nPaket sudah termasuk : \n1 x M4\n1x Charging Dock Cable\n1 x Instruksi",
+        descvendor:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
         fotovendor:fotovendor,
         comments:[
             {
@@ -601,6 +675,23 @@ export const AllVendor = [
                 username:"Lana",
                 komentar:"Terima kasih, vendor amanah, kualitas dan proses terjamin, semoga sukses",
                 rate:"4.0"
+            },
+        ],
+        portofolio:[
+            {
+                portofoliotitle:"Saffan's Wedding Party",
+                foto1:wedding1,
+                foto2:wedding2
+            },
+            {
+                portofoliotitle:"Pentas Seni SMA",
+                foto1:pentas1,
+                foto2:pentas2
+            },
+            {
+                portofoliotitle:"Booklet SMA",
+                foto1:bookletsma1,
+                foto2:bookletsma2
             },
         ]
     },
