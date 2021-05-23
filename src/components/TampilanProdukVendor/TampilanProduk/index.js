@@ -28,6 +28,7 @@ const TampilanProduk = ({ descprod, fotoproduk }) => {
   const carouseright = () => {
     setCurrent(current === 0 ? lengths - 1 : current - 1);
   };
+
   return (
     <GlobalTemplate>
       <div style={{ width: "100%" }}>

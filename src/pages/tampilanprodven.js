@@ -22,7 +22,6 @@ const TampilanProdukPage = ({ match }) => {
     };
     fetchData();
   }, []);
-  console.log(productData);
   return (
     <>
       {isLoading ? (
