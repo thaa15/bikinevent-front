@@ -9,11 +9,8 @@ export const BoxedPrice = styled.div`
     flex-direction: column;
     padding: 6px;
     width: 100%;
-    height: 290px;
+    min-height: 285px;
     cursor: pointer;
-    @media screen and (max-width: 443px) {
-        height: 310px;
-    }
 `;
 
 export const BoxImage = styled.div`
@@ -49,9 +46,9 @@ export const Price = styled.h3`
 export const ApartPriced = styled.div`
     display: flex;
     flex-direction: column;
-    height:120px;
+    height: 115px;
     @media screen and (max-width: 443px) {
-        height: 170px;
+        height: 165px;
     }
 `;
 
@@ -100,20 +97,8 @@ export const BlogBoxHome = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
     width: 100%;
-    height: 260px;
+    min-height: 260px;
     cursor: pointer;
-    @media screen and (max-width: 1040px) {
-        height: 300px;
-    }
-    @media screen and (max-width: 769px) {
-        height: 280px;
-    }
-    @media screen and (max-width: 600px) {
-        height: 320px;
-    }
-    @media screen and (max-width: 512px) {
-        height: 280px;
-    }
 `;
 
 export const BlogBoxImage = styled.div`

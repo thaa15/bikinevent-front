@@ -19,6 +19,7 @@ import {
   Privasi,
   Refund
 } from "./pages/pelayanan";
+import TampilanProdukPage from "./pages/tampilanprodven"
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/panduan" component={Panduan} exact/>
           <Route path="/privasi" component={Privasi} exact/>
           <Route path="/refund" component={Refund} exact/>
+          <Route path="/detailed-product/:id" component={TampilanProdukPage} exact/>
         </Switch>
         <Footer/>
       </Router>

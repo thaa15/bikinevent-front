@@ -1,6 +1,7 @@
 import React from "react";
 import {GlobalTemplate} from "../../../templates/GlobalTemplate";
 import {TitleHome,ApartView,LinkTitle} from "../HomeGlobal";
+import {Link} from "react-router-dom";
 import {
     PopulerGrid
 } from "../Populer/PopulerStyled";
@@ -18,8 +19,11 @@ const OtherPopuler = () => {
                 </TitleHome>
             </ApartView>
             <PopulerGrid>
-                {PopulerData.slice(0,5).map((data,idx)=>(
-                    <BoxHarga
+                {PopulerData.slice(0,5).map((data,idx)=>{
+                    return(
+                    <Link to={`/detailed-product/${data.id}`}
+                    style={{height:"fit-content",cursor:"pointer",textDecoration:"none"}}>
+                        <BoxHarga
                         key = {idx}
                         image = {data.image}
                         city = {data.kota}
@@ -27,8 +31,10 @@ const OtherPopuler = () => {
                         harga = {data.harga}
                         rate = {data.rating}
                         review = {data.ulasan}
-                    />
-                ))}
+                        />
+                    </Link>
+                    )
+                })}
             </PopulerGrid>
         </GlobalTemplate>
         <GlobalTemplate>
@@ -39,8 +45,11 @@ const OtherPopuler = () => {
                 </TitleHome>
             </ApartView>
             <PopulerGrid>
-                {PopulerData.slice(0,5).map((data,idx)=>(
-                    <BoxHarga
+                {PopulerData.slice(0,5).map((data,idx)=>{
+                    return(
+                    <Link to={`/detailed-product/${data.id}`}
+                    style={{height:"fit-content",cursor:"pointer",textDecoration:"none"}}>
+                        <BoxHarga
                         key = {idx}
                         image = {data.image}
                         city = {data.kota}
@@ -48,8 +57,10 @@ const OtherPopuler = () => {
                         harga = {data.harga}
                         rate = {data.rating}
                         review = {data.ulasan}
-                    />
-                ))}
+                        />
+                    </Link>
+                    )
+                })}
             </PopulerGrid>
         </GlobalTemplate>
         </>

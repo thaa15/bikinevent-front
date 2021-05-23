@@ -21,13 +21,13 @@ const BoxHarga = ({image,city,judul,harga,rate,review}) =>{
         <BoxedPrice>
             <BoxImage img={image}/>
             <ApartPriced>
-                <div style={{flexBasis:"50%"}}>
+                <div style={{flexBasis:"60%"}}>
                     <BoxExp>{city}</BoxExp>
                     <BoxExp titlee>
                         <EllipsisText text={judul} length={"40"} />
                     </BoxExp>
                 </div>
-                <div style={{flexBasis:"50%"}}>
+                <div style={{flexBasis:"40%"}}>
                     <Price>Rp{harga}</Price>
                     <BoxExp><Star/>{rate} / 5.0 ({review} Ulasan)</BoxExp>
                 </div>

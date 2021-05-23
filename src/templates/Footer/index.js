@@ -20,6 +20,8 @@ import {
 
 
 const Footer = () => {
+    let year = new Date();
+    let years = year.getFullYear();
     return(
         <Foot>
             <div style={{width:"100%"}}>
@@ -90,7 +92,7 @@ const Footer = () => {
                         </SocialIcons>
                     </FooterBox>
                 </FootSet>
-                <CopyWright>Bikinevent 2021 © All rights reserved</CopyWright>
+                <CopyWright>Bikinevent {years} © All rights reserved</CopyWright>
             </div>
         </Foot>
     )
