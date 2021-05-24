@@ -1,6 +1,7 @@
 import './App.css';
 import React from "react";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {ProtectedRouteSucReg} from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Footer from "./templates/Footer";
 import Home from "./pages";
