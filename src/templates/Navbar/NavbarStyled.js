@@ -40,7 +40,8 @@ export const NavItem = styled.div`
     @media screen and (max-width: 830px) {
         display: ${(props) => props.removedl ? "none" : "flex"};
         width: ${(props) => props.removedl ? "none" : "100%"};
-        flex-basis: 50%;
+        flex-basis: 100%;
+        justify-content: left;
     }
 `;
 export const Dropdownbut = styled(RiArrowDropDownLine)`
@@ -195,11 +196,11 @@ export const MobileIcon = styled.div`
   display: none;
 
   @media screen and (max-width: 830px) {
-    flex-basis: 50%;
     display: flex;
     flex-direction: row-reverse;
-    width: 100%;
+    width: fit-content !important;
     font-size: 1.8rem;
+    font-weight: 500;
     cursor: pointer;
     color: #909DAA;
   }

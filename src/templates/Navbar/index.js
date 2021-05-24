@@ -22,7 +22,7 @@ import {FiSearch} from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
 import gambartest from "../../images/logocomp.png";
 
-const Navbar = () => {
+const Navbar = ({toggling}) => {
     return(
         <Nav>
             <NavSet>
@@ -33,8 +33,8 @@ const Navbar = () => {
                     </ElementLink>
                 </NavItem>
                 
-                <MobileIcon>
-                    <FaBars/>
+                <MobileIcon onClick={toggling}>
+                    <FaBars />
                 </MobileIcon>
 
                 <NavItem part="65%" removedl>

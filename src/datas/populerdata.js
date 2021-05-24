@@ -700,7 +700,7 @@ export const AllVendor = [
 
 export const DataLoadingProduct = [
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -708,7 +708,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -716,7 +716,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -724,7 +724,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -732,7 +732,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -740,7 +740,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -748,7 +748,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -756,7 +756,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -764,7 +764,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
@@ -772,7 +772,7 @@ export const DataLoadingProduct = [
         ulasan: "999",
     },
     {
-        image: loadingblurry,
+        image: null,
         kota:"Loading...",
         judul:"Loading...",
         harga:"Loading...",
