@@ -27,7 +27,6 @@ export const SidebarWrapperContainer = styled.div`
 
 export const CloseIcon = styled(FaTimes)`
     color: #909DAA;
-    width:fit-content;
 `;
 
 export const Icon = styled.div`

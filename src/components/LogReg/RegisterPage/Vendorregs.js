@@ -310,7 +310,6 @@ const Vendorregs = (props) => {
             type="radio"
             value="pria"
             name="gender"
-            checked
             onClick={() => {
               setFormData({
                 ...formData,

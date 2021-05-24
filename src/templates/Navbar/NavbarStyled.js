@@ -40,7 +40,7 @@ export const NavItem = styled.div`
     @media screen and (max-width: 830px) {
         display: ${(props) => props.removedl ? "none" : "flex"};
         width: ${(props) => props.removedl ? "none" : "100%"};
-        flex-basis: 100%;
+        flex-basis: 90%;
         justify-content: left;
     }
 `;
@@ -162,7 +162,7 @@ export const ElementLink = styled(LinkR)`
     border: none;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: fit-content;
 `;
 
 export const ShoppingCartIcon = styled(FaShoppingCart)`
@@ -197,6 +197,7 @@ export const MobileIcon = styled.div`
 
   @media screen and (max-width: 830px) {
     display: flex;
+    flex-basis: 10%;
     flex-direction: row-reverse;
     width: fit-content !important;
     font-size: 1.8rem;

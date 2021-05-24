@@ -23,7 +23,6 @@ const Sidebar = ({ isOpen, toggling }) => {
                 </Icon>
 
                 <SidebarWrapper>
-
                     <SidebarLink to="/" onClick={toggling}>
                         <SideBtnWrap>
                             <HomeButton />Home
@@ -47,12 +46,11 @@ const Sidebar = ({ isOpen, toggling }) => {
                             <ProfileIcon />Profile
                         </SideBtnWrap>
                     </SidebarLink>
-
                 </SidebarWrapper>
 
                 <div style={{width:"50%",margin:"0 auto"}}>
-                    <ButtonBottom to="/login">Login</ButtonBottom>
-                    <ButtonBottom call to="/register">Register</ButtonBottom>
+                    <ButtonBottom to="/login" onClick={toggling}>Login</ButtonBottom>
+                    <ButtonBottom call to="/register" onClick={toggling}>Register</ButtonBottom>
                 </div>
             </SidebarWrapperContainer>
         </SidebarContainer>
