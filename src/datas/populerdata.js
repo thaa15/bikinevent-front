@@ -30,6 +30,7 @@ import pentas1 from "../images/pentas1.png";
 import pentas2 from "../images/pentas2.png";
 import bookletsma1 from "../images/bookletsma1.png";
 import bookletsma2 from "../images/bookletsma2.png";
+import loadingblurry from "../images/loadingblurry.png"
 
 export const PopulerData = [
     {
@@ -694,5 +695,88 @@ export const AllVendor = [
                 foto2:bookletsma2
             },
         ]
+    },
+]
+
+export const DataLoadingProduct = [
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
+    },
+    {
+        image: loadingblurry,
+        kota:"Loading...",
+        judul:"Loading...",
+        harga:"Loading...",
+        rating:"5",
+        ulasan: "999",
     },
 ]

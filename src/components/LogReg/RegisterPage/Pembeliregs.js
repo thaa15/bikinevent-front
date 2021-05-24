@@ -7,10 +7,13 @@ import {
   Buttonslog,
   Buttons,
 } from "../LoginPage/LoginStyled";
+import { withRouter } from "react-router-dom";
 import { CheckBoxInput, TermanConds } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { authService } from "../../../services/Auth";
-const Pembeliregs = () => {
+import AuthSucReg from "../../../AllAuth";
+
+const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
   const [formData, setFormData] = useState({
@@ -37,6 +40,9 @@ const Pembeliregs = () => {
     const response = await authService.register(formData).catch((err) => {
       return setError(err.response.data.data[0].messages[0].message);
     });
+    AuthSucReg.insucreg(() => { 
+      props.history.push("/successreg") 
+    })
     return response;
   };
 
@@ -44,6 +50,7 @@ const Pembeliregs = () => {
     console.log(formData);
     toggle();
   }, []);
+
   return (
     <form onSubmit={submitHandler}>
       <p style={{ color: "red" }}>{error}</p>
@@ -127,4 +134,4 @@ const Pembeliregs = () => {
     </form>
   );
 };
-export default Pembeliregs;
+export default withRouter(Pembeliregs);

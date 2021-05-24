@@ -34,7 +34,7 @@ function App() {
           <Route path="/" component={Home} exact />
           <Route path="/login" component={LoginPage} exact/>
           <Route path="/register" component={RegisterPage} exact/>
-          <Route path="/successreg" component={SuccessReg} exact/>
+          <ProtectedRouteSucReg path="/successreg" component={SuccessReg} exact/>
           <Route path="/blog/:id" component={RoutedBlog} exact/>
           <Route path="/allblog" component={Blogs} exact/>
           <Route path="/faq" component={FAQ} exact/>

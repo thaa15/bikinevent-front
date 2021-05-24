@@ -16,6 +16,7 @@ import {
   OrLine,
   Buttonsgoogle,
 } from "./LoginStyled";
+import LoadingPage from "../../../templates/Loading";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { AiFillGooglePlusCircle } from "react-icons/ai";
 import GoogleLogin from "react-google-login";
@@ -24,6 +25,7 @@ import { authService } from "../../../services/Auth";
 
 const LoginPage = () => {
   const [visible, setVisible] = useState(true);
+  const [isLoading,setIsLoading] = useState(true);
   const [typepw, setTypepw] = useState("");
   const [formData, setFormData] = useState({
     identifier: "",
@@ -70,12 +72,20 @@ const LoginPage = () => {
     }
   };
 
+  setTimeout(()=>{
+    setIsLoading(false);
+  },1000)
+
   useEffect(() => {
     toggle();
     console.log(role);
   }, []);
 
   return (
+    <>
+    {isLoading ? (
+      <LoadingPage/>
+    ):(
     <LoginBg>
       <LoginBox>
         <LoginTittle>Log In</LoginTittle>
@@ -187,6 +197,8 @@ const LoginPage = () => {
         />
       </LoginBox>
     </LoginBg>
+    )}
+    </>
   );
 };
 export default LoginPage;

@@ -3,7 +3,7 @@ import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import { TitleHome } from "../HomeGlobal";
 import { Link } from "react-router-dom";
 import { PopulerGrid } from "./PopulerStyled";
-import { PopulerData } from "../../../datas/populerdata";
+import { DataLoadingProduct } from "../../../datas/populerdata";
 import { BoxHarga } from "../../../templates/Box";
 import { homeService } from "../../../services/Home";
 
@@ -23,12 +23,24 @@ const Populer = () => {
 
   return (
     <GlobalTemplate>
+      <TitleHome>Paling Populer</TitleHome>
+      <PopulerGrid>
       {loading ? (
-        <div>Loading</div>
+        <>
+        {DataLoadingProduct.slice(0, 10).map((data,idx)=>(
+          <BoxHarga
+            key={idx}
+            image={data.image}
+            city={data.kota}
+            judul={data.judul}
+            harga={data.harga}
+            rate={data.rating}
+            review={data.ulasan}
+          />
+        ))}
+        </>
       ) : (
         <>
-          <TitleHome>Paling Populer</TitleHome>
-          <PopulerGrid>
             {productData.slice(0, 10).map((data, idx) => {
               return (
                 <Link
@@ -51,9 +63,9 @@ const Populer = () => {
                 </Link>
               );
             })}
-          </PopulerGrid>
         </>
       )}
+      </PopulerGrid>
     </GlobalTemplate>
   );
 };

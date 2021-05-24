@@ -22,6 +22,7 @@ const TampilanProdukPage = ({ match }) => {
     };
     fetchData();
   }, []);
+
   return (
     <>
       {isLoading ? (
@@ -42,6 +43,7 @@ const TampilanProdukPage = ({ match }) => {
           <TampilanProduk
             descprod={productData.deskripsi_produk}
             fotoproduk={productData.list_foto_produk}
+            lengths={productData.list_foto_produk.length}
           />
           <PenilaianVendor
             fotovendor={productData.vendor.foto_profil.url}

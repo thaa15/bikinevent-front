@@ -32,7 +32,7 @@ export const SucRegWrited = styled.div`
     margin: 8px auto;
 `;
 
-export const GoHome = styled(Link)`
+export const GoHome = styled.button`
 width: 50%;
 margin: 10px auto;
 background: #E30045;
@@ -42,6 +42,7 @@ text-decoration: none;
 border: none;
 padding: 16px;
 font-weight: 500;
+cursor:pointer;
 font-size: 14px;
 line-height: 22px;
 color: #FFFFFF;

@@ -18,10 +18,10 @@ import {
   Imagees,
 } from "./TampilanProdukStyled";
 
-const TampilanProduk = ({ descprod, fotoproduk }) => {
+const TampilanProduk = ({ descprod, fotoproduk,lengths }) => {
   const [clicked, setClicked] = useState(true);
   const [current, setCurrent] = useState(0);
-  const lengths = fotoproduk.length;
+  
   const carouseleft = () => {
     setCurrent(current === lengths - 1 ? 0 : current + 1);
   };
@@ -44,7 +44,7 @@ const TampilanProduk = ({ descprod, fotoproduk }) => {
                 {clicked ? (
                   <>
                     <BoxImageTampilan
-                      img={data}
+                      img={data.url}
                       key={idx}
                       onClick={() => {
                         setClicked(false);
@@ -68,7 +68,7 @@ const TampilanProduk = ({ descprod, fotoproduk }) => {
                         {fotoproduk.map((dats, index) => {
                           return (
                             <ContentDrop played={index === current} key={index}>
-                              {index === current && <Imagees src={dats} />}
+                              {index === current && <Imagees src={dats.url} />}
                             </ContentDrop>
                           );
                         })}

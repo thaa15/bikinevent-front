@@ -15,12 +15,14 @@ import {
   InputCityApart,
   UploadFile,
 } from "./RegisterStyled";
+import { withRouter } from "react-router-dom";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import { authService } from "../../../services/Auth";
 import axios from "axios";
+import AuthSucReg from "../../../AllAuth"
 
-const Vendorregs = () => {
+const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
   const dropRef = useRef();
@@ -191,6 +193,7 @@ const Vendorregs = () => {
           },
         }
       );
+      AuthSucReg.insucreg(() => { props.history.push('/successreg') })
       return vendorRes;
     }
   };
@@ -605,4 +608,4 @@ const Vendorregs = () => {
     </form>
   );
 };
-export default Vendorregs;
+export default withRouter(Vendorregs);
