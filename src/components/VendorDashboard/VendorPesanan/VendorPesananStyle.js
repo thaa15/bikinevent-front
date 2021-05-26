@@ -17,6 +17,9 @@ export const BoxPesanan = styled.div`
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+    @media screen and (max-width: 484px) {
+        flex-direction: column;
+    }
 `;
 
 export const BoxPesananContent = styled.div`

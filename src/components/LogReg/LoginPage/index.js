@@ -33,6 +33,8 @@ const LoginPage = (props) => {
     password: "",
   });
   const [role, setRole] = useState("pembeli");
+  const [pembelibutton,setPembelibutton] = useState(true);
+  const [vendorbutton,setVendorbutton] = useState(false);
   const [error, setError] = useState("");
   const pembeliId = "609d0717322f2d5510e1a0a7";
   const toggle = () => {
@@ -147,7 +149,12 @@ const LoginPage = (props) => {
                     type="radio"
                     value="pembeli"
                     name="type"
-                    onClick={() => setRole("pembeli")}
+                    checked = {pembelibutton}
+                    onClick={() => {
+                      setRole("pembeli");
+                      setVendorbutton(false);
+                      setPembelibutton(true);
+                    }}
                   />
                   <LoginLabel for="pembeli">Pembeli</LoginLabel>
                 </div>
@@ -156,8 +163,11 @@ const LoginPage = (props) => {
                     type="radio"
                     value="vendor"
                     name="type"
+                    checked={vendorbutton}
                     onClick={() => {
                       setRole("vendor");
+                      setVendorbutton(true);
+                      setPembelibutton(false);
                     }}
                   />
                   <LoginLabel for="vendor">Vendor</LoginLabel>

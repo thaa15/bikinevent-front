@@ -162,7 +162,7 @@ export const ElementLink = styled(LinkR)`
     border: none;
     display: flex;
     align-items: center;
-    width: fit-content;
+    width: 100%;
 `;
 
 export const ShoppingCartIcon = styled(FaShoppingCart)`
