@@ -14,4 +14,8 @@ export const HeaderWrited = styled.div`
     line-height: 21px;
     color: #212B36;
     margin: 0 auto;
+    span{
+        font-weight: 750;
+        color: #E30045;
+    }
 `;

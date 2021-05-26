@@ -1,9 +1,13 @@
 import styled from "styled-components";
+import { FaShoppingCart } from "react-icons/fa";
+import { BsChatFill, BsFillPersonFill,BsFillBagFill } from "react-icons/bs";
+import {RiMoneyDollarCircleFill} from "react-icons/ri";
 
-export const TempLegal = styled.div`
+export const TempVendash = styled.div`
 display: flex;
 flex-direction: row;
 width: 100%;
+margin-top: 25px;
 @media screen and (max-width: 957px) {
     display: -webkit-box;
     display: -moz-box;
@@ -14,7 +18,7 @@ width: 100%;
 }
 `;
 
-export const OtherLegal = styled.div`
+export const OtherVendash = styled.div`
     flex-basis: 18%;
     padding: 4px;
     width: 100%;
@@ -26,21 +30,15 @@ export const OtherLegal = styled.div`
     height: fit-content;
 
     @media screen and (max-width: 957px) {
-        -webkit-box-ordinal-group: 2;
-        -moz-box-ordinal-group: 2;
-        box-ordinal-group: 2;
-        margin-top: 20px;
+        display:none;
     }
 `;
 
-export const MainLegal = styled.div`
+export const MainVendash = styled.div`
     flex-basis: 80%;
-    padding: 10px;
+    padding: 0 10px;
     width: 100%;
     background: #FFFFFF;
-    border: 1px solid #E0E0E0;
-    box-sizing: border-box;
-    border-radius: 10px;
 
     @media screen and (max-width: 957px) {
         -webkit-box-ordinal-group: 1;
@@ -49,7 +47,7 @@ export const MainLegal = styled.div`
     }
 `;
 
-export const LegalWritedContent = styled.div`
+export const VendashWritedContent = styled.div`
     white-space: pre-line;  
     vertical-align: bottom;
     margin: ${(props) => props.title ? "10px 0 5px" : "0 0 20px"};
@@ -57,4 +55,29 @@ export const LegalWritedContent = styled.div`
     font-size: 14px;
     line-height: 20px;
     color: #212B36;
+`;
+
+export const PesananIcon = styled(FaShoppingCart)`
+    color: #909DAA;
+    margin-right: 9px;
+`;
+
+export const KeuanganIcon = styled(RiMoneyDollarCircleFill)`
+    color: #909DAA;
+    margin-right: 9px;
+`;
+
+export const ProdukIcon = styled(BsFillBagFill)`
+    color: #909DAA;
+    margin-right: 9px;
+`;
+
+export const ChatIcon = styled(BsChatFill)`
+    color: #909DAA;
+    margin-right: 9px;
+`;
+
+export const ProfilIcon = styled(BsFillPersonFill)`
+    color: #909DAA;
+    margin-right: 9px;
 `;

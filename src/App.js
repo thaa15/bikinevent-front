@@ -1,7 +1,7 @@
 import './App.css';
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {ProtectedRouteSucReg} from "./templates/ProtectedRoute";
+import {ProtectedRouteSucReg,ProtectedVendorLogin} from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Sidebar from "./templates/Sidebar";
 import Footer from "./templates/Footer";
@@ -24,24 +24,42 @@ import {
 import {
   TampilanProdukPage,
   TampilanVendorPage
-} from "./pages/tampilanprodven"
+} from "./pages/tampilanprodven";
+import {
+  VendorChat,
+  VendorPesanan,
+  VendorProduk,
+  VendorKeuangan,
+  VendorProfil
+} from "./pages/vendorcenter"
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [toct,setToct] = useState();
+  const [name,setName] = useState();
   const toggling = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(()=>{
+    setToct(localStorage.getItem('token'));
+    setName(localStorage.getItem('namaLengkap'));
+  });
   return (
     <>
       <Router>
         <ScrollToTop/>
-        <Sidebar isOpen={isOpen} toggling={toggling} />
-        <Navbar toggling={toggling}/>
+        <Sidebar isOpen={isOpen} toggling={toggling} isAuth={toct}/>
+        <Navbar toggling={toggling} isAuth={toct} nama={name}/>
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/login" component={LoginPage} exact/>
           <Route path="/register" component={RegisterPage} exact/>
+          <ProtectedVendorLogin path="/vendor-chat" component={VendorChat} isAuth={toct} exact/>
+          <ProtectedVendorLogin path="/vendor-pesanan" component={VendorPesanan} isAuth={toct} exact/>
+          <ProtectedVendorLogin path="/vendor-produk" component={VendorProduk} isAuth={toct} exact/>
+          <ProtectedVendorLogin path="/vendor-keuangan" component={VendorKeuangan} isAuth={toct} exact/>
+          <ProtectedVendorLogin path="/vendor-profil" component={VendorProfil} isAuth={toct} exact/>
           <ProtectedRouteSucReg path="/successreg" component={SuccessReg} exact/>
           <Route path="/blog/:id" component={RoutedBlog} exact/>
           <Route path="/allblog" component={Blogs} exact/>

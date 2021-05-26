@@ -20,75 +20,83 @@ import {
 } from "./NavbarStyled";
 import {FiSearch} from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
+import {AuthLogins} from "../../AllAuth";
 import gambartest from "../../images/logocomp.png";
+import NavbarVendor from "./NavbarVendor"
 
-const Navbar = ({toggling}) => {
+const Navbar = ({toggling,isAuth,nama}) => {
     return(
-        <Nav>
-            <NavSet>
+        <>
+        {isAuth !== null ? (
+            <NavbarVendor toggling={toggling} nama={nama}/>
+        ) : (
+            <Nav>
+                <NavSet>
 
-                <NavItem part="17%">
-                    <ElementLink to="/">
-                        <NavLogo src={gambartest} alt="logo"/>
-                    </ElementLink>
-                </NavItem>
-                
-                <MobileIcon onClick={toggling}>
-                    <FaBars />
-                </MobileIcon>
+                    <NavItem part="17%">
+                        <ElementLink to="/">
+                            <NavLogo src={gambartest} alt="logo"/>
+                        </ElementLink>
+                    </NavItem>
+                    
+                    <MobileIcon onClick={toggling}>
+                        <FaBars />
+                    </MobileIcon>
 
-                <NavItem part="65%" removedl>
-                    <Cathe>Kategori <Dropdownbut/>
-                        <DropdownContent>
-                            <ElementLink to="/">
-                                <Dropdownlist>Perlengkapan</Dropdownlist>
-                            </ElementLink>
-                            <ElementLink to="/">
-                                <Dropdownlist>Vanue</Dropdownlist>
-                            </ElementLink>
-                            <ElementLink to="/">
-                                <Dropdownlist>Talent</Dropdownlist>
-                            </ElementLink>
-                            <ElementLink to="/">
-                                <Dropdownlist>Jasa</Dropdownlist>
-                            </ElementLink>
-                            <ElementLink to="/">
-                                <Dropdownlist>Catering</Dropdownlist>
-                            </ElementLink>
-                            <ElementLink to="/">
-                                <Dropdownlist>Dekorasi</Dropdownlist>
-                            </ElementLink>
-                        </DropdownContent>
-                    </Cathe>
-                    <SearchBar placeholder="Cari Keperluan Event Anda.."/>
-                    <SearchButton>
-                        <FiSearch style={{color:"white",fontSize:"20px"}}/>
-                    </SearchButton>
-                </NavItem>
+                    <NavItem part="65%" removedl>
+                        <Cathe>Kategori <Dropdownbut/>
+                            <DropdownContent>
+                                <ElementLink to="/">
+                                    <Dropdownlist>Perlengkapan</Dropdownlist>
+                                </ElementLink>
+                                <ElementLink to="/">
+                                    <Dropdownlist>Vanue</Dropdownlist>
+                                </ElementLink>
+                                <ElementLink to="/">
+                                    <Dropdownlist>Talent</Dropdownlist>
+                                </ElementLink>
+                                <ElementLink to="/">
+                                    <Dropdownlist>Jasa</Dropdownlist>
+                                </ElementLink>
+                                <ElementLink to="/">
+                                    <Dropdownlist>Catering</Dropdownlist>
+                                </ElementLink>
+                                <ElementLink to="/">
+                                    <Dropdownlist>Dekorasi</Dropdownlist>
+                                </ElementLink>
+                            </DropdownContent>
+                        </Cathe>
+                        <SearchBar placeholder="Cari Keperluan Event Anda.."/>
+                        <SearchButton>
+                            <FiSearch style={{color:"white",fontSize:"20px"}}/>
+                        </SearchButton>
+                    </NavItem>
 
-                <NavItem part="18%" removedl>
-                    <ProfButton>
-                        <ElementLink to="/">
-                            <ShoppingCartIcon/>
-                        </ElementLink>
-                        <ElementLink to="/">
-                            <ChatIcon/>
-                        </ElementLink>
-                        <ElementLink to="/">
-                            <ProfileIcon/>
-                        </ElementLink>
-                        <div style={{display:"flex",flexDirection:"column"}}>
-                            <ElementLink to="/login">
-                                <DisplayProf>Masuk/</DisplayProf>
+                    <NavItem part="18%" removedl>
+                        <ProfButton>
+                            <ElementLink to="/">
+                                <ShoppingCartIcon/>
                             </ElementLink>
-                            <ElementLink to="/register">
-                                <DisplayProf name>Daftar</DisplayProf>
+                            <ElementLink to="/">
+                                <ChatIcon/>
                             </ElementLink>
-                        </div>
-                    </ProfButton>
-                </NavItem>
-            </NavSet>
-        </Nav>
+                            <ElementLink to="/">
+                                <ProfileIcon/>
+                            </ElementLink>
+                            <div style={{display:"flex",flexDirection:"column"}}>
+                                <ElementLink to="/login">
+                                    <DisplayProf>Masuk/</DisplayProf>
+                                </ElementLink>
+                                <ElementLink to="/register">
+                                    <DisplayProf name>Daftar</DisplayProf>
+                                </ElementLink>
+                            </div>
+                        </ProfButton>
+                    </NavItem>
+                </NavSet>
+            </Nav>
+        )}
+        </>
     )
 }
 

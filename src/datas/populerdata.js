@@ -30,7 +30,6 @@ import pentas1 from "../images/pentas1.png";
 import pentas2 from "../images/pentas2.png";
 import bookletsma1 from "../images/bookletsma1.png";
 import bookletsma2 from "../images/bookletsma2.png";
-import loadingblurry from "../images/loadingblurry.png"
 
 export const PopulerData = [
     {

@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { BsChatFill, BsFillPersonFill } from "react-icons/bs";
+import { BsChatFill, BsFillPersonFill,BsFillBagFill } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
+import {RiMoneyDollarCircleFill} from "react-icons/ri";
 
 export const SidebarContainer = styled.aside`
     position: fixed;
@@ -94,6 +95,19 @@ export const ChatIcon = styled(BsChatFill)`
 `;
 
 export const ProfileIcon = styled(BsFillPersonFill)`
+    color: #212B36;
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 10px;
+`;
+
+export const KeuanganIcon = styled(RiMoneyDollarCircleFill)`
+    color: #212B36;
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 10px;
+`;
+export const ProdukIcon = styled(BsFillBagFill)`
     color: #212B36;
     font-size: 25px;
     cursor: pointer;

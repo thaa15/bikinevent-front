@@ -206,3 +206,57 @@ export const MobileIcon = styled.div`
     color: #909DAA;
   }
 `;
+
+export const NavItemVendor = styled.div`
+    flex-basis: ${(props) => props.part};
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+    align-self: center;
+    align-items:center;
+    @media screen and (max-width: 957px) {
+        display: ${(props) => props.removedl ? "none" : "flex"};
+        width: ${(props) => props.removedl ? "none" : "100%"};
+        flex-basis: 90%;
+        justify-content: left;
+    }
+`;
+
+export const MobileIconVendor = styled.div`
+  display: none;
+
+  @media screen and (max-width: 957px) {
+    display: flex;
+    flex-basis: 10%;
+    flex-direction: row-reverse;
+    width: fit-content !important;
+    font-size: 1.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: #909DAA;
+  }
+`;
+
+export const LogOutContent = styled.div`
+    display: flex;
+    flex-direciton: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    &:hover ${DropdownContent}{
+        top:100%;
+        display: block;
+        -webkit-transition: .3s ease-out;
+        -moz-transition: .3s ease-out;
+        -o-transition: .3s ease-out;
+        -ms-transition: .3s ease-out;
+        transition: .3s ease-out;
+        opacity: 1;
+        visibility: visible;
+        transform: scaleY(1);
+    }
+    @media screen and (max-width: 906px) {
+        width: 100px;
+    }
+`;

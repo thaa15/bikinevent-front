@@ -11,11 +11,16 @@ import {
     ShoppingCartIcon,
     ChatIcon,
     ProfileIcon,
-    ButtonBottom
+    ButtonBottom,
 } from "./SidebarStyled";
+import SidebarVendor from "./SidebarVendor"
 
-const Sidebar = ({ isOpen, toggling }) => {
+const Sidebar = ({ isOpen, toggling,isAuth }) => {
     return (
+        <>
+        {isAuth !== null ? (
+            <SidebarVendor isOpen={isOpen} toggling={toggling}/>
+        ) : (
         <SidebarContainer isOpen={isOpen}>
             <SidebarWrapperContainer>
                 <Icon>
@@ -54,6 +59,8 @@ const Sidebar = ({ isOpen, toggling }) => {
                 </div>
             </SidebarWrapperContainer>
         </SidebarContainer>
+        )}
+        </>
     );
 };
 

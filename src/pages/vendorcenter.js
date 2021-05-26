@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import HeaderSmall from "../templates/HeaderSmall";
-import LegalLayanContent from "../components/LegalAndLayanan";
+import React,{useState} from "react";
+import {VendorHeader} from "../templates/HeaderSmall/VendorHeader";
 import LoadingPage from "../templates/Loading";
-import {
-    FAQData,
-    AboutUsData,
-    PanduanData,
-    PrivasiData,
-    RefundData
-} from "../datas/legaldata";
+import {PesananVendor} from "../datas/vendordata";
+import VendorChatContent from "../components/VendorDashboard/VendorChat";
+import VendorPesananContent from "../components/VendorDashboard/VendorPesanan";
+import VendorProdukContent from "../components/VendorDashboard/VendorProduk";
+import VendorKeuanganContent from "../components/VendorDashboard/VendorKeuangan";
+import VendorProfilContent from "../components/VendorDashboard/VendorProfil";
 
-
-const FAQ = () => {
+export const VendorChat = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
         setIsLoading(false);
-    }, 1500)
+    }, 2000)
     return (
         <>
             {isLoading ? (
@@ -24,15 +21,15 @@ const FAQ = () => {
                     <LoadingPage />
                 </>) : (
                 <>
-                    <HeaderSmall text="Layanan Pelanggan dan Legal" />
-                    <LegalLayanContent type="faq" data={FAQData} />
+                    <VendorHeader />
+                    <VendorChatContent/>
                 </>
             )}
         </>
     )
 }
 
-const TentangKami = () => {
+export const VendorPesanan = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
@@ -45,14 +42,15 @@ const TentangKami = () => {
                     <LoadingPage />
                 </>) : (
                 <>
-                    <HeaderSmall text="Layanan Pelanggan dan Legal" />
-                    <LegalLayanContent type="tentang" data={AboutUsData} />
-                </>)}
+                    <VendorHeader />
+                    <VendorPesananContent data={PesananVendor}/>
+                </>
+            )}
         </>
     )
 }
 
-const Panduan = () => {
+export const VendorProduk = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
@@ -65,14 +63,15 @@ const Panduan = () => {
                     <LoadingPage />
                 </>) : (
                 <>
-                    <HeaderSmall text="Layanan Pelanggan dan Legal" />
-                    <LegalLayanContent type="panduan" data={PanduanData} />
-                </>)}
+                    <VendorHeader />
+                    <VendorProdukContent/>
+                </>
+            )}
         </>
     )
 }
 
-const Privasi = () => {
+export const VendorKeuangan = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
@@ -85,14 +84,15 @@ const Privasi = () => {
                     <LoadingPage />
                 </>) : (
                 <>
-                    <HeaderSmall text="Layanan Pelanggan dan Legal" />
-                    <LegalLayanContent type="privasi" data={PrivasiData} />
-                </>)}
+                    <VendorHeader />
+                    <VendorKeuanganContent/>
+                </>
+            )}
         </>
     )
 }
 
-const Refund = () => {
+export const VendorProfil = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     setTimeout(() => {
@@ -105,17 +105,10 @@ const Refund = () => {
                     <LoadingPage />
                 </>) : (
                 <>
-                    <HeaderSmall text="Layanan Pelanggan dan Legal" />
-                    <LegalLayanContent type="refund" data={RefundData} />
-                </>)}
+                    <VendorHeader />
+                    <VendorProfilContent/>
+                </>
+            )}
         </>
     )
 }
-
-export {
-    FAQ,
-    TentangKami,
-    Panduan,
-    Privasi,
-    Refund
-};

@@ -5,7 +5,7 @@ import {
     SucRegWrited,
     GoHome
 } from "./SuccessRegStyled";
-import AuthSucReg from "../../../AllAuth";
+import {AuthSucRegs} from "../../../AllAuth";
 import sucregcheck from "../../../images/sucregcheck.png";
 import LoadingPage from "../../../templates/Loading"
 
@@ -29,7 +29,7 @@ const SuccessReg = (props) => {
                         </SucRegWrited>
                     <GoHome
                         onClick={()=>{
-                            AuthSucReg.outsucreg(()=>{
+                            AuthSucRegs.outsucreg(()=>{
                                 props.history.push("/");
                             })
                         }}>Kembali ke Beranda</GoHome>

@@ -20,7 +20,7 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import { authService } from "../../../services/Auth";
 import axios from "axios";
-import AuthSucReg from "../../../AllAuth";
+import {AuthSucRegs} from "../../../AllAuth";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -193,7 +193,7 @@ const Vendorregs = (props) => {
           },
         }
       );
-      AuthSucReg.insucreg(() => {
+      AuthSucRegs.insucreg(() => {
         props.history.push("/successreg");
       });
       return vendorRes;
@@ -405,7 +405,7 @@ const Vendorregs = (props) => {
       <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
       <br />
       <LoginInput
-        type="text"
+        type="number"
         required
         name="num"
         onChange={(e) => {

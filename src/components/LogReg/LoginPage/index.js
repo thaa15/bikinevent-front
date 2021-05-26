@@ -17,15 +17,16 @@ import {
   Buttonsgoogle,
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
+import {AuthLogins} from "../../../AllAuth";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { AiFillGooglePlusCircle } from "react-icons/ai";
 import GoogleLogin from "react-google-login";
 import line from "../../../images/line.png";
 import { authService } from "../../../services/Auth";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [visible, setVisible] = useState(true);
-  const [isLoading,setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [typepw, setTypepw] = useState("");
   const [formData, setFormData] = useState({
     identifier: "",
@@ -60,7 +61,11 @@ const LoginPage = () => {
           );
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
-          //Nanti push ke halaman lainnya disini ya (Vendor)
+          localStorage.setItem("token", userData.jwt);
+          localStorage.setItem("namaLengkap", userData.user.nama_lengkap);
+
+          window.location.reload();
+          window.location.href= "/vendor-chat";
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {
@@ -72,9 +77,9 @@ const LoginPage = () => {
     }
   };
 
-  setTimeout(()=>{
+  setTimeout(() => {
     setIsLoading(false);
-  },1000)
+  }, 1000)
 
   useEffect(() => {
     toggle();
@@ -83,121 +88,120 @@ const LoginPage = () => {
 
   return (
     <>
-    {isLoading ? (
-      <LoadingPage/>
-    ):(
-    <LoginBg>
-      <LoginBox>
-        <LoginTittle>Log In</LoginTittle>
-        {error}
-        <form onSubmit={submitHandler}>
-          <LoginLabel for="email">E-mail</LoginLabel>
-          <br />
-          <LoginInput
-            type="email"
-            required
-            name="email"
-            onChange={(e) => {
-              setFormData({ ...formData, identifier: e.target.value });
-            }}
-          />
-          <br />
-
-          <LoginLabel for="password">Password</LoginLabel>
-          <br />
-          <LogApart>
-            <LoginInput
-              type={typepw}
-              required
-              name="password"
-              pw
-              onChange={(e) => {
-                setFormData({ ...formData, password: e.target.value });
-              }}
-            />
-            {visible ? (
-              <IconBg>
-                <BsFillEyeSlashFill
-                  onClick={toggle}
-                  style={{ color: "#909DAA" }}
-                />
-              </IconBg>
-            ) : (
-              <IconBg>
-                <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
-              </IconBg>
-            )}
-          </LogApart>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              width: "60%",
-              margin: "15px auto 0",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <RadioButton
-                type="radio"
-                value="pembeli"
-                name="type"
-                checked
-                onClick={() => setRole("pembeli")}
-              />
-              <LoginLabel for="pembeli">Pembeli</LoginLabel>
-            </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <RadioButton
-                type="radio"
-                value="vendor"
-                name="type"
-                onClick={() => {
-                  setRole("vendor");
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <LoginBg>
+          <LoginBox>
+            <LoginTittle>Log In</LoginTittle>
+            {error}
+            <form onSubmit={submitHandler}>
+              <LoginLabel for="email">E-mail</LoginLabel>
+              <br />
+              <LoginInput
+                type="email"
+                required
+                name="email"
+                onChange={(e) => {
+                  setFormData({ ...formData, identifier: e.target.value });
                 }}
               />
-              <LoginLabel for="vendor">Vendor</LoginLabel>
-            </div>
-          </div>
+              <br />
 
-          <HaveAccount>
-            Belum memiliki akun?
+              <LoginLabel for="password">Password</LoginLabel>
+              <br />
+              <LogApart>
+                <LoginInput
+                  type={typepw}
+                  required
+                  name="password"
+                  pw
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                  }}
+                />
+                {visible ? (
+                  <IconBg>
+                    <BsFillEyeSlashFill
+                      onClick={toggle}
+                      style={{ color: "#909DAA" }}
+                    />
+                  </IconBg>
+                ) : (
+                  <IconBg>
+                    <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
+                  </IconBg>
+                )}
+              </LogApart>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  width: "60%",
+                  margin: "15px auto 0",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <RadioButton
+                    type="radio"
+                    value="pembeli"
+                    name="type"
+                    onClick={() => setRole("pembeli")}
+                  />
+                  <LoginLabel for="pembeli">Pembeli</LoginLabel>
+                </div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <RadioButton
+                    type="radio"
+                    value="vendor"
+                    name="type"
+                    onClick={() => {
+                      setRole("vendor");
+                    }}
+                  />
+                  <LoginLabel for="vendor">Vendor</LoginLabel>
+                </div>
+              </div>
+
+              <HaveAccount>
+                Belum memiliki akun?
             <HaveAccountLink to="/register">Daftar Sekarang</HaveAccountLink>
-          </HaveAccount>
+              </HaveAccount>
 
-          <Buttonslog type="submit">
-            <Buttons>Masuk</Buttons>
-          </Buttonslog>
-        </form>
+              <Buttonslog type="submit">
+                <Buttons>Masuk</Buttons>
+              </Buttonslog>
+            </form>
 
-        <Liner img={line}>
-          <OrLine>atau</OrLine>
-        </Liner>
+            <Liner img={line}>
+              <OrLine>atau</OrLine>
+            </Liner>
 
-        {/*<Buttonsgoogle>
+            {/*<Buttonsgoogle>
                     <AiFillGooglePlusCircle style={{color: "white", fontSize:"20px", marginRight:"5px"}}/>
                     Google
                 </Buttonsgoogle>*/}
-        <GoogleLogin
-          clientId={null}
-          buttonText="Login"
-          onSuccess={null}
-          onFailure={null}
-          cookiePolicy={"single_host_origin"}
-          disabledStyle={{
-            width: "100%",
-            display: "flex",
-            alignSelf: "center",
-            background: "white",
-            alignItems: "center",
-            borderRadius: "10px",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
-        />
-      </LoginBox>
-    </LoginBg>
-    )}
+            <GoogleLogin
+              clientId={null}
+              buttonText="Login"
+              onSuccess={null}
+              onFailure={null}
+              cookiePolicy={"single_host_origin"}
+              disabledStyle={{
+                width: "100%",
+                display: "flex",
+                alignSelf: "center",
+                background: "white",
+                alignItems: "center",
+                borderRadius: "10px",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
+            />
+          </LoginBox>
+        </LoginBg>
+      )}
     </>
   );
 };

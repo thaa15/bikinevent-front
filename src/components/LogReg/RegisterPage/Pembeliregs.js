@@ -11,7 +11,7 @@ import { withRouter } from "react-router-dom";
 import { CheckBoxInput, TermanConds } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { authService } from "../../../services/Auth";
-import AuthSucReg from "../../../AllAuth";
+import {AuthSucRegs} from "../../../AllAuth";
 
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -40,9 +40,7 @@ const Pembeliregs = (props) => {
     const response = await authService.register(formData).catch((err) => {
       return setError(err.response.data.data[0].messages[0].message);
     });
-    AuthSucReg.insucreg(() => { 
-      props.history.push("/successreg") 
-    })
+    props.history.push("/login"); 
     return response;
   };
 
@@ -112,7 +110,7 @@ const Pembeliregs = (props) => {
       <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
       <br />
       <LoginInput
-        type="text"
+        type="number"
         required
         name="phone_number"
         onChange={(e) =>
