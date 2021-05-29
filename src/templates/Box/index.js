@@ -11,7 +11,11 @@ import {
     BlogBoxHome,
     BlogBoxImage,
     BlogExpHome,
-    ApartPriced
+    ApartPriced,
+    ButtonVendor,
+    ApartButton,
+    BoxedVendor,
+    ApartVendor
 } from "./BoxStyled";
 import EllipsisText from "react-ellipsis-text";
 
@@ -33,6 +37,28 @@ const BoxHarga = ({image,city,judul,harga,rate,review}) =>{
                 </div>
             </ApartPriced>
         </BoxedPrice>
+        </>
+    )
+}
+
+const BoxVendorProduct = ({image,judul,statss,harga}) =>{
+    return(
+        <>
+        <BoxedVendor>
+            <BoxImage img={image}/>
+            <ApartVendor>
+                <div style={{flexBasis:"60%"}}>
+                    <BoxExp titlee>
+                        <EllipsisText text={judul} length={"35"} />
+                    </BoxExp>
+                </div>
+                <Price>Rp{harga}</Price>
+                <ApartButton>
+                    <ButtonVendor ubah>Ubah</ButtonVendor>
+                    <ButtonVendor>{statss}</ButtonVendor>
+                </ApartButton>
+            </ApartVendor>
+        </BoxedVendor>
         </>
     )
 }
@@ -63,4 +89,4 @@ const BlogHomeBox = ({image,titlee,desc}) => {
     )
 }
 
-export {BoxHarga, KategoriBox, BlogHomeBox};
+export {BoxHarga, KategoriBox, BlogHomeBox,BoxVendorProduct};

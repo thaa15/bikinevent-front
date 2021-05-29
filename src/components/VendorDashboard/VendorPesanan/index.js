@@ -36,7 +36,7 @@ const VendorPesananContent = ({ data }) => {
                                             <JudulHarga judul>{item.judul}</JudulHarga>
                                             <JudulHarga>Rp{item.harga}</JudulHarga>
                                             <SubJudul>Nomor Invoice</SubJudul>
-                                            <SubJudulContent>{item.invoice}</SubJudulContent>
+                                            <SubJudulContent invoice>{item.invoice}</SubJudulContent>
                                             <SubJudul>Nama Pembeli</SubJudul>
                                             <SubJudulContent>{item.pembeli}</SubJudulContent>
                                             <SubJudul>Tanggal Pesanan</SubJudul>

@@ -1,7 +1,11 @@
 import './App.css';
 import React,{useState,useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {ProtectedRouteSucReg,ProtectedVendorLogin} from "./templates/ProtectedRoute";
+import {
+  ProtectedRouteSucReg,
+  ProtectedVendorLogin,
+  ProtectedVendor
+} from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Sidebar from "./templates/Sidebar";
 import Footer from "./templates/Footer";
@@ -52,7 +56,7 @@ function App() {
         <Sidebar isOpen={isOpen} toggling={toggling} isAuth={toct}/>
         <Navbar toggling={toggling} isAuth={toct} nama={name}/>
         <Switch>
-          <Route path="/" component={Home} exact />
+          <ProtectedVendor path="/" component={Home} exact isAuth={toct}/>
           <Route path="/login" component={LoginPage} exact/>
           <Route path="/register" component={RegisterPage} exact/>
           <ProtectedVendorLogin path="/vendor-chat" component={VendorChat} isAuth={toct} exact/>
@@ -68,8 +72,8 @@ function App() {
           <Route path="/panduan" component={Panduan} exact/>
           <Route path="/privasi" component={Privasi} exact/>
           <Route path="/refund" component={Refund} exact/>
-          <Route path="/detailed-product/:id" component={TampilanProdukPage} exact/>
-          <Route path="/vendor/:vendor" component={TampilanVendorPage} exact/>
+          <ProtectedVendor path="/detailed-product/:id" component={TampilanProdukPage} exact isAuth={toct}/>
+          <ProtectedVendor path="/vendor/:vendor" component={TampilanVendorPage} exact isAuth={toct}/>
         </Switch>
         <Footer/>
       </Router>

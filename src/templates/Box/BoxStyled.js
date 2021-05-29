@@ -118,3 +118,52 @@ export const BlogExpHome = styled.div`
     line-height: ${(props) => props.title ? "21px" : "20px"};
     color: #212B36;
 `;
+
+export const ButtonVendor = styled.div`
+    background: #FFFFFF;
+    width: 50%;
+    border: ${(props)=>props.ubah? "1px solid #E30045" : "1px solid #909DAA"};
+    box-sizing: border-box;
+    border-radius: 3px;
+    text-align:center;
+    font-weight: 500;
+    font-size: 10px;
+    padding: 8px;
+    line-height: 15px;
+    height: fit-content;
+    cursor:pointer;
+    color: ${(props)=>props.ubah? "#E30045" : "#909DAA"};
+    margin-right: ${(props)=>props.ubah? "5px" : "0"};
+`;
+
+export const ApartButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-basis: 40%;
+    width: 100%;
+`;
+
+export const BoxedVendor = styled.div`
+    background: white;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    flex-direction: column;
+    padding: 6px;
+    width: 100%;
+    min-height: 250px;
+`;
+export const ApartVendor = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 105px;
+    @media screen and (max-width: 391px) {
+        height: 130px;
+    }
+    @media screen and (max-width: 375px) {
+        height: 95px;
+    }
+    @media screen and (max-width: 209px) {
+        height: 120px;
+    }
+`;

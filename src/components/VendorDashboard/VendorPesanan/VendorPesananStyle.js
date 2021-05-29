@@ -42,6 +42,10 @@ export const ImagePesanan = styled.div`
     background-position: center;
     background-size: cover;
     background-color:#cfcaca;
+    @media screen and (max-width: 484px) {
+        width: 100%;
+        height: 150px;
+    }
 `;
 
 export const JudulHarga = styled.div`
@@ -59,11 +63,14 @@ export const SubJudul = styled.div`
 `;
 
 export const SubJudulContent = styled.div`
-font-weight: ${(props)=>props.status ? "bold" : "normal"};
-font-size: 14px;
-line-height: 21px;
-color: ${(props)=>props.tanggal ? "#212B36" : "#E30045"};
-margin-bottom: 3px;
+    font-weight: ${(props)=>props.status ? "bold" : "normal"};
+    font-size: 14px;
+    line-height: 21px;
+    color: ${(props)=>props.tanggal ? "#212B36" : "#E30045"};
+    margin-bottom: 3px;
+    @media screen and (max-width: 320px) {
+        font-size: 12px;
+    }
 `;
 
 export const BoxNotEntry = styled.div`

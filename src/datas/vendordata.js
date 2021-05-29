@@ -1,5 +1,8 @@
 import wedfod from "../images/wedfood.png";
 import takjil from "../images/takjil.png";
+import eskrim from "../images/eskrim.png";
+import western from "../images/western.png";
+import panggung from "../images/panggung.png";
 
 export const PesananVendor = [
     {
@@ -12,6 +15,7 @@ export const PesananVendor = [
         pembeli: "Dimas",
         tanggalpesan:"20 April 2021, 10:22 WIB",
         status:"selesai",
+        statprod:"arsip",
     },
     {
         id:"2",
@@ -22,6 +26,67 @@ export const PesananVendor = [
         invoice:"INV/20210326/MPL/1128690183",
         pembeli: "Saffan",
         tanggalpesan:"21 April 2021, 10:23 WIB",
-        status:"selesai"
+        status:"selesai",
+        statprod:"show",
+    },
+    {
+        id:"3",
+        image: eskrim,
+        kota:"Depok",
+        judul:"Dessert Ice Cream 400 px ",
+        harga:"500.000",
+        invoice:"INV/20210326/MPL/1128690183",
+        pembeli: "Dimas",
+        tanggalpesan:"20 April 2021, 10:22 WIB",
+        status:"memesan",
+        statprod:"arsip",
+    },
+    {
+        id:"4",
+        image: western,
+        kota:"Depok",
+        judul:"Breakfast ONLY Western Style 500 px",
+        harga:"400.000",
+        invoice:"INV/20210326/MPL/1128690183",
+        pembeli: "Dimas",
+        tanggalpesan:"20 April 2021, 10:22 WIB",
+        status:"memesan",
+        statprod:"arsip",
+    },
+    {
+        id:"5",
+        image: panggung,
+        kota:"Depok",
+        judul:"Perlengkapan Set Panggung",
+        harga:"5.400.000",
+        invoice:"INV/20210326/MPL/1128690183",
+        pembeli: "Dimas",
+        tanggalpesan:"20 April 2021, 10:22 WIB",
+        status:"selesai",
+        statprod:"show",
+    },
+    {
+        id:"6",
+        image: panggung,
+        kota:"Depok",
+        judul:"Perlengkapan Set Panggung",
+        harga:"5.400.000",
+        invoice:"INV/20210326/MPL/1128690183",
+        pembeli: "Dimas",
+        tanggalpesan:"20 April 2021, 10:22 WIB",
+        status:"selesai",
+        statprod:"arsip",
+    },
+    {
+        id:"7",
+        image: panggung,
+        kota:"Depok",
+        judul:"Perlengkapan Set Panggung",
+        harga:"5.400.000",
+        invoice:"INV/20210326/MPL/1128690183",
+        pembeli: "Dimas",
+        tanggalpesan:"20 April 2021, 10:22 WIB",
+        status:"selesai",
+        statprod:"arsip",
     },
 ]

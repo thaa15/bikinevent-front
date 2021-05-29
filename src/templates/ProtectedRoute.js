@@ -46,3 +46,25 @@ export const ProtectedVendorLogin = ({ isAuth:isAuth, component: Component, ...r
             }} />
     )
 }
+
+export const ProtectedVendor = ({ isAuth:isAuth, component: Component, ...rest }) => {
+    return(
+        <Route 
+            {...rest}
+            render={props => {
+                if(isAuth === null){
+                    return <Component {...props} />
+                }
+                else {
+                    return <Redirect to={
+                        {
+                            pathname: "/vendor-chat",
+                            state:{
+                                from: props.location
+                            }
+                        }
+                    } />
+                }
+            }} />
+    )
+}

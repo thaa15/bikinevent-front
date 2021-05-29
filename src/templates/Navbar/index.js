@@ -16,7 +16,8 @@ import {
     ShoppingCartIcon,
     ChatIcon,
     ProfileIcon,
-    MobileIcon
+    MobileIcon,
+    LogOutContent
 } from "./NavbarStyled";
 import {FiSearch} from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
@@ -83,14 +84,21 @@ const Navbar = ({toggling,isAuth,nama}) => {
                             <ElementLink to="/">
                                 <ProfileIcon/>
                             </ElementLink>
-                            <div style={{display:"flex",flexDirection:"column"}}>
-                                <ElementLink to="/login">
+                            
+                            <LogOutContent>
+                                <div style={{display:"flex",flexDirection:"column"}}>
                                     <DisplayProf>Masuk/</DisplayProf>
-                                </ElementLink>
-                                <ElementLink to="/register">
                                     <DisplayProf name>Daftar</DisplayProf>
-                                </ElementLink>
-                            </div>
+                                </div>
+                                <DropdownContent>
+                                        <ElementLink to="/login">
+                                            <Dropdownlist>Masuk</Dropdownlist>
+                                        </ElementLink>
+                                        <ElementLink to="/register">
+                                            <Dropdownlist>Daftar</Dropdownlist>
+                                        </ElementLink>
+                                </DropdownContent>
+                            </LogOutContent>
                         </ProfButton>
                     </NavItem>
                 </NavSet>
