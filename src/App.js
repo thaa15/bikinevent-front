@@ -39,7 +39,7 @@ import {
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [toct,setToct] = useState(null);
+  const [toct,setToct] = useState();
   const [name,setName] = useState();
   const toggling = () => {
     setIsOpen(!isOpen);

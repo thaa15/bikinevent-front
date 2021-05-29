@@ -52,7 +52,7 @@ export const ProtectedVendor = ({ isAuth:isAuth, component: Component, ...rest }
         <Route 
             {...rest}
             render={props => {
-                if(isAuth === null){
+                if(isAuth == null){
                     return <Component {...props} />
                 }
                 else {
