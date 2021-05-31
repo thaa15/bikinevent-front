@@ -36,18 +36,19 @@ export const GridProduct = styled.div`
 `;
 
 export const LabelVendorProduk = styled.label`
+    display: block;
     font-size: 15px;
     line-height: 22px;
     color: #545454;
-    padding: ${(props) => props.awal ? "15px 0 10px" : "10px 0"};
+    margin: ${(props) => props.awal ? "15px 0 10px" : "10px 0 5px"};
 `;
 
 export const InputModif = styled.input`
     background: #FFFFFF;
-    width: 100%;
+    width: ${(props)=>props.harga ? "95%":"100%"};
     border: 1px solid #E4E4E4;
     box-sizing: border-box;
-    border-radius: 6px;
+    border-radius: ${(props)=>props.harga ? "0 6px 6px 0":"6px"};
     padding: 8px;
     outline:none;
 `;
@@ -68,7 +69,24 @@ export const InputMCQ= styled.select`
     border-radius: 6px;
     outline: none;
     padding: 8px;
+`;
+
+export const Options = styled.option`
     font-size: 13px;
-line-height: 22px;
-color: #909DAA;
+    line-height: 22px;
+    color: ${(props)=>props.non ? "#909DAA" : "#212B36"};
+`;
+
+export const PriceLabel = styled.div`
+    display:inline-block;
+    background: #909DAA;
+    width: 5%;
+    box-sizing: border-box;
+    border-radius: 6px 0 0 6px;
+    padding: 14px;
+    outline:none;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 10px;
+    color: #FFFFFF;
 `;

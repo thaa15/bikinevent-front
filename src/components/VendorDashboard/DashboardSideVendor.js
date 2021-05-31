@@ -5,9 +5,9 @@ import {
     ChatIcon,
     ProfilIcon,
     KeuanganIcon,
-    ProdukIcon
+    ProdukIcon,
+    Otwrit
 } from "./VendorDashboardStyled";
-import { Otwrit } from "../Blog/BlogRoute/BlogRouteStyled";
 
 const DashboardSite = ({typeVendash}) => {
     return (

@@ -28,7 +28,7 @@ import {
 import {
   TampilanProdukPage,
   TampilanVendorPage
-} from "./pages/tampilanprodven";
+} from "./pages/vendor_produk";
 import {
   VendorChat,
   VendorPesanan,

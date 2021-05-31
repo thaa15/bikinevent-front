@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FaShoppingCart } from "react-icons/fa";
 import { BsChatFill, BsFillPersonFill,BsFillBagFill } from "react-icons/bs";
 import {RiMoneyDollarCircleFill} from "react-icons/ri";
+import {Link} from "react-router-dom";
 
 export const TempVendash = styled.div`
 display: flex;
@@ -57,6 +58,22 @@ export const VendashWritedContent = styled.div`
     color: #212B36;
 `;
 
+export const Otwrit = styled(Link)`
+    display: flex;
+    text-decoration: none;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #909DAA;
+    align-items:center;
+    background-color: ${(props) => props.aktif ? "#F2F2F2" : "white"};
+    border-radius: 5px;
+    &:hover {
+        background-color: ${(props) => props.aktif ? "#F2F2F2" : "#f7f8fa"};
+    }
+`;
+
 export const PesananIcon = styled(FaShoppingCart)`
     color: #909DAA;
     margin-right: 9px;
@@ -65,6 +82,7 @@ export const PesananIcon = styled(FaShoppingCart)`
 export const KeuanganIcon = styled(RiMoneyDollarCircleFill)`
     color: #909DAA;
     margin-right: 9px;
+    font-size:14.4px;
 `;
 
 export const ProdukIcon = styled(BsFillBagFill)`

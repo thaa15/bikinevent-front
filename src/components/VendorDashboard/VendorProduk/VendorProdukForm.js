@@ -4,46 +4,64 @@ import {
     LabelVendorProduk,
     InputModif,
     InputModifArea,
-    InputMCQ
+    InputMCQ,
+    Options,
+    PriceLabel
 } from "./VendorProdukStyled";
 
-const VendorProdukForm = () =>{
-    return(
+const VendorProdukForm = () => {
+    return (
         <>
-        <TitleStats>Tambah Produk Baru</TitleStats>
-        <form>
-            <LabelVendorProduk awal>Nama Produk</LabelVendorProduk><br/>
-            <InputModif
-             type="text"
-             required
-             name="nama"/>
+            <TitleStats>Tambah Produk Baru</TitleStats>
+            <form>
+                <LabelVendorProduk awal>Nama Produk</LabelVendorProduk>
+                <InputModif
+                    type="text"
+                    required
+                    name="nama" />
 
-             <LabelVendorProduk>Deskripsi</LabelVendorProduk><br/>
-             <InputModifArea
-             rows="8"
-             required
-             name="description"/>
+                <LabelVendorProduk>Deskripsi</LabelVendorProduk>
+                <InputModifArea
+                    rows="8"
+                    required
+                    name="description" />
 
-             <LabelVendorProduk>Kategori</LabelVendorProduk><br/>
-             <InputMCQ name="kategori">
-                 <option value="perlengkapan">Perlengkapan</option>
-                 <option value="venue">Venue</option>
-                 <option value="talent">Talent</option>
-                 <option value="jasa">Jasa</option>
-                 <option value="catering">Catering</option>
-                 <option value="dekorasi">Dekorasi</option>
-             </InputMCQ>
-            <br/>
-             <LabelVendorProduk>Lokasi</LabelVendorProduk><br/>
-             <InputMCQ name="lokasi">
-                 <option value="jakarta">Jakarta</option>
-                 <option value="bandung">Bandung</option>
-                 <option value="semarang">Semarang</option>
-                 <option value="depok">Depok</option>
-                 <option value="bekasi">Bekasi</option>
-                 <option value="tangerang">Tangerang</option>
-             </InputMCQ>
-        </form>
+                <LabelVendorProduk>Kategori</LabelVendorProduk>
+                <InputMCQ name="kategori">
+                    <Options non>Pilih Kategori</Options>
+                    <Options value="perlengkapan">Perlengkapan</Options>
+                    <Options value="venue">Venue</Options>
+                    <Options value="talent">Talent</Options>
+                    <Options value="jasa">Jasa</Options>
+                    <Options value="catering">Catering</Options>
+                    <Options value="dekorasi">Dekorasi</Options>
+                </InputMCQ>
+                <br />
+                <LabelVendorProduk>Lokasi</LabelVendorProduk>
+                <InputMCQ name="lokasi">
+                    <Options non>Pilih Kota</Options>
+                    <Options value="jakarta">Jakarta</Options>
+                    <Options value="bandung">Bandung</Options>
+                    <Options value="semarang">Semarang</Options>
+                    <Options value="depok">Depok</Options>
+                    <Options value="bekasi">Bekasi</Options>
+                    <Options value="tangerang">Tangerang</Options>
+                </InputMCQ>
+                <br/>
+                <LabelVendorProduk>Harga</LabelVendorProduk>
+                <PriceLabel>Rp</PriceLabel>
+                <InputModif
+                    harga
+                    type="number"
+                    required
+                    name="price" />
+                <LabelVendorProduk>Foto Produk</LabelVendorProduk>
+                <LabelVendorProduk>Tags</LabelVendorProduk>
+                <InputModifArea
+                    rows="4"
+                    required
+                    name="description" />
+            </form>
         </>
     )
 }
