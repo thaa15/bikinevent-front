@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GlobalTemplate } from "../GlobalTemplate";
 import {
   BgTop,
@@ -119,7 +119,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
             <TampilanApart>
               <BoxExp titlee>
                 <Shopping />
-                {vendor}
+                {vendor.nama_vendor}
               </BoxExp>
               <BoxExp>
                 <Star />
@@ -129,7 +129,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
           </TampilanCommentsVendor>
           <TampilanCommentsVendor button>
             <TampilanApart>
-              <ButtonBottom need to={`/vendor/${vendor}`}>
+              <ButtonBottom need to={`/vendor/${vendor._id}`}>
                 <Shop />
                 Kunjungi Vendor
               </ButtonBottom>
@@ -144,7 +144,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
           return (
             <CommentsPart key={idx}>
               <CommentProfile profile>
-                <UserPhoto img={data.userprofile} />
+                <UserPhoto img={data.user.foto_profil.url} />
                 <UserName>{data.user.nama_lengkap}</UserName>
               </CommentProfile>
               <CommentProfile>
@@ -169,14 +169,14 @@ const PenilaianVendorVendor = ({ comments }) => {
         return (
           <CommentsPart key={idx}>
             <CommentProfile profile>
-              <UserPhoto img={data.userprofile} />
-              <UserName>{data.username}</UserName>
+              <UserPhoto img={data.user.foto_profil.url} />
+              <UserName>{data.user.username}</UserName>
             </CommentProfile>
             <CommentProfile>
               <UserComment>{data.komentar}</UserComment>
               <UserRate>
                 <StarUserRate />
-                {data.rate} / 5.0
+                {data.rating} / 5.0
               </UserRate>
             </CommentProfile>
           </CommentsPart>

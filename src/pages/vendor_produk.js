@@ -9,6 +9,7 @@ import {
 import TampilanProduk from "../components/TampilanProdukVendor/TampilanProduk";
 import { productService } from "../services/Product";
 import TampilanVendor from "../components/TampilanProdukVendor/TampilanVendor";
+import { vendorService } from "../services/Vendor";
 
 const TampilanProdukPage = ({ match }) => {
   const [productData, setProductData] = useState([]);
@@ -47,7 +48,7 @@ const TampilanProdukPage = ({ match }) => {
           />
           <PenilaianVendor
             fotovendor={productData.vendor.foto_profil.url}
-            vendor={productData.vendor.nama_vendor}
+            vendor={productData.vendor}
             rating={productData.rating}
             ulasan={productData.penilaian.length}
             comments={productData.penilaian}
@@ -59,12 +60,26 @@ const TampilanProdukPage = ({ match }) => {
 };
 
 const TampilanVendorPage = ({ match }) => {
-  const vendor = AllVendor.filter((x) => x["vendor"] == match.params.vendor);
-  const produkvendors = PopulerData.filter(
-    (x) => x["vendor"] == match.params.vendor
-  );
+  const [vendorData, setVendorData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [totalRating, setTotalRating] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await vendorService.getVendorById(match.params.vendor);
+      const data = response.data;
+      await setVendorData(data);
+      const calculateTotalRating = () => {
+        let tempTotal = 0;
+        data.comments.forEach((comment) => {
+          tempTotal += comment.rating;
+        });
+        setTotalRating(tempTotal / data.comments.length);
+      };
+      calculateTotalRating();
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
   return (
     <>
       {isLoading ? (
@@ -73,25 +88,18 @@ const TampilanVendorPage = ({ match }) => {
         </>
       ) : (
         <>
-          {vendor.map((item, idx) => {
-            return (
-              <>
-                <ShowAtTopVendor
-                  key={idx}
-                  fotovendor={item.fotovendor}
-                  vendor={item.vendor}
-                  ratingvendor={item.ratingvendor}
-                  ulasanvendor={item.ulasanvendor}
-                />
-                <TampilanVendor
-                  descvendor={item.descvendor}
-                  produkvendor={produkvendors}
-                  comments={item.comments}
-                  portofolio={item.portofolio}
-                />
-              </>
-            );
-          })}
+          <ShowAtTopVendor
+            fotovendor={vendorData.foto_profil.url}
+            vendor={vendorData.nama_vendor}
+            ratingvendor={totalRating}
+            ulasanvendor={vendorData.comments.length}
+          />
+          <TampilanVendor
+            descvendor={vendorData.deskripsi}
+            produkvendor={vendorData.produks}
+            comments={vendorData.comments}
+            portofolio={vendorData.portfolio}
+          />
         </>
       )}
     </>
