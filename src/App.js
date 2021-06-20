@@ -1,7 +1,7 @@
 import './App.css';
-import React,{useState,useEffect,useMemo} from "react";
-import {loginContext} from "./context";
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { loginContext } from "./context";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   ProtectedRouteSucReg,
   ProtectedVendorLogin,
@@ -40,45 +40,49 @@ import {
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [name,setName] = useState();
-  const [vendorlog,setVendorlog] = useState();
-  
+  const [name, setName] = useState();
+  const [vendorlog, setVendorlog] = useState();
+
   const toggling = () => {
     setIsOpen(!isOpen);
   };
-  useEffect(()=>{
+  useEffect(() => {
     setVendorlog(localStorage.getItem("tokenVendor"));
     setName(localStorage.getItem("nama"));
   });
   return (
     <>
       <Router>
-        <ScrollToTop/>
-        <loginContext.Provider value={{vendorlog,setVendorlog}}>
-            <Sidebar isOpen={isOpen} toggling={toggling} isAuth={vendorlog}/>
-            <Navbar toggling={toggling} isAuth={vendorlog} nama={name}/>
-            <Switch>
-              <ProtectedVendor path="/" component={Home} exact isAuth={vendorlog}/>
-              <Route path="/login" component={LoginPage} exact/>
-              <Route path="/register" component={RegisterPage} exact/>
-              <ProtectedVendorLogin path="/vendor-chat" component={VendorChat} isAuth={vendorlog} exact/>
-              <ProtectedVendorLogin path="/vendor-pesanan" component={VendorPesanan} isAuth={vendorlog} exact/>
-              <ProtectedVendorLogin path="/vendor-produk" component={VendorProduk} isAuth={vendorlog} exact/>
-              <ProtectedVendorLogin path="/vendor-keuangan" component={VendorKeuangan} isAuth={vendorlog} exact/>
-              <ProtectedVendorLogin path="/vendor-profil" component={VendorProfil} isAuth={vendorlog} exact/>
-              <ProtectedRouteSucReg path="/successreg" component={SuccessReg} exact/>
-              <Route path="/blog/:id" component={RoutedBlog} exact/>
-              <Route path="/allblog" component={Blogs} exact/>
-              <Route path="/faq" component={FAQ} exact/>
-              <Route path="/tentangkami" component={TentangKami} exact/>
-              <Route path="/panduan" component={Panduan} exact/>
-              <Route path="/privasi" component={Privasi} exact/>
-              <Route path="/refund" component={Refund} exact/>
-              <ProtectedVendor path="/detailed-product/:id" component={TampilanProdukPage} exact isAuth={vendorlog}/>
-              <ProtectedVendor path="/vendor/:vendor" component={TampilanVendorPage} exact isAuth={vendorlog}/>
-            </Switch>
-            <Footer/>
-        </loginContext.Provider>
+        <div className="page-container">
+          <div className="content-wrap">
+            <ScrollToTop />
+            <loginContext.Provider value={{ vendorlog, setVendorlog }}>
+              <Sidebar isOpen={isOpen} toggling={toggling} isAuth={vendorlog} />
+              <Navbar toggling={toggling} isAuth={vendorlog} nama={name} />
+              <Switch>
+                <ProtectedVendor path="/" component={Home} exact isAuth={vendorlog} />
+                <Route path="/login" component={LoginPage} exact />
+                <Route path="/register" component={RegisterPage} exact />
+                <ProtectedVendorLogin path="/vendor-chat" component={VendorChat} isAuth={vendorlog} exact />
+                <ProtectedVendorLogin path="/vendor-pesanan" component={VendorPesanan} isAuth={vendorlog} exact />
+                <ProtectedVendorLogin path="/vendor-produk" component={VendorProduk} isAuth={vendorlog} exact />
+                <ProtectedVendorLogin path="/vendor-keuangan" component={VendorKeuangan} isAuth={vendorlog} exact />
+                <ProtectedVendorLogin path="/vendor-profil" component={VendorProfil} isAuth={vendorlog} exact />
+                <ProtectedRouteSucReg path="/successreg" component={SuccessReg} exact />
+                <Route path="/blog/:id" component={RoutedBlog} exact />
+                <Route path="/allblog" component={Blogs} exact />
+                <Route path="/faq" component={FAQ} exact />
+                <Route path="/tentangkami" component={TentangKami} exact />
+                <Route path="/panduan" component={Panduan} exact />
+                <Route path="/privasi" component={Privasi} exact />
+                <Route path="/refund" component={Refund} exact />
+                <ProtectedVendor path="/detailed-product/:id" component={TampilanProdukPage} exact isAuth={vendorlog} />
+                <ProtectedVendor path="/vendor/:vendor" component={TampilanVendorPage} exact isAuth={vendorlog} />
+              </Switch>
+            </loginContext.Provider>
+          </div>
+          <Footer />
+        </div>
       </Router>
     </>
   );

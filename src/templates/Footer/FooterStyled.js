@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
-export const Foot = styled.nav`
+export const Foot = styled.footer`
     background: #F9FAFB;
     width:100%;
+    position:relative;
+    bottom:0;
 `;
 
 export const FootSet = styled.div`

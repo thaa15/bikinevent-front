@@ -10,6 +10,8 @@ export const GlobalTemplate = styled.div`
     overflow: hidden;
     transition: .3s ease-out
     opacity:1;
+    position:relative;
+    min-height: 100%;
 `;
 
 export const PopUpBg = styled.div`
