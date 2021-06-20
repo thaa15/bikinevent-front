@@ -115,7 +115,8 @@ export const Buttons = styled.div`
     text-align:center;
     width:100%;
     margin: 0 auto;
-`
+`;
+
 export const Buttonslog = styled.button`
     display: inline-block;
     background: #E30045;

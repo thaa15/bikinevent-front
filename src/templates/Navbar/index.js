@@ -28,7 +28,7 @@ import NavbarVendor from "./NavbarVendor"
 const Navbar = ({toggling,isAuth,nama}) => {
     return(
         <>
-        {isAuth !== null ? (
+        {isAuth != null ? (
             <NavbarVendor toggling={toggling} nama={nama}/>
         ) : (
             <Nav>

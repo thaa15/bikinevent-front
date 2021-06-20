@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import {Link} from "react-router-dom"
 
 export const TitleStats = styled.h3`
     font-weight: bold;
     font-size: 14px;
     line-height: 21px;
     color: #212B36;
-    margin:${(props)=>props.selesai ? "15px 0 8px" : "0"};
+    margin:${(props)=>props.selesai ? "25px 0 8px" : "0"};
 `;
 
 export const BoxPesanan = styled.div`
@@ -90,4 +91,43 @@ export const BoxNotEntry = styled.div`
     font-size: 14px;
     line-height: 21px;
     color: #212B36;
+`;
+
+export const GridButton = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: space-between;
+    grid-gap: 5px;
+    margin: 8px auto;
+    @media screen and (max-width: 608px) {
+        grid-template-columns: repeat(1,1fr);
+    }
+`;
+export const ButtonChat = styled(Link)`
+    background: #E30045;
+    border-radius: 10px;
+    padding: 8px;
+    width: 100%;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+`;
+
+export const ButtonPengaduan = styled.a`
+    display:block;
+    background: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid #E30045;
+    padding: 8px;
+    width: ${(props)=>props.selesai ? "48%" : "100%"};
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+    text-decoration: none;
+    color: #E30045;
+    cursor: pointer;
 `;

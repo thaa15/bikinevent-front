@@ -16,8 +16,8 @@ import gambartest from "../../images/logocomp.png";
 
 const NavbarVendor = ({ toggling, nama }) => {
     const removed = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("namaLengkap");
+        localStorage.removeItem("tokenVendor");
+        localStorage.removeItem("nama");
 
         window.location.reload();
         window.location.href = "/";

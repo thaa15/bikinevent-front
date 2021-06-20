@@ -1,5 +1,6 @@
 import './App.css';
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useMemo} from "react";
+import {loginContext} from "./context";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {
   ProtectedRouteSucReg,
@@ -39,43 +40,45 @@ import {
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [toct,setToct] = useState();
   const [name,setName] = useState();
+  const [vendorlog,setVendorlog] = useState();
+  
   const toggling = () => {
     setIsOpen(!isOpen);
   };
-
   useEffect(()=>{
-    setToct(localStorage.getItem('token'));
-    setName(localStorage.getItem('namaLengkap'));
+    setVendorlog(localStorage.getItem("tokenVendor"));
+    setName(localStorage.getItem("nama"));
   });
   return (
     <>
       <Router>
         <ScrollToTop/>
-        <Sidebar isOpen={isOpen} toggling={toggling} isAuth={toct}/>
-        <Navbar toggling={toggling} isAuth={toct} nama={name}/>
-        <Switch>
-          <ProtectedVendor path="/" component={Home} exact isAuth={toct}/>
-          <Route path="/login" component={LoginPage} exact/>
-          <Route path="/register" component={RegisterPage} exact/>
-          <ProtectedVendorLogin path="/vendor-chat" component={VendorChat} isAuth={toct} exact/>
-          <ProtectedVendorLogin path="/vendor-pesanan" component={VendorPesanan} isAuth={toct} exact/>
-          <ProtectedVendorLogin path="/vendor-produk" component={VendorProduk} isAuth={toct} exact/>
-          <ProtectedVendorLogin path="/vendor-keuangan" component={VendorKeuangan} isAuth={toct} exact/>
-          <ProtectedVendorLogin path="/vendor-profil" component={VendorProfil} isAuth={toct} exact/>
-          <ProtectedRouteSucReg path="/successreg" component={SuccessReg} exact/>
-          <Route path="/blog/:id" component={RoutedBlog} exact/>
-          <Route path="/allblog" component={Blogs} exact/>
-          <Route path="/faq" component={FAQ} exact/>
-          <Route path="/tentangkami" component={TentangKami} exact/>
-          <Route path="/panduan" component={Panduan} exact/>
-          <Route path="/privasi" component={Privasi} exact/>
-          <Route path="/refund" component={Refund} exact/>
-          <ProtectedVendor path="/detailed-product/:id" component={TampilanProdukPage} exact isAuth={toct}/>
-          <ProtectedVendor path="/vendor/:vendor" component={TampilanVendorPage} exact isAuth={toct}/>
-        </Switch>
-        <Footer/>
+        <loginContext.Provider value={{vendorlog,setVendorlog}}>
+            <Sidebar isOpen={isOpen} toggling={toggling} isAuth={vendorlog}/>
+            <Navbar toggling={toggling} isAuth={vendorlog} nama={name}/>
+            <Switch>
+              <ProtectedVendor path="/" component={Home} exact isAuth={vendorlog}/>
+              <Route path="/login" component={LoginPage} exact/>
+              <Route path="/register" component={RegisterPage} exact/>
+              <ProtectedVendorLogin path="/vendor-chat" component={VendorChat} isAuth={vendorlog} exact/>
+              <ProtectedVendorLogin path="/vendor-pesanan" component={VendorPesanan} isAuth={vendorlog} exact/>
+              <ProtectedVendorLogin path="/vendor-produk" component={VendorProduk} isAuth={vendorlog} exact/>
+              <ProtectedVendorLogin path="/vendor-keuangan" component={VendorKeuangan} isAuth={vendorlog} exact/>
+              <ProtectedVendorLogin path="/vendor-profil" component={VendorProfil} isAuth={vendorlog} exact/>
+              <ProtectedRouteSucReg path="/successreg" component={SuccessReg} exact/>
+              <Route path="/blog/:id" component={RoutedBlog} exact/>
+              <Route path="/allblog" component={Blogs} exact/>
+              <Route path="/faq" component={FAQ} exact/>
+              <Route path="/tentangkami" component={TentangKami} exact/>
+              <Route path="/panduan" component={Panduan} exact/>
+              <Route path="/privasi" component={Privasi} exact/>
+              <Route path="/refund" component={Refund} exact/>
+              <ProtectedVendor path="/detailed-product/:id" component={TampilanProdukPage} exact isAuth={vendorlog}/>
+              <ProtectedVendor path="/vendor/:vendor" component={TampilanVendorPage} exact isAuth={vendorlog}/>
+            </Switch>
+            <Footer/>
+        </loginContext.Provider>
       </Router>
     </>
   );

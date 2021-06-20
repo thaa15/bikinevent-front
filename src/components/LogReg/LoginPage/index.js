@@ -63,11 +63,10 @@ const LoginPage = (props) => {
           );
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
-          localStorage.setItem("token", userData.jwt);
-          localStorage.setItem("namaLengkap", userData.user.nama_lengkap);
-
+          localStorage.setItem("tokenVendor",userData.jwt);
           window.location.reload();
-          window.location.href= "/vendor-chat";
+          window.location.href = "/vendor-chat";
+          localStorage.setItem("nama",userData.user.nama_lengkap);
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {
@@ -82,12 +81,10 @@ const LoginPage = (props) => {
   setTimeout(() => {
     setIsLoading(false);
   }, 1000)
-
+ 
   useEffect(() => {
     toggle();
-    console.log(role);
   }, []);
-
   return (
     <>
       {isLoading ? (

@@ -37,7 +37,7 @@ export const GridProduct = styled.div`
 
 export const LabelVendorProduk = styled.label`
     display: block;
-    font-size: 15px;
+    font-size: 13px;
     line-height: 22px;
     color: #545454;
     margin: ${(props) => props.awal ? "15px 0 10px" : "10px 0 5px"};
@@ -45,10 +45,10 @@ export const LabelVendorProduk = styled.label`
 
 export const InputModif = styled.input`
     background: #FFFFFF;
-    width: ${(props)=>props.harga ? "95%":"100%"};
+    width: ${(props) => props.harga ? "95%" : "100%"};
     border: 1px solid #E4E4E4;
     box-sizing: border-box;
-    border-radius: ${(props)=>props.harga ? "0 6px 6px 0":"6px"};
+    border-radius: ${(props) => props.harga ? "0 6px 6px 0" : "6px"};
     padding: 8px;
     outline:none;
 `;
@@ -62,31 +62,98 @@ export const InputModifArea = styled.textarea`
     padding: 8px;
 `;
 
-export const InputMCQ= styled.select`
+export const InputMCQ = styled.select`
     width: 30%;
     border: 1px solid #E4E4E4;
     box-sizing: border-box;
     border-radius: 6px;
     outline: none;
     padding: 8px;
+    @media screen and (max-width: 599px) {
+        width: 100%
+    }
 `;
 
 export const Options = styled.option`
     font-size: 13px;
     line-height: 22px;
-    color: ${(props)=>props.non ? "#909DAA" : "#212B36"};
+    color: ${(props) => props.non ? "#909DAA" : "#212B36"};
 `;
 
 export const PriceLabel = styled.div`
     display:inline-block;
     background: #909DAA;
-    width: 5%;
+    width: 50px;
     box-sizing: border-box;
     border-radius: 6px 0 0 6px;
-    padding: 14px;
+    padding: 13px 13px 15px 13px;
     outline:none;
     font-weight: 600;
     font-size: 14px;
     line-height: 10px;
     color: #FFFFFF;
+`;
+
+export const FotoUploadApartProduct = styled.div`
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 20px;
+    margin: 10px 0 20px;
+    @media screen and (max-width: 739px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media screen and (max-width: 527px) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 527px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+`;
+
+export const UploadFile = styled.div`
+    background: #FFFFFF;
+    display:flex;
+    width: 100%;
+    height: 110px;
+    padding: 3px;
+    border: 1px dashed #909DAA;
+    box-sizing: border-box;
+    border-radius: 6px;
+    align-items:center;
+    align-self:center;
+    justify-content:center;
+    margin-bottom: 20px;
+    cursor: pointer;
+`;
+
+export const DivPrice = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-self: center;
+`;
+
+export const ButtonsArsip = styled.button`
+    display: inline-block;
+    background: #FFFFFF;
+    border-radius: 10px;
+    width:100%;
+    text-align:center;
+    cursor: ${(props) => props.allowed ? "not-allowed" : "pointer"};
+    border: 1px solid #E30045;
+    outline:none;
+    color: #E30045;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.2px;
+    padding: 8px 32px;
+    margin: 30px auto 0;
+    &:active, &:focus {
+        background-color:#a3143f;
+    }
 `;

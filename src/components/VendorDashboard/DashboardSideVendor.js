@@ -25,7 +25,7 @@ const DashboardSite = ({typeVendash}) => {
                 <Otwrit aktif={"keuangan" === typeVendash} to="/vendor-keuangan">
                     <KeuanganIcon/>Keuangan
                 </Otwrit>
-                <Otwrit aktif={"profil" === typeVendash} to="/vendor-profil">
+                <Otwrit aktif={"profile" === typeVendash} to="/vendor-profil">
                     <ProfilIcon/>Profil
                 </Otwrit>
             </OtherVendash>

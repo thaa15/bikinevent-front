@@ -10,7 +10,10 @@ import {
     JudulHarga,
     SubJudul,
     SubJudulContent,
-    BoxNotEntry
+    BoxNotEntry,
+    ButtonChat,
+    GridButton,
+    ButtonPengaduan
 } from "./VendorPesananStyle"
 
 const VendorPesananContent = ({ data }) => {
@@ -43,6 +46,10 @@ const VendorPesananContent = ({ data }) => {
                                             <SubJudulContent tanggal>{item.tanggalpesan}</SubJudulContent>
                                             <SubJudul>Status</SubJudul>
                                             <SubJudulContent tanggal status>Menunggu Pembayaran</SubJudulContent>
+                                            <GridButton>
+                                                <ButtonChat to="/vendor-chat">Hubungi Pembeli</ButtonChat>
+                                                <ButtonPengaduan>Ajukan Pengaduan</ButtonPengaduan>
+                                            </GridButton>
                                         </BoxPesananContent>
                                     </BoxPesanan>
                                 )
@@ -71,6 +78,7 @@ const VendorPesananContent = ({ data }) => {
                                             <SubJudulContent tanggal>{item.tanggalpesan}</SubJudulContent>
                                             <SubJudul>Status</SubJudul>
                                             <SubJudulContent tanggal status>Selesai</SubJudulContent>
+                                            <ButtonPengaduan selesai>Ajukan Pengaduan</ButtonPengaduan>
                                         </BoxPesananContent>
                                     </BoxPesanan>
                                 )

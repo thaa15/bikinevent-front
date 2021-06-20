@@ -142,4 +142,14 @@ export const UploadFile = styled.div`
     border-radius: 6px;
     text-align: center;
     margin-bottom: 15px;
+    cursor:pointer;
+`;
+
+export const FileViewStyle = styled.div`
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 `;

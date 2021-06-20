@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{useEffect} from "react";
+import React,{useContext} from "react";
 import { Route,Redirect } from "react-router-dom";
 import {AuthSucRegs,AuthLogins} from "../AllAuth";
 
