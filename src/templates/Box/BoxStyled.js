@@ -47,10 +47,8 @@ export const Price = styled.h3`
 export const ApartPriced = styled.div`
     display: flex;
     flex-direction: column;
-    height: 115px;
-    @media screen and (max-width: 443px) {
-        height: 165px;
-    }
+    min-height: 115px;
+    justify-content:space-between;
 `;
 
 export const Star = styled(AiFillStar)`
@@ -65,6 +63,7 @@ export const BoxKat = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-color:#cfcaca;
     width: 100%;
     height: 140px;
     cursor: pointer;
@@ -157,6 +156,10 @@ export const ApartVendor = styled.div`
     display: flex;
     flex-direction: column;
     height: 105px;
+    justify-content: space-between;
+    @media screen and (max-width: 423px) {
+        height: 130px;
+    }
     @media screen and (max-width: 391px) {
         height: 130px;
     }

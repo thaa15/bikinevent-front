@@ -130,4 +130,7 @@ export const ButtonPengaduan = styled.a`
     text-decoration: none;
     color: #E30045;
     cursor: pointer;
+    @media screen and (max-width: 608px) {
+        width: ${(props)=>props.selesai ? "100%" : "100%"};
+    }
 `;

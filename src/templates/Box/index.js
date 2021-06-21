@@ -31,7 +31,7 @@ const BoxHarga = ({image,city,judul,harga,rate,review}) =>{
                         <EllipsisText text={judul} length={"40"} />
                     </BoxExp>
                 </div>
-                <div style={{flexBasis:"40%"}}>
+                <div style={{flexBasis:"39%"}}>
                     <Price>Rp{harga}</Price>
                     <BoxExp><Star/>{rate} / 5.0 ({review} Ulasan)</BoxExp>
                 </div>
@@ -52,11 +52,13 @@ const BoxVendorProduct = ({image,judul,statss,harga}) =>{
                         <EllipsisText text={judul} length={"35"} />
                     </BoxExp>
                 </div>
+                <div style={{flexBasis:"39%"}}>
                 <Price>Rp{harga}</Price>
                 <ApartButton>
                     <ButtonVendor ubah>Ubah</ButtonVendor>
                     <ButtonVendor>{statss}</ButtonVendor>
                 </ApartButton>
+                </div>
             </ApartVendor>
         </BoxedVendor>
         </>
