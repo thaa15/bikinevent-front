@@ -40,11 +40,19 @@ const RoutedBlog = ({ match }) => {
 };
 
 const Blogs = () => {
+  const [blogDatas, setBlogDatas] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseAll = await blogService.getAllBlog();
+      const allData = responseAll.data;
+      setBlogDatas(allData);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1500);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       {isLoading ? (
@@ -54,7 +62,7 @@ const Blogs = () => {
       ) : (
         <>
           <HeaderSmall text="Blog Kami" />
-          <AllBlog datas={BlogHomeData} />
+          <AllBlog datas={blogDatas} />
         </>
       )}
     </>

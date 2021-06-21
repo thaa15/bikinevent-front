@@ -2,7 +2,7 @@ import axios from "axios";
 export const gatewayHelper = {
   http,
 };
-const BASE_URL = "https://staging-bikinevent.herokuapp.com";
+const BASE_URL = "http://localhost:1337";
 
 async function http(method, endpoint, token = null, body = null) {
   const headers = {
