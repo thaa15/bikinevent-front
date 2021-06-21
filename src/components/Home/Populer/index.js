@@ -25,22 +25,22 @@ const Populer = () => {
     <GlobalTemplate>
       <TitleHome>Paling Populer</TitleHome>
       <PopulerGrid>
-      {loading ? (
-        <>
-        {DataLoadingProduct.slice(0, 10).map((data,idx)=>(
-          <BoxHarga
-            key={idx}
-            image={data.image}
-            city={data.kota}
-            judul={data.judul}
-            harga={data.harga}
-            rate={data.rating}
-            review={data.ulasan}
-          />
-        ))}
-        </>
-      ) : (
-        <>
+        {loading ? (
+          <>
+            {DataLoadingProduct.slice(0, 10).map((data, idx) => (
+              <BoxHarga
+                key={idx}
+                image={data.image}
+                city={data.kota}
+                judul={data.judul}
+                harga={data.harga}
+                rate={data.rating}
+                review={data.ulasan}
+              />
+            ))}
+          </>
+        ) : (
+          <>
             {productData.slice(0, 10).map((data, idx) => {
               return (
                 <Link
@@ -53,7 +53,7 @@ const Populer = () => {
                 >
                   <BoxHarga
                     key={idx}
-                    image={data.foto_produk.url}
+                    image={data.foto_produk[0].url}
                     city={data.lokasi}
                     judul={data.nama}
                     harga={data.harga}
@@ -63,8 +63,8 @@ const Populer = () => {
                 </Link>
               );
             })}
-        </>
-      )}
+          </>
+        )}
       </PopulerGrid>
     </GlobalTemplate>
   );

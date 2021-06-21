@@ -33,7 +33,7 @@ const TampilanProdukPage = ({ match }) => {
       ) : (
         <>
           <ShowAtTopProduk
-            image={productData.foto_produk.url}
+            image={productData.foto_produk[0].url}
             kota={productData.lokasi}
             judul={productData.nama}
             vendor={productData.vendor.nama_vendor}
@@ -43,8 +43,8 @@ const TampilanProdukPage = ({ match }) => {
           />
           <TampilanProduk
             descprod={productData.deskripsi_produk}
-            fotoproduk={productData.list_foto_produk}
-            lengths={productData.list_foto_produk.length}
+            fotoproduk={productData.foto_produk}
+            lengths={productData.foto_produk.length}
           />
           <PenilaianVendor
             fotovendor={productData.vendor.foto_profil.url}

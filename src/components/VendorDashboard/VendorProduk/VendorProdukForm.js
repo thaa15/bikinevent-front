@@ -1,7 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import Dropzone from "react-dropzone";
 import { TitleStats } from "../VendorPesanan/VendorPesananStyle";
 import { Buttonslog, Buttons } from "../../LogReg/LoginPage/LoginStyled";
+import axios from "axios";
+import { loginContext } from "../../../context";
 import {
   LabelVendorProduk,
   InputModif,
@@ -28,7 +30,6 @@ const VendorProdukForm = () => {
   const [isPreviewFoto1, setIsPreviewFoto1] = useState(false);
   const dropRefFoto2 = useRef();
   const [previewFoto2, setPreviewFoto2] = useState("");
-  const [previewFoto, setPreviewFoto] = useState([]);
   const [isPreviewFoto2, setIsPreviewFoto2] = useState(false);
   const dropRefFoto3 = useRef();
   const [previewFoto3, setPreviewFoto3] = useState("");
@@ -48,10 +49,61 @@ const VendorProdukForm = () => {
   const dropRefFoto8 = useRef();
   const [previewFoto8, setPreviewFoto8] = useState("");
   const [isPreviewFoto8, setIsPreviewFoto8] = useState(false);
+  const { vendorlog } = useContext(loginContext);
+  const vendor_id = localStorage.getItem("vendor_id");
+  const [formData, setFormData] = useState({
+    nama: "",
+    lokasi: "",
+    foto_produk: null,
+    deskripsi_produk: "",
+    harga: 0,
+    category: "",
+    isArchived: true,
+    vendor: vendor_id,
+  });
+  console.log(formData);
+
+  const submitHandler = async (e, archive) => {
+    e.preventDefault();
+    const {
+      nama,
+      lokasi,
+      foto_produk,
+      deskripsi_produk,
+      harga,
+      category,
+      vendor,
+      isArchived,
+    } = formData;
+    const productData = new FormData();
+    productData.append(
+      "data",
+      JSON.stringify({
+        nama,
+        lokasi,
+        deskripsi_produk,
+        harga,
+        vendor,
+        category,
+        isArchived: archive,
+      })
+    );
+    productData.append("files.foto_produk", foto_produk, foto_produk.name);
+    const productRes = await axios.post(
+      "http://localhost:1337/produks",
+      productData,
+      {
+        headers: {
+          Authorization: `Bearer ${vendorlog}`,
+        },
+      }
+    );
+    return productRes;
+  };
 
   const onDropFoto1 = (files) => {
     const [uploadedFile] = files;
-
+    setFormData({ ...formData, foto_produk: files[0] });
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewFoto1(fileReader.result);
@@ -144,30 +196,57 @@ const VendorProdukForm = () => {
     setIsPreviewFoto8(uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/));
     dropRefFoto8.current.style.border = "2px dashed #e9ebeb";
   };
+
   return (
     <>
       <TitleStats>Tambah Produk Baru</TitleStats>
       <form>
         <LabelVendorProduk awal>Nama Produk</LabelVendorProduk>
-        <InputModif type="text" required name="nama" />
+        <InputModif
+          type="text"
+          required
+          name="nama"
+          onChange={(e) => {
+            setFormData({ ...formData, nama: e.target.value });
+          }}
+        />
 
         <LabelVendorProduk>Deskripsi</LabelVendorProduk>
-        <InputModifArea rows="8" required name="description" />
+        <InputModifArea
+          rows="8"
+          required
+          name="description"
+          onChange={(e) => {
+            setFormData({ ...formData, deskripsi_produk: e.target.value });
+          }}
+        />
 
         <LabelVendorProduk>Kategori</LabelVendorProduk>
-        <InputMCQ name="kategori">
+        <InputMCQ
+          name="kategori"
+          value={formData.category}
+          onChange={(e) => {
+            setFormData({ ...formData, category: e.target.value });
+          }}
+        >
           <Options non>Pilih Kategori</Options>
-          <Options value="perlengkapan">Perlengkapan</Options>
-          <Options value="venue">Venue</Options>
-          <Options value="talent">Talent</Options>
-          <Options value="jasa">Jasa</Options>
-          <Options value="catering">Catering</Options>
-          <Options value="dekorasi">Dekorasi</Options>
+          <Options value="Perlengkapan">Perlengkapan</Options>
+          <Options value="Venue">Venue</Options>
+          <Options value="Talent">Talent</Options>
+          <Options value="Jasa">Jasa</Options>
+          <Options value="Catering">Catering</Options>
+          <Options value="Dekorasi">Dekorasi</Options>
         </InputMCQ>
         <br />
 
         <LabelVendorProduk>Lokasi</LabelVendorProduk>
-        <InputMCQ name="lokasi">
+        <InputMCQ
+          name="lokasi"
+          value={formData.lokasi}
+          onChange={(e) => {
+            setFormData({ ...formData, lokasi: e.target.value });
+          }}
+        >
           <Options non>Pilih Kota</Options>
           <Options value="jakarta">Jakarta</Options>
           <Options value="bandung">Bandung</Options>
@@ -181,7 +260,15 @@ const VendorProdukForm = () => {
         <LabelVendorProduk>Harga</LabelVendorProduk>
         <DivPrice>
           <PriceLabel>Rp</PriceLabel>
-          <InputModif harga type="number" required name="price" />
+          <InputModif
+            harga
+            type="number"
+            required
+            name="price"
+            onChange={(e) => {
+              setFormData({ ...formData, harga: e.target.value });
+            }}
+          />
         </DivPrice>
         <br />
 
@@ -449,10 +536,10 @@ const VendorProdukForm = () => {
         <InputModifArea rows="4" required name="description" />
 
         <GridButton>
-          <Buttonslog type="submit">
+          <Buttonslog onClick={(e) => submitHandler(e, false)}>
             <Buttons>Tampilkan</Buttons>
           </Buttonslog>
-          <ButtonsArsip type="submit">
+          <ButtonsArsip onClick={(e) => submitHandler(e, true)}>
             <Buttons>Arsipkan</Buttons>
           </ButtonsArsip>
         </GridButton>

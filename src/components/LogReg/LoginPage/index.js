@@ -17,7 +17,7 @@ import {
   Buttonsgoogle,
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
-import {AuthLogins} from "../../../AllAuth";
+import { AuthLogins } from "../../../AllAuth";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { AiFillGooglePlusCircle } from "react-icons/ai";
 import GoogleLogin from "react-google-login";
@@ -33,8 +33,8 @@ const LoginPage = (props) => {
     password: "",
   });
   const [role, setRole] = useState("pembeli");
-  const [pembelibutton,setPembelibutton] = useState(true);
-  const [vendorbutton,setVendorbutton] = useState(false);
+  const [pembelibutton, setPembelibutton] = useState(true);
+  const [vendorbutton, setVendorbutton] = useState(false);
   const [error, setError] = useState("");
   const pembeliId = "609d0717322f2d5510e1a0a7";
   const toggle = () => {
@@ -63,10 +63,11 @@ const LoginPage = (props) => {
           );
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
-          localStorage.setItem("tokenVendor",userData.jwt);
+          localStorage.setItem("tokenVendor", userData.jwt);
           window.location.reload();
           window.location.href = "/vendor-chat";
-          localStorage.setItem("nama",userData.user.nama_lengkap);
+          localStorage.setItem("nama", userData.user.nama_lengkap);
+          localStorage.setItem("vendor_id", userData.user.vendor._id);
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {
@@ -80,8 +81,8 @@ const LoginPage = (props) => {
 
   setTimeout(() => {
     setIsLoading(false);
-  }, 1000)
- 
+  }, 1000);
+
   useEffect(() => {
     toggle();
   }, []);
@@ -128,7 +129,10 @@ const LoginPage = (props) => {
                   </IconBg>
                 ) : (
                   <IconBg>
-                    <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
+                    <BsFillEyeFill
+                      onClick={toggle}
+                      style={{ color: "#909DAA" }}
+                    />
                   </IconBg>
                 )}
               </LogApart>
@@ -146,7 +150,7 @@ const LoginPage = (props) => {
                     type="radio"
                     value="pembeli"
                     name="type"
-                    checked = {pembelibutton}
+                    checked={pembelibutton}
                     onClick={() => {
                       setRole("pembeli");
                       setVendorbutton(false);
@@ -173,7 +177,9 @@ const LoginPage = (props) => {
 
               <HaveAccount>
                 Belum memiliki akun?
-            <HaveAccountLink to="/register">Daftar Sekarang</HaveAccountLink>
+                <HaveAccountLink to="/register">
+                  Daftar Sekarang
+                </HaveAccountLink>
               </HaveAccount>
 
               <Buttonslog type="submit">

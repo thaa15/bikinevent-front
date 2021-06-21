@@ -14,14 +14,14 @@ import {
   TermanConds,
   InputCityApart,
   UploadFile,
-  FileViewStyle
+  FileViewStyle,
 } from "./RegisterStyled";
 import { withRouter } from "react-router-dom";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import { authService } from "../../../services/Auth";
 import axios from "axios";
-import {AuthSucRegs} from "../../../AllAuth";
+import { AuthSucRegs } from "../../../AllAuth";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -468,7 +468,10 @@ const Vendorregs = (props) => {
       <UploadFile>
         <Dropzone onDrop={onDropWajah}>
           {({ getRootProps, getInputProps }) => (
-            <FileViewStyle {...getRootProps({ className: "drop-zone" })} ref={dropRefWajah}>
+            <FileViewStyle
+              {...getRootProps({ className: "drop-zone" })}
+              ref={dropRefWajah}
+            >
               <input {...getInputProps()} name="foto_wajah" />
               {previewWajah ? (
                 isPreviewWajahAv ? (
@@ -498,7 +501,10 @@ const Vendorregs = (props) => {
       <UploadFile>
         <Dropzone onDrop={onDropKTP}>
           {({ getRootProps, getInputProps }) => (
-            <FileViewStyle {...getRootProps({ className: "drop-zone" })} ref={dropRefKTP}>
+            <FileViewStyle
+              {...getRootProps({ className: "drop-zone" })}
+              ref={dropRefKTP}
+            >
               <input {...getInputProps()} name="foto_ktp" />
               {previewKTP ? (
                 isPreviewKTPAv ? (
@@ -528,7 +534,10 @@ const Vendorregs = (props) => {
       <UploadFile>
         <Dropzone onDrop={onDropTab}>
           {({ getRootProps, getInputProps }) => (
-            <FileViewStyle {...getRootProps({ className: "drop-zone" })} ref={dropRefTab}>
+            <FileViewStyle
+              {...getRootProps({ className: "drop-zone" })}
+              ref={dropRefTab}
+            >
               <input {...getInputProps()} name="foto_tabungan" />
               {previewTab ? (
                 isPreviewTabAv ? (
@@ -558,7 +567,10 @@ const Vendorregs = (props) => {
       <UploadFile>
         <Dropzone onDrop={onDrop}>
           {({ getRootProps, getInputProps }) => (
-            <FileViewStyle {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
+            <FileViewStyle
+              {...getRootProps({ className: "drop-zone" })}
+              ref={dropRef}
+            >
               <input {...getInputProps()} name="foto_toko" />
               {previewSrc ? (
                 isPreviewAvailable ? (

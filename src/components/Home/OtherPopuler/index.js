@@ -70,7 +70,7 @@ const OtherPopuler = () => {
                         >
                           <BoxHarga
                             key={idx}
-                            image={data.foto_produk.url}
+                            image={data.foto_produk[0].url}
                             city={data.lokasi}
                             judul={data.nama}
                             harga={data.harga}
@@ -81,9 +81,11 @@ const OtherPopuler = () => {
                       );
                     })}
                   </PopulerGrid>
-                </>)
+                </>
+              );
             })}
-          </>)}
+          </>
+        )}
       </GlobalTemplate>
     </>
   );
