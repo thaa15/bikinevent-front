@@ -90,7 +90,7 @@ const VendorProdukForm = () => {
     );
     productData.append("files.foto_produk", foto_produk, foto_produk.name);
     const productRes = await axios.post(
-      "http://localhost:1337/produks",
+      "https://staging-bikinevent.herokuapp.com/produks",
       productData,
       {
         headers: {
