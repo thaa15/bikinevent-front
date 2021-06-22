@@ -2,6 +2,7 @@ import { gatewayHelper } from "../utility/index";
 export const authService = {
   login,
   register,
+  getDetails,
 };
 
 async function login(body) {
@@ -14,6 +15,17 @@ async function register(body) {
     "POST",
     "auth/local/register",
     null,
+    body
+  );
+  return response;
+}
+
+async function getDetails(token) {
+  const body = {};
+  const response = await gatewayHelper.http(
+    "GET_AUTH",
+    "users/me",
+    token,
     body
   );
   return response;

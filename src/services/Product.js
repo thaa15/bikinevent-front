@@ -1,6 +1,10 @@
 import { gatewayHelper } from "../utility/index";
 
-export const productService = { getAllProduct, getProductById };
+export const productService = {
+  getAllProduct,
+  getProductById,
+  editProductById,
+};
 
 async function getAllProduct() {
   const body = {};
@@ -14,6 +18,16 @@ async function getProductById(productId) {
     "GET",
     "produks/" + productId,
     null,
+    body
+  );
+  return response;
+}
+
+async function editProductById(productId, token, body) {
+  const response = await gatewayHelper.http(
+    "PUT_AUTH",
+    "produks/" + productId,
+    token,
     body
   );
   return response;

@@ -2,7 +2,7 @@ import axios from "axios";
 export const gatewayHelper = {
   http,
 };
-const BASE_URL = "https://staging-bikinevent.herokuapp.com";
+const BASE_URL = "http://localhost:1337";
 
 async function http(method, endpoint, token = null, body = null) {
   const headers = {
@@ -30,6 +30,27 @@ async function http(method, endpoint, token = null, body = null) {
         headers: headers,
       }
     );
+  } else if ("POST_AUTH" === method.toUpperCase()) {
+    response = await axios.post(`${BASE_URL}/${endpoint}`, body, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } else if ("GET_AUTH" === method.toUpperCase()) {
+    response = await axios.get(`${BASE_URL}/${endpoint}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } else if ("PUT_AUTH" === method.toUpperCase()) {
+    response = await axios.put(`${BASE_URL}/${endpoint}`, body, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
   return response;
 }
