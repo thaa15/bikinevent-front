@@ -12,15 +12,15 @@ const AllBlog = ({ datas }) => {
   const [now_num, setNow_num] = useState(false);
   let lengths;
 
-  if (Object.keys(datas).length / 9 == Object.keys(datas).length % 9) {
-    lengths = Object.keys(datas).length % 9;
-  } else if (Object.keys(datas).length % 9 < Object.keys(datas).length / 9) {
-    lengths = (Object.keys(datas).length % 9) + 1;
+  if (Object.keys(datas).length / 9 == parseInt(Object.keys(datas).length / 9)) {
+    lengths = parseInt(Object.keys(datas).length / 9);
+  } else {
+    lengths = parseInt(Object.keys(datas).length / 9) + 1;
   }
 
   const toright = () => {
     setPage(page === lengths ? lengths : page + 1);
-    setGetprevnum(true);
+    setGetprevnum(page === lengths ? false : true);
     setNow_num(false);
     window.scrollTo({
       top: 0,
@@ -35,7 +35,7 @@ const AllBlog = ({ datas }) => {
   const toleft = () => {
     setPage(page === 1 ? 1 : page - 1);
     setGetprevnum(false);
-    setNow_num(true);
+    setNow_num(page === 1 ? false : true);
     window.scrollTo({
       top: 0,
       behavior: "smooth",

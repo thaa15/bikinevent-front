@@ -10,7 +10,8 @@ import {
     ButtonKeu,
     IncomeWrite,
     WithdrawalWrite,
-    BalanceTable
+    BalanceTable,
+    ManageTable
 } from "./VendorKeuanganStyled"
 
 const VendorKeuanganContent = ({balance_released,seller_balance,account_number,bank,account_name,income_history,balance_withdrawal}) => {
@@ -65,7 +66,7 @@ const VendorKeuanganContent = ({balance_released,seller_balance,account_number,b
                     <div style={{marginBottom:"20px"}}/>
 
                     <TitleVendorKeu>Riwayat Penarikan Saldo</TitleVendorKeu>
-                    <div style={{overflowX:"scroll",marginBottom:"20px"}}>
+                    <ManageTable>
                         <BalanceTable>
                             {balance_withdrawal.map((item,idx)=>{
                                 return(
@@ -79,7 +80,7 @@ const VendorKeuanganContent = ({balance_released,seller_balance,account_number,b
                                 )
                             })}
                         </BalanceTable>
-                    </div>
+                    </ManageTable>
                 </MainVendash>
             </TempVendash>
         </GlobalTemplate>

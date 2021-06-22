@@ -81,3 +81,21 @@ export const WithdrawalWrite = styled.td`
     color: #212B36;
     margin-bottom:6px;
 `;
+
+export const ManageTable = styled.div`
+    overflow-x: scroll;
+    margin-bottom: 20px;
+    ::-webkit-scrollbar{
+        width: 5px;
+    }
+      
+    ::-webkit-scrollbar-thumb{
+        background: rgba(158, 158, 158,0.6);
+        border-radius: 8px;
+    }
+      
+    ::-webkit-scrollbar-thumb:hover{
+        background: rgba(158, 158, 158,0.9);
+        border-radius: 8px;
+    }
+`;

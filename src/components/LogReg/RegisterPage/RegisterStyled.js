@@ -136,7 +136,6 @@ export const DropDiv = styled.div`
 export const UploadFile = styled.div`
     background: #FFFFFF;
     width: 100%;
-    padding: 24px;
     border: 1px dashed #007BFF;
     box-sizing: border-box;
     border-radius: 6px;
@@ -152,4 +151,5 @@ export const FileViewStyle = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
+    padding: 24px;
 `;
