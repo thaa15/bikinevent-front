@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IoIosArrowBack } from "react-icons/io";
 
 export const TemplateChat = styled.div`
     display:flex;
@@ -8,7 +9,7 @@ export const TemplateChat = styled.div`
 `;
 
 export const ChatList = styled.div`
-    flex-basis: 30%;
+    flex-basis: ${(props) => props.resp ? "100%" : "30%"};
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
@@ -28,10 +29,13 @@ export const ChatList = styled.div`
         background: rgba(158, 158, 158,0.9);
         border-radius: 8px;
     }
+    @media screen and (max-width: 957px) {
+        flex-basis: ${(props) => props.resp ? "100%" : "34%"};
+    }
 `;
 
 export const ChatContent = styled.div`
-    flex-basis: 69%;
+    flex-basis: ${(props) => props.resp ? "100%" : "69%"};
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
@@ -40,6 +44,9 @@ export const ChatContent = styled.div`
     padding: 7px 10px;
     display:flex;
     flex-direction: column;
+    @media screen and (max-width: 957px) {
+        flex-basis:${(props) => props.resp ? "100%" : "65%"};
+    }
 `;
 
 export const ChatPerson = styled.div`
@@ -59,8 +66,8 @@ export const ChatPerson = styled.div`
 
 export const ProfilePhoto = styled.div`
     border-radius: 100%;
-    width: 58px;
-    height: 58px;
+    width: 52px;
+    height: 52px;
     background-image: url(${(props) => props.src});
     background-repeat: no-repeat;
     background-position: center;
@@ -83,7 +90,7 @@ export const LastChatDisplay = styled.div`
 `;
 
 export const ListChatPart = styled.div`
-    flex-basis: ${(props)=>props.photo ? "30%" : "69%"};
+    flex-basis: ${(props)=>props.photo ? "30%" : props.resp ? "12%" : props.resp2 ? "87%" : "69%"};
     width: 100%;
     flex-direction: column;
 `;
@@ -154,6 +161,7 @@ export const ButtonSend = styled.button`
     font-size: 14px;
     line-height: 21px;
     color: #FFFFFF;
+    cursor:pointer;
     padding: 8px;
     &:active, &:focus {
         background-color:#a3143f;
@@ -180,4 +188,11 @@ export const PlacedChatBox = styled.div`
     width: 100%;
     flex-direction: ${(props)=>props.user ? "row-reverse" : "row"};
     margin-bottom: 10px;
+`;
+
+export const BackButton = styled(IoIosArrowBack)`
+font-size: 16px;
+color: #212B36;
+margin: 0 5px;
+cursor:pointer;
 `;
