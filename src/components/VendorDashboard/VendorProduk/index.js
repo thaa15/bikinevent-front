@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import DashboardSite from "../DashboardSideVendor";
 import { TitleStats } from "../VendorPesanan/VendorPesananStyle";

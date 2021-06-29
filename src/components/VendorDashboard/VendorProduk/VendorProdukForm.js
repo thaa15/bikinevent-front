@@ -73,7 +73,6 @@ const VendorProdukForm = () => {
       harga,
       category,
       vendor,
-      isArchived,
     } = formData;
     const productData = new FormData();
     productData.append(

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import HeaderSmall from "../templates/HeaderSmall";
 import BlogRoute from "../components/Blog/BlogRoute";
 import AllBlog from "../components/Blog/AllBlog";
-import { BlogHomeData } from "../datas/populerdata";
 import LoadingPage from "../templates/Loading";
 import { blogService } from "../services/Blog";
 

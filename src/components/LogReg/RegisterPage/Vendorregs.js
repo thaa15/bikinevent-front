@@ -19,7 +19,6 @@ import {
 import { withRouter } from "react-router-dom";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
-import { authService } from "../../../services/Auth";
 import axios from "axios";
 import { AuthSucRegs } from "../../../AllAuth";
 
@@ -215,6 +214,7 @@ const Vendorregs = (props) => {
   }, []);
   return (
     <form encType="multipart/form-data" onSubmit={submitHandler}>
+      <p style={{ color: "red" }}>{error}</p>
       <LoginLabel for="username">Username</LoginLabel>
       <br />
       <LoginInput

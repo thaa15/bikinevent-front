@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { PopulerData, AllVendor } from "../datas/populerdata";
 import LoadingPage from "../templates/Loading";
 import {
   ShowAtTopProduk,
@@ -22,7 +21,7 @@ const TampilanProdukPage = ({ match }) => {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [match.params.id]);
 
   return (
     <>
@@ -79,7 +78,7 @@ const TampilanVendorPage = ({ match }) => {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [match.params.vendor]);
   return (
     <>
       {isLoading ? (
@@ -98,7 +97,7 @@ const TampilanVendorPage = ({ match }) => {
             descvendor={vendorData.deskripsi}
             produkvendor={vendorData.produks}
             comments={vendorData.comments}
-            portofolio={vendorData.portfolio}
+            portofolio={vendorData.portfolios}
           />
         </>
       )}

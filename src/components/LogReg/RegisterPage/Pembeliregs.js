@@ -11,7 +11,6 @@ import { withRouter } from "react-router-dom";
 import { CheckBoxInput, TermanConds } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { authService } from "../../../services/Auth";
-import {AuthSucRegs} from "../../../AllAuth";
 
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -40,12 +39,11 @@ const Pembeliregs = (props) => {
     const response = await authService.register(formData).catch((err) => {
       return setError(err.response.data.data[0].messages[0].message);
     });
-    props.history.push("/login"); 
+    props.history.push("/login");
     return response;
   };
 
   useEffect(() => {
-    console.log(formData);
     toggle();
   }, []);
 
@@ -121,8 +119,8 @@ const Pembeliregs = (props) => {
 
       <CheckBoxInput>
         <input type="checkbox" required style={{ marginRight: "4px" }} />
-        <div style={{width:"100%"}}>
-        Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
+        <div style={{ width: "100%" }}>
+          Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
         </div>
       </CheckBoxInput>
 

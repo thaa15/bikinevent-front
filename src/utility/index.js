@@ -2,7 +2,9 @@ import axios from "axios";
 export const gatewayHelper = {
   http,
 };
-const BASE_URL = "https://staging-bikinevent.herokuapp.com";
+const BASE_URL =
+  process.env.REACT_APP_DEVELOPMENT_URL ||
+  "https://staging-bikinevent.herokuapp.com";
 
 async function http(method, endpoint, token = null, body = null) {
   const headers = {
@@ -23,13 +25,11 @@ async function http(method, endpoint, token = null, body = null) {
       params: body,
     });
   } else if ("PUT" === method.toUpperCase()) {
-    response = await axios.put(
-      `${BASE_URL}/${endpoint}`,
-      JSON.stringify(body),
-      {
-        headers: headers,
-      }
-    );
+    response = await axios.put(`${BASE_URL}/${endpoint}`, body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } else if ("POST_AUTH" === method.toUpperCase()) {
     response = await axios.post(`${BASE_URL}/${endpoint}`, body, {
       headers: {
@@ -46,6 +46,13 @@ async function http(method, endpoint, token = null, body = null) {
     });
   } else if ("PUT_AUTH" === method.toUpperCase()) {
     response = await axios.put(`${BASE_URL}/${endpoint}`, body, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } else if ("DELETE" === method.toUpperCase()) {
+    response = await axios.delete(`${BASE_URL}/${endpoint}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

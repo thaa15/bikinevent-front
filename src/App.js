@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { loginContext } from "./context";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
@@ -37,7 +37,7 @@ function App() {
   useEffect(() => {
     setVendorlog(localStorage.getItem("tokenVendor"));
     setName(localStorage.getItem("nama"));
-  });
+  }, []);
   return (
     <>
       <Router>

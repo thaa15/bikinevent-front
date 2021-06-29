@@ -13,7 +13,6 @@ import VendorKeuanganContent from "../components/VendorDashboard/VendorKeuangan"
 import VendorProfilContent from "../components/VendorDashboard/VendorProfil";
 import { authService } from "../services/Auth";
 import { loginContext } from "../context";
-import { productService } from "../services/Product";
 import { vendorService } from "../services/Vendor";
 
 export const VendorChat = () => {
@@ -64,6 +63,7 @@ export const VendorProduk = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [productData, setProductData] = useState([]);
   const { vendorlog } = useContext(loginContext);
+
   useEffect(() => {
     const fetchData = async () => {
       const userResponse = await authService.getDetails(vendorlog);
@@ -74,7 +74,7 @@ export const VendorProduk = () => {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [vendorlog]);
   return (
     <>
       {isLoading ? (
@@ -130,12 +130,18 @@ export const VendorKeuangan = () => {
 
 export const VendorProfil = () => {
   const [isLoading, setIsLoading] = useState(true);
-
-  //ganti GET
-  const data = ProfileVendor.filter((dats) => dats.name === "Ernia");
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1500);
+  const [profilData, setProfilData] = useState();
+  const vendorId = localStorage.getItem("vendor_id");
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await vendorService.getVendorById(vendorId);
+      const data = response.data;
+      setProfilData(data);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+  console.log(profilData);
   return (
     <>
       {isLoading ? (
@@ -145,17 +151,17 @@ export const VendorProfil = () => {
       ) : (
         <>
           <VendorHeader />
-          {data.map((item, idx) => (
-            <VendorProfilContent
-              key={idx}
-              vendor_name={item.vendor_name}
-              owner={item.name}
-              email={item.email}
-              phone_number={item.phone_number}
-              password={item.password}
-              portofolio={item.portofolio}
-            />
-          ))}
+          <VendorProfilContent
+            vendor_name={profilData.nama_vendor}
+            owner={profilData.user.username}
+            email={profilData.user.email}
+            phone_number={profilData.user.phone_number}
+            password=""
+            portofolio={profilData.portfolios}
+            description={profilData.deskripsi}
+            location={profilData.location}
+            vendorId={vendorId}
+          />
         </>
       )}
     </>

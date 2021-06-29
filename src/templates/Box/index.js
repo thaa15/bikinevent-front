@@ -49,7 +49,7 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
 const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   const { vendorlog } = useContext(loginContext);
   const changeHandler = async () => {
-    if (statss == "Arsipkan") {
+    if (statss === "Arsipkan") {
       const body = {
         isArchived: true,
       };
