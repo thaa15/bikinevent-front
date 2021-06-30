@@ -146,7 +146,7 @@ const Vendorregs = (props) => {
       foto_toko,
     } = formData;
     const user = await axios
-      .post("https://staging-bikinevent.herokuapp.com/auth/local/register", {
+      .post("https://bikinevent.id/api/auth/local/register", {
         username,
         email,
         password,
@@ -185,7 +185,7 @@ const Vendorregs = (props) => {
         foto_buku_tabungan.name
       );
       const vendorRes = await axios.post(
-        "https://staging-bikinevent.herokuapp.com/vendors",
+        "https://bikinevent.id/api/vendors",
         vendorData,
         {
           headers: {
