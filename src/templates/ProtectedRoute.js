@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthSucRegs } from "../AllAuth";
+import { searchContext } from "../context";
 
 export const ProtectedRouteSucReg = ({ component: Component, ...rest }) => {
   return (
@@ -77,3 +78,29 @@ export const ProtectedVendor = ({ isAuth, component: Component, ...rest }) => {
     />
   );
 };
+
+export const ProtectedSearch = ({ searchs, component: Component, ...rest }) => {
+  const { searched, setSearched } = useContext(searchContext);
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        if (searched.searchFill.length != 0) {
+          return <Component {...props} />;
+        } else {
+          return (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: {
+                  from: props.location,
+                },
+              }}
+            />
+          );
+        }
+      }}
+    />
+  );
+};
+

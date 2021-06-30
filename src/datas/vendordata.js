@@ -164,3 +164,30 @@ export const VendorChat = [
         ]
     }
 ]
+
+export const Kategories = [
+    {
+        cath:"Perlengkapan",
+        subcath:["Panggung","Sound System","Lighting"]
+    },
+    {
+        cath:"Venue",
+        subcath:["Gedung Pernikahan","Gedung Pertunjukan","Gedung Pesta"]
+    },
+    {
+        cath:"Talent",
+        subcath:["MUA","MC","Dancers"]
+    },
+    {
+        cath:"Jasa",
+        subcath:["Manpower","Security","Event Organizer","Wedding Organizer","MICE Organizer"]
+    },
+    {
+        cath:"Catering",
+        subcath:[]
+    },
+    {
+        cath:"Dekorasi",
+        subcath:[]
+    },
+]

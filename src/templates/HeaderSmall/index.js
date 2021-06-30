@@ -4,11 +4,11 @@ import {
     HeaderWrited
 } from "./HeaderSmallStyled"
 
-const HeaderSmall = ({text}) => {
+const HeaderSmall = ({text,searche}) => {
     return(
         <HeaderBg>
             <HeaderWrited>
-                {text}
+                {text} <b>{searche}</b>
             </HeaderWrited>
         </HeaderBg>
     )

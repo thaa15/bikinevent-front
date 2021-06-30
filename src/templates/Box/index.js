@@ -68,8 +68,8 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
         vendorlog,
         body
       );
-      console.log(response.data);
     }
+    window.location.reload();
   };
   return (
     <>

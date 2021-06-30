@@ -89,7 +89,7 @@ export const Cathe = styled.div`
     font-size: 12px;
     line-height: 18px;
     cursor: pointer;
-    width: 90px;
+    width: 100px;
     &:hover ${Dropdownbut}{
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
@@ -115,7 +115,7 @@ export const SearchBar = styled.input`
     border-radius: none;
     background: #F9FAFB;
     padding: 10px;
-    width: 80%;
+    width: 90%;
     border: none;
     font-size: 12px;
     line-height: 18px;
@@ -129,7 +129,10 @@ export const SearchBar = styled.input`
 `;
 
 export const SearchButton = styled.button`
-    padding: 6px;
+    padding: 9px 6px;
+    display: flex;
+    align-self: center;
+    align-items:center;
     background: #E30045;
     border-radius: 0 5px 5px 0;
     border:none;

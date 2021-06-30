@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext,useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Nav,
   NavSet,
@@ -23,8 +24,24 @@ import { FiSearch } from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
 import gambartest from "../../images/logocomp.png";
 import NavbarVendor from "./NavbarVendor";
+import { searchContext } from "../../context";
 
 const Navbar = ({ toggling, isAuth, nama }) => {
+  const history = useHistory();
+  const { searched, setSearched } = useContext(searchContext);
+  const [getsearch,setGetsearch] = useState("");
+  const [placehldr, setPlacehldr] = useState("")
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setPlacehldr("Cari Keperluan Event Anda..")
+    setSearched({...searched, searchFill: getsearch});
+    history.push({
+      pathname:"/searched"
+    })
+    setPlacehldr("");
+  };
+  
   return (
     <>
       {isAuth != null ? (
@@ -66,10 +83,22 @@ const Navbar = ({ toggling, isAuth, nama }) => {
                   </ElementLink>
                 </DropdownContent>
               </Cathe>
-              <SearchBar placeholder="Cari Keperluan Event Anda.." />
-              <SearchButton>
-                <FiSearch style={{ color: "white", fontSize: "20px" }} />
-              </SearchButton>
+              <form
+                style={{ width: "100%", display: "flex", flexDirection: "row" }}
+                onSubmit={submitHandler}
+              >
+                <SearchBar
+                  placeholder="Cari Keperluan Event Anda.."
+                  value={placehldr}
+                  onChange={(e) => {
+                    setGetsearch(e.target.value);
+                    setPlacehldr(e.target.value);
+                  }}
+                />
+                <SearchButton>
+                  <FiSearch style={{ color: "white", fontSize: "20px" }} />
+                </SearchButton>
+              </form>
             </NavItem>
 
             <NavItem part="18%" removedl>

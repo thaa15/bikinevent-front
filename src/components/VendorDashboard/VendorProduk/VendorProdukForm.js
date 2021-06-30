@@ -83,56 +83,67 @@ const VendorProdukForm = () => {
 
   const onDropFoto = (files) => {
     const [uploadedFile] = files;
+    let arr2 = [...previewFoto];
+    let arr3 = [...isPreviewFoto];
     //setFormData({ ...formData, foto_produk: files[0] });
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      if (previewFoto.length == 8) setPreviewFoto(oldArray => [...oldArray]);
-      else setPreviewFoto(oldArray => [...oldArray, fileReader.result]);
+      setPreviewFoto(oldArray =>
+        [
+          ...oldArray.slice(0, idxFoto),
+          fileReader.result,
+          ...oldArray.slice(idxFoto + 1, previewFoto.length + 1)
+        ]);
     };
     fileReader.readAsDataURL(uploadedFile);
-    setIsPreviewFoto(oldArray => [...oldArray, uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/)]);
+    //arr3.splice(idxFoto+1,0,uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/))
+    setIsPreviewFoto(oldArray =>
+      [
+        ...oldArray.slice(0, idxFoto),
+        uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/),
+        ...oldArray.slice(idxFoto + 1, isPreviewFoto.length + 1)
+      ]);
   };
-  console.log(isPreviewFoto);
   console.log(previewFoto);
-
+  console.log(idxFoto)
   const renderPhotos = (np, id) => {
     let arr = previewFoto
     return (
       <div style={{ flexDirection: "column" }}>
-        <UploadFile>
-            <Dropzone
-              onDrop={onDropFoto}
-              onDragEnter={()=>{setIdxFoto(id)}}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <FileViewStyle
-                  {...getRootProps({ className: "drop-zone" })}
-                >
-                  <input {...getInputProps()} name="foto" />
-                  {previewFoto.length !== 0 ? (
-                    isPreviewFoto.length !== 0 ? (
-                      <>
-                        {id < previewFoto.length ? (
-                          <img
-                            className="preview-image"
-                            src={arr[id]}
-                            alt="Preview"
-                            width="100%"
-                            height="100%"
-                          />
-                        ) : (<PlusImage>+</PlusImage>)}
-                      </>
-                    ) : (
-                      <TitleProfileVendor>
-                        No preview available for this file
-                      </TitleProfileVendor>
-                    )
+        <UploadFile onClick={() => { setIdxFoto(id) }}>
+          <Dropzone
+            onDrop={onDropFoto}
+            onDragEnter={() => { setIdxFoto(id) }}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <FileViewStyle
+                {...getRootProps({ className: "drop-zone" })}
+              >
+                <input {...getInputProps()} name="foto" />
+                {previewFoto.length !== 0 ? (
+                  isPreviewFoto.length !== 0 ? (
+                    <>
+                      {id < previewFoto.length ? (
+                        <img
+                          className="preview-image"
+                          src={arr[id]}
+                          alt="Preview"
+                          width="100%"
+                          height="100%"
+                        />
+                      ) : (<PlusImage>+</PlusImage>)}
+                    </>
                   ) : (
-                    <PlusImage>+</PlusImage>
-                  )}
-                </FileViewStyle>
-              )}
-            </Dropzone>
+                    <TitleProfileVendor>
+                      No preview available for this file
+                    </TitleProfileVendor>
+                  )
+                ) : (
+                  <PlusImage>+</PlusImage>
+                )}
+              </FileViewStyle>
+            )}
+          </Dropzone>
         </UploadFile>
         <ExpUploadPhoto>{np}</ExpUploadPhoto>
       </div>
