@@ -12,6 +12,7 @@ import {
     ChatIcon,
     ProfileIcon,
     ButtonBottom,
+    SearchIcon
 } from "./SidebarStyled";
 import SidebarVendor from "./SidebarVendor"
 

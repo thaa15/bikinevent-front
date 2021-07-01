@@ -101,8 +101,6 @@ const VendorProdukForm = () => {
     let newArr = [...formData.foto_produk];
     newArr.push(files[0]);
     setFormData({ ...formData, foto_produk: newArr });
-    let arr2 = [...previewFoto];
-    let arr3 = [...isPreviewFoto];
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewFoto((oldArray) => [
@@ -112,13 +110,13 @@ const VendorProdukForm = () => {
       ]);
     };
     fileReader.readAsDataURL(uploadedFile);
-    //arr3.splice(idxFoto+1,0,uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/))
     setIsPreviewFoto((oldArray) => [
       ...oldArray.slice(0, idxFoto),
       uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/),
       ...oldArray.slice(idxFoto + 1, isPreviewFoto.length + 1),
     ]);
   };
+  
   const renderPhotos = (np, id) => {
     let arr = previewFoto;
     return (

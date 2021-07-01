@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Nav,
@@ -19,9 +19,11 @@ import {
   ProfileIcon,
   MobileIcon,
   LogOutContent,
+  DropdownSearchContent
 } from "./NavbarStyled";
 import { FiSearch } from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
+import { AiOutlineSearch } from "react-icons/ai";
 import gambartest from "../../images/logocomp.png";
 import NavbarVendor from "./NavbarVendor";
 import { searchContext } from "../../context";
@@ -29,19 +31,22 @@ import { searchContext } from "../../context";
 const Navbar = ({ toggling, isAuth, nama }) => {
   const history = useHistory();
   const { searched, setSearched } = useContext(searchContext);
-  const [getsearch,setGetsearch] = useState("");
-  const [placehldr, setPlacehldr] = useState("")
+  const [getsearch, setGetsearch] = useState("");
+  const [placehldr, setPlacehldr] = useState("");
+  const [searchContent, setSearchContent] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if(getsearch.length === 0);
     setPlacehldr("Cari Keperluan Event Anda..")
-    setSearched({...searched, searchFill: getsearch});
+    setSearched({ ...searched, searchFill: getsearch, loading: true });
     history.push({
-      pathname:"/searched"
+      pathname: "/searched"
     })
     setPlacehldr("");
+    setSearchContent(false)
   };
-  
+
   return (
     <>
       {isAuth != null ? (
@@ -55,8 +60,31 @@ const Navbar = ({ toggling, isAuth, nama }) => {
               </ElementLink>
             </NavItem>
 
-            <MobileIcon onClick={toggling}>
-              <FaBars />
+            <MobileIcon>
+              <FaBars onClick={toggling} />
+              <AiOutlineSearch
+                style={{ marginRight: "14px" }}
+                onClick={() => { setSearchContent(!searchContent) }}
+              />
+              {searchContent ? (
+                <DropdownSearchContent>
+                  <form onSubmit={submitHandler}>
+                    <SearchBar
+                      mobile
+                      required
+                      placeholder="Cari Keperluan Event Anda.."
+                      value={placehldr}
+                      onChange={(e) => {
+                        setGetsearch(e.target.value);
+                        setPlacehldr(e.target.value);
+                      }}
+                    />
+                    <SearchButton mobile type="submit">
+                      <FiSearch style={{ color: "white", fontSize: "20px" }} />
+                    </SearchButton>
+                  </form>
+                </DropdownSearchContent>
+              ) : (<></>)}
             </MobileIcon>
 
             <NavItem part="65%" removedl>
@@ -86,6 +114,7 @@ const Navbar = ({ toggling, isAuth, nama }) => {
               <form
                 style={{ width: "100%", display: "flex", flexDirection: "row" }}
                 onSubmit={submitHandler}
+                required
               >
                 <SearchBar
                   placeholder="Cari Keperluan Event Anda.."

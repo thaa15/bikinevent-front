@@ -168,26 +168,26 @@ export const VendorChat = [
 export const Kategories = [
     {
         cath:"Perlengkapan",
-        subcath:["Panggung","Sound System","Lighting"]
+        subcath:["Panggung","Sound System","Lighting","Meja Kursi","Tenda","AC/Cooling Fan","Genset","Perlengkapan Lainnya"]
     },
     {
         cath:"Venue",
-        subcath:["Gedung Pernikahan","Gedung Pertunjukan","Gedung Pesta"]
+        subcath:["Gedung Pernikahan","Gedung Pertunjukan","Gedung Pesta","Venue Lainnya"]
     },
     {
         cath:"Talent",
-        subcath:["MUA","MC","Dancers"]
+        subcath:["Make up","MC","Penari","Band","Penyanyi","Talent Lainnya"]
     },
     {
         cath:"Jasa",
-        subcath:["Manpower","Security","Event Organizer","Wedding Organizer","MICE Organizer"]
+        subcath:["Manpower","Security","Event Organizer","Wedding Organizer","MICE Organizer","Photo Booth","Photography","Live Streaming","Jasa Lainnya"]
     },
     {
         cath:"Catering",
-        subcath:[]
+        subcath:["All","Snacks","Main Course","Beverages","Catering Lainnya"]
     },
     {
         cath:"Dekorasi",
-        subcath:[]
+        subcath:["Florist","Backdrop","Dekorasi Lainnya"]
     },
 ]

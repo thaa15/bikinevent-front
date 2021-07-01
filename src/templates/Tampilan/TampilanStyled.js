@@ -139,21 +139,21 @@ export const ChatShop = styled(BsChatFill)`
     font-weight: 500;
     font-size: 14px;
     color: #E30045;
-    margin-right: 9px;
+    margin-right: 11px;
 `;
 
 export const Shop = styled(AiFillShop)`
     font-weight: 500;
     font-size: 14px;
     color: white;
-    margin-right: 9px;
+    margin-right: 11px;
 `;
 
 export const CartShop = styled(FaShoppingCart)`
     font-weight: 500;
     font-size: 14px;
     color: white;
-    margin-right: 9px;
+    margin-right: 11px;
 `;
 
 export const VendorPhoto = styled.div`

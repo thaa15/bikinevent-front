@@ -1,5 +1,5 @@
-import React from "react";
-import { OtherSearch } from "../SearchContent";
+import React, {useState,useEffect} from "react";
+import { OtherSearch } from "./Style/SearchContentStyle";
 import {
     TitleAside,
     BoxAside,
@@ -9,19 +9,33 @@ import {
     CheckFlex,
     InputModif,
     ButtonsSearch,
-    ResetButton
-} from "./ProdukSearchStyled";
+    ResetButton,
+    ApartAside,
+    FilterAside,
+    ButtonCanclled
+} from "./Style/ProdukSearchStyled";
 import {
     DivPrice,
     PriceLabel,
-} from "../../VendorDashboard/VendorProduk/VendorProdukStyled";
-import { Kategories } from "../../../datas/vendordata";
+} from "../VendorDashboard/VendorProduk/VendorProdukStyled";
+import { Kategories } from "../../datas/vendordata";
 
-const SideSearch = () => {
+export const SideSearchProduk = ({ act }) => {
+    const [actv,setActv] = useState();
     const Location = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"]
+
     return (
-        <OtherSearch>
-            <TitleAside>Filter</TitleAside>
+        <OtherSearch aktif={actv}>
+            <ApartAside>
+                <FilterAside>
+                    <TitleAside>Filter</TitleAside>
+                </FilterAside>
+                <FilterAside button onClick={()=>{setActv(!actv)}}>
+                    <ButtonCanclled>
+                        X
+                    </ButtonCanclled>
+                </FilterAside>
+            </ApartAside>
             <BoxAside>
                 <form>
                     <LabelSearch>Lokasi</LabelSearch>
@@ -84,11 +98,49 @@ const SideSearch = () => {
                         )
                     })}
                     <ButtonsSearch type="submit">Gunakan Filter</ButtonsSearch>
-                    <ResetButton type="reset" value="Reset"/>
+                    <ResetButton type="reset" value="Reset" />
                 </form>
             </BoxAside>
         </OtherSearch>
     )
 }
 
-export default SideSearch;
+export const SideSearchVendor = ({ act }) => {
+    const Location = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"]
+    return (
+        <OtherSearch aktif={act === true}>
+            <ApartAside>
+                <FilterAside>
+                    <TitleAside>Filter</TitleAside>
+                </FilterAside>
+                <FilterAside button>
+                    X
+                </FilterAside>
+            </ApartAside>
+            <BoxAside>
+                <form>
+                    <LabelSearch>Lokasi</LabelSearch>
+                    {Location.map((data, idx) => {
+                        return (
+                            <CheckFlex key={idx}>
+                                <CheckBoks type="checkbox" id={data} name="location" value={data} />
+                                <LabelCheck for={data}>{data}</LabelCheck>
+                            </CheckFlex>
+                        )
+                    })}
+                    <div style={{ marginBottom: "15px" }} />
+
+                    <LabelSearch>Rating</LabelSearch>
+                    <CheckFlex>
+                        <CheckBoks type="checkbox" id="Three Up" name="rating" value="Three Up" />
+                        <LabelCheck for="Three Up">3 ke atas</LabelCheck>
+                    </CheckFlex>
+                    <div style={{ marginBottom: "15px" }} />
+
+                    <ButtonsSearch type="submit">Gunakan Filter</ButtonsSearch>
+                    <ResetButton type="reset" value="Reset" />
+                </form>
+            </BoxAside>
+        </OtherSearch>
+    )
+}

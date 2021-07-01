@@ -33,7 +33,8 @@ function App() {
   const [name, setName] = useState();
   const [searched, setSearched] = useState({
     searchFill:"",
-    category:""
+    category:"",
+    loading:true
   });
   const [vendorlog, setVendorlog] = useState();
 

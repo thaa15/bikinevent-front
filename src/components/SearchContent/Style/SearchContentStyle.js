@@ -22,9 +22,21 @@ export const OtherSearch = styled.div`
     margin-right: 10px;
     background: #FFFFFF;
     height: fit-content;
-
+    display:${(props)=>props.aktif ? "flex" : "flex"};
+    flex-direction:column;
     @media screen and (max-width: 957px) {
-        display:none;
+        display:${(props)=>props.aktif ? "block" : "none"};
+        position: fixed;
+        z-index: 999;
+        width: 100%;
+        height:100%;
+        background: white;
+        transition: all 1s ease-in-out;
+        padding: 20px;
+        overflow-Y: scroll;
+        left:0;
+        opacity: ${(props)=>props.aktif ? "100%" : "0"};
+        top: ${(props)=>props.aktif ? "0" : "-100%"};
     }
 `;
 

@@ -81,15 +81,15 @@ export const Dropdownlist = styled.div`
 `;
 export const Cathe = styled.div`
     position: relative;
-    display: inline-block;
+    display: block;
     border: 1px solid #F9FAFB;
     box-sizing: border-box;
     border-radius: 5px 0 0 5px;
-    padding: 10px;
+    padding: 10px 5px 10px 10px;
     font-size: 12px;
     line-height: 18px;
     cursor: pointer;
-    width: 100px;
+    width: 110px;
     &:hover ${Dropdownbut}{
         -ms-transform: rotate(180deg);
         transform: rotate(180deg);
@@ -115,7 +115,7 @@ export const SearchBar = styled.input`
     border-radius: none;
     background: #F9FAFB;
     padding: 10px;
-    width: 90%;
+    width: ${(props)=>props.mobile ? "100%" : "90%"};
     border: none;
     font-size: 12px;
     line-height: 18px;
@@ -133,10 +133,12 @@ export const SearchButton = styled.button`
     display: flex;
     align-self: center;
     align-items:center;
+    justify-content:center;
     background: #E30045;
-    border-radius: 0 5px 5px 0;
+    border-radius: ${(props)=>props.mobile ? "0 0 5px 5px" : "0 5px 5px 0"};
     border:none;
     cursor: pointer;
+    width: ${(props)=>props.mobile ? "100%" : "fit-content"};
 `;
 
 export const ProfButton = styled.div`
@@ -262,4 +264,17 @@ export const LogOutContent = styled.div`
     @media screen and (max-width: 906px) {
         width: 100px;
     }
+`;
+
+export const DropdownSearchContent = styled.div`
+    position: absolute;
+    background: white;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius:5px;
+    z-index: 51;
+    width:50%;
+    top:80%;
+    right:0;
+    bottom:0;
 `;
