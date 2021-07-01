@@ -114,11 +114,11 @@ const Navbar = ({ toggling, isAuth, nama }) => {
               <form
                 style={{ width: "100%", display: "flex", flexDirection: "row" }}
                 onSubmit={submitHandler}
-                required
               >
                 <SearchBar
                   placeholder="Cari Keperluan Event Anda.."
                   value={placehldr}
+                  required
                   onChange={(e) => {
                     setGetsearch(e.target.value);
                     setPlacehldr(e.target.value);
