@@ -3,6 +3,7 @@ import HeaderSmall from "../../templates/HeaderSmall";
 import { searchContext } from "../../context";
 import VendorSearch from "./VendorSearch";
 import { GlobalTemplate } from "../../templates/GlobalTemplate";
+import { Link } from "react-router-dom";
 import { MainSearch, TempSearch, OtherSearch } from "./Style/SearchContentStyle";
 import {
     TopHeader,
@@ -195,17 +196,28 @@ const SearchContent = () => {
                                     </TopHeader>
 
                                     <GridTempProduk>
-                                        {PopulerData.map((data, idx) => (
-                                            <BoxHarga
-                                                key={idx}
-                                                image={data.image}
-                                                city={data.kota}
-                                                judul={data.judul}
-                                                harga={data.harga}
-                                                rate={data.rating}
-                                                review={data.ulasan}
-                                            />
-                                        ))}
+                                        {PopulerData.map((data, idx) => {
+                                            return (
+                                                <Link
+                                                    to={`/detailed-product/${data.id}`}
+                                                    style={{
+                                                        height: "fit-content",
+                                                        cursor: "pointer",
+                                                        textDecoration: "none",
+                                                    }}
+                                                >
+                                                    <BoxHarga
+                                                        key={idx}
+                                                        image={data.image}
+                                                        city={data.kota}
+                                                        judul={data.judul}
+                                                        harga={data.harga}
+                                                        rate={data.rating}
+                                                        review={data.ulasan}
+                                                    />
+                                                </Link>
+                                            )
+                                        })}
                                     </GridTempProduk>
 
                                 </MainSearch>

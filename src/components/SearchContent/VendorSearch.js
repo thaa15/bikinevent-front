@@ -36,10 +36,7 @@ import {
     Shopping,
     Star,
 } from "../../templates/Tampilan/TampilanStyled";
-import {
-    DivPrice,
-    PriceLabel,
-} from "../VendorDashboard/VendorProduk/VendorProdukStyled";
+import { Link } from "react-router-dom";
 
 const VendorSearch = ({ vendor }) => {
     const { searched, setSearched } = useContext(searchContext);
@@ -131,22 +128,31 @@ const VendorSearch = ({ vendor }) => {
                             <GridTempVendor>
                                 {PopulerData.map((data, idx) => {
                                     return (
-                                        <ShowedVendor key={idx}>
-                                            <VendorPhotos src={data.image} />
-                                            <GetApart>
-                                                <BoxsExpVendor titlee>
-                                                    <Shopping />
-                                                    {data.vendor}
-                                                </BoxsExpVendor>
-                                                <BoxsExpVendor>
-                                                    <Star />
-                                                    {data.rating} / 5.0 ({data.ulasanvendor} Ulasan)
-                                                </BoxsExpVendor>
-                                                <BoxsExpVendor>
-                                                    {data.kota}
-                                                </BoxsExpVendor>
-                                            </GetApart>
-                                        </ShowedVendor>
+                                        <Link
+                                            to={`/vendor/${data.id}`}
+                                            style={{
+                                                height: "fit-content",
+                                                cursor: "pointer",
+                                                textDecoration: "none",
+                                            }}
+                                        >
+                                            <ShowedVendor key={idx}>
+                                                <VendorPhotos src={data.image} />
+                                                <GetApart>
+                                                    <BoxsExpVendor titlee>
+                                                        <Shopping />
+                                                        {data.vendor}
+                                                    </BoxsExpVendor>
+                                                    <BoxsExpVendor>
+                                                        <Star />
+                                                        {data.rating} / 5.0 ({data.ulasanvendor} Ulasan)
+                                                    </BoxsExpVendor>
+                                                    <BoxsExpVendor>
+                                                        {data.kota}
+                                                    </BoxsExpVendor>
+                                                </GetApart>
+                                            </ShowedVendor>
+                                        </Link>
                                     )
                                 })}
                             </GridTempVendor>
