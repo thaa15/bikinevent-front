@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
-import { FaAngleDoubleRight,FaAngleDoubleLeft } from "react-icons/fa";
+import { FaAngleDoubleRight,FaAngleDoubleLeft,FaCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 export const GlobalTemplate = styled.div`
     display: flex;
@@ -23,7 +24,7 @@ export const PopUpBg = styled.div`
     background-color: rgba(0,0,0);
     z-index: 51;
     padding: 15px;
-    overflow-y: auto;
+    overflow-y: scroll;
 `;
 
 export const ContentPopUp = styled.div`
@@ -87,4 +88,55 @@ export const AngleLeft = styled(FaAngleDoubleLeft)`
     font-size:50px;
     cursor: pointer;
     user-select: none;
+`;
+
+export const PopBgSuccess = styled.div`
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    z-index:100;
+`;
+
+export const BgSuccess = styled.div`
+    margin: 0 auto 20px;
+    width: 330px;
+    border-radius:10px;
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+    opacity:${(props)=>props.aktif ? "1" : "0"};
+    transition: 0.5s all linear;
+    background: ${(props)=>props.right ? "#4BCA81" : "#cc0000"};
+    color: white;
+    font-size: 14px;
+    padding: 8px;
+    @media screen and (max-width: 574px) {
+        width: 270px;
+    }
+    @media screen and (max-width: 412px) {
+        width: 250px;
+    }
+`;
+
+export const Succesicon = styled(FaCheck)`
+    font-size: 40px;
+    margin-right: 16px;
+    color: #4BCA81;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 100%;
+    background:white;
+`;
+
+export const Failedicon = styled(ImCross)`
+    font-size: 40px;
+    margin-right: 16px;
+    color: #cc0000;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 100%;
+    background:white;
 `;

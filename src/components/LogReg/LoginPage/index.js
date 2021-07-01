@@ -23,11 +23,16 @@ import { AiFillGooglePlusCircle } from "react-icons/ai";
 import GoogleLogin from "react-google-login";
 import line from "../../../images/line.png";
 import { authService } from "../../../services/Auth";
+import { PopBgSuccess,BgSuccess,Succesicon,Failedicon } from "../../../templates/GlobalTemplate";
 
 const LoginPage = (props) => {
   const [visible, setVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [typepw, setTypepw] = useState("");
+  const [loginUser, setLoginUser] = useState({
+    right: false,
+    wrong: false
+  });
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
@@ -48,6 +53,10 @@ const LoginPage = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const response = await authService.login(formData).catch((err) => {
+      setLoginUser({...loginUser,wrong:true});
+      setTimeout(() => {
+        setLoginUser({...loginUser,wrong:false});
+      }, 2000);
       return setError("Invalid Email or Password");
     });
     if (response) {
@@ -58,19 +67,31 @@ const LoginPage = (props) => {
           return response;
         }
         if (userData.user.role._id != pembeliId && role == "pembeli") {
+          setLoginUser({...loginUser,wrong:true});
+          setTimeout(() => {
+            setLoginUser({...loginUser,wrong:false});
+          }, 2000);
           return setError(
             "Akun dengan email ini tidak terdaftar sebagai pembeli"
           );
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
           localStorage.setItem("tokenVendor", userData.jwt);
-          window.location.reload();
-          window.location.href = "/vendor-chat";
           localStorage.setItem("nama", userData.user.nama_lengkap);
           localStorage.setItem("vendor_id", userData.user.vendor._id);
+          setLoginUser({...loginUser,right:true});
+          setTimeout(() => {
+            setLoginUser({...loginUser,right:false});
+            window.location.reload();
+            window.location.href = "/vendor-chat";
+          }, 1000);
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {
+          setLoginUser({...loginUser,wrong:true})
+          setTimeout(() => {
+            setLoginUser({...loginUser,wrong:false});
+          }, 2000);
           return setError(
             "Akun dengan email ini tidak terdaftar sebagai vendor"
           );
@@ -94,7 +115,6 @@ const LoginPage = (props) => {
         <LoginBg>
           <LoginBox>
             <LoginTittle>Log In</LoginTittle>
-            {error}
             <form onSubmit={submitHandler}>
               <LoginLabel for="email">E-mail</LoginLabel>
               <br />
@@ -212,6 +232,28 @@ const LoginPage = (props) => {
                 cursor: "pointer",
               }}
             />
+
+            {loginUser.wrong ? (
+              <PopBgSuccess>
+                <BgSuccess aktif={loginUser.wrong === true}>
+                  <Failedicon/>
+                  <div style={{display:"flex",width:"100%",flexDirection:"column"}}>
+                    <b>FAILED</b>
+                    {error}
+                  </div>
+                </BgSuccess>
+              </PopBgSuccess>
+            ) : loginUser.right ? (
+              <PopBgSuccess>
+                <BgSuccess aktif={loginUser.right === true} right>
+                  <Succesicon/>
+                  <div style={{display:"flex",width:"100%",flexDirection:"column"}}>
+                    <b>SUCCESS</b>
+                    Anda Berhasil Login!
+                  </div>
+                </BgSuccess>
+              </PopBgSuccess>
+            ) : (<></>)}
           </LoginBox>
         </LoginBg>
       )}

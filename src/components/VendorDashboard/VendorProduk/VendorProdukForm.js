@@ -23,11 +23,13 @@ import {
   FileViewStyle,
   ExpUploadPhoto,
 } from "../VendorProfil/VendorProfileStyled";
+import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
 
 const VendorProdukForm = () => {
   const dropRef = useRef();
   const [previewFoto, setPreviewFoto] = useState([]);
   const [isPreviewFoto, setIsPreviewFoto] = useState([]);
+  const [successave, setsuccessave] = useState(false);
   const [idxFoto, setIdxFoto] = useState(0);
   const { vendorlog } = useContext(loginContext);
   const vendor_id = localStorage.getItem("vendor_id");
@@ -77,6 +79,7 @@ const VendorProdukForm = () => {
         isArchived: archive,
       })
     );
+    setsuccessave(true);
     for (let i = 0; i < formData.foto_produk.length; i++) {
       productData.append(
         `files.foto_produk`,
@@ -93,6 +96,10 @@ const VendorProdukForm = () => {
         },
       }
     );
+    setTimeout(() => {
+      setsuccessave(false);
+      window.location.reload();
+    }, 1500);
     return productRes;
   };
 
@@ -116,7 +123,7 @@ const VendorProdukForm = () => {
       ...oldArray.slice(idxFoto + 1, isPreviewFoto.length + 1),
     ]);
   };
-  
+
   const renderPhotos = (np, id) => {
     let arr = previewFoto;
     return (
@@ -257,6 +264,17 @@ const VendorProdukForm = () => {
             <Buttons>Arsipkan</Buttons>
           </ButtonsArsip>
         </GridButton>
+        {successave ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={successave === true} right>
+              <Succesicon />
+              <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                <b>SUCCESS</b>
+                Data Berhasil Disimpan!
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : (<></>)}
       </form>
     </>
   );

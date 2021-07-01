@@ -30,6 +30,7 @@ import {
 import { portfolioService } from "../../../services/Portfolio";
 import { loginContext } from "../../../context";
 import { vendorService } from "../../../services/Vendor";
+import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
 
 const displayPw = (pw) => {
   let str1 = "";
@@ -60,6 +61,7 @@ const VendorProfileContent = ({
   const [portofolios, setPortofolios] = useState(false);
   const { vendorlog } = useContext(loginContext);
   const [descriptions, setDescriptions] = useState("");
+  const [loginUser, setLoginUser] = useState(false);
   const [locations, setLocations] = useState("");
   setTimeout(() => {
     setPw(displayPw(password));
@@ -99,12 +101,17 @@ const VendorProfileContent = ({
       deskripsi: descriptions,
       location: locations,
     };
+    setLoginUser(true);
     console.log(body);
     const response = await vendorService.editVendorById(
       vendorId,
       vendorlog,
       body
     );
+    setTimeout(() => {
+      setLoginUser(false);
+      window.location.reload();
+    }, 1500);
     return response;
   };
 
@@ -152,7 +159,7 @@ const VendorProfileContent = ({
                 <div>
                   <TitleProfileVendor>Password</TitleProfileVendor>
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                    <ContentProfile>{pw}</ContentProfile>
+                    <ContentProfile>******</ContentProfile>
                     <UbahPwLink>Ubah</UbahPwLink>
                   </div>
                 </div>
@@ -239,6 +246,17 @@ const VendorProfileContent = ({
               <Buttonslog>
                 <Buttons onClick={submitEdit}>Simpan</Buttons>
               </Buttonslog>
+              {loginUser ? (
+                <PopBgSuccess>
+                  <BgSuccess aktif={loginUser === true} right>
+                    <Succesicon />
+                    <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                      <b>SUCCESS</b>
+                      Data Berhasil Disimpan!
+                    </div>
+                  </BgSuccess>
+                </PopBgSuccess>
+              ) : (<></>)}
             </>
           )}
         </MainVendash>

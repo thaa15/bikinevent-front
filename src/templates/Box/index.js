@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   BoxedPrice,
   BoxImage,
@@ -20,6 +20,7 @@ import {
 import EllipsisText from "react-ellipsis-text";
 import { productService } from "../../services/Product";
 import { loginContext } from "../../context";
+import { PopBgSuccess, BgSuccess, Succesicon } from "../../templates/GlobalTemplate";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
   return (
@@ -48,7 +49,10 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
 
 const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   const { vendorlog } = useContext(loginContext);
+  const [loginUser, setLoginUser] = useState(false);
+
   const changeHandler = async () => {
+    setLoginUser(true);
     if (statss === "Arsipkan") {
       const body = {
         isArchived: true,
@@ -69,7 +73,10 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
         body
       );
     }
-    window.location.reload();
+    setTimeout(() => {
+      setLoginUser(false);
+      window.location.reload();
+    }, 2000);
   };
   return (
     <>
@@ -87,6 +94,17 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
             <ButtonVendor onClick={changeHandler}>{statss}</ButtonVendor>
           </ApartButton>
         </ApartVendor>
+        {loginUser ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={loginUser === true} right>
+              <Succesicon />
+              <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                <b>SUCCESS</b>
+                Produk Berhasil Di"{statss}"
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : (<></>)}
       </BoxedVendor>
     </>
   );

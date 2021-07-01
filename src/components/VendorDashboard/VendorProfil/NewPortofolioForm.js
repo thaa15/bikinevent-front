@@ -16,11 +16,13 @@ import {
 } from "./VendorProfileStyled";
 import { loginContext } from "../../../context";
 import axios from "axios";
+import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
 
 const NewPortofolioForm = ({ portofolio }) => {
   const [previewFoto, setPreviewFoto] = useState([]);
   const [isPreviewFoto, setIsPreviewFoto] = useState([]);
   const [idxFoto, setIdxFoto] = useState(0);
+  const [loginUser, setLoginUser] = useState(false);
   const [namaEvent, setNamaEvent] = useState("");
   const [foto_portfolio, setFoto_Portfolio] = useState();
   const { vendorlog } = useContext(loginContext);
@@ -44,6 +46,7 @@ const NewPortofolioForm = ({ portofolio }) => {
       foto_portfolio,
       foto_portfolio.name
     );
+    setLoginUser(true);
     const portfolioRes = await axios.post(
       "http://localhost:1337/portfolios",
       portfolioData,
@@ -53,6 +56,10 @@ const NewPortofolioForm = ({ portofolio }) => {
         },
       }
     );
+    setTimeout(() => {
+      setLoginUser(false);
+      window.location.reload();
+    }, 1500);
     console.log(portfolioRes);
     return portfolioRes;
   };
@@ -81,7 +88,7 @@ const NewPortofolioForm = ({ portofolio }) => {
   const renderPhotos = (np, id) => {
     let arr = previewFoto;
     return (
-      <div style={{ flexDirection: "column",marginRight:"20px" }}>
+      <div style={{ flexDirection: "column", marginRight: "20px" }}>
         <UploadFile
           onClick={() => {
             setIdxFoto(id);
@@ -147,6 +154,17 @@ const NewPortofolioForm = ({ portofolio }) => {
       <Buttonslog>
         <Buttons onClick={submitPortfolio}>Tampilkan</Buttons>
       </Buttonslog>
+      {loginUser ? (
+        <PopBgSuccess>
+          <BgSuccess aktif={loginUser === true} right>
+            <Succesicon />
+            <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+              <b>SUCCESS</b>
+              Portoflio Berhasil Ditambahkan!
+            </div>
+          </BgSuccess>
+        </PopBgSuccess>
+      ) : (<></>)}
     </>
   );
 };

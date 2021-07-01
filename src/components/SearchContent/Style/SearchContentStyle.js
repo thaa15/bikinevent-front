@@ -28,11 +28,12 @@ export const OtherSearch = styled.div`
         display:${(props)=>props.aktif ? "block" : "none"};
         position: fixed;
         z-index: 999;
-        width: 100%;
+        width: 100%;sad
         height:100%;
         background: white;
         transition: all 1s ease-in-out;
         padding: 20px;
+        translate: scaleY(1);
         overflow-Y: scroll;
         left:0;
         opacity: ${(props)=>props.aktif ? "100%" : "0"};
