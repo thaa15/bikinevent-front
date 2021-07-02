@@ -42,7 +42,6 @@ import {
   PriceLabel,
   Options,
 } from "../VendorDashboard/VendorProduk/VendorProdukStyled";
-import { PopulerData } from "../../datas/populerdata";
 import { BoxHarga } from "../../templates/Box";
 import LoadingPage from "../../templates/Loading";
 import { Kategories } from "../../datas/vendordata";
@@ -66,14 +65,16 @@ const SearchContent = () => {
     fetchData();
     const filterData = (data) => {
       let filterTemp = data.filter((item) => {
-        if (item.nama.toLowerCase().includes(searched.searchFill.toLowerCase())) {
+        if (
+          item.nama.toLowerCase().includes(searched.searchFill.toLowerCase())
+        ) {
           return item;
         }
       });
       setFiltered(filterTemp);
     };
     filterData(productData);
-  }, [searched.loading,filtered,productData]);
+  }, [searched.loading]);
   console.log(filtered);
 
   const Pilihan = [
@@ -255,13 +256,17 @@ const SearchContent = () => {
                     </DivApart>
                   </TopHeader>
                   {filtered.length === 0 ? (
-                    <BoxNotEntry>"{searched.searchFill}" Tidak Ditemukan!</BoxNotEntry>
+                    <BoxNotEntry>
+                      "{searched.searchFill}" Tidak Ditemukan!
+                    </BoxNotEntry>
                   ) : (
                     <GridTempProduk>
                       {filtered.map((data, idx) => {
                         return (
                           <Link
-                            onClick={()=>setSearched({ ...searched, loading: true })}
+                            onClick={() =>
+                              setSearched({ ...searched, loading: true })
+                            }
                             to={`/detailed-product/${data.id}`}
                             style={{
                               height: "fit-content",
@@ -283,7 +288,6 @@ const SearchContent = () => {
                       })}
                     </GridTempProduk>
                   )}
-
                 </MainSearch>
               </TempSearch>
             </GlobalTemplate>
@@ -294,8 +298,7 @@ const SearchContent = () => {
             </>
           )}
         </>
-      )
-      }
+      )}
     </>
   );
 };
