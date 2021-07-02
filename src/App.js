@@ -33,7 +33,13 @@ function App() {
   const [name, setName] = useState();
   const [searched, setSearched] = useState({
     searchFill:"",
-    category:[],
+    filter:{
+      location:"",
+      hargaMin:"",
+      hargaMax:"",
+      rating:"",
+      kategori:[]
+    },
     loading:true
   });
   const [vendorlog, setVendorlog] = useState();

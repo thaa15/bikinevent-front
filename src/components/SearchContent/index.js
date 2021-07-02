@@ -47,6 +47,7 @@ import { BoxHarga } from "../../templates/Box";
 import LoadingPage from "../../templates/Loading";
 import { Kategories } from "../../datas/vendordata";
 import { productService } from "../../services/Product";
+import { BoxNotEntry } from "../VendorDashboard/VendorPesanan/VendorPesananStyle";
 
 const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
@@ -60,21 +61,19 @@ const SearchContent = () => {
       const response = await productService.getAllProduct();
       const data = response.data;
       setProductData(data);
+      setSearched({ ...searched, loading: false });
     };
     fetchData();
     const filterData = (data) => {
       let filterTemp = data.filter((item) => {
-        if (item.nama.includes(searched.searchFill)) {
+        if (item.nama.toLowerCase().includes(searched.searchFill.toLowerCase())) {
           return item;
         }
       });
       setFiltered(filterTemp);
     };
     filterData(productData);
-    setTimeout(() => {
-      setSearched({ ...searched, loading: false });
-    }, 1000);
-  }, [searched.loading]);
+  }, [searched.loading,filtered,productData]);
   console.log(filtered);
 
   const Pilihan = [
@@ -255,31 +254,36 @@ const SearchContent = () => {
                       </FilterNav>
                     </DivApart>
                   </TopHeader>
+                  {filtered.length === 0 ? (
+                    <BoxNotEntry>"{searched.searchFill}" Tidak Ditemukan!</BoxNotEntry>
+                  ) : (
+                    <GridTempProduk>
+                      {filtered.map((data, idx) => {
+                        return (
+                          <Link
+                            onClick={()=>setSearched({ ...searched, loading: true })}
+                            to={`/detailed-product/${data.id}`}
+                            style={{
+                              height: "fit-content",
+                              cursor: "pointer",
+                              textDecoration: "none",
+                            }}
+                          >
+                            <BoxHarga
+                              key={idx}
+                              image={data.foto_produk[0].url}
+                              city={data.lokasi}
+                              judul={data.nama}
+                              harga={data.harga}
+                              rate={data.rating}
+                              review={data.penilaian.length}
+                            />
+                          </Link>
+                        );
+                      })}
+                    </GridTempProduk>
+                  )}
 
-                  <GridTempProduk>
-                    {filtered.map((data, idx) => {
-                      return (
-                        <Link
-                          to={`/detailed-product/${data.id}`}
-                          style={{
-                            height: "fit-content",
-                            cursor: "pointer",
-                            textDecoration: "none",
-                          }}
-                        >
-                          <BoxHarga
-                            key={idx}
-                            image={data.foto_produk[0].url}
-                            city={data.lokasi}
-                            judul={data.nama}
-                            harga={data.harga}
-                            rate={data.rating}
-                            review={data.penilaian.length}
-                          />
-                        </Link>
-                      );
-                    })}
-                  </GridTempProduk>
                 </MainSearch>
               </TempSearch>
             </GlobalTemplate>
@@ -290,7 +294,8 @@ const SearchContent = () => {
             </>
           )}
         </>
-      )}
+      )
+      }
     </>
   );
 };

@@ -37,7 +37,6 @@ const Navbar = ({ toggling, isAuth, nama }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if(getsearch.length === 0);
     setPlacehldr("Cari Keperluan Event Anda..")
     setSearched({ ...searched, searchFill: getsearch, loading: true });
     history.push({
