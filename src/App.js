@@ -51,7 +51,6 @@ function App() {
     setVendorlog(localStorage.getItem("tokenVendor"));
     setName(localStorage.getItem("nama"));
   }, []);
-  console.log(searched);
 
   return (
     <>

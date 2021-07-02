@@ -52,8 +52,14 @@ const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
   const [produk, setProduk] = useState(true);
   const [active, setActive] = useState(false);
+  const [ getFilter,setGetFilter ] = useState()
   const [productData, setProductData] = useState([]);
   const [filtered, setFiltered] = useState([]);
+
+  const filterHandler = (e) => {
+    e.preventDefault();
+    setSearched({ ...searched, loading: true });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +81,6 @@ const SearchContent = () => {
     };
     filterData(productData);
   }, [searched.loading]);
-  console.log(filtered);
 
   const Pilihan = [
     "Paling Sesuai",
@@ -114,7 +119,7 @@ const SearchContent = () => {
                   </ApartAside>
                   <BoxAside>
                     {/*FORM FILTER SIDE BAR*/}
-                    <form>
+                    <form onSubmit={filterHandler}>
                       <LabelSearch>Lokasi</LabelSearch>
                       {Location.map((data, idx) => {
                         return (
