@@ -31,13 +31,14 @@ export const ContentProfile = styled.p`
     }
 `;
 
-export const UbahPwLink = styled(Link)`
+export const UbahPwLink = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
     color: #E30045;
     text-decoration: none;
     margin-left: 10px;
+    cursor:pointer;
     &:hover{
         text-decoration: underline;
     }
@@ -127,4 +128,41 @@ text-align: center;
 color: #909DAA;
 width: 100%;
 margin: -10px auto 0;
+`;
+
+export const ChangePwBg = styled.div`
+    max-width: 584px;
+    max-height: 403px;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    margin: 30px auto;
+`;
+
+export const TitleApart = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    align-self: center;
+`;
+
+export const DivisionTitle = styled.div`
+    width: 100%;
+    flex-basis: ${(props)=>props.button ? "5%" : "95%"};
+    flex-direction: ${(props)=>props.button ? "row-reverse" : "row"};
+`;
+
+export const TitleChangepw = styled.h3`
+font-size: 20px;
+line-height: 22px;
+color: #212B36;
+`;
+
+export const DivButton = styled.div`
+    width: fit-content;
+    cursor:pointer;
+    &:hover{
+        font-weight: bold;
+    }
 `;

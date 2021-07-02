@@ -54,7 +54,7 @@ const TampilanProduk = ({ descprod, fotoproduk,lengths }) => {
                   </>
                 ) : (
                   <>
-                    <PopUpBg>
+                    <PopUpBg need>
                       <ButtonClosePopUp
                         onClick={() => {
                           setClicked(true);

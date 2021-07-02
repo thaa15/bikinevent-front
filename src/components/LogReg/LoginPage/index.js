@@ -84,7 +84,7 @@ const LoginPage = (props) => {
             setLoginUser({...loginUser,right:false});
             window.location.reload();
             window.location.href = "/vendor-chat";
-          }, 1000);
+          }, 2000);
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {

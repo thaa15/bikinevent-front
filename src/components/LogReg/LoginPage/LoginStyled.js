@@ -133,8 +133,11 @@ export const Buttonslog = styled.button`
     letter-spacing: -0.2px;
     padding: 8px 32px;
     margin: 30px auto 0;
-    &:active, &:focus {
+    &:hover {
         background-color:#a3143f;
+    }
+    &:active{
+        background-color:#c91a4f;
     }
 `;
 

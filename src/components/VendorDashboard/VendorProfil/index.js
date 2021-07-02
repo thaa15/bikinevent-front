@@ -21,6 +21,11 @@ import {
   PortofolioBox,
   ButtonPart,
   Button,
+  ChangePwBg,
+  TitleApart,
+  DivisionTitle,
+  TitleChangepw,
+  DivButton,
 } from "./VendorProfileStyled";
 import {
   PortofolioTitle,
@@ -30,7 +35,13 @@ import {
 import { portfolioService } from "../../../services/Portfolio";
 import { loginContext } from "../../../context";
 import { vendorService } from "../../../services/Vendor";
-import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
+import {
+  PopBgSuccess,
+  BgSuccess,
+  Succesicon,
+  PopUpBg,
+} from "../../../templates/GlobalTemplate";
+import { LabelVendorProduk, InputModif } from "../VendorProduk/VendorProdukStyled";
 
 const displayPw = (pw) => {
   let str1 = "";
@@ -59,6 +70,8 @@ const VendorProfileContent = ({
   const [previewProfile, setPreviewProfile] = useState("");
   const [isPreviewProfile, setIsPreviewProfile] = useState(false);
   const [portofolios, setPortofolios] = useState(false);
+  const [changePw, setChangePw] = useState(false);
+  const [pwChanged, setPwChanged] = useState(false);
   const { vendorlog } = useContext(loginContext);
   const [descriptions, setDescriptions] = useState("");
   const [loginUser, setLoginUser] = useState(false);
@@ -160,10 +173,72 @@ const VendorProfileContent = ({
                   <TitleProfileVendor>Password</TitleProfileVendor>
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <ContentProfile>******</ContentProfile>
-                    <UbahPwLink>Ubah</UbahPwLink>
+                    <UbahPwLink onClick={() => { setChangePw(true) }}>Ubah</UbahPwLink>
                   </div>
                 </div>
               </GridContent>
+
+              {/* POP UP PASSWORD */}
+              <>
+                {changePw ? (
+                  <PopUpBg need>
+                    <ChangePwBg>
+                      <TitleApart>
+                        <DivisionTitle>
+                          <TitleChangepw>Ubah Password</TitleChangepw>
+                        </DivisionTitle>
+                        <DivisionTitle button onClick={() => { setChangePw(false) }}>
+                          <DivButton>
+                            X
+                          </DivButton>
+                        </DivisionTitle>
+                      </TitleApart>
+                      <LabelVendorProduk awal>Password Lama</LabelVendorProduk>
+                      <InputModif
+                        type="password"
+                        required
+                        name="pwlama"
+                      />
+                      <LabelVendorProduk>Password Baru</LabelVendorProduk>
+                      <InputModif
+                        type="password"
+                        required
+                        name="pwbaru"
+                      />
+                      <LabelVendorProduk>Ulangi Password Baru</LabelVendorProduk>
+                      <InputModif
+                        type="password"
+                        required
+                        name="pwbaruConfirm"
+                      />
+                      <Buttonslog onClick={() => { 
+                        setPwChanged(true);
+                        setTimeout(() => {
+                          setPwChanged(false);
+                          window.location.reload();
+                        }, 2000);
+                        }}>
+                        <Buttons>Simpan</Buttons>
+                      </Buttonslog>
+                    </ChangePwBg>
+                  </PopUpBg>
+                ) : (<></>)}
+              </>
+
+              {/* POP UP BERHASIL GANTI PASSWORD */}
+              <>
+                {pwChanged ? (
+                  <PopBgSuccess>
+                    <BgSuccess aktif={pwChanged === true} right>
+                      <Succesicon />
+                      <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                        <b>SUCCESS</b>
+                        Password Berhasil Diubah!
+                      </div>
+                    </BgSuccess>
+                  </PopBgSuccess>
+                ) : (<></>)}
+              </>
 
               <TitleProfileVendor>Lokasi</TitleProfileVendor>
               <InputMCQ
@@ -243,8 +318,8 @@ const VendorProfileContent = ({
               <UploadFile onClick={() => setPortofolios(true)}>
                 <PlusImage>+</PlusImage>
               </UploadFile>
-              <Buttonslog>
-                <Buttons onClick={submitEdit}>Simpan</Buttons>
+              <Buttonslog onClick={submitEdit}>
+                <Buttons>Simpan</Buttons>
               </Buttonslog>
               {loginUser ? (
                 <PopBgSuccess>

@@ -326,4 +326,5 @@ export const PortofolioImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    cursor:pointer;
 `;

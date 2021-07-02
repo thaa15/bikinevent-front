@@ -1,5 +1,14 @@
 import React from "react";
-import { GlobalTemplate } from "../GlobalTemplate";
+import { 
+  GlobalTemplate,
+  PopUpBg,
+  ContentPopUp,
+  ButtonCloser,
+  ButtonClosePopUp,
+  AngleLeft,
+  AngleRight,
+  ContentDrop,
+} from "../GlobalTemplate";
 import {
   BgTop,
   ShowedObj,

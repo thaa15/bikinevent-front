@@ -79,13 +79,13 @@ export const ProtectedVendor = ({ isAuth, component: Component, ...rest }) => {
   );
 };
 
-export const ProtectedSearch = ({ searchs, component: Component, ...rest }) => {
+export const ProtectedSearch = ({ searchs, isAuth,component: Component, ...rest }) => {
   const { searched, setSearched } = useContext(searchContext);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (searched.searchFill.length != 0) {
+        if (searched.searchFill.length != 0 && isAuth == null) {
           return <Component {...props} />;
         } else {
           return (

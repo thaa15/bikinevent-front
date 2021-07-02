@@ -33,7 +33,7 @@ function App() {
   const [name, setName] = useState();
   const [searched, setSearched] = useState({
     searchFill:"",
-    category:"",
+    category:[],
     loading:true
   });
   const [vendorlog, setVendorlog] = useState();
@@ -101,7 +101,7 @@ function App() {
                     component={SuccessReg}
                     exact
                   />
-                  <ProtectedSearch path="/searched" component={SearchContent} exact/>
+                  <ProtectedSearch path="/searched" component={SearchContent} exact isAuth={vendorlog}/>
                   <Route path="/blog/:id" component={RoutedBlog} exact />
                   <Route path="/allblog" component={Blogs} exact />
                   <Route path="/faq" component={FAQ} exact />
