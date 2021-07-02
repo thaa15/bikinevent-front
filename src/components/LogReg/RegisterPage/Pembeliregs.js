@@ -108,7 +108,7 @@ const Pembeliregs = (props) => {
       <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
       <br />
       <LoginInput
-        type="tel"
+        type="number"
         required
         name="phone_number"
         onChange={(e) =>

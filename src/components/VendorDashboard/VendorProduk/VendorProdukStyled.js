@@ -77,6 +77,7 @@ export const InputMCQ = styled.select`
 export const Options = styled.option`
     font-size: 13px;
     line-height: 22px;
+    outline: none;
     color: ${(props) => props.non ? "#909DAA" : "#212B36"};
 `;
 

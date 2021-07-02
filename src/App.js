@@ -34,7 +34,7 @@ function App() {
   const [searched, setSearched] = useState({
     searchFill:"",
     filter:{
-      location:"",
+      location:[],
       hargaMin:"",
       hargaMax:"",
       rating:"",

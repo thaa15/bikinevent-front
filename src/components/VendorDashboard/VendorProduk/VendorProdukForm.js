@@ -99,7 +99,7 @@ const VendorProdukForm = () => {
     setTimeout(() => {
       setsuccessave(false);
       window.location.reload();
-    }, 1500);
+    }, 900);
     return productRes;
   };
 

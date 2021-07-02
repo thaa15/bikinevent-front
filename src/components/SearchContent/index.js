@@ -47,18 +47,24 @@ import LoadingPage from "../../templates/Loading";
 import { Kategories } from "../../datas/vendordata";
 import { productService } from "../../services/Product";
 import { BoxNotEntry } from "../VendorDashboard/VendorPesanan/VendorPesananStyle";
+import { ImLocation2 } from "react-icons/im";
+import { IoLogoDropbox } from "react-icons/io";
 
 const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
+  const [checkSubcath, setCheckSubcath] = useState([-1, -1]);
   const [produk, setProduk] = useState(true);
+  const [checkliststable, setCheckliststable] = useState([false, false, false, false, false, false]);
   const [active, setActive] = useState(false);
-  const [ getFilter,setGetFilter ] = useState()
+  const [getFilter, setGetFilter] = useState(searched.filter)
   const [productData, setProductData] = useState([]);
   const [filtered, setFiltered] = useState([]);
 
+  console.log(getFilter);
+
   const filterHandler = (e) => {
     e.preventDefault();
-    setSearched({ ...searched, loading: true });
+    setSearched({ ...searched, filter: getFilter });
   };
 
   useEffect(() => {
@@ -129,6 +135,16 @@ const SearchContent = () => {
                               id={data}
                               name="location"
                               value={data}
+                              onClick={(e) => {
+                                let arrWithObject = [];
+                                let arrWithArr = [...getFilter.location];
+                                if (e.target.checked) {
+                                  arrWithObject.push(e.target.value)
+                                  arrWithArr.push(arrWithObject)
+                                } else arrWithArr.splice(arrWithArr.findIndex((elemen) => elemen == e.target.value), 1);
+
+                                setGetFilter({ ...getFilter, location: arrWithArr })
+                              }}
                             />
                             <LabelCheck for={data}>{data}</LabelCheck>
                           </CheckFlex>
@@ -144,6 +160,9 @@ const SearchContent = () => {
                           type="number"
                           placeholder="Harga Minimum"
                           name="priceMin"
+                          onChange={(e) => {
+                            setGetFilter({ ...getFilter, hargaMin: e.target.value })
+                          }}
                         />
                       </DivPrice>
                       <div style={{ marginBottom: "5px" }} />
@@ -154,6 +173,9 @@ const SearchContent = () => {
                           type="number"
                           placeholder="Harga Maksimum"
                           name="priceMaks"
+                          onChange={(e) => {
+                            setGetFilter({ ...getFilter, hargaMax: e.target.value })
+                          }}
                         />
                       </DivPrice>
                       <div style={{ marginBottom: "15px" }} />
@@ -164,22 +186,38 @@ const SearchContent = () => {
                           type="checkbox"
                           id="Three Up"
                           name="rating"
-                          value="Three Up"
+                          value="3 ke atas"
+                          onChange={(e) => {
+                            if (e.target.checked) setGetFilter({ ...getFilter, rating: e.target.value })
+                            else setGetFilter({ ...getFilter, rating: "" });
+                          }}
                         />
                         <LabelCheck for="Three Up">3 ke atas</LabelCheck>
                       </CheckFlex>
                       <div style={{ marginBottom: "15px" }} />
 
                       <LabelSearch>Kategori</LabelSearch>
-                      {Kategories.map((data, idx) => {
+                      {Kategories.map((data, ids) => {
                         return (
                           <>
-                            <CheckFlex key={idx}>
+                            <CheckFlex key={ids}>
                               <CheckBoks
                                 type="checkbox"
-                                id={data.cath}
+                                id={ids}
                                 name="kategori"
                                 value={data.cath}
+                                onClick={(e) => {
+                                  let arrWithObject = data.subcath;
+                                  let arrWithArr = [...getFilter.kategori];
+                                  if (e.target.checked) {
+                                    arrWithArr.push(arrWithObject);
+                                    setCheckliststable(old => [...old.slice(0, ids), true, ...old.slice(ids + 1, checkliststable.length + 1)])
+                                  } else if (!e.target.checked) {
+                                    arrWithArr.splice(arrWithArr.findIndex((elemen) => elemen === data.subcath), 1);
+                                    setCheckliststable(old => [...old.slice(0, ids), false, ...old.slice(ids + 1, checkliststable.length + 1)])
+                                  };
+                                  setGetFilter({ ...getFilter, kategori: arrWithArr })
+                                }}
                               />
                               <LabelCheck for={data.cath}>
                                 {data.cath}
@@ -191,8 +229,23 @@ const SearchContent = () => {
                                   <CheckBoks
                                     type="checkbox"
                                     id={item}
-                                    name="kategori"
+                                    name={ids}
                                     value={item}
+                                    onClick={(e) => {
+                                      let arrWithObjects = [];
+                                      let arrWithArr = [...getFilter.kategori];
+                                      if (e.target.checked) {
+                                        arrWithObjects.push(e.target.value)
+                                        arrWithArr.push(arrWithObjects)
+                                        setCheckSubcath([idx, ids])
+                                      } else if (checkliststable[ids] === false) {
+                                        arrWithArr.splice(arrWithArr.findIndex((elemen) => elemen == e.target.value), 1)
+                                        setCheckSubcath([-1, -1])
+                                      };
+
+                                      setGetFilter({ ...getFilter, kategori: arrWithArr })
+                                    }}
+                                    checked={checkliststable[ids] || (checkSubcath[0] === idx && checkSubcath[1] === ids)}
                                     sub
                                   />
                                   <LabelCheck for={item}>{item}</LabelCheck>
