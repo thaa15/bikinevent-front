@@ -70,6 +70,7 @@ const Navbar = ({ toggling, isAuth, nama }) => {
                   <form onSubmit={submitHandler}>
                     <SearchBar
                       mobile
+                      type="search"
                       required
                       placeholder="Cari Keperluan Event Anda.."
                       value={placehldr}
@@ -115,6 +116,7 @@ const Navbar = ({ toggling, isAuth, nama }) => {
                 onSubmit={submitHandler}
               >
                 <SearchBar
+                  type="search"
                   placeholder="Cari Keperluan Event Anda.."
                   value={placehldr}
                   required

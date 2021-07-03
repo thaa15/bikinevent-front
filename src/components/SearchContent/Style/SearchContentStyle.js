@@ -19,7 +19,6 @@ export const OtherSearch = styled.div`
     flex-basis: 25%;
     padding: 4px;
     width: 100%;
-    margin-right: 10px;
     background: #FFFFFF;
     height: fit-content;
     display:${(props)=>props.aktif ? "flex" : "flex"};
@@ -46,10 +45,12 @@ export const MainSearch = styled.div`
     padding: 0 10px;
     width: 100%;
     background: #FFFFFF;
+    margin-left: 10px;
 
     @media screen and (max-width: 957px) {
         -webkit-box-ordinal-group: 1;
         -moz-box-ordinal-group: 1;
         box-ordinal-group: 1;
+        margin-left: 0;
     }
 `;

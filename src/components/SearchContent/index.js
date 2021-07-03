@@ -157,6 +157,8 @@ const SearchContent = () => {
                         <PriceLabel>Rp</PriceLabel>
                         <InputModif
                           harga
+                          pattern="[1-9]"
+                          title="harus angka!"
                           type="number"
                           placeholder="Harga Minimum"
                           name="priceMin"
@@ -171,6 +173,8 @@ const SearchContent = () => {
                         <InputModif
                           harga
                           type="number"
+                          pattern="[1-9]"
+                          title="harus angka!"
                           placeholder="Harga Maksimum"
                           name="priceMaks"
                           onChange={(e) => {

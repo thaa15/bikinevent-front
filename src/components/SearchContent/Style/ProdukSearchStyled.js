@@ -87,7 +87,7 @@ export const CheckFlex = styled.div`
 
 export const InputModif = styled.input`
     background: #FFFFFF;
-    width: ${(props) => props.harga ? "95%" : "100%"};
+    width: 80%;
     border: 1px solid #E4E4E4;
     box-sizing: border-box;
     border-radius: ${(props) => props.harga ? "0 6px 6px 0" : "6px"};

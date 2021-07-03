@@ -88,6 +88,8 @@ const Pembeliregs = (props) => {
         <LoginInput
           type={typepw}
           required
+          pattern=".{6,}" 
+          title="Enam atau lebih karakter"
           name="password"
           pw
           onChange={(e) =>
