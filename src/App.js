@@ -6,7 +6,7 @@ import {
   ProtectedRouteSucReg,
   ProtectedVendorLogin,
   ProtectedVendor,
-  ProtectedSearch
+  ProtectedSearch,
 } from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Sidebar from "./templates/Sidebar";
@@ -32,15 +32,17 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState();
   const [searched, setSearched] = useState({
-    searchFill:"",
-    filter:{
-      location:[],
-      hargaMin:"",
-      hargaMax:"",
-      rating:"",
-      kategori:[]
+    searchFill: "",
+    filter: {
+      lokasi: [],
+      subcategory: [],
     },
-    loading:true
+    rangeFilter: {
+      hargaMin: "",
+      hargaMax: "",
+      rating: "",
+    },
+    loading: true,
   });
   const [vendorlog, setVendorlog] = useState();
 
@@ -60,7 +62,11 @@ function App() {
             <ScrollToTop />
             <searchContext.Provider value={{ searched, setSearched }}>
               <loginContext.Provider value={{ vendorlog, setVendorlog }}>
-                <Sidebar isOpen={isOpen} toggling={toggling} isAuth={vendorlog} />
+                <Sidebar
+                  isOpen={isOpen}
+                  toggling={toggling}
+                  isAuth={vendorlog}
+                />
                 <Navbar toggling={toggling} isAuth={vendorlog} nama={name} />
                 <Switch>
                   <ProtectedVendor
@@ -106,7 +112,12 @@ function App() {
                     component={SuccessReg}
                     exact
                   />
-                  <ProtectedSearch path="/searched" component={SearchContent} exact isAuth={vendorlog}/>
+                  <ProtectedSearch
+                    path="/searched"
+                    component={SearchContent}
+                    exact
+                    isAuth={vendorlog}
+                  />
                   <Route path="/blog/:id" component={RoutedBlog} exact />
                   <Route path="/allblog" component={Blogs} exact />
                   <Route path="/faq" component={FAQ} exact />

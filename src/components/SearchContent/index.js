@@ -54,13 +54,20 @@ const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
   const [checkSubcath, setCheckSubcath] = useState([-1, -1]);
   const [produk, setProduk] = useState(true);
-  const [checkliststable, setCheckliststable] = useState([false, false, false, false, false, false]);
+  const [checkliststable, setCheckliststable] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
   const [active, setActive] = useState(false);
-  const [getFilter, setGetFilter] = useState(searched.filter)
+  const [getFilter, setGetFilter] = useState(searched.filter);
+  const [getRangeFilter, setGetRangeFilter] = useState(searched.rangeFilter);
   const [productData, setProductData] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-
-  console.log(getFilter);
+  const [searchedProduct, setSearchedProduct] = useState([]);
+  const [filteredProduct, setFilteredProduct] = useState([]);
 
   const filterHandler = (e) => {
     e.preventDefault();
@@ -83,7 +90,8 @@ const SearchContent = () => {
           return item;
         }
       });
-      setFiltered(filterTemp);
+      setSearchedProduct(filterTemp);
+      setFilteredProduct(filterTemp);
     };
     filterData(productData);
   }, [searched.loading]);
@@ -95,6 +103,37 @@ const SearchContent = () => {
     "Harga Terendah",
   ];
   const Location = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"];
+
+  const useFilterHandler = () => {
+    const filterKeys = Object.keys(getFilter);
+    let tempProds = searchedProduct;
+    if (Object.values(getFilter).some((arr) => arr.length > 0)) {
+      tempProds = searchedProduct.filter((product) => {
+        return filterKeys.some((key) => {
+          if (Array.isArray(product[key])) {
+            return product[key].some((keyVal) => {
+              getFilter[key].includes(keyVal);
+            });
+          }
+          return getFilter[key].some((item) => item.includes(product[key]));
+        });
+      });
+    }
+    if (getRangeFilter.hargaMin !== "" && getRangeFilter.hargaMax !== "") {
+      tempProds = tempProds.filter((product) => {
+        return (
+          product.harga > getRangeFilter.hargaMin &&
+          product.harga < getRangeFilter.hargaMax
+        );
+      });
+    }
+    if (getRangeFilter.rating !== "") {
+      tempProds = tempProds.filter((product) => {
+        return product.rating > 3;
+      });
+    }
+    setFilteredProduct(tempProds);
+  };
   return (
     <>
       {searched.loading ? (
@@ -137,13 +176,22 @@ const SearchContent = () => {
                               value={data}
                               onClick={(e) => {
                                 let arrWithObject = [];
-                                let arrWithArr = [...getFilter.location];
+                                let arrWithArr = [...getFilter.lokasi];
                                 if (e.target.checked) {
-                                  arrWithObject.push(e.target.value)
-                                  arrWithArr.push(arrWithObject)
-                                } else arrWithArr.splice(arrWithArr.findIndex((elemen) => elemen == e.target.value), 1);
+                                  arrWithObject.push(e.target.value);
+                                  arrWithArr.push(arrWithObject);
+                                } else
+                                  arrWithArr.splice(
+                                    arrWithArr.findIndex(
+                                      (elemen) => elemen == e.target.value
+                                    ),
+                                    1
+                                  );
 
-                                setGetFilter({ ...getFilter, location: arrWithArr })
+                                setGetFilter({
+                                  ...getFilter,
+                                  lokasi: arrWithArr,
+                                });
                               }}
                             />
                             <LabelCheck for={data}>{data}</LabelCheck>
@@ -161,7 +209,10 @@ const SearchContent = () => {
                           placeholder="Harga Minimum"
                           name="priceMin"
                           onChange={(e) => {
-                            setGetFilter({ ...getFilter, hargaMin: e.target.value })
+                            setGetRangeFilter({
+                              ...getRangeFilter,
+                              hargaMin: e.target.value,
+                            });
                           }}
                         />
                       </DivPrice>
@@ -174,7 +225,10 @@ const SearchContent = () => {
                           placeholder="Harga Maksimum"
                           name="priceMaks"
                           onChange={(e) => {
-                            setGetFilter({ ...getFilter, hargaMax: e.target.value })
+                            setGetRangeFilter({
+                              ...getRangeFilter,
+                              hargaMax: e.target.value,
+                            });
                           }}
                         />
                       </DivPrice>
@@ -188,8 +242,16 @@ const SearchContent = () => {
                           name="rating"
                           value="3 ke atas"
                           onChange={(e) => {
-                            if (e.target.checked) setGetFilter({ ...getFilter, rating: e.target.value })
-                            else setGetFilter({ ...getFilter, rating: "" });
+                            if (e.target.checked)
+                              setGetRangeFilter({
+                                ...getRangeFilter,
+                                rating: e.target.value,
+                              });
+                            else
+                              setGetRangeFilter({
+                                ...getRangeFilter,
+                                rating: "",
+                              });
                           }}
                         />
                         <LabelCheck for="Three Up">3 ke atas</LabelCheck>
@@ -208,15 +270,37 @@ const SearchContent = () => {
                                 value={data.cath}
                                 onClick={(e) => {
                                   let arrWithObject = data.subcath;
-                                  let arrWithArr = [...getFilter.kategori];
+                                  let arrWithArr = [...getFilter.subcategory];
                                   if (e.target.checked) {
                                     arrWithArr.push(arrWithObject);
-                                    setCheckliststable(old => [...old.slice(0, ids), true, ...old.slice(ids + 1, checkliststable.length + 1)])
+                                    setCheckliststable((old) => [
+                                      ...old.slice(0, ids),
+                                      true,
+                                      ...old.slice(
+                                        ids + 1,
+                                        checkliststable.length + 1
+                                      ),
+                                    ]);
                                   } else if (!e.target.checked) {
-                                    arrWithArr.splice(arrWithArr.findIndex((elemen) => elemen === data.subcath), 1);
-                                    setCheckliststable(old => [...old.slice(0, ids), false, ...old.slice(ids + 1, checkliststable.length + 1)])
-                                  };
-                                  setGetFilter({ ...getFilter, kategori: arrWithArr })
+                                    arrWithArr.splice(
+                                      arrWithArr.findIndex(
+                                        (elemen) => elemen === data.subcath
+                                      ),
+                                      1
+                                    );
+                                    setCheckliststable((old) => [
+                                      ...old.slice(0, ids),
+                                      false,
+                                      ...old.slice(
+                                        ids + 1,
+                                        checkliststable.length + 1
+                                      ),
+                                    ]);
+                                  }
+                                  setGetFilter({
+                                    ...getFilter,
+                                    subcategory: arrWithArr,
+                                  });
                                 }}
                               />
                               <LabelCheck for={data.cath}>
@@ -233,19 +317,35 @@ const SearchContent = () => {
                                     value={item}
                                     onClick={(e) => {
                                       let arrWithObjects = [];
-                                      let arrWithArr = [...getFilter.kategori];
+                                      let arrWithArr = [
+                                        ...getFilter.subcategory,
+                                      ];
                                       if (e.target.checked) {
-                                        arrWithObjects.push(e.target.value)
-                                        arrWithArr.push(arrWithObjects)
-                                        setCheckSubcath([idx, ids])
-                                      } else if (checkliststable[ids] === false) {
-                                        arrWithArr.splice(arrWithArr.findIndex((elemen) => elemen == e.target.value), 1)
-                                        setCheckSubcath([-1, -1])
-                                      };
+                                        arrWithObjects.push(e.target.value);
+                                        arrWithArr.push(arrWithObjects);
+                                        setCheckSubcath([idx, ids]);
+                                      } else if (
+                                        checkliststable[ids] === false
+                                      ) {
+                                        arrWithArr.splice(
+                                          arrWithArr.findIndex(
+                                            (elemen) => elemen == e.target.value
+                                          ),
+                                          1
+                                        );
+                                        setCheckSubcath([-1, -1]);
+                                      }
 
-                                      setGetFilter({ ...getFilter, kategori: arrWithArr })
+                                      setGetFilter({
+                                        ...getFilter,
+                                        subcategory: arrWithArr,
+                                      });
                                     }}
-                                    checked={checkliststable[ids] || (checkSubcath[0] === idx && checkSubcath[1] === ids)}
+                                    checked={
+                                      checkliststable[ids] ||
+                                      (checkSubcath[0] === idx &&
+                                        checkSubcath[1] === ids)
+                                    }
                                     sub
                                   />
                                   <LabelCheck for={item}>{item}</LabelCheck>
@@ -255,7 +355,7 @@ const SearchContent = () => {
                           </>
                         );
                       })}
-                      <ButtonsSearch type="submit">
+                      <ButtonsSearch type="submit" onClick={useFilterHandler}>
                         Gunakan Filter
                       </ButtonsSearch>
                       <ResetButton type="reset" value="Reset" />
@@ -313,13 +413,13 @@ const SearchContent = () => {
                       </FilterNav>
                     </DivApart>
                   </TopHeader>
-                  {filtered.length === 0 ? (
+                  {filteredProduct.length === 0 ? (
                     <BoxNotEntry>
                       "{searched.searchFill}" Tidak Ditemukan!
                     </BoxNotEntry>
                   ) : (
                     <GridTempProduk>
-                      {filtered.map((data, idx) => {
+                      {filteredProduct.map((data, idx) => {
                         return (
                           <Link
                             onClick={() =>
