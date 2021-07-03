@@ -23,7 +23,12 @@ import { AiFillGooglePlusCircle } from "react-icons/ai";
 import GoogleLogin from "react-google-login";
 import line from "../../../images/line.png";
 import { authService } from "../../../services/Auth";
-import { PopBgSuccess,BgSuccess,Succesicon,Failedicon } from "../../../templates/GlobalTemplate";
+import {
+  PopBgSuccess,
+  BgSuccess,
+  Succesicon,
+  Failedicon,
+} from "../../../templates/GlobalTemplate";
 
 const LoginPage = (props) => {
   const [visible, setVisible] = useState(true);
@@ -31,7 +36,7 @@ const LoginPage = (props) => {
   const [typepw, setTypepw] = useState("");
   const [loginUser, setLoginUser] = useState({
     right: false,
-    wrong: false
+    wrong: false,
   });
   const [formData, setFormData] = useState({
     identifier: "",
@@ -53,9 +58,9 @@ const LoginPage = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const response = await authService.login(formData).catch((err) => {
-      setLoginUser({...loginUser,wrong:true});
+      setLoginUser({ ...loginUser, wrong: true });
       setTimeout(() => {
-        setLoginUser({...loginUser,wrong:false});
+        setLoginUser({ ...loginUser, wrong: false });
       }, 2000);
       return setError("Invalid Email or Password");
     });
@@ -67,9 +72,9 @@ const LoginPage = (props) => {
           return response;
         }
         if (userData.user.role._id != pembeliId && role == "pembeli") {
-          setLoginUser({...loginUser,wrong:true});
+          setLoginUser({ ...loginUser, wrong: true });
           setTimeout(() => {
-            setLoginUser({...loginUser,wrong:false});
+            setLoginUser({ ...loginUser, wrong: false });
           }, 2000);
           return setError(
             "Akun dengan email ini tidak terdaftar sebagai pembeli"
@@ -79,18 +84,18 @@ const LoginPage = (props) => {
           localStorage.setItem("tokenVendor", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
           localStorage.setItem("vendor_id", userData.user.vendor._id);
-          setLoginUser({...loginUser,right:true});
+          setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
-            setLoginUser({...loginUser,right:false});
+            setLoginUser({ ...loginUser, right: false });
             window.location.reload();
             window.location.href = "/vendor-chat";
           }, 2000);
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {
-          setLoginUser({...loginUser,wrong:true})
+          setLoginUser({ ...loginUser, wrong: true });
           setTimeout(() => {
-            setLoginUser({...loginUser,wrong:false});
+            setLoginUser({ ...loginUser, wrong: false });
           }, 2000);
           return setError(
             "Akun dengan email ini tidak terdaftar sebagai vendor"
@@ -215,29 +220,37 @@ const LoginPage = (props) => {
                     <AiFillGooglePlusCircle style={{color: "white", fontSize:"20px", marginRight:"5px"}}/>
                     Google
                 </Buttonsgoogle>*/}
-            <GoogleLogin
-              clientId={null}
-              buttonText="Login"
-              onSuccess={null}
-              onFailure={null}
-              cookiePolicy={"single_host_origin"}
-              disabledStyle={{
-                width: "100%",
-                display: "flex",
-                alignSelf: "center",
-                background: "white",
-                alignItems: "center",
-                borderRadius: "10px",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-            />
+            <a href="https://bikinevent.id/api/connect/google">
+              <GoogleLogin
+                clientId={null}
+                buttonText="Login"
+                onSuccess={null}
+                onFailure={null}
+                cookiePolicy={"single_host_origin"}
+                disabledStyle={{
+                  width: "100%",
+                  display: "flex",
+                  alignSelf: "center",
+                  background: "white",
+                  alignItems: "center",
+                  borderRadius: "10px",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              />
+            </a>
 
             {loginUser.wrong ? (
               <PopBgSuccess>
                 <BgSuccess aktif={loginUser.wrong === true}>
-                  <Failedicon/>
-                  <div style={{display:"flex",width:"100%",flexDirection:"column"}}>
+                  <Failedicon />
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
+                    }}
+                  >
                     <b>FAILED</b>
                     {error}
                   </div>
@@ -246,14 +259,22 @@ const LoginPage = (props) => {
             ) : loginUser.right ? (
               <PopBgSuccess>
                 <BgSuccess aktif={loginUser.right === true} right>
-                  <Succesicon/>
-                  <div style={{display:"flex",width:"100%",flexDirection:"column"}}>
+                  <Succesicon />
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
+                    }}
+                  >
                     <b>SUCCESS</b>
                     Anda Berhasil Login!
                   </div>
                 </BgSuccess>
               </PopBgSuccess>
-            ) : (<></>)}
+            ) : (
+              <></>
+            )}
           </LoginBox>
         </LoginBg>
       )}
