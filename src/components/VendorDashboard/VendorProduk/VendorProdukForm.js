@@ -24,6 +24,7 @@ import {
   ExpUploadPhoto,
 } from "../VendorProfil/VendorProfileStyled";
 import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
+import { Kategories } from "../../../datas/vendordata";
 
 const VendorProdukForm = () => {
   const dropRef = useRef();
@@ -31,6 +32,8 @@ const VendorProdukForm = () => {
   const [isPreviewFoto, setIsPreviewFoto] = useState([]);
   const [successave, setsuccessave] = useState(false);
   const [idxFoto, setIdxFoto] = useState(0);
+  const [showSubCath, setShowSubCath] = useState(false);
+  const [tester,setTester] = useState("");
   const { vendorlog } = useContext(loginContext);
   const vendor_id = localStorage.getItem("vendor_id");
   const [formData, setFormData] = useState({
@@ -43,7 +46,6 @@ const VendorProdukForm = () => {
     isArchived: true,
     vendor: vendor_id,
   });
-  console.log(formData);
 
   const ket = [
     "Foto Utama",
@@ -200,24 +202,60 @@ const VendorProdukForm = () => {
         <LabelVendorProduk>Kategori</LabelVendorProduk>
         <InputMCQ
           name="kategori"
+          required
           value={formData.category}
           onChange={(e) => {
-            setFormData({ ...formData, category: e.target.value });
+            if (e.target.value !== "Pilih Kategori") {
+              setShowSubCath(true);
+              setFormData({ ...formData, category: e.target.value });
+              setTester("")
+            }
           }}
         >
           <Options non>Pilih Kategori</Options>
-          <Options value="Perlengkapan">Perlengkapan</Options>
-          <Options value="Venue">Venue</Options>
-          <Options value="Talent">Talent</Options>
-          <Options value="Jasa">Jasa</Options>
-          <Options value="Catering">Catering</Options>
-          <Options value="Dekorasi">Dekorasi</Options>
+          {Kategories.map((data, idx) => {
+            return (
+              <Options
+                value={data.cath}
+                key={idx}
+              >{data.cath}</Options>
+            )
+          })}
         </InputMCQ>
         <br />
+
+        {showSubCath ? (
+          <>
+            <LabelVendorProduk>Sub-kategori</LabelVendorProduk>
+            <InputMCQ
+              name="sub-kategori"
+              required
+              value={tester}
+              onChange={(e)=>{
+                setTester(e.target.value)
+              }}
+            >
+              <Options non>Pilih Sub-Kategori</Options>
+              {Kategories.filter(elemen => elemen.cath === formData.category).map((data) => {
+                return (
+                  <>
+                    {data.subcath.map((item,idx) => {
+                      return (
+                        <Options value={item} key={idx}>{item}</Options>
+                      )
+                    })}
+                  </>
+                )
+              })}
+            </InputMCQ>
+            <br />
+          </>
+        ) : (<></>)}
 
         <LabelVendorProduk>Lokasi</LabelVendorProduk>
         <InputMCQ
           name="lokasi"
+          required
           value={formData.lokasi}
           onChange={(e) => {
             setFormData({ ...formData, lokasi: e.target.value });

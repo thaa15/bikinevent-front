@@ -42,7 +42,6 @@ export const ContentPopUp = styled.div`
 export const ButtonCloser = styled(AiOutlineClose)`
     font-size: 26px;
     color: white;
-    font-weight: 400;
     &:hover{
         font-weight: 800;
     }
@@ -73,7 +72,6 @@ export const AngleRight = styled(FaAngleDoubleRight)`
     top: 50%;
     z-index: 60;
     right: 5px;
-    font-weight:400;
     background-color: transparent;
     color : #EFB401;
     font-size:50px;
@@ -88,7 +86,6 @@ export const AngleLeft = styled(FaAngleDoubleLeft)`
     top: 50%;
     z-index: 60;
     left: 5px;
-    font-weight:400;
     background-color: transparent;
     color : #EFB401;
     font-size:50px;

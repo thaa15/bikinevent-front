@@ -15,6 +15,7 @@ import {
   PenilaianVendorVendor,
   PortofolioVendor,
 } from "../../../templates/Tampilan";
+import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 
 const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
   return (
@@ -52,18 +53,24 @@ const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
         <TitleTampilan>Penilaian Vendor</TitleTampilan>
         <PenilaianVendorVendor comments={comments} />
         <TitleTampilan>Portofolio Vendor</TitleTampilan>
-        <GridVendorPortofolio>
-          {portofolio.map((data, idx) => (
-            <PortofolioVendor
-              key={idx}
-              portofoliotitle={data.nama}
-              foto1={data.foto_portfolio[0].url}
-              foto2={data.foto_portfolio[1].url}
-            />
-          ))}
-        </GridVendorPortofolio>
+        {portofolio.length === 0 ? (<>
+          <BoxNotEntry>
+            Belum Terdapat Portofolio!
+          </BoxNotEntry>
+        </>) : (
+          <GridVendorPortofolio>
+            {portofolio.map((data, idx) => (
+              <PortofolioVendor
+                key={idx}
+                portofoliotitle={data.nama}
+                foto1={data.foto_portfolio[0].url}
+                foto2={data.foto_portfolio[1].url}
+              />
+            ))}
+          </GridVendorPortofolio>
+        )}
       </div>
-    </GlobalTemplate>
+    </GlobalTemplate >
   );
 };
 

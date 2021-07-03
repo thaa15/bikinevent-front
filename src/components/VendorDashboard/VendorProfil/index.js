@@ -197,27 +197,33 @@ const VendorProfileContent = ({
                       <InputModif
                         type="password"
                         required
+                        pattern=".{6,}"
+                        title="Enam atau lebih karakter"
                         name="pwlama"
                       />
                       <LabelVendorProduk>Password Baru</LabelVendorProduk>
                       <InputModif
                         type="password"
                         required
+                        pattern=".{6,}"
+                        title="Enam atau lebih karakter"
                         name="pwbaru"
                       />
                       <LabelVendorProduk>Ulangi Password Baru</LabelVendorProduk>
                       <InputModif
                         type="password"
                         required
+                        pattern=".{6,}"
+                        title="Enam atau lebih karakter"
                         name="pwbaruConfirm"
                       />
-                      <Buttonslog onClick={() => { 
+                      <Buttonslog onClick={() => {
                         setPwChanged(true);
                         setTimeout(() => {
                           setPwChanged(false);
                           window.location.reload();
                         }, 2000);
-                        }}>
+                      }}>
                         <Buttons>Simpan</Buttons>
                       </Buttonslog>
                     </ChangePwBg>

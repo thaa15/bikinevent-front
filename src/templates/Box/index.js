@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import {
   BoxedPrice,
   BoxImage,
@@ -23,6 +23,16 @@ import { loginContext } from "../../context";
 import { PopBgSuccess, BgSuccess, Succesicon } from "../../templates/GlobalTemplate";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
+  const [prices,setPrices] = useState(harga.toLocaleString());
+  const [rates,setRates] = useState(rate);
+  const [handles,setHandles] = useState(false);
+
+  useEffect(() => {
+    if(rates === undefined) setRates(0);
+    else setRates(rate);
+
+    if(prices.length > 11) setHandles(true);
+  }, [])
   return (
     <>
       <BoxedPrice>
@@ -35,10 +45,10 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
             </BoxExp>
           </div>
           <div style={{ flexBasis: "40%" }}>
-            <Price>Rp{harga}</Price>
+            <Price handle = {handles}>Rp{prices}</Price>
             <BoxExp>
               <Star />
-              {rate} / 5.0 ({review} Ulasan)
+              {rates} / 5.0 ({review} Ulasan)
             </BoxExp>
           </div>
         </ApartPriced>
@@ -50,6 +60,12 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
 const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   const { vendorlog } = useContext(loginContext);
   const [loginUser, setLoginUser] = useState(false);
+  const [prices,setPrices] = useState(harga.toLocaleString());
+  const [handles,setHandles] = useState(false);
+
+  useEffect(() => {
+    if(prices.length > 11) setHandles(true);
+  }, [])
 
   const changeHandler = async () => {
     setLoginUser(true);
@@ -88,7 +104,7 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
               <EllipsisText text={judul} length={"35"} />
             </BoxExp>
           </div>
-          <Price>Rp{harga}</Price>
+          <Price handle={handles}>Rp{prices}</Price>
           <ApartButton>
             <ButtonVendor ubah>Ubah</ButtonVendor>
             <ButtonVendor onClick={changeHandler}>{statss}</ButtonVendor>

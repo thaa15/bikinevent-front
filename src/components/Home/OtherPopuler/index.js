@@ -51,7 +51,7 @@ const OtherPopuler = () => {
               return (
                 <>
                   <ApartView key={idx}>
-                    <TitleHome>Populer di {data.category}</TitleHome>
+                    <TitleHome>Populer di "{data.category}"</TitleHome>
                     <TitleHome view>
                       <LinkTitle to="/">Lihat Semua</LinkTitle>
                     </TitleHome>

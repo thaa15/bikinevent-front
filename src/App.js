@@ -27,6 +27,7 @@ import {
   VendorProfil,
 } from "./pages/vendorcenter";
 import SearchContent from "./components/SearchContent";
+import LoginSuccess from "./components/LogReg/SuccessRegPage/LoginSuccess";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -118,6 +119,7 @@ function App() {
                     exact
                     isAuth={vendorlog}
                   />
+                  <Route path="/login-success" component={LoginSuccess} exact />
                   <Route path="/blog/:id" component={RoutedBlog} exact />
                   <Route path="/allblog" component={Blogs} exact />
                   <Route path="/faq" component={FAQ} exact />
