@@ -23,7 +23,7 @@ import { loginContext } from "../../context";
 import { PopBgSuccess, BgSuccess, Succesicon } from "../../templates/GlobalTemplate";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
-  const [prices,setPrices] = useState(harga.toLocaleString());
+  const [prices,setPrices] = useState(harga.toLocaleString("id-ID"));
   const [rates,setRates] = useState(rate);
   const [handles,setHandles] = useState(false);
 
@@ -58,9 +58,9 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
 };
 
 const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
-  const { vendorlog } = useContext(loginContext);
+  const { loginInfo } = useContext(loginContext);
   const [loginUser, setLoginUser] = useState(false);
-  const [prices,setPrices] = useState(harga.toLocaleString());
+  const [prices,setPrices] = useState(harga.toLocaleString("id-ID"));
   const [handles,setHandles] = useState(false);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
       };
       const response = await productService.editProductById(
         id,
-        vendorlog,
+        loginInfo.token,
         body
       );
       console.log(response.data);
@@ -85,14 +85,14 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
       };
       const response = await productService.editProductById(
         id,
-        vendorlog,
+        loginInfo.token,
         body
       );
     }
     setTimeout(() => {
       setLoginUser(false);
       window.location.reload();
-    }, 2000);
+    }, 1000);
   };
   return (
     <>

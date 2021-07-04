@@ -34,7 +34,7 @@ const VendorProdukForm = () => {
   const [idxFoto, setIdxFoto] = useState(0);
   const [showSubCath, setShowSubCath] = useState(false);
   const [tester,setTester] = useState("");
-  const { vendorlog } = useContext(loginContext);
+  const { loginInfo } = useContext(loginContext);
   const vendor_id = localStorage.getItem("vendor_id");
   const [formData, setFormData] = useState({
     nama: "",
@@ -94,7 +94,7 @@ const VendorProdukForm = () => {
       productData,
       {
         headers: {
-          Authorization: `Bearer ${vendorlog}`,
+          Authorization: `Bearer ${loginInfo.token}`,
         },
       }
     );

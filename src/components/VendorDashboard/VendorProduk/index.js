@@ -16,7 +16,6 @@ const VendorProdukContent = ({ data }) => {
   const [addproduk, setAddproduk] = useState(true);
   const arsip = data.filter((stat) => stat.isArchived === true);
   const show = data.filter((stat) => stat.isArchived === false);
-  console.log(show);
 
   return (
     <>

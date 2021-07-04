@@ -20,7 +20,7 @@ const NavbarVendor = ({ toggling, nama }) => {
         localStorage.removeItem("nama");
 
         window.location.reload();
-        window.location.href = "/";
+        window.location.href = "/login";
     }
     return (
         <Nav>

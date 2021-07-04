@@ -44,7 +44,7 @@ import {
 } from "../VendorDashboard/VendorProduk/VendorProdukStyled";
 import { BoxHarga } from "../../templates/Box";
 import LoadingPage from "../../templates/Loading";
-import { Kategories } from "../../datas/vendordata";
+import { Kategories, StableCheck } from "../../datas/vendordata";
 import { productService } from "../../services/Product";
 import { BoxNotEntry } from "../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { ImLocation2 } from "react-icons/im";
@@ -52,7 +52,7 @@ import { IoLogoDropbox } from "react-icons/io";
 
 const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
-  const [checkSubcath, setCheckSubcath] = useState([-1, -1]);
+  const [checkSubcath, setCheckSubcath] = useState(StableCheck);
   const [produk, setProduk] = useState(true);
   const [checkliststable, setCheckliststable] = useState([
     false,
@@ -71,7 +71,7 @@ const SearchContent = () => {
 
   const filterHandler = (e) => {
     e.preventDefault();
-    setSearched({ ...searched, filter: getFilter });
+    setSearched({ ...searched, filter: getFilter, rangeFilter: getRangeFilter });
   };
 
   useEffect(() => {
@@ -134,6 +134,20 @@ const SearchContent = () => {
     }
     setFilteredProduct(tempProds);
   };
+
+  const checkHandler = (row, state, idx) => {
+    const arrRow = [8, 4, 6, 9, 5, 3]
+    setCheckSubcath((old) => [
+      ...old.slice(0, row),
+        ...old.slice(0, idx),
+        state,
+        ...old.slice(
+          idx+1,
+          arrRow[row]+1
+        ),
+      ...old.slice(row + 1, 7)]);
+  }
+  console.log(checkSubcath);
   return (
     <>
       {searched.loading ? (
@@ -210,6 +224,7 @@ const SearchContent = () => {
                           type="number"
                           placeholder="Harga Minimum"
                           name="priceMin"
+                          lang="id"
                           onChange={(e) => {
                             setGetRangeFilter({
                               ...getRangeFilter,
@@ -225,6 +240,7 @@ const SearchContent = () => {
                           harga
                           type="number"
                           pattern="[1-9]"
+                          lang="id"
                           title="harus angka!"
                           placeholder="Harga Maksimum"
                           name="priceMaks"
@@ -325,19 +341,19 @@ const SearchContent = () => {
                                         ...getFilter.subcategory,
                                       ];
                                       if (e.target.checked) {
+                                        checkHandler(ids, true, idx);
                                         arrWithObjects.push(e.target.value);
                                         arrWithArr.push(arrWithObjects);
-                                        setCheckSubcath([idx, ids]);
                                       } else if (
                                         checkliststable[ids] === false
                                       ) {
+                                        checkHandler(ids, false, idx);
                                         arrWithArr.splice(
                                           arrWithArr.findIndex(
                                             (elemen) => elemen == e.target.value
                                           ),
                                           1
                                         );
-                                        setCheckSubcath([-1, -1]);
                                       }
 
                                       setGetFilter({
@@ -346,9 +362,8 @@ const SearchContent = () => {
                                       });
                                     }}
                                     checked={
-                                      checkliststable[ids] ||
-                                      (checkSubcath[0] === idx &&
-                                        checkSubcath[1] === ids)
+                                      checkliststable[ids]
+                                      || checkSubcath[ids][idx]
                                     }
                                     sub
                                   />
@@ -362,7 +377,37 @@ const SearchContent = () => {
                       <ButtonsSearch type="submit" onClick={useFilterHandler}>
                         Gunakan Filter
                       </ButtonsSearch>
-                      <ResetButton type="reset" value="Reset" />
+                      <ResetButton
+                        type="reset"
+                        value="Reset"
+                        onClick={() => {
+                          setGetFilter({
+                            subcategory: [],
+                            lokasi: [],
+                          });
+
+                          setGetRangeFilter({
+                            hargaMin: "",
+                            hargaMax: "",
+                            rating: "",
+                          })
+
+                          setSearched({
+                            ...searched,
+                            filter: getFilter,
+                            rangeFilter: getRangeFilter
+                          })
+
+                          setCheckliststable([
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                          ]);
+                        }}
+                      />
                     </form>
                   </BoxAside>
                 </OtherSearch>

@@ -25,7 +25,7 @@ const NewPortofolioForm = ({ portofolio }) => {
   const [loginUser, setLoginUser] = useState(false);
   const [namaEvent, setNamaEvent] = useState("");
   const [foto_portfolio, setFoto_Portfolio] = useState();
-  const { vendorlog } = useContext(loginContext);
+  const { loginInfo } = useContext(loginContext);
   const vendorId = localStorage.getItem("vendor_id");
 
   const ket = [
@@ -52,7 +52,7 @@ const NewPortofolioForm = ({ portofolio }) => {
       portfolioData,
       {
         headers: {
-          Authorization: `Bearer ${vendorlog}`,
+          Authorization: `Bearer ${loginInfo.token}`,
         },
       }
     );

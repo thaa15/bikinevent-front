@@ -36,7 +36,7 @@ export const ProtectedVendorLogin = ({
     <Route
       {...rest}
       render={(props) => {
-        if (isAuth !== null) {
+        if (isAuth.length > 4 || isAuth !== "null") {
           return <Component {...props} />;
         } else {
           return (
@@ -60,7 +60,7 @@ export const ProtectedVendor = ({ isAuth, component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (isAuth == null) {
+        if (isAuth.length <= 4) {
           return <Component {...props} />;
         } else {
           return (
@@ -79,13 +79,37 @@ export const ProtectedVendor = ({ isAuth, component: Component, ...rest }) => {
   );
 };
 
+export const ProtectedUser = ({ isAuth, component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        if (isAuth.length <= 4) {
+          return <Component {...props} />;
+        } else {
+          return (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: {
+                  from: props.location,
+                },
+              }}
+            />
+          );
+        }
+      }}
+    />
+  );
+};
+
 export const ProtectedSearch = ({ searchs, isAuth,component: Component, ...rest }) => {
   const { searched, setSearched } = useContext(searchContext);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (searched.searchFill.length != 0 && isAuth == null) {
+        if (searched.searchFill.length != 0 && isAuth.length <= 4) {
           return <Component {...props} />;
         } else {
           return (

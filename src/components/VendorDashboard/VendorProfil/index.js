@@ -72,7 +72,7 @@ const VendorProfileContent = ({
   const [portofolios, setPortofolios] = useState(false);
   const [changePw, setChangePw] = useState(false);
   const [pwChanged, setPwChanged] = useState(false);
-  const { vendorlog } = useContext(loginContext);
+  const { loginInfo } = useContext(loginContext);
   const [descriptions, setDescriptions] = useState("");
   const [loginUser, setLoginUser] = useState(false);
   const [locations, setLocations] = useState("");
@@ -104,7 +104,7 @@ const VendorProfileContent = ({
   const deletePortfolio = async (portfolioId) => {
     const response = await portfolioService.deletePortfolioById(
       portfolioId,
-      vendorlog
+      loginInfo.token
     );
     return response;
   };
@@ -118,7 +118,7 @@ const VendorProfileContent = ({
     console.log(body);
     const response = await vendorService.editVendorById(
       vendorId,
-      vendorlog,
+      loginInfo.token,
       body
     );
     setTimeout(() => {

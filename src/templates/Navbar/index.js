@@ -45,10 +45,9 @@ const Navbar = ({ toggling, isAuth, nama }) => {
     setPlacehldr("");
     setSearchContent(false)
   };
-
   return (
     <>
-      {isAuth != null ? (
+      {isAuth.length > 4 ? (
         <NavbarVendor toggling={toggling} nama={nama} />
       ) : (
         <Nav>

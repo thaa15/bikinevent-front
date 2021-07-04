@@ -62,11 +62,11 @@ export const VendorPesanan = () => {
 export const VendorProduk = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [productData, setProductData] = useState([]);
-  const { vendorlog } = useContext(loginContext);
+  const { loginInfo } = useContext(loginContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      const userResponse = await authService.getDetails(vendorlog);
+      const userResponse = await authService.getDetails(loginInfo.token);
       const userData = userResponse.data;
       const vendorResponse = await vendorService.getVendorById(userData.vendor);
       const vendorData = vendorResponse.data;
@@ -74,7 +74,7 @@ export const VendorProduk = () => {
       setIsLoading(false);
     };
     fetchData();
-  }, [vendorlog]);
+  }, [loginInfo.token]);
   return (
     <>
       {isLoading ? (

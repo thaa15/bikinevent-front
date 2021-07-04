@@ -53,7 +53,7 @@ const ShowAtTopProduk = ({
   ulasan,
   harga,
 }) => {
-  const [prices, setPrices] = useState(harga.toLocaleString());
+  const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
   const [rates, setRates] = useState(rating);
   const [handles, setHandles] = useState(false);
 

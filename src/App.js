@@ -7,6 +7,7 @@ import {
   ProtectedVendorLogin,
   ProtectedVendor,
   ProtectedSearch,
+  ProtectedUser
 } from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Sidebar from "./templates/Sidebar";
@@ -31,7 +32,6 @@ import LoginSuccess from "./components/LogReg/SuccessRegPage/LoginSuccess";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState();
   const [searched, setSearched] = useState({
     searchFill: "",
     filter: {
@@ -45,14 +45,23 @@ function App() {
     },
     loading: true,
   });
-  const [vendorlog, setVendorlog] = useState();
+  const [loginInfo, setLoginInfo] = useState({
+    token: "",
+    id: "",
+    name: "",
+    role: ""
+  });
 
   const toggling = () => {
     setIsOpen(!isOpen);
   };
+
   useEffect(() => {
-    setVendorlog(localStorage.getItem("tokenVendor"));
-    setName(localStorage.getItem("nama"));
+    setLoginInfo({
+      ...loginInfo,
+      name: `${localStorage.getItem("nama")}`,
+      token: `${localStorage.getItem("tokenVendor")}`,
+    });
   }, []);
 
   return (
@@ -62,50 +71,50 @@ function App() {
           <div className="content-wrap">
             <ScrollToTop />
             <searchContext.Provider value={{ searched, setSearched }}>
-              <loginContext.Provider value={{ vendorlog, setVendorlog }}>
+              <loginContext.Provider value={{ loginInfo, setLoginInfo }}>
                 <Sidebar
                   isOpen={isOpen}
                   toggling={toggling}
-                  isAuth={vendorlog}
+                  isAuth={loginInfo.token}
                 />
-                <Navbar toggling={toggling} isAuth={vendorlog} nama={name} />
+                <Navbar toggling={toggling} isAuth={loginInfo.token} nama={loginInfo.name} />
                 <Switch>
                   <ProtectedVendor
                     path="/"
                     component={Home}
                     exact
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                   />
-                  <Route path="/login" component={LoginPage} exact />
-                  <Route path="/register" component={RegisterPage} exact />
+                  <ProtectedUser path="/login" component={LoginPage} isAuth={loginInfo.token} exact />
+                  <ProtectedUser path="/register" component={RegisterPage} isAuth={loginInfo.token} exact />
                   <ProtectedVendorLogin
                     path="/vendor-chat"
                     component={VendorChat}
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-pesanan"
                     component={VendorPesanan}
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-produk"
                     component={VendorProduk}
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-keuangan"
                     component={VendorKeuangan}
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-profil"
                     component={VendorProfil}
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                     exact
                   />
                   <ProtectedRouteSucReg
@@ -117,7 +126,7 @@ function App() {
                     path="/searched"
                     component={SearchContent}
                     exact
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                   />
                   <Route path="/login-success" component={LoginSuccess} exact />
                   <Route path="/blog/:id" component={RoutedBlog} exact />
@@ -131,13 +140,13 @@ function App() {
                     path="/detailed-product/:id"
                     component={TampilanProdukPage}
                     exact
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                   />
                   <ProtectedVendor
                     path="/vendor/:vendor"
                     component={TampilanVendorPage}
                     exact
-                    isAuth={vendorlog}
+                    isAuth={loginInfo.token}
                   />
                 </Switch>
               </loginContext.Provider>

@@ -1,4 +1,4 @@
 import { createContext } from 'react'
 
-export const loginContext = createContext(null);
+export const loginContext = createContext({});
 export const searchContext = createContext({});

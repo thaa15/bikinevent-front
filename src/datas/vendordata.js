@@ -191,3 +191,24 @@ export const Kategories = [
         subcath:["Florist","Backdrop","Dekorasi Lainnya"]
     },
 ]
+
+export const StableCheck = [
+    [
+        false,false,false,false,false,false,false,false
+    ],
+    [
+        false,false,false,false
+    ],
+    [
+        false,false,false,false,false,false
+    ],
+    [
+        false,false,false,false,false,false,false,false,false
+    ],
+    [
+        false,false,false,false,false
+    ],
+    [
+        false,false,false
+    ]
+]

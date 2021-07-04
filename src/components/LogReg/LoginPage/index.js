@@ -89,7 +89,7 @@ const LoginPage = (props) => {
             setLoginUser({ ...loginUser, right: false });
             window.location.reload();
             window.location.href = "/vendor-chat";
-          }, 2000);
+          }, 1000);
           return response;
         }
         if (userData.user.role._id == pembeliId && role == "vendor") {
@@ -220,7 +220,7 @@ const LoginPage = (props) => {
                     <AiFillGooglePlusCircle style={{color: "white", fontSize:"20px", marginRight:"5px"}}/>
                     Google
                 </Buttonsgoogle>*/}
-            <a href="https://bikinevent.id/api/connect/google">
+            <a href="https://bikinevent.id/api/connect/google" style={{textDecoration:"none"}}>
               <GoogleLogin
                 clientId={null}
                 buttonText="Login"
