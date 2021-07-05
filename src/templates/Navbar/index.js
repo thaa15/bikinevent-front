@@ -28,12 +28,22 @@ import gambartest from "../../images/logocomp.png";
 import NavbarVendor from "./NavbarVendor";
 import { searchContext } from "../../context";
 
-const Navbar = ({ toggling, isAuth, nama }) => {
+const Navbar = ({ toggling, isAuth, nama, role }) => {
   const history = useHistory();
   const { searched, setSearched } = useContext(searchContext);
   const [getsearch, setGetsearch] = useState("");
   const [placehldr, setPlacehldr] = useState("");
   const [searchContent, setSearchContent] = useState(false);
+
+  const removed = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("nama");
+    localStorage.removeItem("vendor_id");
+    localStorage.removeItem("role");
+    
+    window.location.reload();
+    window.location.href = "/login";
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -47,7 +57,7 @@ const Navbar = ({ toggling, isAuth, nama }) => {
   };
   return (
     <>
-      {isAuth.length > 4 ? (
+      {isAuth.length > 4 && role === "vendor" ? (
         <NavbarVendor toggling={toggling} nama={nama} />
       ) : (
         <Nav>
@@ -143,18 +153,35 @@ const Navbar = ({ toggling, isAuth, nama }) => {
                 </ElementLink>
 
                 <LogOutContent>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <DisplayProf>Masuk/</DisplayProf>
-                    <DisplayProf name>Daftar</DisplayProf>
-                  </div>
-                  <DropdownContent>
-                    <ElementLink to="/login">
-                      <Dropdownlist>Masuk</Dropdownlist>
-                    </ElementLink>
-                    <ElementLink to="/register">
-                      <Dropdownlist>Daftar</Dropdownlist>
-                    </ElementLink>
-                  </DropdownContent>
+                  {nama.length > 4 ? (
+                    <>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <DisplayProf>Hello</DisplayProf>
+                        <DisplayProf name>{nama}</DisplayProf>
+                      </div>
+                      <DropdownContent>
+                        <ElementLink onClick={removed}>
+                          <Dropdownlist>LogOut</Dropdownlist>
+                        </ElementLink>
+                      </DropdownContent>
+                    </>
+                  ) : (
+                    <>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <DisplayProf>Masuk/</DisplayProf>
+                        <DisplayProf name>Daftar</DisplayProf>
+                      </div>
+                      <DropdownContent>
+                        <ElementLink to="/login">
+                          <Dropdownlist>Masuk</Dropdownlist>
+                        </ElementLink>
+                        <ElementLink to="/register">
+                          <Dropdownlist>Daftar</Dropdownlist>
+                        </ElementLink>
+                      </DropdownContent>
+                    </>
+                  )}
+
                 </LogOutContent>
               </ProfButton>
             </NavItem>

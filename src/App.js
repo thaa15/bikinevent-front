@@ -18,7 +18,7 @@ import ScrollToTop from "./templates/ScrollToTop";
 import RegisterPage from "./components/LogReg/RegisterPage";
 import SuccessReg from "./components/LogReg/SuccessRegPage";
 import { RoutedBlog, Blogs } from "./pages/blog";
-import { FAQ, TentangKami, Panduan, Privasi, Refund } from "./pages/pelayanan";
+import { FAQ, TentangKami, Panduan, Privasi, Refund, Syarat } from "./pages/pelayanan";
 import { TampilanProdukPage, TampilanVendorPage } from "./pages/vendor_produk";
 import {
   VendorChat,
@@ -60,7 +60,8 @@ function App() {
     setLoginInfo({
       ...loginInfo,
       name: `${localStorage.getItem("nama")}`,
-      token: `${localStorage.getItem("tokenVendor")}`,
+      token: `${localStorage.getItem("token")}`,
+      role: `${localStorage.getItem("role")}`
     });
   }, []);
 
@@ -76,13 +77,19 @@ function App() {
                   isOpen={isOpen}
                   toggling={toggling}
                   isAuth={loginInfo.token}
+                  role={loginInfo.role}
                 />
-                <Navbar toggling={toggling} isAuth={loginInfo.token} nama={loginInfo.name} />
+                <Navbar
+                  toggling={toggling}
+                  isAuth={loginInfo.token}
+                  nama={loginInfo.name}
+                  role={loginInfo.role} />
                 <Switch>
                   <ProtectedVendor
                     path="/"
                     component={Home}
                     exact
+                    role={loginInfo.role}
                     isAuth={loginInfo.token}
                   />
                   <ProtectedUser path="/login" component={LoginPage} isAuth={loginInfo.token} exact />
@@ -91,30 +98,35 @@ function App() {
                     path="/vendor-chat"
                     component={VendorChat}
                     isAuth={loginInfo.token}
+                    role={loginInfo.role}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-pesanan"
                     component={VendorPesanan}
                     isAuth={loginInfo.token}
+                    role={loginInfo.role}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-produk"
                     component={VendorProduk}
                     isAuth={loginInfo.token}
+                    role={loginInfo.role}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-keuangan"
                     component={VendorKeuangan}
                     isAuth={loginInfo.token}
+                    role={loginInfo.role}
                     exact
                   />
                   <ProtectedVendorLogin
                     path="/vendor-profil"
                     component={VendorProfil}
                     isAuth={loginInfo.token}
+                    role={loginInfo.role}
                     exact
                   />
                   <ProtectedRouteSucReg
@@ -125,6 +137,7 @@ function App() {
                   <ProtectedSearch
                     path="/searched"
                     component={SearchContent}
+                    role={loginInfo.role}
                     exact
                     isAuth={loginInfo.token}
                   />
@@ -136,15 +149,18 @@ function App() {
                   <Route path="/panduan" component={Panduan} exact />
                   <Route path="/privasi" component={Privasi} exact />
                   <Route path="/refund" component={Refund} exact />
+                  <Route path="/syarat" component={Syarat} exact />
                   <ProtectedVendor
                     path="/detailed-product/:id"
                     component={TampilanProdukPage}
+                    role={loginInfo.role}
                     exact
                     isAuth={loginInfo.token}
                   />
                   <ProtectedVendor
                     path="/vendor/:vendor"
                     component={TampilanVendorPage}
+                    role={loginInfo.role}
                     exact
                     isAuth={loginInfo.token}
                   />

@@ -69,6 +69,15 @@ const LoginPage = (props) => {
       if (userData) {
         if (userData.user.role._id == pembeliId && role == "pembeli") {
           //Nanti push ke halaman lainnya disini ya (Pembeli)
+          localStorage.setItem("token", userData.jwt);
+          localStorage.setItem("nama", userData.user.nama_lengkap);
+          localStorage.setItem("role","pembeli");
+          setLoginUser({ ...loginUser, right: true });
+          setTimeout(() => {
+            setLoginUser({ ...loginUser, right: false });
+            window.location.reload();
+            window.location.href = "/";
+          }, 1000);
           return response;
         }
         if (userData.user.role._id != pembeliId && role == "pembeli") {
@@ -81,9 +90,10 @@ const LoginPage = (props) => {
           );
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
-          localStorage.setItem("tokenVendor", userData.jwt);
+          localStorage.setItem("token", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
           localStorage.setItem("vendor_id", userData.user.vendor._id);
+          localStorage.setItem("role","vendor");
           setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
             setLoginUser({ ...loginUser, right: false });

@@ -47,7 +47,7 @@ const Footer = () => {
 
                     <FooterBox>
                         <FooterExp title row>Legal</FooterExp>
-                        <FooterExpLink>Syarat dan Ketentuan</FooterExpLink>
+                        <FooterExpLink to="/syarat">Syarat dan Ketentuan</FooterExpLink>
                         <FooterExpLink to="/privasi">Kebijakan Privasi</FooterExpLink>
                         <FooterExpLink to="/refund">Kebijakan Refund</FooterExpLink>
                     </FooterBox>

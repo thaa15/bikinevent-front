@@ -112,10 +112,31 @@ const Refund = () => {
     )
 }
 
+const Syarat = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    setTimeout(() => {
+        setIsLoading(false);
+    }, 1500)
+    return (
+        <>
+            {isLoading ? (
+                <>
+                    <LoadingPage />
+                </>) : (
+                <>
+                    <HeaderSmall text="Layanan Pelanggan dan Legal" />
+                    <LegalLayanContent type="syarat" data={RefundData} />
+                </>)}
+        </>
+    )
+}
+
 export {
     FAQ,
     TentangKami,
     Panduan,
     Privasi,
-    Refund
+    Refund,
+    Syarat
 };

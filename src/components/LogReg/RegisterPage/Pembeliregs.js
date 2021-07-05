@@ -11,10 +11,17 @@ import { withRouter } from "react-router-dom";
 import { CheckBoxInput, TermanConds } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { authService } from "../../../services/Auth";
+import {
+  PopBgSuccess,
+  BgSuccess,
+  Succesicon,
+} from "../../../templates/GlobalTemplate";
 
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
+  const [accountCreated, setAccountCreated] = useState(false);
+
   const [formData, setFormData] = useState({
     nama_lengkap: "",
     email: "",
@@ -36,10 +43,14 @@ const Pembeliregs = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setAccountCreated(true)
     const response = await authService.register(formData).catch((err) => {
       return setError(err.response.data.data[0].messages[0].message);
     });
-    props.history.push("/login");
+    setTimeout(() => {
+      setAccountCreated(false);
+      props.history.push("/login");
+    }, 700);
     return response;
   };
 
@@ -88,7 +99,7 @@ const Pembeliregs = (props) => {
         <LoginInput
           type={typepw}
           required
-          pattern=".{6,}" 
+          pattern=".{6,}"
           title="Enam atau lebih karakter"
           name="password"
           pw
@@ -129,6 +140,17 @@ const Pembeliregs = (props) => {
       <Buttonslog type="submit">
         <Buttons>Daftar</Buttons>
       </Buttonslog>
+      {accountCreated ? (
+        <PopBgSuccess>
+          <BgSuccess aktif={accountCreated === true} right>
+            <Succesicon />
+            <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+              <b>SUCCESS</b>
+              Akun Berhasil Dibuat
+            </div>
+          </BgSuccess>
+        </PopBgSuccess>
+      ) : (<></>)}
     </form>
   );
 };

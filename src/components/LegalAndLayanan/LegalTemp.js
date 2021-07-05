@@ -15,6 +15,9 @@ const LegalTemp = ({typeLegal}) => {
                 <Otwrit aktif={"panduan" === typeLegal} to="/panduan">
                     Panduan Pemesanan
                 </Otwrit>
+                <Otwrit aktif={"syarat" === typeLegal} to="/syarat">
+                    Syarat Dan Ketentuan
+                </Otwrit>
                 <Otwrit aktif={"privasi" === typeLegal} to="/privasi">
                     Kebijakan Privasi
                 </Otwrit>

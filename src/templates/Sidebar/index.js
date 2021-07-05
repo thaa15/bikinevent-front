@@ -16,51 +16,66 @@ import {
 } from "./SidebarStyled";
 import SidebarVendor from "./SidebarVendor"
 
-const Sidebar = ({ isOpen, toggling,isAuth }) => {
+const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
+    const removed = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("nama");
+        localStorage.removeItem("vendor_id");
+        localStorage.removeItem("role");
+
+        window.location.reload();
+        window.location.href = "/login";
+        toggling = false;
+    }
     return (
         <>
-        {isAuth !== null ? (
-            <SidebarVendor isOpen={isOpen} toggling={toggling}/>
-        ) : (
-        <SidebarContainer isOpen={isOpen}>
-            <SidebarWrapperContainer>
-                <Icon>
-                    <CloseIcon onClick={toggling} />
-                </Icon>
+            {isAuth.length > 4 && role === "vendor" ? (
+                <SidebarVendor isOpen={isOpen} toggling={toggling} />
+            ) : (
+                <SidebarContainer isOpen={isOpen}>
+                    <SidebarWrapperContainer>
+                        <Icon>
+                            <CloseIcon onClick={toggling} />
+                        </Icon>
 
-                <SidebarWrapper>
-                    <SidebarLink to="/" onClick={toggling}>
-                        <SideBtnWrap>
-                            <HomeButton />Home
-                        </SideBtnWrap>
-                    </SidebarLink>
+                        <SidebarWrapper>
+                            <SidebarLink to="/" onClick={toggling}>
+                                <SideBtnWrap>
+                                    <HomeButton />Home
+                                </SideBtnWrap>
+                            </SidebarLink>
 
-                    <SidebarLink to="/" onClick={toggling}>
-                        <SideBtnWrap>
-                            <ShoppingCartIcon />Cart
-                        </SideBtnWrap>
-                    </SidebarLink>
+                            <SidebarLink to="/" onClick={toggling}>
+                                <SideBtnWrap>
+                                    <ShoppingCartIcon />Cart
+                                </SideBtnWrap>
+                            </SidebarLink>
 
-                    <SidebarLink to="/" onClick={toggling}>
-                        <SideBtnWrap>
-                            <ChatIcon />Chat
-                        </SideBtnWrap>
-                    </SidebarLink>
+                            <SidebarLink to="/" onClick={toggling}>
+                                <SideBtnWrap>
+                                    <ChatIcon />Chat
+                                </SideBtnWrap>
+                            </SidebarLink>
 
-                    <SidebarLink to="/" onClick={toggling}>
-                        <SideBtnWrap>
-                            <ProfileIcon />Profile
-                        </SideBtnWrap>
-                    </SidebarLink>
-                </SidebarWrapper>
-
-                <div style={{width:"50%",margin:"0 auto"}}>
-                    <ButtonBottom to="/login" onClick={toggling}>Login</ButtonBottom>
-                    <ButtonBottom call to="/register" onClick={toggling}>Register</ButtonBottom>
-                </div>
-            </SidebarWrapperContainer>
-        </SidebarContainer>
-        )}
+                            <SidebarLink to="/" onClick={toggling}>
+                                <SideBtnWrap>
+                                    <ProfileIcon />Profile
+                                </SideBtnWrap>
+                            </SidebarLink>
+                        </SidebarWrapper>
+                        {role.length > 4 ? (
+                            <div style={{ width: "50%", margin: "0 auto" }}>
+                                <ButtonBottom onClick={removed}>Logout</ButtonBottom>
+                            </div>
+                        ) : (
+                            <div style={{ width: "50%", margin: "0 auto" }}>
+                                <ButtonBottom to="/login" onClick={toggling}>Login</ButtonBottom>
+                                <ButtonBottom call to="/register" onClick={toggling}>Register</ButtonBottom>
+                            </div>
+                        )}
+                    </SidebarWrapperContainer>
+                </SidebarContainer>
+            )}
         </>
     );
 };

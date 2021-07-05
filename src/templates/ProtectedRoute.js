@@ -29,6 +29,7 @@ export const ProtectedRouteSucReg = ({ component: Component, ...rest }) => {
 
 export const ProtectedVendorLogin = ({
   isAuth,
+  role,
   component: Component,
   ...rest
 }) => {
@@ -36,7 +37,7 @@ export const ProtectedVendorLogin = ({
     <Route
       {...rest}
       render={(props) => {
-        if (isAuth.length > 4 || isAuth !== "null") {
+        if ((isAuth.length > 4 || isAuth !== "null") && role === "vendor" ) {
           return <Component {...props} />;
         } else {
           return (
@@ -55,12 +56,12 @@ export const ProtectedVendorLogin = ({
   );
 };
 
-export const ProtectedVendor = ({ isAuth, component: Component, ...rest }) => {
+export const ProtectedVendor = ({ isAuth,role, component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isAuth.length <= 4) {
+        if (isAuth.length <= 4 || role !== "vendor") {
           return <Component {...props} />;
         } else {
           return (
@@ -103,13 +104,13 @@ export const ProtectedUser = ({ isAuth, component: Component, ...rest }) => {
   );
 };
 
-export const ProtectedSearch = ({ searchs, isAuth,component: Component, ...rest }) => {
+export const ProtectedSearch = ({ searchs,role, isAuth,component: Component, ...rest }) => {
   const { searched, setSearched } = useContext(searchContext);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (searched.searchFill.length != 0 && isAuth.length <= 4) {
+        if (searched.searchFill.length != 0 && (isAuth.length <= 4 || role !== "vendor")) {
           return <Component {...props} />;
         } else {
           return (

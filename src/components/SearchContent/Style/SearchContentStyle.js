@@ -27,7 +27,7 @@ export const OtherSearch = styled.div`
         display:${(props)=>props.aktif ? "block" : "none"};
         position: fixed;
         z-index: 999;
-        width: 100%;sad
+        width: 100%;
         height:100%;
         background: white;
         transition: all 1s ease-in-out;

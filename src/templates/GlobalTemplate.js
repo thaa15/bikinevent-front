@@ -24,7 +24,7 @@ export const PopUpBg = styled.div`
     background-color: ${(props)=>props.need ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.8)"};
     z-index: 51;
     padding: 15px;
-    overflow-y: visible;
+    overflow-y: ${(props)=>props.needs ? "scroll" : "visible"};
 `;
 
 export const ContentPopUp = styled.div`

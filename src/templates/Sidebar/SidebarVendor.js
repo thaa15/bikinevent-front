@@ -17,12 +17,14 @@ import {
 
 const SidebarVendor = ({ isOpen, toggling }) => {
     const removed = () => {
-        localStorage.removeItem("tokenVendor");
+        localStorage.removeItem("token");
         localStorage.removeItem("nama");
+        localStorage.removeItem("vendor_id");
+        localStorage.removeItem("role");
 
         window.location.reload();
-        window.location.href = "/";
-        toggling=false;
+        window.location.href = "/login";
+        toggling = false;
     }
     return (
         <SidebarContainer isOpen={isOpen}>

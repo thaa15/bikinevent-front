@@ -16,12 +16,14 @@ import gambartest from "../../images/logocomp.png";
 
 const NavbarVendor = ({ toggling, nama }) => {
     const removed = () => {
-        localStorage.removeItem("tokenVendor");
+        localStorage.removeItem("token");
         localStorage.removeItem("nama");
-
+        localStorage.removeItem("vendor_id");
+        localStorage.removeItem("role");
+        
         window.location.reload();
         window.location.href = "/login";
-    }
+      }
     return (
         <Nav>
             <NavSet>
