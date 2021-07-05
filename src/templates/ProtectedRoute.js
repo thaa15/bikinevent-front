@@ -37,7 +37,7 @@ export const ProtectedVendorLogin = ({
     <Route
       {...rest}
       render={(props) => {
-        if ((isAuth.length > 4 || isAuth !== "null") && role === "vendor" ) {
+        if ((isAuth.length > 4 || isAuth !== "null") && role !== "pembeli" ) {
           return <Component {...props} />;
         } else {
           return (

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {AiFillStar} from "react-icons/ai";
+import {BsFillTrashFill} from "react-icons/bs";
 
 export const BoxedPrice = styled.div`
     background: white;
@@ -54,6 +55,12 @@ export const ApartPriced = styled.div`
 export const Star = styled(AiFillStar)`
     font-size: 15px;
     color: #F2C94C;
+    padding: 0 2px;
+`;
+
+export const Trash = styled(BsFillTrashFill)`
+    font-size: 20px;
+    color: white;
     padding: 0 2px;
 `;
 
@@ -135,6 +142,20 @@ export const ButtonVendor = styled.div`
     margin-right: ${(props)=>props.ubah? "5px" : "0"};
 `;
 
+export const ButtonDelete = styled.div`
+    background: #E30045;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 8px;
+    height: fit-content;
+    cursor:pointer;
+    margin: 4px auto;
+`;
+
 export const ApartButton = styled.div`
     display: flex;
     flex-direction: row;
@@ -155,18 +176,15 @@ export const BoxedVendor = styled.div`
 export const ApartVendor = styled.div`
     display: flex;
     flex-direction: column;
-    height: 105px;
+    height: ${(props)=>props.ars ? "155px" : "105px"};
     justify-content: space-between;
     @media screen and (max-width: 423px) {
-        height: 130px;
-    }
-    @media screen and (max-width: 391px) {
-        height: 130px;
+        height: ${(props)=>props.ars ? "180px" : "130px"};
     }
     @media screen and (max-width: 375px) {
-        height: 95px;
+        height: ${(props)=>props.ars ? "145px" : "95px"};
     }
     @media screen and (max-width: 209px) {
-        height: 120px;
+        height: ${(props)=>props.ars ? "170px" : "120px"};
     }
 `;

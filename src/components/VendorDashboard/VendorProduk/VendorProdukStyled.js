@@ -6,6 +6,12 @@ export const ButtonAddProduct = styled.div`
     border-radius: 10px;
     margin: 6px 0 13px;
     cursor: pointer;
+    &:hover {
+        background-color:#a3143f;
+    }
+    &:active{
+        background-color:#c91a4f;
+    }
 `;
 
 export const ButtonAddProdTitl = styled.div`

@@ -72,6 +72,7 @@ const SearchContent = () => {
   const filterHandler = (e) => {
     e.preventDefault();
     setSearched({ ...searched, filter: getFilter, rangeFilter: getRangeFilter });
+    setActive(false);
   };
 
   useEffect(() => {

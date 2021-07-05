@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   BoxedPrice,
   BoxImage,
@@ -16,6 +16,8 @@ import {
   ApartButton,
   BoxedVendor,
   ApartVendor,
+  ButtonDelete,
+  Trash
 } from "./BoxStyled";
 import EllipsisText from "react-ellipsis-text";
 import { productService } from "../../services/Product";
@@ -23,15 +25,15 @@ import { loginContext } from "../../context";
 import { PopBgSuccess, BgSuccess, Succesicon } from "../../templates/GlobalTemplate";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
-  const [prices,setPrices] = useState(harga.toLocaleString("id-ID"));
-  const [rates,setRates] = useState(rate);
-  const [handles,setHandles] = useState(false);
+  const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
+  const [rates, setRates] = useState(rate);
+  const [handles, setHandles] = useState(false);
 
   useEffect(() => {
-    if(rates === undefined) setRates(0);
+    if (rates === undefined) setRates(0);
     else setRates(rate);
 
-    if(prices.length > 11) setHandles(true);
+    if (prices.length > 11) setHandles(true);
   }, [])
   return (
     <>
@@ -45,7 +47,7 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
             </BoxExp>
           </div>
           <div style={{ flexBasis: "40%" }}>
-            <Price handle = {handles}>Rp{prices}</Price>
+            <Price handle={handles}>Rp{prices}</Price>
             <BoxExp>
               <Star />
               {rates} / 5.0 ({review} Ulasan)
@@ -60,11 +62,11 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
 const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   const { loginInfo } = useContext(loginContext);
   const [loginUser, setLoginUser] = useState(false);
-  const [prices,setPrices] = useState(harga.toLocaleString("id-ID"));
-  const [handles,setHandles] = useState(false);
+  const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
+  const [handles, setHandles] = useState(false);
 
   useEffect(() => {
-    if(prices.length > 11) setHandles(true);
+    if (prices.length > 11) setHandles(true);
   }, [])
 
   const changeHandler = async () => {
@@ -92,13 +94,17 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
     setTimeout(() => {
       setLoginUser(false);
       window.location.reload();
-    }, 1000);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 500);
   };
   return (
     <>
       <BoxedVendor>
         <BoxImage img={image} />
-        <ApartVendor>
+        <ApartVendor ars ={statss !== "Arsipkan"}>
           <div style={{ flexBasis: "60%" }}>
             <BoxExp titlee>
               <EllipsisText text={judul} length={"35"} />
@@ -109,6 +115,13 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
             <ButtonVendor ubah>Ubah</ButtonVendor>
             <ButtonVendor onClick={changeHandler}>{statss}</ButtonVendor>
           </ApartButton>
+
+          {statss !== "Arsipkan" ? (
+            <ButtonDelete >
+              <Trash />
+            </ButtonDelete>
+          ) : (<></>)}
+
         </ApartVendor>
         {loginUser ? (
           <PopBgSuccess>
