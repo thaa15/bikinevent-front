@@ -69,7 +69,7 @@ export const DropdownContent = styled.div`
 export const Dropdownlist = styled.div`
     font-size: 13px;
     position:relative;
-    line-height: 24px;
+    line-height: ${(props)=>props.need ? "17px" : "24px"};
     color: #909DAA;
     padding: 15px;
     width:100%;
@@ -150,7 +150,7 @@ export const ProfButton = styled.div`
 `;
 
 export const DisplayProf = styled.div`
-    cursor:pointer;
+    cursor: ${(props)=>props.need ? "auto" : "pointer" };
     font-size: ${(props) => props.name ? "18px" : "12px"};
     line-height: ${(props) => props.name ? "27px" : "18px"};
     color: ${(props) => props.name ? "#212B36" : "#909DAA"};
@@ -162,6 +162,15 @@ export const DisplayProf = styled.div`
 `;
 
 export const ElementLink = styled(LinkR)`
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+`;
+
+export const ElementLinks = styled.div`
     cursor: pointer;
     text-decoration: none;
     border: none;
@@ -246,23 +255,24 @@ export const MobileIconVendor = styled.div`
 export const LogOutContent = styled.div`
     display: flex;
     flex-direciton: column;
-    width: 100%;
+    width: ${(props)=>props.need ? "100%" : "100%"};
     height: 100%;
     position: relative;
     &:hover ${DropdownContent}{
         top:100%;
+        margin-left: ${(props)=>props.need ? "-50px" : "0"};
         display: block;
-        -webkit-transition: .3s ease-out;
-        -moz-transition: .3s ease-out;
-        -o-transition: .3s ease-out;
-        -ms-transition: .3s ease-out;
-        transition: .3s ease-out;
+        -webkit-transition: transform .3s ease-out;
+        -moz-transition: transform .3s ease-out;
+        -o-transition: transform .3s ease-out;
+        -ms-transition: transform .3s ease-out;
+        transition: transform .3s ease-out;
         opacity: 1;
         visibility: visible;
         transform: scaleY(1);
     }
     @media screen and (max-width: 906px) {
-        width: 100px;
+        width: ${(props)=>props.need ? "100%" : "100px"};
     }
 `;
 

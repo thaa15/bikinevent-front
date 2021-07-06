@@ -4,8 +4,7 @@ import bannerhome from "../../../images/homebanner.png"
 
 const Banner = () => {
     return(
-        <BannerContainer img={bannerhome}>
-        </BannerContainer>
+        <BannerContainer src={bannerhome} />
     )
 };
 

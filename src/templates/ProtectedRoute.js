@@ -56,6 +56,35 @@ export const ProtectedVendorLogin = ({
   );
 };
 
+export const ProtectedPembeliLogin = ({
+  isAuth,
+  role,
+  component: Component,
+  ...rest
+}) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        if ((isAuth.length > 4 || isAuth !== "null") && role !== "vendor" ) {
+          return <Component {...props} />;
+        } else {
+          return (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: {
+                  from: props.location,
+                },
+              }}
+            />
+          );
+        }
+      }}
+    />
+  );
+};
+
 export const ProtectedVendor = ({ isAuth,role, component: Component, ...rest }) => {
   return (
     <Route

@@ -107,7 +107,7 @@ export const PopBgSuccess = styled.div`
 `;
 
 export const BgSuccess = styled.div`
-    margin: 0 auto 20px;
+    margin: 0 auto 50px;
     width: 330px;
     border-radius:10px;
     display:flex;

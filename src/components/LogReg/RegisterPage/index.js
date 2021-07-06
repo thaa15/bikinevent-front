@@ -40,7 +40,7 @@ const RegisterPage = (props) => {
                         <RegisterTittle>Daftar Sebagai</RegisterTittle>
                         <HaveAccount>
                             Sudah memiliki akun?
-                    <HaveAccountLink to="/login">Log In</HaveAccountLink>
+                            <HaveAccountLink to="/login">Log In</HaveAccountLink>
                         </HaveAccount>
                         <TypeChoose>
                             <TypeApart onClick={() => { setCheckreg(true) }}
@@ -49,7 +49,7 @@ const RegisterPage = (props) => {
                                     <TypeImage src={pembelireg}>
                                         <TypeSigned>
                                             Pembeli
-                                    <IconCheck aktif={checkreg === true}>
+                                            <IconCheck aktif={checkreg === true}>
                                                 <ChecklistCircle />
                                             </IconCheck>
                                         </TypeSigned>
@@ -62,7 +62,7 @@ const RegisterPage = (props) => {
                                     <TypeImage src={vendorreg}>
                                         <TypeSigned>
                                             Vendor
-                                    <IconCheck aktif={checkreg === false}>
+                                            <IconCheck aktif={checkreg === false}>
                                                 <FaCheckCircle style={{
                                                     color: "#219653",
                                                     fontSize: "40px",
@@ -78,7 +78,7 @@ const RegisterPage = (props) => {
 
                         <Welcomed>
                             Selamat Datang! <br /> Mohon lengkapi data di bawah untuk daftar
-                </Welcomed>
+                        </Welcomed>
                         {checkreg ? (
                             <Pembeliregs />
                         ) : (

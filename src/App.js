@@ -7,7 +7,8 @@ import {
   ProtectedVendorLogin,
   ProtectedVendor,
   ProtectedSearch,
-  ProtectedUser
+  ProtectedUser,
+  ProtectedPembeliLogin
 } from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Sidebar from "./templates/Sidebar";
@@ -29,6 +30,9 @@ import {
 } from "./pages/vendorcenter";
 import SearchContent from "./components/SearchContent";
 import LoginSuccess from "./components/LogReg/SuccessRegPage/LoginSuccess";
+import {
+  PembeliProfil
+} from "./pages/pembelidashboard"
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -150,6 +154,13 @@ function App() {
                   <Route path="/privasi" component={Privasi} exact />
                   <Route path="/refund" component={Refund} exact />
                   <Route path="/syarat" component={Syarat} exact />
+                  <ProtectedPembeliLogin
+                    path="/client-profil"
+                    role={loginInfo.role}
+                    exact
+                    component={PembeliProfil}
+                    isAuth={loginInfo.token}
+                  />
                   <ProtectedVendor
                     path="/detailed-product/:id"
                     component={TampilanProdukPage}

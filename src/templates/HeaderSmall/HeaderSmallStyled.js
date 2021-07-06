@@ -8,7 +8,7 @@ export const HeaderBg = styled.div`
 `;
 
 export const HeaderWrited = styled.div`
-    max-width: 80%;
+    max-width: 82%;
     font-size: 14px;
     font-weight: 500;
     line-height: 21px;

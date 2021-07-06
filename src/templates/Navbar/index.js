@@ -19,7 +19,8 @@ import {
   ProfileIcon,
   MobileIcon,
   LogOutContent,
-  DropdownSearchContent
+  DropdownSearchContent,
+  ElementLinks
 } from "./NavbarStyled";
 import { FiSearch } from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
@@ -40,7 +41,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     localStorage.removeItem("nama");
     localStorage.removeItem("vendor_id");
     localStorage.removeItem("role");
-    
+
     window.location.reload();
     window.location.href = "/login";
   }
@@ -148,23 +149,35 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                 <ElementLink to="/">
                   <ChatIcon />
                 </ElementLink>
-                <ElementLink to="/">
-                  <ProfileIcon />
-                </ElementLink>
-
-                <LogOutContent>
-                  {nama.length > 4 ? (
-                    <>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <DisplayProf>Hello</DisplayProf>
-                        <DisplayProf name>{nama}</DisplayProf>
-                      </div>
-                      <DropdownContent>
-                        <ElementLink onClick={removed}>
+                {nama !== "null" ? (
+                  <LogOutContent need>
+                    <ElementLinks>
+                      <ProfileIcon />
+                    </ElementLinks>
+                    <DropdownContent>
+                      <ElementLink to="/client-profil">
+                        <Dropdownlist>Profile</Dropdownlist>
+                      </ElementLink>
+                      <ElementLink to="/">
+                        <Dropdownlist>Pesanan</Dropdownlist>
+                      </ElementLink>
+                      <ElementLink onClick={removed}>
                           <Dropdownlist>LogOut</Dropdownlist>
                         </ElementLink>
-                      </DropdownContent>
-                    </>
+                    </DropdownContent>
+                  </LogOutContent>
+                ) : (
+                  <ElementLink to="/client-profil">
+                    <ProfileIcon />
+                  </ElementLink>
+                )}
+
+                <LogOutContent>
+                  {nama !== "null" ? (
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <DisplayProf need>Hello</DisplayProf>
+                        <DisplayProf name need>{nama}</DisplayProf>
+                      </div>
                   ) : (
                     <>
                       <div style={{ display: "flex", flexDirection: "column" }}>

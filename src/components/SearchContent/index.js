@@ -148,7 +148,6 @@ const SearchContent = () => {
         ),
       ...old.slice(row + 1, 7)]);
   }
-  console.log(checkSubcath);
   return (
     <>
       {searched.loading ? (

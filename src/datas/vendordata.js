@@ -156,6 +156,47 @@ export const ProfileVendor = [
     }
 ]
 
+export const ProfilePembeli = [
+    {
+        id:"1",
+        name:"Ernia Watson",
+        email:"Ernia@yahud.com",
+        phone_number:"+6112312312",
+        client_information: [
+            {
+                title_name:"Saffan Firdaus",
+                number:"081395090000",
+                address:"Jl. ABC Tengah no 18 RT 04 RW 11, Kelurahan Zebra Cikutra Barat, Kota Bandung, 40123",
+            },
+            {
+                title_name:"Kevin Ahmad",
+                number:"081312343333",
+                address:"Jl. CDE Utara no 14 RT 05 RW 04, Kelurahan Kijang Cimenyan Barat, Kota Bogor, 42312",
+            },
+            {
+                title_name:"Saffan Firdaus",
+                number:"081395090000",
+                address:"Jl. ABC Tengah no 18 RT 04 RW 11, Kelurahan Zebra Cikutra Barat, Kota Bandung, 40123",
+            },
+            {
+                title_name:"Kevin Ahmad",
+                number:"081312343333",
+                address:"Jl. CDE Utara no 14 RT 05 RW 04, Kelurahan Kijang Cimenyan Barat, Kota Bogor, 42312",
+            },
+            {
+                title_name:"Kevin Ahmad",
+                number:"081312343333",
+                address:"Jl. CDE Utara no 14 RT 05 RW 04, Kelurahan Kijang Cimenyan Barat, Kota Bogor, 42312",
+            },
+            {
+                title_name:"Saffan Firdaus",
+                number:"081395090000",
+                address:"Jl. ABC Tengah no 18 RT 04 RW 11, Kelurahan Zebra Cikutra Barat, Kota Bandung, 40123",
+            },
+        ],
+    }
+]
+
 export const VendorChat = [
     {
         id:"1",

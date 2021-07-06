@@ -57,7 +57,7 @@ const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
                                 </SideBtnWrap>
                             </SidebarLink>
 
-                            <SidebarLink to="/" onClick={toggling}>
+                            <SidebarLink to="/client-profil" onClick={toggling}>
                                 <SideBtnWrap>
                                     <ProfileIcon />Profile
                                 </SideBtnWrap>
