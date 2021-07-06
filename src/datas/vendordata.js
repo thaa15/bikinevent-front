@@ -194,6 +194,9 @@ export const ProfilePembeli = [
                 address:"Jl. ABC Tengah no 18 RT 04 RW 11, Kelurahan Zebra Cikutra Barat, Kota Bandung, 40123",
             },
         ],
+        order:[
+            
+        ]
     }
 ]
 
