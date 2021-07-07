@@ -134,7 +134,7 @@ const PembeliProfilContent = ({
                                     setTimeout(() => {
                                         setPwChanged(false);
                                         window.location.reload();
-                                    }, 2000);
+                                    }, 900);
                                 }}>
                                     <Buttons>Simpan</Buttons>
                                 </Buttonslog>

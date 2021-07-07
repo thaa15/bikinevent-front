@@ -20,7 +20,8 @@ import {
   MobileIcon,
   LogOutContent,
   DropdownSearchContent,
-  ElementLinks
+  ElementLinks,
+  NotifBadge
 } from "./NavbarStyled";
 import { FiSearch } from "react-icons/fi";
 import { FaBars } from "react-icons/fa";
@@ -28,6 +29,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import gambartest from "../../images/logocomp.png";
 import NavbarVendor from "./NavbarVendor";
 import { searchContext } from "../../context";
+import { ProfilePembeli } from "../../datas/vendordata";
 
 const Navbar = ({ toggling, isAuth, nama, role }) => {
   const history = useHistory();
@@ -56,6 +58,10 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     setPlacehldr("");
     setSearchContent(false)
   };
+  const data = ProfilePembeli.filter(
+    (dats) => dats.name === "Ernia Watson").map(
+      item=>item.order);
+  const sum = data[0].reduce((a,b)=>a+b.items.length,0)
   return (
     <>
       {isAuth.length > 4 && role === "vendor" ? (
@@ -143,41 +149,52 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
 
             <NavItem part="18%" removedl>
               <ProfButton>
-                <ElementLink to="/">
-                  <ShoppingCartIcon />
-                </ElementLink>
-                <ElementLink to="/">
-                  <ChatIcon />
-                </ElementLink>
                 {nama !== "null" ? (
-                  <LogOutContent need>
-                    <ElementLinks>
-                      <ProfileIcon />
-                    </ElementLinks>
-                    <DropdownContent>
-                      <ElementLink to="/client-profil">
-                        <Dropdownlist>Profile</Dropdownlist>
-                      </ElementLink>
-                      <ElementLink to="/">
-                        <Dropdownlist>Pesanan</Dropdownlist>
-                      </ElementLink>
-                      <ElementLink onClick={removed}>
+                  <>
+                    <ElementLink to="/client-purchase/cart">
+                        <ShoppingCartIcon />
+                        <NotifBadge>{sum}</NotifBadge>
+                    </ElementLink>
+                    <ElementLink to="/">
+                      <ChatIcon />
+                    </ElementLink>
+                    <LogOutContent need>
+                      <ElementLinks>
+                        <ProfileIcon />
+                      </ElementLinks>
+                      <DropdownContent>
+                        <ElementLink to="/client-profil">
+                          <Dropdownlist>Profile</Dropdownlist>
+                        </ElementLink>
+                        <ElementLink to="/">
+                          <Dropdownlist>Pesanan</Dropdownlist>
+                        </ElementLink>
+                        <ElementLink onClick={removed}>
                           <Dropdownlist>LogOut</Dropdownlist>
                         </ElementLink>
-                    </DropdownContent>
-                  </LogOutContent>
+                      </DropdownContent>
+                    </LogOutContent>
+                  </>
                 ) : (
-                  <ElementLink to="/client-profil">
-                    <ProfileIcon />
-                  </ElementLink>
+                  <>
+                    <ElementLink to="/client-purchase/cart">
+                      <ShoppingCartIcon />
+                    </ElementLink>
+                    <ElementLink to="/">
+                      <ChatIcon />
+                    </ElementLink>
+                    <ElementLink to="/client-profil">
+                      <ProfileIcon />
+                    </ElementLink>
+                  </>
                 )}
 
                 <LogOutContent>
                   {nama !== "null" ? (
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <DisplayProf need>Hello</DisplayProf>
-                        <DisplayProf name need>{nama}</DisplayProf>
-                      </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <DisplayProf need>Hello</DisplayProf>
+                      <DisplayProf name need>{nama}</DisplayProf>
+                    </div>
                   ) : (
                     <>
                       <div style={{ display: "flex", flexDirection: "column" }}>

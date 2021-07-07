@@ -14,7 +14,6 @@ import {
   Buttons,
   Liner,
   OrLine,
-  Buttonsgoogle,
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
 import { AuthLogins } from "../../../AllAuth";
@@ -226,10 +225,6 @@ const LoginPage = (props) => {
               <OrLine>atau</OrLine>
             </Liner>
 
-            {/*<Buttonsgoogle>
-                    <AiFillGooglePlusCircle style={{color: "white", fontSize:"20px", marginRight:"5px"}}/>
-                    Google
-                </Buttonsgoogle>*/}
             <a href="https://bikinevent.id/api/connect/google" style={{textDecoration:"none"}}>
               <GoogleLogin
                 clientId={null}

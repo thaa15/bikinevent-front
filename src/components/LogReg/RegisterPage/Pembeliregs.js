@@ -8,19 +8,28 @@ import {
   Buttons,
 } from "../LoginPage/LoginStyled";
 import { withRouter } from "react-router-dom";
-import { CheckBoxInput, TermanConds } from "./RegisterStyled";
+import { 
+  CheckBoxInput, 
+  TermanConds,
+  CondTermBg,
+  CondTermTitle,
+  CondTermContent
+} from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { authService } from "../../../services/Auth";
 import {
   PopBgSuccess,
+  PopUpBg,
   BgSuccess,
   Succesicon,
+  ContentPopUp
 } from "../../../templates/GlobalTemplate";
 
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
+  const [condTerm, setCondTerm] = useState(false);
 
   const [formData, setFormData] = useState({
     nama_lengkap: "",
@@ -59,99 +68,125 @@ const Pembeliregs = (props) => {
   }, []);
 
   return (
-    <form onSubmit={submitHandler}>
-      <p style={{ color: "red" }}>{error}</p>
-      <br />
-      <LoginLabel for="name">Nama Lengkap</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="nama_lengkap"
-        onChange={(e) =>
-          setFormData({ ...formData, nama_lengkap: e.target.value })
-        }
-      />
-      <br />
-      <LoginLabel for="username">Username</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="username"
-        onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-      />
-      <br />
-
-      <LoginLabel for="email">E-mail</LoginLabel>
-      <br />
-      <LoginInput
-        type="email"
-        required
-        name="email"
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-      />
-      <br />
-
-      <LoginLabel for="password">Password</LoginLabel>
-      <br />
-      <LogApart>
+    <>
+      <form onSubmit={submitHandler}>
+        <p style={{ color: "red" }}>{error}</p>
+        <br />
+        <LoginLabel for="name">Nama Lengkap</LoginLabel>
+        <br />
         <LoginInput
-          type={typepw}
+          type="text"
           required
-          pattern=".{6,}"
-          title="Enam atau lebih karakter"
-          name="password"
-          pw
+          name="nama_lengkap"
           onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
+            setFormData({ ...formData, nama_lengkap: e.target.value })
           }
         />
-        {visible ? (
-          <IconBg>
-            <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
-          </IconBg>
-        ) : (
-          <IconBg>
-            <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
-          </IconBg>
-        )}
-      </LogApart>
+        <br />
+        <LoginLabel for="username">Username</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="username"
+          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+        />
+        <br />
 
-      <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
-      <br />
-      <LoginInput
-        type="number"
-        required
-        name="phone_number"
-        onChange={(e) =>
-          setFormData({ ...formData, phone_number: e.target.value })
-        }
-      />
-      <br />
+        <LoginLabel for="email">E-mail</LoginLabel>
+        <br />
+        <LoginInput
+          type="email"
+          required
+          name="email"
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        />
+        <br />
 
-      <CheckBoxInput>
-        <input type="checkbox" required style={{ marginRight: "4px" }} />
-        <div style={{ width: "100%" }}>
-          Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
-        </div>
-      </CheckBoxInput>
+        <LoginLabel for="password">Password</LoginLabel>
+        <br />
+        <LogApart>
+          <LoginInput
+            type={typepw}
+            required
+            pattern=".{6,}"
+            title="Enam atau lebih karakter"
+            name="password"
+            pw
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+          />
+          {visible ? (
+            <IconBg>
+              <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
+            </IconBg>
+          ) : (
+            <IconBg>
+              <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
+            </IconBg>
+          )}
+        </LogApart>
 
-      <Buttonslog type="submit">
-        <Buttons>Daftar</Buttons>
-      </Buttonslog>
-      {accountCreated ? (
-        <PopBgSuccess>
-          <BgSuccess aktif={accountCreated === true} right>
-            <Succesicon />
-            <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
-              <b>SUCCESS</b>
-              Akun Berhasil Dibuat
-            </div>
-          </BgSuccess>
-        </PopBgSuccess>
-      ) : (<></>)}
-    </form>
+        <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
+        <br />
+        <LoginInput
+          type="number"
+          required
+          name="phone_number"
+          onChange={(e) =>
+            setFormData({ ...formData, phone_number: e.target.value })
+          }
+        />
+        <br />
+
+        <CheckBoxInput>
+          <input type="checkbox" required style={{ marginRight: "4px" }} />
+          <div style={{ width: "100%" }} onClick={() => { setCondTerm(true) }}>
+            Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
+          </div>
+        </CheckBoxInput>
+
+        <Buttonslog type="submit">
+          <Buttons>Daftar</Buttons>
+        </Buttonslog>
+        {accountCreated ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={accountCreated === true} right>
+              <Succesicon />
+              <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                <b>SUCCESS</b>
+                Akun Berhasil Dibuat
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : (<></>)}
+      </form>
+      <>
+        {condTerm ? (
+          <PopUpBg need>
+            <ContentPopUp>
+              <CondTermBg>
+                <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+                <CondTermContent>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br/>
+                  <br/>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br/>
+                  <br/>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br/>
+                </CondTermContent>
+                <Buttonslog onClick={()=>{setCondTerm(false)}}>
+                  <Buttons>Tutup</Buttons>
+                </Buttonslog>
+              </CondTermBg>
+            </ContentPopUp>
+          </PopUpBg>
+        ) : (<></>)}
+      </>
+    </>
   );
 };
 export default withRouter(Pembeliregs);

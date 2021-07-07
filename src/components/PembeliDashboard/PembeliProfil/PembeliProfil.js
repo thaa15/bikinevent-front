@@ -45,6 +45,7 @@ export const PartTrashButton = styled.div`
     margin-right: 5px
     height: 100%;
     align-items: right;
+    margin-left: auto;
 `;
 
 export const TrashButton = styled.div`
@@ -68,7 +69,7 @@ export const InformationContent = styled.p`
 `;
 
 export const TrashsIcon = styled(BsFillTrashFill)`
-    font-size: 20px;
+    font-size: ${(props)=>props.need ? "25px" : "20px"};
     color: #909DAA;
     padding: 0 2px;
 `;

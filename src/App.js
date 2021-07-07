@@ -30,9 +30,10 @@ import {
 } from "./pages/vendorcenter";
 import SearchContent from "./components/SearchContent";
 import LoginSuccess from "./components/LogReg/SuccessRegPage/LoginSuccess";
+import KeranjangBelanjaPage from "./components/PembeliDashboard/PembeliCart/KeranjangBelanja";
 import {
   PembeliProfil
-} from "./pages/pembelidashboard"
+} from "./pages/pembelidashboard";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -154,6 +155,13 @@ function App() {
                   <Route path="/privasi" component={Privasi} exact />
                   <Route path="/refund" component={Refund} exact />
                   <Route path="/syarat" component={Syarat} exact />
+                  <ProtectedPembeliLogin
+                    path="/client-purchase/cart"
+                    role={loginInfo.role}
+                    component={KeranjangBelanjaPage}
+                    isAuth={loginInfo.token}
+                    exact
+                  />
                   <ProtectedPembeliLogin
                     path="/client-profil"
                     role={loginInfo.role}

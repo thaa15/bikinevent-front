@@ -15,12 +15,19 @@ import {
   InputCityApart,
   UploadFile,
   FileViewStyle,
+  CondTermBg,
+  CondTermTitle,
+  CondTermContent,
 } from "./RegisterStyled";
 import { withRouter } from "react-router-dom";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import axios from "axios";
 import { AuthSucRegs } from "../../../AllAuth";
+import {
+  PopUpBg,
+  ContentPopUp
+} from "../../../templates/GlobalTemplate";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -37,6 +44,7 @@ const Vendorregs = (props) => {
   const [isPreviewKTPAv, setIsPreviewKTPAv] = useState(false);
   const [isPreviewTabAv, setIsPreviewTabAv] = useState(false);
   const [isPreviewAvailable, setIsPreviewAvailable] = useState(false);
+  const [condTerm, setCondTerm] = useState(false);
   const [formData, setFormData] = useState({
     nama_lengkap: "",
     email: "",
@@ -213,412 +221,438 @@ const Vendorregs = (props) => {
     toggle();
   }, []);
   return (
-    <form encType="multipart/form-data" onSubmit={submitHandler}>
-      <p style={{ color: "red" }}>{error}</p>
-      <LoginLabel for="username">Username</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="username"
-        onChange={(e) => {
-          setFormData({ ...formData, username: e.target.value });
-        }}
-      />
-      <br />
-      <LoginLabel for="email">E-mail</LoginLabel>
-      <br />
-      <LoginInput
-        type="email"
-        required
-        name="email"
-        onChange={(e) => {
-          setFormData({ ...formData, email: e.target.value });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="password">Password</LoginLabel>
-      <br />
-      <LogApart>
+    <>
+      <form encType="multipart/form-data" onSubmit={submitHandler}>
+        <p style={{ color: "red" }}>{error}</p>
+        <LoginLabel for="username">Username</LoginLabel>
+        <br />
         <LoginInput
-          type={typepw}
+          type="text"
           required
-          pattern=".{6,}" 
-          title="Enam atau lebih karakter"
-          name="password"
-          pw
+          name="username"
           onChange={(e) => {
-            setFormData({ ...formData, password: e.target.value });
+            setFormData({ ...formData, username: e.target.value });
           }}
         />
-        {visible ? (
-          <IconBg>
-            <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
-          </IconBg>
-        ) : (
-          <IconBg>
-            <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
-          </IconBg>
-        )}
-      </LogApart>
+        <br />
+        <LoginLabel for="email">E-mail</LoginLabel>
+        <br />
+        <LoginInput
+          type="email"
+          required
+          name="email"
+          onChange={(e) => {
+            setFormData({ ...formData, email: e.target.value });
+          }}
+        />
+        <br />
 
-      <LoginLabel for="name">Nama Lengkap</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="nama_lengkap"
-        onChange={(e) => {
-          setFormData({ ...formData, nama_lengkap: e.target.value });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="nik">NIK</LoginLabel>
-      <br />
-      <LoginInput
-        type="number"
-        required
-        name="nik"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            NIK: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="birth">Tempat, Tanggal Lahir</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="birth"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            tempat_tanggal_lahir: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="gend">Jenis Kelamin</LoginLabel>
-      <br />
-      <div style={{ display: "flex", margin: "5px auto 15px" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <RadioButton
-            type="radio"
-            value="pria"
-            name="gender"
-            onClick={() => {
-              setFormData({
-                ...formData,
-                jenis_kelamin: "pria",
-              });
+        <LoginLabel for="password">Password</LoginLabel>
+        <br />
+        <LogApart>
+          <LoginInput
+            type={typepw}
+            required
+            pattern=".{6,}"
+            title="Enam atau lebih karakter"
+            name="password"
+            pw
+            onChange={(e) => {
+              setFormData({ ...formData, password: e.target.value });
             }}
           />
-          <LoginLabel for="pria">Pria</LoginLabel>
+          {visible ? (
+            <IconBg>
+              <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
+            </IconBg>
+          ) : (
+            <IconBg>
+              <BsFillEyeFill onClick={toggle} style={{ color: "#909DAA" }} />
+            </IconBg>
+          )}
+        </LogApart>
+
+        <LoginLabel for="name">Nama Lengkap</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="nama_lengkap"
+          onChange={(e) => {
+            setFormData({ ...formData, nama_lengkap: e.target.value });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="nik">NIK</LoginLabel>
+        <br />
+        <LoginInput
+          type="number"
+          required
+          name="nik"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              NIK: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="birth">Tempat, Tanggal Lahir</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="birth"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              tempat_tanggal_lahir: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="gend">Jenis Kelamin</LoginLabel>
+        <br />
+        <div style={{ display: "flex", margin: "5px auto 15px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <RadioButton
+              type="radio"
+              value="pria"
+              name="gender"
+              onClick={() => {
+                setFormData({
+                  ...formData,
+                  jenis_kelamin: "pria",
+                });
+              }}
+            />
+            <LoginLabel for="pria">Pria</LoginLabel>
+          </div>
+          <div
+            style={{ display: "flex", alignItems: "center", margin: "0 10px" }}
+          >
+            <RadioButton
+              type="radio"
+              value="wanita"
+              name="gender"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  jenis_kelamin: "wanita",
+                })
+              }
+            />
+            <LoginLabel for="wanita">Wanita</LoginLabel>
+          </div>
         </div>
-        <div
-          style={{ display: "flex", alignItems: "center", margin: "0 10px" }}
+
+        <LoginLabel for="nameven">Nama Vendor (Tidak Bisa Diubah)</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="nameven"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              nama_vendor: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="address">Alamat Lengkap</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="address"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              alamat_lengkap: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <InputCityApart>
+          <div style={{ flexBasis: "58%" }}>
+            <LoginLabel for="city">Kota/Kabupaten</LoginLabel>
+            <br />
+            <LoginInput
+              type="text"
+              required
+              name="city"
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  kota_kabupaten: e.target.value,
+                });
+              }}
+            />
+            <br />
+          </div>
+          <div style={{ flexBasis: "40%" }}>
+            <LoginLabel for="pos">Kode Pos</LoginLabel>
+            <br />
+            <LoginInput
+              type="number"
+              required
+              name="pos"
+              onChange={(e) => {
+                setFormData({
+                  ...formData,
+                  kode_pos: e.target.value,
+                });
+              }}
+            />
+            <br />
+          </div>
+        </InputCityApart>
+
+        <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
+        <br />
+        <LoginInput
+          type="tel"
+          required
+          name="num"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              phone_number: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="rek">Nomor Rekening</LoginLabel>
+        <br />
+        <LoginInput
+          type="number"
+          required
+          name="rek"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              no_rekening: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="bank">Nama Bank</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="bank"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              nama_bank: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="rekan">Rekening Atas Nama</LoginLabel>
+        <br />
+        <LoginInput
+          type="text"
+          required
+          name="rekan"
+          onChange={(e) => {
+            setFormData({
+              ...formData,
+              nama_rekening: e.target.value,
+            });
+          }}
+        />
+        <br />
+
+        <LoginLabel for="wajah">Upload Foto Wajah</LoginLabel>
+        <br />
+        <UploadFile>
+          <Dropzone onDrop={onDropWajah}>
+            {({ getRootProps, getInputProps }) => (
+              <FileViewStyle
+                {...getRootProps({ className: "drop-zone" })}
+                ref={dropRefWajah}
+              >
+                <input {...getInputProps()} name="foto_wajah" />
+                {previewWajah ? (
+                  isPreviewWajahAv ? (
+                    <div className="image-preview">
+                      <img
+                        className="preview-image"
+                        src={previewWajah}
+                        alt="Preview"
+                        width="60%"
+                      />
+                    </div>
+                  ) : (
+                    <div className="preview-message">
+                      <p>No preview available for this file</p>
+                    </div>
+                  )
+                ) : (
+                  <img className="preview-message" src={upfil} alt="Preview" />
+                )}
+              </FileViewStyle>
+            )}
+          </Dropzone>
+        </UploadFile>
+
+        <LoginLabel for="ktp">Upload Foto KTP</LoginLabel>
+        <br />
+        <UploadFile>
+          <Dropzone onDrop={onDropKTP}>
+            {({ getRootProps, getInputProps }) => (
+              <FileViewStyle
+                {...getRootProps({ className: "drop-zone" })}
+                ref={dropRefKTP}
+              >
+                <input {...getInputProps()} name="foto_ktp" />
+                {previewKTP ? (
+                  isPreviewKTPAv ? (
+                    <div className="image-preview">
+                      <img
+                        className="preview-image"
+                        src={previewKTP}
+                        alt="Preview"
+                        width="60%"
+                      />
+                    </div>
+                  ) : (
+                    <div className="preview-message">
+                      <p>No preview available for this file</p>
+                    </div>
+                  )
+                ) : (
+                  <img className="preview-message" src={upfil} alt="Preview" />
+                )}
+              </FileViewStyle>
+            )}
+          </Dropzone>
+        </UploadFile>
+
+        <LoginLabel for="buktab">Upload Foto Buku Tabungan</LoginLabel>
+        <br />
+        <UploadFile>
+          <Dropzone onDrop={onDropTab}>
+            {({ getRootProps, getInputProps }) => (
+              <FileViewStyle
+                {...getRootProps({ className: "drop-zone" })}
+                ref={dropRefTab}
+              >
+                <input {...getInputProps()} name="foto_tabungan" />
+                {previewTab ? (
+                  isPreviewTabAv ? (
+                    <div className="image-preview">
+                      <img
+                        className="preview-image"
+                        src={previewTab}
+                        alt="Preview"
+                        width="60%"
+                      />
+                    </div>
+                  ) : (
+                    <div className="preview-message">
+                      <p>No preview available for this file</p>
+                    </div>
+                  )
+                ) : (
+                  <img className="preview-message" src={upfil} alt="Preview" />
+                )}
+              </FileViewStyle>
+            )}
+          </Dropzone>
+        </UploadFile>
+
+        <LoginLabel for="fotok">Upload Foto Toko</LoginLabel>
+        <br />
+        <UploadFile>
+          <Dropzone onDrop={onDrop}>
+            {({ getRootProps, getInputProps }) => (
+              <FileViewStyle
+                {...getRootProps({ className: "drop-zone" })}
+                ref={dropRef}
+              >
+                <input {...getInputProps()} name="foto_toko" />
+                {previewSrc ? (
+                  isPreviewAvailable ? (
+                    <div className="image-preview">
+                      <img
+                        className="preview-image"
+                        src={previewSrc}
+                        alt="Preview"
+                        width="60%"
+                      />
+                    </div>
+                  ) : (
+                    <div className="preview-message">
+                      <p>No preview available for this file</p>
+                    </div>
+                  )
+                ) : (
+                  <img className="preview-message" src={upfil} alt="Preview" />
+                )}
+              </FileViewStyle>
+            )}
+          </Dropzone>
+        </UploadFile>
+
+        <CheckBoxInput>
+          <input type="checkbox" style={{ marginRight: "4px" }} />
+          <div style={{ width: "100%" }} onClick={() => { setCondTerm(true) }}>
+            Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
+          </div>
+        </CheckBoxInput>
+
+        <Buttonslog
+          type="submit"
+          disabled={!(previewWajah && previewKTP && previewTab && previewSrc)}
+          allowed={!(previewWajah && previewKTP && previewTab && previewSrc)}
         >
-          <RadioButton
-            type="radio"
-            value="wanita"
-            name="gender"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                jenis_kelamin: "wanita",
-              })
-            }
-          />
-          <LoginLabel for="wanita">Wanita</LoginLabel>
-        </div>
-      </div>
-
-      <LoginLabel for="nameven">Nama Vendor (Tidak Bisa Diubah)</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="nameven"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            nama_vendor: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="address">Alamat Lengkap</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="address"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            alamat_lengkap: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <InputCityApart>
-        <div style={{ flexBasis: "58%" }}>
-          <LoginLabel for="city">Kota/Kabupaten</LoginLabel>
-          <br />
-          <LoginInput
-            type="text"
-            required
-            name="city"
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                kota_kabupaten: e.target.value,
-              });
-            }}
-          />
-          <br />
-        </div>
-        <div style={{ flexBasis: "40%" }}>
-          <LoginLabel for="pos">Kode Pos</LoginLabel>
-          <br />
-          <LoginInput
-            type="number"
-            required
-            name="pos"
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                kode_pos: e.target.value,
-              });
-            }}
-          />
-          <br />
-        </div>
-      </InputCityApart>
-
-      <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
-      <br />
-      <LoginInput
-        type="tel"
-        required
-        name="num"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            phone_number: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="rek">Nomor Rekening</LoginLabel>
-      <br />
-      <LoginInput
-        type="number"
-        required
-        name="rek"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            no_rekening: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="bank">Nama Bank</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="bank"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            nama_bank: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="rekan">Rekening Atas Nama</LoginLabel>
-      <br />
-      <LoginInput
-        type="text"
-        required
-        name="rekan"
-        onChange={(e) => {
-          setFormData({
-            ...formData,
-            nama_rekening: e.target.value,
-          });
-        }}
-      />
-      <br />
-
-      <LoginLabel for="wajah">Upload Foto Wajah</LoginLabel>
-      <br />
-      <UploadFile>
-        <Dropzone onDrop={onDropWajah}>
-          {({ getRootProps, getInputProps }) => (
-            <FileViewStyle
-              {...getRootProps({ className: "drop-zone" })}
-              ref={dropRefWajah}
-            >
-              <input {...getInputProps()} name="foto_wajah" />
-              {previewWajah ? (
-                isPreviewWajahAv ? (
-                  <div className="image-preview">
-                    <img
-                      className="preview-image"
-                      src={previewWajah}
-                      alt="Preview"
-                      width="60%"
-                    />
-                  </div>
-                ) : (
-                  <div className="preview-message">
-                    <p>No preview available for this file</p>
-                  </div>
-                )
-              ) : (
-                <img className="preview-message" src={upfil} alt="Preview" />
-              )}
-            </FileViewStyle>
-          )}
-        </Dropzone>
-      </UploadFile>
-
-      <LoginLabel for="ktp">Upload Foto KTP</LoginLabel>
-      <br />
-      <UploadFile>
-        <Dropzone onDrop={onDropKTP}>
-          {({ getRootProps, getInputProps }) => (
-            <FileViewStyle
-              {...getRootProps({ className: "drop-zone" })}
-              ref={dropRefKTP}
-            >
-              <input {...getInputProps()} name="foto_ktp" />
-              {previewKTP ? (
-                isPreviewKTPAv ? (
-                  <div className="image-preview">
-                    <img
-                      className="preview-image"
-                      src={previewKTP}
-                      alt="Preview"
-                      width="60%"
-                    />
-                  </div>
-                ) : (
-                  <div className="preview-message">
-                    <p>No preview available for this file</p>
-                  </div>
-                )
-              ) : (
-                <img className="preview-message" src={upfil} alt="Preview" />
-              )}
-            </FileViewStyle>
-          )}
-        </Dropzone>
-      </UploadFile>
-
-      <LoginLabel for="buktab">Upload Foto Buku Tabungan</LoginLabel>
-      <br />
-      <UploadFile>
-        <Dropzone onDrop={onDropTab}>
-          {({ getRootProps, getInputProps }) => (
-            <FileViewStyle
-              {...getRootProps({ className: "drop-zone" })}
-              ref={dropRefTab}
-            >
-              <input {...getInputProps()} name="foto_tabungan" />
-              {previewTab ? (
-                isPreviewTabAv ? (
-                  <div className="image-preview">
-                    <img
-                      className="preview-image"
-                      src={previewTab}
-                      alt="Preview"
-                      width="60%"
-                    />
-                  </div>
-                ) : (
-                  <div className="preview-message">
-                    <p>No preview available for this file</p>
-                  </div>
-                )
-              ) : (
-                <img className="preview-message" src={upfil} alt="Preview" />
-              )}
-            </FileViewStyle>
-          )}
-        </Dropzone>
-      </UploadFile>
-
-      <LoginLabel for="fotok">Upload Foto Toko</LoginLabel>
-      <br />
-      <UploadFile>
-        <Dropzone onDrop={onDrop}>
-          {({ getRootProps, getInputProps }) => (
-            <FileViewStyle
-              {...getRootProps({ className: "drop-zone" })}
-              ref={dropRef}
-            >
-              <input {...getInputProps()} name="foto_toko" />
-              {previewSrc ? (
-                isPreviewAvailable ? (
-                  <div className="image-preview">
-                    <img
-                      className="preview-image"
-                      src={previewSrc}
-                      alt="Preview"
-                      width="60%"
-                    />
-                  </div>
-                ) : (
-                  <div className="preview-message">
-                    <p>No preview available for this file</p>
-                  </div>
-                )
-              ) : (
-                <img className="preview-message" src={upfil} alt="Preview" />
-              )}
-            </FileViewStyle>
-          )}
-        </Dropzone>
-      </UploadFile>
-
-      <CheckBoxInput>
-        <input type="checkbox" style={{ marginRight: "4px" }} />
-        <div style={{ width: "100%" }}>
-          Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
-        </div>
-      </CheckBoxInput>
-
-      <Buttonslog
-        type="submit"
-        disabled={!(previewWajah && previewKTP && previewTab && previewSrc)}
-        allowed={!(previewWajah && previewKTP && previewTab && previewSrc)}
-      >
-        <Buttons>Daftar</Buttons>
-      </Buttonslog>
-      {formData ? (
-        <span style={{ color: "#ff0000", fontSize: "12px" }}>
-          Data belum lengkap!
-        </span>
-      ) : (
-        <span></span>
-      )}
-    </form>
+          <Buttons>Daftar</Buttons>
+        </Buttonslog>
+        {formData ? (
+          <span style={{ color: "#ff0000", fontSize: "12px" }}>
+            Data belum lengkap!
+          </span>
+        ) : (
+          <span></span>
+        )}
+      </form>
+      <>
+        {condTerm ? (
+          <PopUpBg need>
+            <ContentPopUp>
+              <CondTermBg>
+                <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+                <CondTermContent>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br />
+                  <br />
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br />
+                  <br />
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br />
+                </CondTermContent>
+                <Buttonslog onClick={() => { setCondTerm(false) }}>
+                  <Buttons>Tutup</Buttons>
+                </Buttonslog>
+              </CondTermBg>
+            </ContentPopUp>
+          </PopUpBg>
+        ) : (<></>)}
+      </>
+    </>
   );
 };
 export default withRouter(Vendorregs);

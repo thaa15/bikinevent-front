@@ -9,11 +9,11 @@ export const TemplateChat = styled.div`
 `;
 
 export const ChatList = styled.div`
-    flex-basis: ${(props) => props.resp ? "100%" : "30%"};
+    flex-basis: 30%;
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
-    max-height: 500px;
+    height: 500px;
     overflow-y: scroll;
     padding: 7px;
     ::-webkit-scrollbar{
@@ -30,12 +30,35 @@ export const ChatList = styled.div`
         border-radius: 8px;
     }
     @media screen and (max-width: 957px) {
-        flex-basis: ${(props) => props.resp ? "100%" : "34%"};
+        flex-basis: 34%;
+    }
+`;
+
+export const ChatListResp = styled.div`
+    width: 100%;
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    height: 500px;
+    overflow-y: scroll;
+    padding: 7px;
+    ::-webkit-scrollbar{
+        width: 10px;
+    }
+      
+    ::-webkit-scrollbar-thumb{
+        background: rgba(158, 158, 158,0.6);
+        border-radius: 8px;
+    }
+      
+    ::-webkit-scrollbar-thumb:hover{
+        background: rgba(158, 158, 158,0.9);
+        border-radius: 8px;
     }
 `;
 
 export const ChatContent = styled.div`
-    flex-basis: ${(props) => props.resp ? "100%" : "69%"};
+    flex-basis: 69%;
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
@@ -45,8 +68,19 @@ export const ChatContent = styled.div`
     display:flex;
     flex-direction: column;
     @media screen and (max-width: 957px) {
-        flex-basis:${(props) => props.resp ? "100%" : "65%"};
+        flex-basis:65%;
     }
+`;
+
+export const ChatContentResp = styled.div`
+    border: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    width: 100%;
+    height: 500px;
+    padding: 7px 10px;
+    display:flex;
+    flex-direction: column;
 `;
 
 export const ChatPerson = styled.div`
@@ -107,6 +141,7 @@ export const DisplayChatProfileContent = styled.div`
     padding: 8px;
     align-items: center;
     margin-bottom: 10px;
+    
 `;
 
 export const ChatContetnDisplay = styled.div`
@@ -128,6 +163,7 @@ export const ChatContetnDisplay = styled.div`
         background: rgba(158, 158, 158,0.9);
         border-radius: 8px;
     }
+    
 `;
 
 export const TypingPart = styled.div`

@@ -28,7 +28,7 @@ const VendorChatContent = () => {
     useEffect(()=>{
         if (window.innerWidth < 861) setResponsive(false);
         else setResponsive(true);
-    },[])
+    },[window.innerWidth])
     return (
         <>
             {responsive ? (
@@ -110,6 +110,12 @@ const VendorChatContent = () => {
                                             <PlacedChatBox>
                                                 <ChatBox>
                                                     Apa itu ka?
+                                                </ChatBox>
+                                            </PlacedChatBox>
+
+                                            <PlacedChatBox>
+                                                <ChatBox>
+                                                Iyaaaa..... Terima kasih banyak ya kaaaaaaa
                                                 </ChatBox>
                                             </PlacedChatBox>
 

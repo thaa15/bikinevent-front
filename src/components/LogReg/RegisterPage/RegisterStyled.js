@@ -153,3 +153,40 @@ export const FileViewStyle = styled.div`
     height: 100%;
     padding: 24px;
 `;
+
+export const CondTermBg = styled.div`
+    max-width: 584px;
+    height: 500px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 20px;
+    overflow-Y: scroll;
+    ::-webkit-scrollbar{
+        width: 8px;
+    }
+      
+    ::-webkit-scrollbar-thumb{
+        background: rgba(158, 158, 158,0.6);
+        border-radius: 100%;
+    }
+      
+    ::-webkit-scrollbar-thumb:hover{
+        background: rgba(158, 158, 158,0.9);
+        border-radius: 100%;
+    }
+`;
+
+export const CondTermTitle = styled.h5`
+    font-size: 20px;
+    line-height: 30px;
+    color: #212B36;
+    margin-bottom: 15px;
+`;
+
+export const CondTermContent = styled.div`
+    white-space: pre-line;  
+    vertical-align: bottom;
+    font-size: 14px;
+    line-height: 21px;
+    color: #212B36;
+`;

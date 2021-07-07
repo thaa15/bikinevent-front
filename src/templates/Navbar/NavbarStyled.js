@@ -168,6 +168,7 @@ export const ElementLink = styled(LinkR)`
     display: flex;
     align-items: center;
     width: 100%;
+    position:relative;
 `;
 
 export const ElementLinks = styled.div`
@@ -287,4 +288,15 @@ export const DropdownSearchContent = styled.div`
     top:80%;
     right:0;
     bottom:0;
+`;
+export const NotifBadge = styled.span`
+    position: relative;
+    top: -10px;
+    right: 10px;
+    padding: 1px 6px;
+    text-align:center;
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: #E30045;
+    color: white;
 `;
