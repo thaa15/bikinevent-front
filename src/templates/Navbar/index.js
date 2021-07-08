@@ -24,6 +24,7 @@ import {
   NotifBadge
 } from "./NavbarStyled";
 import { FiSearch } from "react-icons/fi";
+import EllipsisText from "react-ellipsis-text";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import gambartest from "../../images/logocomp.png";
@@ -60,8 +61,8 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
   };
   const data = ProfilePembeli.filter(
     (dats) => dats.name === "Ernia Watson").map(
-      item=>item.order);
-  const sum = data[0].reduce((a,b)=>a+b.items.length,0)
+      item => item.order);
+  const sum = data[0].reduce((a, b) => a + b.items.length, 0)
   return (
     <>
       {isAuth.length > 4 && role === "vendor" ? (
@@ -152,8 +153,8 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                 {nama !== "null" ? (
                   <>
                     <ElementLink to="/client-purchase/cart">
-                        <ShoppingCartIcon />
-                        <NotifBadge>{sum}</NotifBadge>
+                      <ShoppingCartIcon />
+                      <NotifBadge>{sum}</NotifBadge>
                     </ElementLink>
                     <ElementLink to="/">
                       <ChatIcon />
@@ -193,7 +194,9 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                   {nama !== "null" ? (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <DisplayProf need>Hello</DisplayProf>
-                      <DisplayProf name need>{nama}</DisplayProf>
+                      <DisplayProf name need>
+                        <EllipsisText text={nama} length={"9"} />
+                      </DisplayProf>
                     </div>
                   ) : (
                     <>

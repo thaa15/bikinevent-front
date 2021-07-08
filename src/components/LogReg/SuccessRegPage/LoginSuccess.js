@@ -14,11 +14,17 @@ const LoginSuccess = (props) => {
       const response = await axios.get(
         `https://bikinevent.id/api/auth/google/callback${search}`
       );
-      const data = response.data;      
-      localStorage.setItem("token", data.jwt);
-      localStorage.setItem("nama", data.user.username);
+      const data = response.data;
+
+      const { jwt, user } = data;
+      localStorage.setItem("token", jwt);
+      localStorage.setItem("nama", user.username);
       localStorage.setItem("role", "pembeli");
       setIsLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+        window.location.href = "/";
+      }, 100);
       return response;
     };
     postNewUser();
@@ -37,11 +43,7 @@ const LoginSuccess = (props) => {
               style={{ margin: "12px auto" }}
             />
             <SucRegWrited>Login Berhasil</SucRegWrited>
-            <GoHome
-              onClick={() => {
-                props.history.push("/");
-              }}
-            >
+            <GoHome>
               Kembali ke Beranda
             </GoHome>
           </SucRegBox>
