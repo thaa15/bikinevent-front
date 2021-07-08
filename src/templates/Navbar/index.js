@@ -195,7 +195,10 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <DisplayProf need>Hello</DisplayProf>
                       <DisplayProf name need>
-                        <EllipsisText text={nama} length={"9"} />
+                        <EllipsisText 
+                        text={nama} 
+                        tail={''} 
+                        length={"6"} />
                       </DisplayProf>
                     </div>
                   ) : (
