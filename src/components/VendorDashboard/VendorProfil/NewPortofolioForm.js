@@ -16,7 +16,11 @@ import {
 } from "./VendorProfileStyled";
 import { loginContext } from "../../../context";
 import axios from "axios";
-import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
+import {
+  PopBgSuccess,
+  BgSuccess,
+  Succesicon,
+} from "../../../templates/GlobalTemplate";
 
 const NewPortofolioForm = ({ portofolio }) => {
   const [previewFoto, setPreviewFoto] = useState([]);
@@ -24,14 +28,12 @@ const NewPortofolioForm = ({ portofolio }) => {
   const [idxFoto, setIdxFoto] = useState(0);
   const [loginUser, setLoginUser] = useState(false);
   const [namaEvent, setNamaEvent] = useState("");
-  const [foto_portfolio, setFoto_Portfolio] = useState();
+  const [foto_portfolio, setFoto_Portfolio] = useState([]);
   const { loginInfo } = useContext(loginContext);
   const vendorId = localStorage.getItem("vendor_id");
 
-  const ket = [
-    "Foto 1",
-    "Foto 2",
-  ];
+  const ket = ["Foto 1", "Foto 2"];
+
   const submitPortfolio = async () => {
     const portfolioData = new FormData();
     portfolioData.append(
@@ -41,14 +43,18 @@ const NewPortofolioForm = ({ portofolio }) => {
         vendor: vendorId,
       })
     );
-    portfolioData.append(
-      "files.foto_portfolio",
-      foto_portfolio,
-      foto_portfolio.name
-    );
+    for (let i = 0; i < foto_portfolio.length; i++) {
+      portfolioData.append(
+        "files.foto_portfolio",
+        foto_portfolio[i],
+        foto_portfolio[i].name
+      );
+    }
+    console.log(portfolioData);
+
     setLoginUser(true);
     const portfolioRes = await axios.post(
-      "http://localhost:1337/portfolios",
+      "https://bikinevent.id/api/portfolios",
       portfolioData,
       {
         headers: {
@@ -60,15 +66,15 @@ const NewPortofolioForm = ({ portofolio }) => {
       setLoginUser(false);
       window.location.reload();
     }, 1500);
-    console.log(portfolioRes);
+
     return portfolioRes;
   };
 
   const onDropFoto = (files) => {
     const [uploadedFile] = files;
-    /*let newArr = [...formData.foto_produk];
+    let newArr = foto_portfolio;
     newArr.push(files[0]);
-    setFormData({ ...formData, foto_produk: newArr });*/
+    setFoto_Portfolio(newArr);
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewFoto((oldArray) => [
@@ -135,6 +141,8 @@ const NewPortofolioForm = ({ portofolio }) => {
     );
   };
 
+  console.log(loginInfo.token);
+
   return (
     <>
       <TitleVendorKeu>Tambah Portofolio Baru</TitleVendorKeu>
@@ -158,13 +166,21 @@ const NewPortofolioForm = ({ portofolio }) => {
         <PopBgSuccess>
           <BgSuccess aktif={loginUser === true} right>
             <Succesicon />
-            <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                flexDirection: "column",
+              }}
+            >
               <b>SUCCESS</b>
               Portoflio Berhasil Ditambahkan!
             </div>
           </BgSuccess>
         </PopBgSuccess>
-      ) : (<></>)}
+      ) : (
+        <></>
+      )}
     </>
   );
 };

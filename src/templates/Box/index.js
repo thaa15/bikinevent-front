@@ -17,12 +17,16 @@ import {
   BoxedVendor,
   ApartVendor,
   ButtonDelete,
-  Trash
+  Trash,
 } from "./BoxStyled";
 import EllipsisText from "react-ellipsis-text";
 import { productService } from "../../services/Product";
 import { loginContext } from "../../context";
-import { PopBgSuccess, BgSuccess, Succesicon } from "../../templates/GlobalTemplate";
+import {
+  PopBgSuccess,
+  BgSuccess,
+  Succesicon,
+} from "../../templates/GlobalTemplate";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
   const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
@@ -34,7 +38,7 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
     else setRates(rate);
 
     if (prices.length > 11) setHandles(true);
-  }, [])
+  }, []);
   return (
     <>
       <BoxedPrice>
@@ -67,7 +71,7 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
 
   useEffect(() => {
     if (prices.length > 11) setHandles(true);
-  }, [])
+  }, []);
 
   const changeHandler = async () => {
     setLoginUser(true);
@@ -100,11 +104,22 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
       });
     }, 500);
   };
+
+  const deleteProduct = async () => {
+    const response = await productService.deleteProductById(
+      id,
+      loginInfo.token
+    );
+    const data = response.data;
+    console.log(response);
+    return response;
+  };
+
   return (
     <>
       <BoxedVendor>
         <BoxImage img={image} />
-        <ApartVendor ars ={statss !== "Arsipkan"}>
+        <ApartVendor ars={statss !== "Arsipkan"}>
           <div style={{ flexBasis: "60%" }}>
             <BoxExp titlee>
               <EllipsisText text={judul} length={"35"} />
@@ -117,23 +132,32 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
           </ApartButton>
 
           {statss !== "Arsipkan" ? (
-            <ButtonDelete >
+            <ButtonDelete onClick={deleteProduct}>
               <Trash />
             </ButtonDelete>
-          ) : (<></>)}
-
+          ) : (
+            <></>
+          )}
         </ApartVendor>
         {loginUser ? (
           <PopBgSuccess>
             <BgSuccess aktif={loginUser === true} right>
               <Succesicon />
-              <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
                 <b>SUCCESS</b>
                 Produk Berhasil Di"{statss}"
               </div>
             </BgSuccess>
           </PopBgSuccess>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </BoxedVendor>
     </>
   );

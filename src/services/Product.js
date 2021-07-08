@@ -4,6 +4,7 @@ export const productService = {
   getAllProduct,
   getProductById,
   editProductById,
+  deleteProductById,
 };
 
 async function getAllProduct() {
@@ -26,6 +27,17 @@ async function getProductById(productId) {
 async function editProductById(productId, token, body) {
   const response = await gatewayHelper.http(
     "PUT_AUTH",
+    "produks/" + productId,
+    token,
+    body
+  );
+  return response;
+}
+
+async function deleteProductById(productId, token) {
+  const body = {};
+  const response = await gatewayHelper.http(
+    "DELETE",
     "produks/" + productId,
     token,
     body

@@ -23,7 +23,11 @@ import {
   FileViewStyle,
   ExpUploadPhoto,
 } from "../VendorProfil/VendorProfileStyled";
-import { PopBgSuccess, BgSuccess, Succesicon } from "../../../templates/GlobalTemplate";
+import {
+  PopBgSuccess,
+  BgSuccess,
+  Succesicon,
+} from "../../../templates/GlobalTemplate";
 import { Kategories } from "../../../datas/vendordata";
 
 const VendorProdukForm = () => {
@@ -33,7 +37,7 @@ const VendorProdukForm = () => {
   const [successave, setsuccessave] = useState(false);
   const [idxFoto, setIdxFoto] = useState(0);
   const [showSubCath, setShowSubCath] = useState(false);
-  const [tester,setTester] = useState("");
+  const [tester, setTester] = useState("");
   const { loginInfo } = useContext(loginContext);
   const vendor_id = localStorage.getItem("vendor_id");
   const [formData, setFormData] = useState({
@@ -66,6 +70,7 @@ const VendorProdukForm = () => {
       deskripsi_produk,
       harga,
       category,
+      subcategory,
       vendor,
     } = formData;
     const productData = new FormData();
@@ -78,6 +83,7 @@ const VendorProdukForm = () => {
         harga,
         vendor,
         category,
+        subcategory,
         isArchived: archive,
       })
     );
@@ -208,18 +214,17 @@ const VendorProdukForm = () => {
             if (e.target.value !== "Pilih Kategori") {
               setShowSubCath(true);
               setFormData({ ...formData, category: e.target.value });
-              setTester("")
+              setTester("");
             }
           }}
         >
           <Options non>Pilih Kategori</Options>
           {Kategories.map((data, idx) => {
             return (
-              <Options
-                value={data.cath}
-                key={idx}
-              >{data.cath}</Options>
-            )
+              <Options value={data.cath} key={idx}>
+                {data.cath}
+              </Options>
+            );
           })}
         </InputMCQ>
         <br />
@@ -231,26 +236,33 @@ const VendorProdukForm = () => {
               name="sub-kategori"
               required
               value={tester}
-              onChange={(e)=>{
-                setTester(e.target.value)
+              onChange={(e) => {
+                setTester(e.target.value);
+                setFormData({ ...formData, subcategory: e.target.value });
               }}
             >
               <Options non>Pilih Sub-Kategori</Options>
-              {Kategories.filter(elemen => elemen.cath === formData.category).map((data) => {
+              {Kategories.filter(
+                (elemen) => elemen.cath === formData.category
+              ).map((data) => {
                 return (
                   <>
-                    {data.subcath.map((item,idx) => {
+                    {data.subcath.map((item, idx) => {
                       return (
-                        <Options value={item} key={idx}>{item}</Options>
-                      )
+                        <Options value={item} key={idx}>
+                          {item}
+                        </Options>
+                      );
                     })}
                   </>
-                )
+                );
               })}
             </InputMCQ>
             <br />
           </>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
 
         <LabelVendorProduk>Lokasi</LabelVendorProduk>
         <InputMCQ
@@ -306,13 +318,21 @@ const VendorProdukForm = () => {
           <PopBgSuccess>
             <BgSuccess aktif={successave === true} right>
               <Succesicon />
-              <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
                 <b>SUCCESS</b>
                 Data Berhasil Disimpan!
               </div>
             </BgSuccess>
           </PopBgSuccess>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </form>
     </>
   );
