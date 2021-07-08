@@ -174,24 +174,9 @@ export const ProfilePembeli = [
                 address: "Jl. CDE Utara no 14 RT 05 RW 04, Kelurahan Kijang Cimenyan Barat, Kota Bogor, 42312",
             },
             {
-                title_name: "Saffan Firdaus",
-                number: "081395090000",
-                address: "Jl. ABC Tengah no 18 RT 04 RW 11, Kelurahan Zebra Cikutra Barat, Kota Bandung, 40123",
-            },
-            {
-                title_name: "Kevin Ahmad",
-                number: "081312343333",
-                address: "Jl. CDE Utara no 14 RT 05 RW 04, Kelurahan Kijang Cimenyan Barat, Kota Bogor, 42312",
-            },
-            {
-                title_name: "Kevin Ahmad",
-                number: "081312343333",
-                address: "Jl. CDE Utara no 14 RT 05 RW 04, Kelurahan Kijang Cimenyan Barat, Kota Bogor, 42312",
-            },
-            {
-                title_name: "Saffan Firdaus",
-                number: "081395090000",
-                address: "Jl. ABC Tengah no 18 RT 04 RW 11, Kelurahan Zebra Cikutra Barat, Kota Bandung, 40123",
+                title_name: "Jonathan",
+                number: "0813950900123",
+                address: "Jl. EFG Timur no 14 RT 02 RW 50, Kelurahan Semut Cimantren Barat, Kota Semarang, 14065",
             },
         ],
         order: [
@@ -224,6 +209,44 @@ export const ProfilePembeli = [
                         price:"10000000"
                     }
                 ]
+            },
+        ],
+        payment:[
+            {
+                bank:"BNI",
+                account:"07983761",
+                name:"Saffan Firdaus",
+                type:"bank"
+            },
+            {
+                bank:"Mandiri",
+                account:"07983761",
+                name:"Saffan Firdaus",
+                type:"bank"
+            },
+            {
+                bank:"BRI",
+                account:"07983761",
+                name:"Saffan Firdaus",
+                type:"bank"
+            },
+            {
+                bank:"OVO",
+                account:"07983761",
+                name:"Saffan Firdaus",
+                type:"wallet"
+            },
+            {
+                bank:"BCA",
+                account:"07983761",
+                name:"Saffan Firdaus",
+                type:"bank"
+            },
+            {
+                bank:"Gopay",
+                account:"07983761",
+                name:"Saffan Firdaus",
+                type:"wallet"
             },
         ]
     }

@@ -65,16 +65,19 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
 
 const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   const { loginInfo } = useContext(loginContext);
-  const [loginUser, setLoginUser] = useState(false);
   const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
   const [handles, setHandles] = useState(false);
+  const [loginUser, setLoginUser] = useState({
+    tampil: false,
+    hapus: false
+  });
 
   useEffect(() => {
     if (prices.length > 11) setHandles(true);
   }, []);
 
   const changeHandler = async () => {
-    setLoginUser(true);
+    setLoginUser({ ...loginUser, tampil: true });
     if (statss === "Arsipkan") {
       const body = {
         isArchived: true,
@@ -96,7 +99,7 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
       );
     }
     setTimeout(() => {
-      setLoginUser(false);
+      setLoginUser({ ...loginUser, tampil: false });
       window.location.reload();
       window.scrollTo({
         top: 0,
@@ -106,12 +109,21 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   };
 
   const deleteProduct = async () => {
+    setLoginUser({ ...loginUser, hapus: true });
     const response = await productService.deleteProductById(
       id,
       loginInfo.token
     );
     const data = response.data;
     console.log(response);
+    setTimeout(() => {
+      setLoginUser({ ...loginUser, hapus: false });
+      window.location.reload();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }, 500);
     return response;
   };
 
@@ -139,9 +151,9 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
             <></>
           )}
         </ApartVendor>
-        {loginUser ? (
+        {loginUser.tampil ? (
           <PopBgSuccess>
-            <BgSuccess aktif={loginUser === true} right>
+            <BgSuccess aktif={loginUser.tampil === true} right>
               <Succesicon />
               <div
                 style={{
@@ -152,6 +164,22 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
               >
                 <b>SUCCESS</b>
                 Produk Berhasil Di"{statss}"
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : loginUser.hapus ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={loginUser.hapus === true} right>
+              <Succesicon />
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
+                <b>SUCCESS</b>
+                Produk Berhasil Dihapuskan
               </div>
             </BgSuccess>
           </PopBgSuccess>

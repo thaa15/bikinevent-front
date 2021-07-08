@@ -108,7 +108,6 @@ justify-content: space-between;
 export const CheckBoxInput = styled.div`
     display: flex;
     align-items:center;
-    align-self: center;
     font-size: 14px;
     line-height: 22px;
     letter-spacing: -0.2px;

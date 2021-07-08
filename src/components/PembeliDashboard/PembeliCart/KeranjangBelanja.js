@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LoadingPage from "../../../templates/Loading";
 import fotoNoEntry from "../../../images/fotoNoEntry.png";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
@@ -26,10 +26,12 @@ import {
     NoteButton
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
+import { clientCartContext } from "../../../context";
 
 const KeranjangBelanjaPage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [prices, setPrices] = useState("0");
+    const { clientCart, setClientCart } = useContext(clientCartContext)
 
     const data = ProfilePembeli.filter((dats) => dats.name === "Ernia Watson");
     useEffect(() => {
@@ -97,11 +99,25 @@ const KeranjangBelanjaPage = (props) => {
                                                                                 type="checkbox"
                                                                                 value={item.price}
                                                                                 onClick={(e) => {
+                                                                                    let arrWithObject = [];
+                                                                                    let arrWithArr = [...clientCart.product];
                                                                                     if (e.target.checked) {
                                                                                         setPrices(`${(parseInt(prices) + parseInt(e.target.value))}`)
+                                                                                        arrWithObject.push(item.judul);
+                                                                                        arrWithArr.push(arrWithObject);
                                                                                     } else {
                                                                                         setPrices(`${(parseInt(prices) - parseInt(e.target.value))}`)
+                                                                                        arrWithArr.splice(
+                                                                                            arrWithArr.findIndex(
+                                                                                                (elemen) => elemen == item.judul
+                                                                                            ),
+                                                                                            1
+                                                                                        );
                                                                                     }
+                                                                                    setClientCart({
+                                                                                        ...clientCart,
+                                                                                        product: arrWithArr,
+                                                                                    });
                                                                                 }}
                                                                             />
                                                                             <DivRowContent needs>
@@ -138,6 +154,7 @@ const KeranjangBelanjaPage = (props) => {
                                                 </PriceTotal>
                                                 <MulaiBelanja need
                                                     onClick={() => {
+                                                        setClientCart({ ...clientCart, price: prices })
                                                         AuthClinformation.inclinfo(() => {
                                                             props.history.push("/client-purchase/information");
                                                         });

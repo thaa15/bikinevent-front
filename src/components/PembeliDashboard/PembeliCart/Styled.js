@@ -128,8 +128,29 @@ export const DivRow = styled.div`
     flex-direction: row;
     column-gap: 20px;
     align-items:center;
+    align-self:center;
     margin-bottom: 10px;
     width: 100%;
+`;
+
+export const BankRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    align-items:center;
+    align-self:center;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    background: ${(props)=>props.aktif ? "#DAF3E5" : "white"};
+`;
+
+export const InformationContents = styled.div`
+    font-size: 15px;
+    line-height: 18px;
+    color: ${(props) => props.nonact ? "#909DAA" : "#212B36"};
 `;
 
 export const DivRowContent = styled.div`
@@ -255,4 +276,67 @@ export const ButtonAddInformation = styled.div`
     text-align:center;
     cursor:pointer;
     margin: 10px auto;
+`;
+
+export const Title = styled.h6`
+    font-size: 18px;
+    line-height: 27px;
+    color: #212B36;
+    margin: ${(props)=>props.top ? "0 0 20px" : "20px 0"};
+`;
+
+export const PaymentContentGrid = styled.div`
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    grid-gap: 5px;
+    @media screen and (max-width: 653px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+`;
+
+export const BankImage = styled.img`
+    margin: 8px 0;
+    max-width: 170px;
+    filter: ${(props)=>props.nonact ? "grayscale(100%)" : "grayscale(0%)"};
+`;
+
+export const EmailConfirm = styled.div`
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 21px;
+    color: #212B36;
+    span{
+        color: #E30045;
+        font-weight: bold;
+        margin: 0 5px;
+    }
+`;
+
+export const ButtonLacak = styled.button`
+    width: 50%;
+    margin: 10px auto;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid #e30045;
+    padding: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 22px;
+    color: #e30045;
+    cursor: pointer;
+    @media screen and (max-width: 525px) {
+        width: 80%;
+    }
+`;
+
+export const ButtonApartas = styled.div`
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    width: 60%;
 `;

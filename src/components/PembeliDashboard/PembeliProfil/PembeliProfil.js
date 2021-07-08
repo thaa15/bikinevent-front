@@ -56,14 +56,14 @@ export const TrashButton = styled.div`
 
 export const TitleName = styled.div`
     font-weight: bold;
-    font-size: 18px;
+    font-size: ${(props)=>props.check ? "15px" : "18px"};
     line-height: 21px;
     color: ${(props) => props.nonact ? "#909DAA" : "#212B36"};
     margin-bottom: 10px;
 `;
 
 export const InformationContent = styled.div`
-    font-size: 15px;
+    font-size: ${(props)=>props.check ? "14px" : "15px"};
     line-height: 18px;
     color: ${(props) => props.nonact ? "#909DAA" : "#212B36"};
     margin-bottom: 10px;
