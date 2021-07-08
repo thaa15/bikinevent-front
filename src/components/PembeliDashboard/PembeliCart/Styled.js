@@ -138,6 +138,7 @@ export const DivRowContent = styled.div`
     column-gap: ${(props)=>props.need ? "6px" : "20px"};
     flex:1;
     align-items:center;
+    align-self:center;
     width: 100%;
     margin-bottom: 10px;
     p {
@@ -152,7 +153,7 @@ export const DivRowContent = styled.div`
     }
     @media screen and (max-width: 718px) {
         flex-direction: ${(props)=>props.need ? "column" : "column"};
-        text-align: center;
+        text-align: ${(props)=>props.needs ? "center" : "left"};
         p{
             margin: 8px auto;
         }
@@ -163,6 +164,7 @@ export const ImageCart = styled.img`
     width: 156px;
     height: 156px;
     object-fit: cover;
+    
     @media screen and (max-width: 461px) {
         width: 120px;
         height: 120px;
@@ -238,4 +240,19 @@ export const NoteButton = styled.button`
     &:hover {
         text-decoration: underline;
     }
+`;
+
+export const ButtonAddInformation = styled.div`
+    border: 1px dashed #909DAA;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #909DAA;
+    text-align:center;
+    cursor:pointer;
+    margin: 10px auto;
 `;

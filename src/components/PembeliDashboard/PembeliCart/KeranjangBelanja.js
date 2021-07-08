@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import LoadingPage from "../../../templates/Loading";
-import fotoNoEntry from "../../../images/fotoNoEntry.png"
+import fotoNoEntry from "../../../images/fotoNoEntry.png";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import { ProfilePembeli } from "../../../datas/vendordata";
 import { TrashsIcon, TrashButton } from "../PembeliProfil/PembeliProfil";
+import { AuthClinformation } from "../../../AllAuth";
 import {
     BgNoEntry,
     NoEntryContent,
@@ -26,7 +27,7 @@ import {
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
 
-const KeranjangBelanjaPage = () => {
+const KeranjangBelanjaPage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [prices, setPrices] = useState("0");
 
@@ -103,7 +104,7 @@ const KeranjangBelanjaPage = () => {
                                                                                     }
                                                                                 }}
                                                                             />
-                                                                            <DivRowContent>
+                                                                            <DivRowContent needs>
                                                                                 <ImageCart src={item.image} />
                                                                                 <div>
                                                                                     <p>{item.judul}</p>
@@ -135,7 +136,12 @@ const KeranjangBelanjaPage = () => {
                                                     <p>Total Harga</p>
                                                     <h6>Rp{parseInt(prices).toLocaleString("id-ID")}</h6>
                                                 </PriceTotal>
-                                                <MulaiBelanja need>
+                                                <MulaiBelanja need
+                                                    onClick={() => {
+                                                        AuthClinformation.inclinfo(() => {
+                                                            props.history.push("/client-purchase/information");
+                                                        });
+                                                    }}>
                                                     Lanjutkan Pembelian
                                                 </MulaiBelanja>
                                             </PurchasePrice>

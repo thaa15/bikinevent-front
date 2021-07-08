@@ -14,17 +14,16 @@ const LoginSuccess = (props) => {
       const response = await axios.get(
         `https://bikinevent.id/api/auth/google/callback${search}`
       );
-      const data = response.data;
-      const { jwt, user } = data;
-      console.log(response);
+      const data = response.data;      
+      localStorage.setItem("token", data.jwt);
+      localStorage.setItem("nama", data.user.username);
+      localStorage.setItem("role", "pembeli");
+      setIsLoading(false);
       return response;
     };
     postNewUser();
   }, []);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 900);
   return (
     <>
       {isLoading ? (

@@ -18,41 +18,27 @@ class AuthSucReg {
     }
 }
 
-class AuthLogin {
+class AuthClientInformation {
     constructor() {
-        this.user = localStorage.getItem('token');
-        this.vendor = null;
+        this.autclinfo = false;
     }
 
-    userLogin(user, cb) {
-        this.user = user;
+    inclinfo(cb) {
+        this.autclinfo = true;
         cb();
     }
 
-    vendorLogin(vendor, cb) {
-        this.vendor = vendor;
+    outclinfo(cb) {
+        this.autclinfo = false;
         cb();
     }
 
-    userLogout(cb) {
-        this.user = null;
-        cb();
-    }
-
-    vendorLogout(cb) {
-        this.vendor = null;
-        cb();
-    }
-
-    isUserAuth() {
-        return this.user;
-    }
-    isVendorAuth() {
-        return this.vendor;
+    isAutclinfo() {
+        return this.autclinfo;
     }
 }
 
-const AuthLogins = new AuthLogin();
-const AuthSucRegs = new AuthSucReg()
+const AuthSucRegs = new AuthSucReg();
+const AuthClinformation = new AuthClientInformation();
 
-export {AuthSucRegs,AuthLogins}
+export {AuthSucRegs,AuthClinformation}

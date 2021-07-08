@@ -29,8 +29,8 @@ import {
   VendorProfil,
 } from "./pages/vendorcenter";
 import SearchContent from "./components/SearchContent";
-import LoginSuccess from "./components/LogReg/SuccessRegPage/LoginSuccess";
 import KeranjangBelanjaPage from "./components/PembeliDashboard/PembeliCart/KeranjangBelanja";
+import InformasiPembeliPage from "./components/PembeliDashboard/PembeliCart/InformasiPembeli";
 import {
   PembeliProfil
 } from "./pages/pembelidashboard";
@@ -146,7 +146,6 @@ function App() {
                     exact
                     isAuth={loginInfo.token}
                   />
-                  <Route path="/login-success" component={LoginSuccess} exact />
                   <Route path="/blog/:id" component={RoutedBlog} exact />
                   <Route path="/allblog" component={Blogs} exact />
                   <Route path="/faq" component={FAQ} exact />
@@ -159,6 +158,13 @@ function App() {
                     path="/client-purchase/cart"
                     role={loginInfo.role}
                     component={KeranjangBelanjaPage}
+                    isAuth={loginInfo.token}
+                    exact
+                  />
+                  <ProtectedPembeliLogin
+                    path="/client-purchase/information"
+                    role={loginInfo.role}
+                    component={InformasiPembeliPage}
                     isAuth={loginInfo.token}
                     exact
                   />

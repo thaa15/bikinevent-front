@@ -16,9 +16,7 @@ import {
   OrLine,
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
-import { AuthLogins } from "../../../AllAuth";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import { AiFillGooglePlusCircle } from "react-icons/ai";
 import GoogleLogin from "react-google-login";
 import line from "../../../images/line.png";
 import { authService } from "../../../services/Auth";

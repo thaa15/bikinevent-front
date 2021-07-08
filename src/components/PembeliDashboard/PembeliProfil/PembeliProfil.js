@@ -54,22 +54,23 @@ export const TrashButton = styled.div`
     cursor: pointer;
 `;
 
-export const TitleName = styled.h6`
-    font-size: 14px;
+export const TitleName = styled.div`
+    font-weight: bold;
+    font-size: 18px;
     line-height: 21px;
-    color: #212B36;
-    margin-bottom: 3px;
+    color: ${(props) => props.nonact ? "#909DAA" : "#212B36"};
+    margin-bottom: 10px;
 `;
 
-export const InformationContent = styled.p`
-    font-size: 12px;
+export const InformationContent = styled.div`
+    font-size: 15px;
     line-height: 18px;
-    color: #212B36;
-    margin: 3px 0;
+    color: ${(props) => props.nonact ? "#909DAA" : "#212B36"};
+    margin-bottom: 10px;
 `;
 
 export const TrashsIcon = styled(BsFillTrashFill)`
-    font-size: ${(props)=>props.need ? "25px" : "20px"};
+    font-size: ${(props) => props.need ? "25px" : "20px"};
     color: #909DAA;
     padding: 0 2px;
 `;

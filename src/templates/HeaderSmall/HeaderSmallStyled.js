@@ -96,27 +96,38 @@ export const StepBg = styled.div`
 `;
 
 export const StepWrited = styled.div`
-    font-size: 18px;
+    font-size: 16px;
     line-height: 27px;
+    display: ${(props)=>props.aktif ? "block" : "block"};
     color: ${(props)=>props.aktif ? "#E30045" : "#909DAA"};
     margin: 0 8px;
     span{
         text-align: center;
         font-size: 14px;
         display: inline-block;
-        width: 33px;
+        width: 23px;
+        height: 25px;
         background: ${(props)=>props.aktif ? "#E30045" : "#909DAA"};
         color: white;
         border-radius: 100%;
-        padding: 4px 0;
         margin: 0 8px;
+    }
+    @media screen and (max-width: 932px) {
+        display: ${(props)=>props.aktif ? "block" : "none"};
     }
 `;
 
 export const Arrow = styled.div`
     color: #909DAA;
     font-weight: bold;
-    margin: 0px 20px;
+    margin: 0px 10px;
     font-size: 18px;
     line-height: 27px;
+    @media screen and (max-width: 1039px) {
+        flex-direction: row;
+        margin: 5px;
+    }
+    @media screen and (max-width: 932px) {
+        display: none;
+    }
 `;
