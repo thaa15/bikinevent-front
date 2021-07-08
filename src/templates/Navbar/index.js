@@ -21,7 +21,7 @@ import {
   LogOutContent,
   DropdownSearchContent,
   ElementLinks,
-  NotifBadge
+  NotifBadge,
 } from "./NavbarStyled";
 import { FiSearch } from "react-icons/fi";
 import EllipsisText from "react-ellipsis-text";
@@ -43,26 +43,28 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("nama");
     localStorage.removeItem("vendor_id");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("pembeliId");
     localStorage.removeItem("role");
 
     window.location.reload();
     window.location.href = "/login";
-  }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setPlacehldr("Cari Keperluan Event Anda..")
+    setPlacehldr("Cari Keperluan Event Anda..");
     setSearched({ ...searched, searchFill: getsearch, loading: true });
     history.push({
-      pathname: "/searched"
-    })
+      pathname: "/searched",
+    });
     setPlacehldr("");
-    setSearchContent(false)
+    setSearchContent(false);
   };
   const data = ProfilePembeli.filter(
-    (dats) => dats.name === "Ernia Watson").map(
-      item => item.order);
-  const sum = data[0].reduce((a, b) => a + b.items.length, 0)
+    (dats) => dats.name === "Ernia Watson"
+  ).map((item) => item.order);
+  const sum = data[0].reduce((a, b) => a + b.items.length, 0);
   return (
     <>
       {isAuth.length > 4 && role === "vendor" ? (
@@ -80,7 +82,9 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
               <FaBars onClick={toggling} />
               <AiOutlineSearch
                 style={{ marginRight: "14px" }}
-                onClick={() => { setSearchContent(!searchContent) }}
+                onClick={() => {
+                  setSearchContent(!searchContent);
+                }}
               />
               {searchContent ? (
                 <DropdownSearchContent>
@@ -101,7 +105,9 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                     </SearchButton>
                   </form>
                 </DropdownSearchContent>
-              ) : (<></>)}
+              ) : (
+                <></>
+              )}
             </MobileIcon>
 
             <NavItem part="65%" removedl>
@@ -195,10 +201,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <DisplayProf need>Hello</DisplayProf>
                       <DisplayProf name need>
-                        <EllipsisText 
-                        text={nama} 
-                        tail={''} 
-                        length={"6"} />
+                        <EllipsisText text={nama} tail={""} length={"6"} />
                       </DisplayProf>
                     </div>
                   ) : (
@@ -217,7 +220,6 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                       </DropdownContent>
                     </>
                   )}
-
                 </LogOutContent>
               </ProfButton>
             </NavItem>

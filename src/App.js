@@ -1,10 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import {
-  loginContext,
-  searchContext,
-  clientCartContext
-} from "./context";
+import { loginContext, searchContext, clientCartContext } from "./context";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   ProtectedRouteSucReg,
@@ -12,7 +8,7 @@ import {
   ProtectedVendor,
   ProtectedSearch,
   ProtectedUser,
-  ProtectedPembeliLogin
+  ProtectedPembeliLogin,
 } from "./templates/ProtectedRoute";
 import Navbar from "./templates/Navbar";
 import Sidebar from "./templates/Sidebar";
@@ -23,7 +19,14 @@ import ScrollToTop from "./templates/ScrollToTop";
 import RegisterPage from "./components/LogReg/RegisterPage";
 import SuccessReg from "./components/LogReg/SuccessRegPage";
 import { RoutedBlog, Blogs } from "./pages/blog";
-import { FAQ, TentangKami, Panduan, Privasi, Refund, Syarat } from "./pages/pelayanan";
+import {
+  FAQ,
+  TentangKami,
+  Panduan,
+  Privasi,
+  Refund,
+  Syarat,
+} from "./pages/pelayanan";
 import { TampilanProdukPage, TampilanVendorPage } from "./pages/vendor_produk";
 import {
   VendorChat,
@@ -39,9 +42,7 @@ import InformasiPembeliPage from "./components/PembeliDashboard/PembeliCart/Info
 import PembayaranPembeliPage from "./components/PembeliDashboard/PembeliCart/PembayaranPembeli";
 import PemeriksaanBelanjaPage from "./components/PembeliDashboard/PembeliCart/PemeriksaanPembeli";
 import SuccessCart from "./components/PembeliDashboard/PembeliCart/SuccessCart";
-import {
-  PembeliProfil
-} from "./pages/pembelidashboard";
+import { PembeliProfil } from "./pages/pembelidashboard";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,15 +65,15 @@ function App() {
     token: "",
     id: "",
     name: "",
-    role: ""
+    role: "",
   });
 
   const [clientCart, setClientCart] = useState({
     price: "",
     bank: "",
     clientInfo: 0,
-    product:[]
-  })
+    product: [],
+  });
 
   const toggling = () => {
     setIsOpen(!isOpen);
@@ -81,13 +82,15 @@ function App() {
   useEffect(() => {
     setLoginInfo({
       ...loginInfo,
+      userId: `${localStorage.getItem("userId")}`,
       name: `${localStorage.getItem("nama")}`,
       token: `${localStorage.getItem("token")}`,
-      role: `${localStorage.getItem("role")}`
+      role: `${localStorage.getItem("role")}`,
+      pembeliId: localStorage.getItem("pembeliId"),
     });
   }, []);
 
-  console.log(clientCart)
+  console.log(clientCart);
   return (
     <>
       <Router>
@@ -107,7 +110,8 @@ function App() {
                     toggling={toggling}
                     isAuth={loginInfo.token}
                     nama={loginInfo.name}
-                    role={loginInfo.role} />
+                    role={loginInfo.role}
+                  />
                   <Switch>
                     <ProtectedVendor
                       path="/"
@@ -116,8 +120,18 @@ function App() {
                       role={loginInfo.role}
                       isAuth={loginInfo.token}
                     />
-                    <ProtectedUser path="/login" component={LoginPage} isAuth={loginInfo.token} exact />
-                    <ProtectedUser path="/register" component={RegisterPage} isAuth={loginInfo.token} exact />
+                    <ProtectedUser
+                      path="/login"
+                      component={LoginPage}
+                      isAuth={loginInfo.token}
+                      exact
+                    />
+                    <ProtectedUser
+                      path="/register"
+                      component={RegisterPage}
+                      isAuth={loginInfo.token}
+                      exact
+                    />
                     <ProtectedVendorLogin
                       path="/vendor-chat"
                       component={VendorChat}
@@ -165,7 +179,11 @@ function App() {
                       exact
                       isAuth={loginInfo.token}
                     />
-                    <Route path="/login-success" component={LoginSuccess} exact />
+                    <Route
+                      path="/login-success"
+                      component={LoginSuccess}
+                      exact
+                    />
                     <Route path="/blog/:id" component={RoutedBlog} exact />
                     <Route path="/allblog" component={Blogs} exact />
                     <Route path="/faq" component={FAQ} exact />

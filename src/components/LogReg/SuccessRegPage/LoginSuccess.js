@@ -19,6 +19,10 @@ const LoginSuccess = (props) => {
       const { jwt, user } = data;
       localStorage.setItem("token", jwt);
       localStorage.setItem("nama", user.username);
+      localStorage.setItem("userId", user.id);
+      if (user.pembeli) {
+        localStorage.setItem("pembeliId", user.pembeli);
+      }
       localStorage.setItem("role", "pembeli");
       setIsLoading(false);
       setTimeout(() => {
@@ -43,9 +47,7 @@ const LoginSuccess = (props) => {
               style={{ margin: "12px auto" }}
             />
             <SucRegWrited>Login Berhasil</SucRegWrited>
-            <GoHome>
-              Kembali ke Beranda
-            </GoHome>
+            <GoHome>Kembali ke Beranda</GoHome>
           </SucRegBox>
         </SucRegBg>
       )}

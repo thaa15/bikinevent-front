@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   GlobalTemplate,
   PopUpBg,
@@ -43,8 +43,11 @@ import {
   PartOfImage,
 } from "./TampilanStyled";
 import { BoxNotEntry } from "../../components/VendorDashboard/VendorPesanan/VendorPesananStyle";
+import { loginContext } from "../../context";
+import { pembeliService } from "../../services/Pembeli";
 
 const ShowAtTopProduk = ({
+  id,
   image,
   kota,
   judul,
@@ -56,13 +59,44 @@ const ShowAtTopProduk = ({
   const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
   const [rates, setRates] = useState(rating);
   const [handles, setHandles] = useState(false);
-
+  const { loginInfo, setLoginInfo } = useContext(loginContext);
   useEffect(() => {
     if (rating === undefined) setRates(0);
     else setRates(rating);
 
     if (prices.length > 11) setHandles(true);
-  }, [])
+  }, []);
+
+  const addToCart = async () => {
+    let body = null;
+    if (loginInfo.pembeliId == null) {
+      body = {
+        user: loginInfo.userId,
+        cart: [id],
+      };
+      const response = await pembeliService.postPembeli(loginInfo.token, body);
+      const data = response.data;
+      setLoginInfo({ ...loginInfo, pembeliId: data.id });
+      return response;
+    } else {
+      const response = await pembeliService.getPembeliById(
+        loginInfo.pembeliId,
+        loginInfo.token
+      );
+      const dataPembeli = response.data;
+      let newCart = dataPembeli.cart;
+      newCart.push(id);
+      body = {
+        cart: newCart,
+      };
+      const putResponse = await pembeliService.editPembeliById(
+        loginInfo.pembeliId,
+        loginInfo.token,
+        body
+      );
+      return putResponse;
+    }
+  };
   return (
     <BgTop prod>
       <GlobalTemplate need>
@@ -82,7 +116,7 @@ const ShowAtTopProduk = ({
             <Price handle={handles}>Rp{prices}</Price>
             <GetButBot>
               <div>
-                <ButtonBottom>
+                <ButtonBottom onClick={addToCart}>
                   <CartShop />
                   Masukkan Keranjang
                 </ButtonBottom>
@@ -110,7 +144,7 @@ const ShowAtTopVendor = ({
   useEffect(() => {
     if (rates === undefined) setRates(0);
     else setRates(ratingvendor);
-  }, [])
+  }, []);
   return (
     <BgTop>
       <GlobalTemplate need>
@@ -142,7 +176,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
   useEffect(() => {
     if (rates === undefined) setRates(0);
     else setRates(rating);
-  }, [])
+  }, []);
   return (
     <GlobalTemplate>
       <TampilanComments>
@@ -199,9 +233,7 @@ const PenilaianVendorVendor = ({ comments }) => {
   return (
     <>
       {comments.length === 0 ? (
-        <BoxNotEntry>
-          Belum Terdapat Penilaian!
-        </BoxNotEntry>
+        <BoxNotEntry>Belum Terdapat Penilaian!</BoxNotEntry>
       ) : (
         <TampilanComments>
           {comments.map((data, idx) => {
@@ -257,8 +289,7 @@ const PortofolioVendor = ({ portofoliotitle, foto1, foto2 }) => {
                 />
               </>
               {clicked ? (
-                <>
-                </>
+                <></>
               ) : (
                 <>
                   <PopUpBg need>
@@ -280,7 +311,7 @@ const PortofolioVendor = ({ portofoliotitle, foto1, foto2 }) => {
                 </>
               )}
             </>
-          )
+          );
         })}
       </PartOfImage>
     </PortofolioBox>

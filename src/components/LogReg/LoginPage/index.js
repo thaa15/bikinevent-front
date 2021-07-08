@@ -66,9 +66,13 @@ const LoginPage = (props) => {
       if (userData) {
         if (userData.user.role._id == pembeliId && role == "pembeli") {
           //Nanti push ke halaman lainnya disini ya (Pembeli)
+          localStorage.setItem("userId", userData.user.id);
           localStorage.setItem("token", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
-          localStorage.setItem("role","pembeli");
+          if (userData.user.pembeli) {
+            localStorage.setItem("pembeliId", userData.user.pembeli);
+          }
+          localStorage.setItem("role", "pembeli");
           setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
             setLoginUser({ ...loginUser, right: false });
@@ -90,7 +94,7 @@ const LoginPage = (props) => {
           localStorage.setItem("token", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
           localStorage.setItem("vendor_id", userData.user.vendor._id);
-          localStorage.setItem("role","vendor");
+          localStorage.setItem("role", "vendor");
           setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
             setLoginUser({ ...loginUser, right: false });
@@ -223,7 +227,10 @@ const LoginPage = (props) => {
               <OrLine>atau</OrLine>
             </Liner>
 
-            <a href="https://bikinevent.id/api/connect/google" style={{textDecoration:"none"}}>
+            <a
+              href="https://bikinevent.id/api/connect/google"
+              style={{ textDecoration: "none" }}
+            >
               <GoogleLogin
                 clientId={null}
                 buttonText="Login"
