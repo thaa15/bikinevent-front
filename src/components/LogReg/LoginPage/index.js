@@ -70,7 +70,7 @@ const LoginPage = (props) => {
           localStorage.setItem("token", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
           if (userData.user.pembeli) {
-            localStorage.setItem("pembeliId", userData.user.pembeli);
+            localStorage.setItem("pembeliId", userData.user.pembeli.id);
           }
           localStorage.setItem("role", "pembeli");
           setLoginUser({ ...loginUser, right: true });

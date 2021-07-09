@@ -70,9 +70,10 @@ function App() {
 
   const [clientCart, setClientCart] = useState({
     price: "",
-    bank: "",
-    clientInfo: 0,
+    payment_method: null,
+    clientInfo: null,
     product: [],
+    statusDp: false,
   });
 
   const toggling = () => {
@@ -86,7 +87,7 @@ function App() {
       name: `${localStorage.getItem("nama")}`,
       token: `${localStorage.getItem("token")}`,
       role: `${localStorage.getItem("role")}`,
-      pembeliId: localStorage.getItem("pembeliId"),
+      pembeliId: `${localStorage.getItem("pembeliId")}`,
     });
   }, []);
 

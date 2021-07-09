@@ -69,7 +69,7 @@ const ShowAtTopProduk = ({
 
   const addToCart = async () => {
     let body = null;
-    if (loginInfo.pembeliId == null) {
+    if (loginInfo.pembeliId == "null") {
       body = {
         user: loginInfo.userId,
         cart: [id],

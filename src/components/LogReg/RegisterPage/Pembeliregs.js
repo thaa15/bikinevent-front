@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   LoginInput,
   LogApart,
@@ -8,12 +8,12 @@ import {
   Buttons,
 } from "../LoginPage/LoginStyled";
 import { withRouter } from "react-router-dom";
-import { 
-  CheckBoxInput, 
+import {
+  CheckBoxInput,
   TermanConds,
   CondTermBg,
   CondTermTitle,
-  CondTermContent
+  CondTermContent,
 } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { authService } from "../../../services/Auth";
@@ -22,15 +22,16 @@ import {
   PopUpBg,
   BgSuccess,
   Succesicon,
-  ContentPopUp
+  ContentPopUp,
 } from "../../../templates/GlobalTemplate";
+import { pembeliService } from "../../../services/Pembeli";
+import { loginContext } from "../../../context";
 
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
   const [condTerm, setCondTerm] = useState(false);
-
   const [formData, setFormData] = useState({
     nama_lengkap: "",
     email: "",
@@ -52,10 +53,27 @@ const Pembeliregs = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setAccountCreated(true)
-    const response = await authService.register(formData).catch((err) => {
-      return setError(err.response.data.data[0].messages[0].message);
-    });
+    setAccountCreated(true);
+    const { username, email, password, nama_lengkap, role } = formData;
+    const body = {
+      username,
+      email,
+      password,
+      nama_lengkap,
+      role,
+    };
+    const response = await authService.register(body);
+    console.log(response);
+    const data = response.data;
+    if (data) {
+      const bodyPembeli = {
+        user: data.user._id,
+      };
+      const pembeliRes = await pembeliService.postPembeli(
+        data.jwt,
+        bodyPembeli
+      );
+    }
     setTimeout(() => {
       setAccountCreated(false);
       props.history.push("/login");
@@ -69,7 +87,7 @@ const Pembeliregs = (props) => {
 
   return (
     <>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={(e) => submitHandler(e)}>
         <p style={{ color: "red" }}>{error}</p>
         <br />
         <LoginLabel for="name">Nama Lengkap</LoginLabel>
@@ -89,7 +107,9 @@ const Pembeliregs = (props) => {
           type="text"
           required
           name="username"
-          onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, username: e.target.value })
+          }
         />
         <br />
 
@@ -119,7 +139,10 @@ const Pembeliregs = (props) => {
           />
           {visible ? (
             <IconBg>
-              <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
+              <BsFillEyeSlashFill
+                onClick={toggle}
+                style={{ color: "#909DAA" }}
+              />
             </IconBg>
           ) : (
             <IconBg>
@@ -142,7 +165,12 @@ const Pembeliregs = (props) => {
 
         <CheckBoxInput>
           <input type="checkbox" required style={{ marginRight: "4px" }} />
-          <div style={{ width: "100%" }} onClick={() => { setCondTerm(true) }}>
+          <div
+            style={{ width: "100%" }}
+            onClick={() => {
+              setCondTerm(true);
+            }}
+          >
             Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
           </div>
         </CheckBoxInput>
@@ -154,13 +182,21 @@ const Pembeliregs = (props) => {
           <PopBgSuccess>
             <BgSuccess aktif={accountCreated === true} right>
               <Succesicon />
-              <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
                 <b>SUCCESS</b>
                 Akun Berhasil Dibuat
               </div>
             </BgSuccess>
           </PopBgSuccess>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </form>
       <>
         {condTerm ? (
@@ -169,22 +205,49 @@ const Pembeliregs = (props) => {
               <CondTermBg>
                 <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
                 <CondTermContent>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  <br/>
-                  <br/>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  <br/>
-                  <br/>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                  <br/>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                  <br />
+                  <br />
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                  <br />
+                  <br />
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                  <br />
                 </CondTermContent>
-                <Buttonslog onClick={()=>{setCondTerm(false)}}>
+                <Buttonslog
+                  onClick={() => {
+                    setCondTerm(false);
+                  }}
+                >
                   <Buttons>Tutup</Buttons>
                 </Buttonslog>
               </CondTermBg>
             </ContentPopUp>
           </PopUpBg>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </>
     </>
   );
