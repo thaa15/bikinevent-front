@@ -49,8 +49,10 @@ const InformasiPembeliPage = (props) => {
                     ) : (
                         <>
                             <PembeliHeaderWithStep
-                                title="Keranjang Belanja"
-                                subtitle="Keperluan yang anda butuhkan."
+                                title="Informasi Pembeli"
+                                subtitle="Isi form dibawah ini dengan informasi secara lengkap."
+                                path="/client-purchase/cart"
+                                buttonTitle="Kembali ke Keranjang"
                                 act="informasi" />
                             {data.map((item, idx) => {
                                 return (

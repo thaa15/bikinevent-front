@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { BsChatFill, BsFillPersonFill,BsFillBagFill } from "react-icons/bs";
+import { BsChatFill, BsFillPersonFill, BsFillBagFill } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
-import {RiMoneyDollarCircleFill} from "react-icons/ri";
+import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { CgTrack } from "react-icons/cg"
 
 export const SidebarContainer = styled.aside`
     position: fixed;
@@ -81,6 +82,13 @@ export const HomeButton = styled(AiFillHome)`
     margin-right: 10px;
 `;
 export const ShoppingCartIcon = styled(FaShoppingCart)`
+    color: #212B36;
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 10px;
+`;
+
+export const TrackIcon = styled(CgTrack)`
     color: #212B36;
     font-size: 25px;
     cursor: pointer;

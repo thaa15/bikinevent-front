@@ -173,7 +173,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                         <ElementLink to="/client-profil">
                           <Dropdownlist>Profile</Dropdownlist>
                         </ElementLink>
-                        <ElementLink to="/">
+                        <ElementLink to="/track-order/records">
                           <Dropdownlist>Pesanan</Dropdownlist>
                         </ElementLink>
                         <ElementLink onClick={removed}>

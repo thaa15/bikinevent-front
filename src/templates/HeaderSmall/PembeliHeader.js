@@ -19,11 +19,13 @@ import {
 } from "../../AllAuth";
 
 export const PembeliHeaderWithStep = ({
-        title,
-        subtitle,
-        act
-    }) => {
-        const history = useHistory()
+    title,
+    subtitle,
+    path,
+    buttonTitle,
+    act
+}) => {
+    const history = useHistory()
     return (
         <HeaderBgPembeli step>
             <GlobalTemplate>
@@ -31,8 +33,24 @@ export const PembeliHeaderWithStep = ({
                 <PartSubTitle>
                     <SubTitle>{subtitle}</SubTitle>
                     <ButtonPart>
-                        <BackHome to="/">
-                            &lt; Kembali Berbelanja
+                        <BackHome 
+                        onClick={() => {
+                            if(path === "/client-purchase/cart") {
+                                AuthClinformation.outclinfo(() => {
+                                    history.push(path);
+                                })
+                            }else if(path === "/client-purchase/information"){
+                                AuthCliPay.outclipay(() => {
+                                    history.push(path);
+                                })
+                            }else if(path === "/client-purchase/payment"){
+                                AuthCliCheck.outclicheck(() => {
+                                    history.push(path);
+                                })
+                            }
+                        }}
+                        to={path}>
+                            &lt; {buttonTitle}
                         </BackHome>
                     </ButtonPart>
                 </PartSubTitle>
@@ -106,6 +124,27 @@ export const PembeliHeaderWithStep = ({
                         <span>4</span>Pemeriksaan
                     </StepWrited>
                 </StepBg>
+            </GlobalTemplate>
+        </HeaderBgPembeli>
+    )
+};
+
+export const PesananPembeliHeader = ({
+    title,
+    subtitle,
+}) => {
+    return (
+        <HeaderBgPembeli step>
+            <GlobalTemplate>
+                <TitleHeader>{title}</TitleHeader>
+                <PartSubTitle>
+                    <SubTitle>{subtitle}</SubTitle>
+                    <ButtonPart>
+                        <BackHome to="/">
+                            &lt; Kembali Berbelanja
+                        </BackHome>
+                    </ButtonPart>
+                </PartSubTitle>
             </GlobalTemplate>
         </HeaderBgPembeli>
     )

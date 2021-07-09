@@ -80,8 +80,10 @@ const PembayaranPembeliPage = (props) => {
                     ) : (
                         <>
                             <PembeliHeaderWithStep
-                                title="Keranjang Belanja"
-                                subtitle="Keperluan yang anda butuhkan."
+                                title="Pembayaran"
+                                subtitle="Tahapan pembayaran akan dilakukan konfirmasi manual melalui email."
+                                path="/client-purchase/information"
+                                buttonTitle="Kembali ke Informasi Pembeli"
                                 act="pembayaran" />
 
                             <GlobalTemplate>

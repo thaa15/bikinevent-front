@@ -43,6 +43,7 @@ import PembayaranPembeliPage from "./components/PembeliDashboard/PembeliCart/Pem
 import PemeriksaanBelanjaPage from "./components/PembeliDashboard/PembeliCart/PemeriksaanPembeli";
 import SuccessCart from "./components/PembeliDashboard/PembeliCart/SuccessCart";
 import { PembeliProfil } from "./pages/pembelidashboard";
+import PembeliPesananPage from "./components/PembeliDashboard/PembeliPesanan/AllOrder";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -234,6 +235,13 @@ function App() {
                       exact
                       component={PembeliProfil}
                       isAuth={loginInfo.token}
+                    />
+                    <ProtectedPembeliLogin
+                      role={loginInfo.role}
+                      component={PembeliPesananPage}
+                      isAuth={loginInfo.token}
+                      path="/track-order/records"
+                      exact
                     />
                     <ProtectedVendor
                       path="/detailed-product/:id"

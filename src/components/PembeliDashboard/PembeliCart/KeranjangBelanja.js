@@ -55,6 +55,8 @@ const KeranjangBelanjaPage = (props) => {
                     <PembeliHeaderWithStep
                         title="Keranjang Belanja"
                         subtitle="Keperluan yang anda butuhkan."
+                        path="/"
+                        buttonTitle="Kembali Berbelanja"
                         act="keranjang" />
                     {data.map((item, idx) => {
                         return (
