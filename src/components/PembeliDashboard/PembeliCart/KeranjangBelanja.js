@@ -27,11 +27,17 @@ import {
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
 import { clientCartContext } from "../../../context";
+import {
+    PopBgSuccess,
+    BgSuccess,
+    Failedicon,
+} from "../../../templates/GlobalTemplate";
 
 const KeranjangBelanjaPage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [prices, setPrices] = useState("0");
-    const { clientCart, setClientCart } = useContext(clientCartContext)
+    const [makeSure, setMakeSure] = useState(false);
+    const { clientCart, setClientCart } = useContext(clientCartContext);
 
     const data = ProfilePembeli.filter((dats) => dats.name === "Ernia Watson");
     useEffect(() => {
@@ -85,9 +91,11 @@ const KeranjangBelanjaPage = (props) => {
                                                                 <CheckBoks
                                                                     type="checkbox"
                                                                 />
-                                                                <DivRowContent need>
-                                                                    <Shopping />
-                                                                    <h6>{dats.vendor_name}</h6>
+                                                                <DivRowContent top>
+                                                                    <DivRowContent need>
+                                                                        <Shopping />
+                                                                        <h6>{dats.vendor_name}</h6>
+                                                                    </DivRowContent>
                                                                     <LinkChat >Hubungi Vendor</LinkChat>
                                                                 </DivRowContent>
                                                             </DivRow>
@@ -120,7 +128,7 @@ const KeranjangBelanjaPage = (props) => {
                                                                                     });
                                                                                 }}
                                                                             />
-                                                                            <DivRowContent needs>
+                                                                            <DivRowContent content>
                                                                                 <ImageCart src={item.image} />
                                                                                 <div>
                                                                                     <p>{item.judul}</p>
@@ -154,15 +162,42 @@ const KeranjangBelanjaPage = (props) => {
                                                 </PriceTotal>
                                                 <MulaiBelanja need
                                                     onClick={() => {
-                                                        setClientCart({ ...clientCart, price: prices })
-                                                        AuthClinformation.inclinfo(() => {
-                                                            props.history.push("/client-purchase/information");
-                                                        });
+                                                        if (prices === "0") {
+                                                            setMakeSure(true);
+                                                            setTimeout(() => {
+                                                                setMakeSure(false)
+                                                            }, 2000);
+                                                        } else {
+                                                            setClientCart({ ...clientCart, price: prices })
+                                                            AuthClinformation.inclinfo(() => {
+                                                                props.history.push("/client-purchase/information");
+                                                            });
+                                                        }
                                                     }}>
                                                     Lanjutkan Pembelian
                                                 </MulaiBelanja>
                                             </PurchasePrice>
-
+                                            <>
+                                                {makeSure ? (
+                                                    <PopBgSuccess>
+                                                        <BgSuccess aktif={makeSure === true}>
+                                                            <Failedicon />
+                                                            <div
+                                                                style={{
+                                                                    display: "flex",
+                                                                    width: "100%",
+                                                                    flexDirection: "column",
+                                                                }}
+                                                            >
+                                                                <b>FAILED</b>
+                                                                Harus Memilih Minimal Satu Barang
+                                                            </div>
+                                                        </BgSuccess>
+                                                    </PopBgSuccess>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </>
                                         </PurchaseContentApart>
                                     )}
                             </GlobalTemplate>

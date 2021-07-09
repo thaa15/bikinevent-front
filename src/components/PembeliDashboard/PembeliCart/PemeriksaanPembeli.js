@@ -4,7 +4,12 @@ import LoadingPage from "../../../templates/Loading";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import { ProfilePembeli } from "../../../datas/vendordata";
-import { AuthCliCheck,AuthCliSuccess } from "../../../AllAuth";
+import { 
+    AuthClinformation,
+    AuthCliPay,
+    AuthCliCheck, 
+    AuthCliSuccess 
+} from "../../../AllAuth";
 import { TitleName, InformationContent } from "../PembeliProfil/PembeliProfil";
 import { getImageBank } from "./PembayaranPembeli";
 import {
@@ -59,11 +64,9 @@ const PemeriksaanBelanjaPage = (props) => {
                                             return (
                                                 <>
                                                     <BoxContentCart>
-                                                        <DivRow>
-                                                            <DivRowContent need>
-                                                                <h6>Keranjang Belanja</h6>
-                                                            </DivRowContent>
-                                                        </DivRow>
+                                                        <DivRowContent>
+                                                            <h6>Keranjang Belanja</h6>
+                                                        </DivRowContent>
                                                         {item.order.map((dats) => {
                                                             return (
                                                                 <>
@@ -71,12 +74,16 @@ const PemeriksaanBelanjaPage = (props) => {
                                                                         return (
                                                                             <>
                                                                                 <DivRow key={idx}>
-                                                                                    <DivRowContent needs>
+                                                                                    <DivRowContent>
                                                                                         <ImageCart src={orderan.image} />
                                                                                         <div>
-                                                                                            <DivRowContent need>
-                                                                                                <Shopping />
-                                                                                                <p>{dats.vendor_name}</p>
+                                                                                            <DivRowContent top>
+                                                                                                <DivRowContent need>
+                                                                                                    <Shopping />
+                                                                                                    <p
+                                                                                                    style={{fontSize: "14px", lineHeight: "21px", color:"#212B36",}}
+                                                                                                    >{dats.vendor_name}</p>
+                                                                                                </DivRowContent>
                                                                                             </DivRowContent>
                                                                                             <p>{orderan.judul}</p>
                                                                                             <h6>Rp{parseInt(orderan.price).toLocaleString("id-ID")}</h6>
@@ -93,16 +100,14 @@ const PemeriksaanBelanjaPage = (props) => {
                                                     </BoxContentCart>
 
                                                     <BoxContentCart>
-                                                        <DivRow>
-                                                            <DivRowContent need>
-                                                                <h6>Informasi Pembeli</h6>
-                                                            </DivRowContent>
-                                                        </DivRow>
+                                                        <DivRowContent>
+                                                            <h6>Informasi Pembeli</h6>
+                                                        </DivRowContent>
                                                         {item.client_information.map((info, idx) => {
                                                             if (idx === clientCart.clientInfo) {
                                                                 return (
                                                                     <DivRow key={idx}>
-                                                                        <DivRowContent needs>
+                                                                        <DivRowContent>
                                                                             <div>
                                                                                 <TitleName check>
                                                                                     {info.title_name}
@@ -122,11 +127,9 @@ const PemeriksaanBelanjaPage = (props) => {
                                                     </BoxContentCart>
 
                                                     <BoxContentCart>
-                                                        <DivRow>
-                                                            <DivRowContent need>
-                                                                <h6>Pembayaran</h6>
-                                                            </DivRowContent>
-                                                        </DivRow>
+                                                        <DivRowContent>
+                                                            <h6>Pembayaran</h6>
+                                                        </DivRowContent>
                                                         {item.payment
                                                             .filter(el => el.bank.toUpperCase() === clientCart.bank)
                                                             .map((dats, idx) => {
@@ -167,6 +170,15 @@ const PemeriksaanBelanjaPage = (props) => {
                                                 AuthCliSuccess.incliSuccess(() => {
                                                     props.history.push("/client-purchase/success-cart");
                                                 });
+                                                AuthClinformation.outclinfo(() => {
+                                                    props.history.push("/client-purchase/success-cart");
+                                                })
+                                                AuthCliPay.outclipay(() => {
+                                                    props.history.push("/client-purchase/success-cart");
+                                                })
+                                                AuthCliCheck.outclicheck(() => {
+                                                    props.history.push("/client-purchase/success-cart");
+                                                })
                                             }}>
                                             Lanjutkan Pembelian
                                         </MulaiBelanja>

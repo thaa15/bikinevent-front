@@ -33,7 +33,7 @@ const SuccessCart = (props) => {
                             <SucRegBox>
                                 <img src={sucregcheck} alt="success" style={{ margin: "12px auto" }} />
                                 <SucRegWrited>Pemesanan Berhasil!</SucRegWrited>
-                                <EmailConfirm>
+                                <EmailConfirm need>
                                     Harap melakukan pembayaran yang tertera pada email
                                     <span>{data.map(el => { return el.email })}</span>
                                 </EmailConfirm>

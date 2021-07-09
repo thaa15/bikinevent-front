@@ -49,7 +49,7 @@ class AuthClientPayment {
     }
 
     outclipay(cb) {
-        this.autclpay = false;
+        this.autclipay = false;
         cb();
     }
 
@@ -69,7 +69,7 @@ class AuthClientCheck {
     }
 
     outclicheck(cb) {
-        this.autclcheck = false;
+        this.autclicheck = false;
         cb();
     }
 
@@ -89,7 +89,7 @@ class AuthClientSuccess {
     }
 
     outcliSuccess(cb) {
-        this.autclSuccess = false;
+        this.autcliSuccess = false;
         cb();
     }
 
