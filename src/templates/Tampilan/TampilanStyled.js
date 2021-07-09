@@ -134,10 +134,10 @@ export const ButtonBottom = styled(Link)`
         margin: 10px 0;
     }
     &:hover {
-        background-color:#a3143f;
+        background: ${(props) => props.call ? "#f5eded" : "#a3143f"};
     }
     &:active{
-        background-color:#c91a4f;
+        background: ${(props) => props.call ? "#f5eded" : "#c91a4f"};
     }
 `;
 
