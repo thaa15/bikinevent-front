@@ -63,9 +63,10 @@ function App() {
 
   const [loginInfo, setLoginInfo] = useState({
     token: "",
-    id: "",
+    userId: "",
     name: "",
     role: "",
+    pembeliId: null
   });
 
   const [clientCart, setClientCart] = useState({

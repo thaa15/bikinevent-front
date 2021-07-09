@@ -133,6 +133,12 @@ export const ButtonBottom = styled(Link)`
     @media screen and (max-width: 606px) {
         margin: 10px 0;
     }
+    &:hover {
+        background-color:#a3143f;
+    }
+    &:active{
+        background-color:#c91a4f;
+    }
 `;
 
 export const ChatShop = styled(BsChatFill)`
@@ -165,6 +171,9 @@ export const VendorPhoto = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    @media screen and (max-width: 550px) {
+        margin-right: 0;
+    }
 `;
 
 export const TitleTampilan = styled.h3`

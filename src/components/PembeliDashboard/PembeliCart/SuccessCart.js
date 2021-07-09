@@ -49,7 +49,7 @@ const SuccessCart = (props) => {
                                     <GoHome
                                         onClick={() => {
                                             AuthCliSuccess.outcliSuccess(() => {
-                                                props.history.push("/");
+                                                props.history.push("/track-order/records");
                                             })
                                         }}>Lacak Pesanan
                                     </GoHome>

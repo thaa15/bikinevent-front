@@ -46,12 +46,14 @@ export const ButtonCloser = styled(AiOutlineClose)`
 `;
 
 export const ContentDrop = styled.div`
-    margin: 0 auto;
+    margin: 0 30px;
     max-width: 700px;
     border-radius: 10px;
     padding: 16px;
     z-index: 52;
-    display: ${({ played }) => (played ? "inline-block" : "none")};
+    align-items: center;
+    justify-content: center;
+    display: ${({ played }) => (played ? "flex" : "none")};
     background-color: transparent;
     @media screen and (max-width: 574px) {
         max-width: 600px;
@@ -63,6 +65,7 @@ export const ButtonClosePopUp = styled.div`
     z-index: 60;
     cursor:pointer;
     width:fit-content;
+    margin-left: auto;
 `;
 
 export const AngleRight = styled(FaAngleDoubleRight)`
