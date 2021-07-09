@@ -2,8 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import LoadingPage from "../../../templates/Loading";
 import fotoNoEntry from "../../../images/fotoNoEntry.png";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
-import { GlobalTemplate } from "../../../templates/GlobalTemplate";
-import { ProfilePembeli } from "../../../datas/vendordata";
+import {
+  GlobalTemplate,
+  PopBgSuccess,
+  BgSuccess,
+  Failedicon,
+} from "../../../templates/GlobalTemplate";
 import { TrashsIcon, TrashButton } from "../PembeliProfil/PembeliProfil";
 import { AuthClinformation } from "../../../AllAuth";
 import {
@@ -172,7 +176,6 @@ const KeranjangBelanjaPage = (props) => {
               </PurchaseContentApart>
             )}
           </GlobalTemplate>
-          );
         </>
       )}
     </>

@@ -33,7 +33,7 @@ const SuccessCart = (props) => {
                             <SucRegBox>
                                 <img src={sucregcheck} alt="success" style={{ margin: "12px auto" }} />
                                 <SucRegWrited>Pemesanan Berhasil!</SucRegWrited>
-                                <EmailConfirm>
+                                <EmailConfirm need>
                                     Harap melakukan pembayaran yang tertera pada email
                                     <span>{data.map(el => { return el.email })}</span>
                                 </EmailConfirm>
@@ -49,7 +49,7 @@ const SuccessCart = (props) => {
                                     <GoHome
                                         onClick={() => {
                                             AuthCliSuccess.outcliSuccess(() => {
-                                                props.history.push("/");
+                                                props.history.push("/track-order/records");
                                             })
                                         }}>Lacak Pesanan
                                     </GoHome>

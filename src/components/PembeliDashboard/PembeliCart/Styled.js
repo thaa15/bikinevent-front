@@ -155,30 +155,48 @@ export const InformationContents = styled.div`
 
 export const DivRowContent = styled.div`
     display: flex;
-    flex-direction: ${(props)=>props.need ? "row" : "row"};
+    flex-direction: ${(props)=>props.top ? "row" : props.content ? "row" : "row"};
     column-gap: ${(props)=>props.need ? "6px" : "20px"};
     flex:1;
-    align-items:center;
-    align-self:center;
+    align-self: center;
+    align-items: ${(props)=>props.top ? "center" : props.content ? "center" : "center"};
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: ${(props)=>props.top ? "0" : props.titlee ? "3px" : "10px"};
     p {
         font-size: 14px;
         line-height: 21px;
         color: #212B36;
+        margin: 3px 0;
     }
     h6 {
         font-size: 18px;
         line-height: 27px;
         color: #212B36;
+        margin: 3px 0;
     }
-    @media screen and (max-width: 718px) {
-        flex-direction: ${(props)=>props.need ? "column" : "column"};
-        text-align: ${(props)=>props.needs ? "center" : "left"};
-        p{
-            margin: 8px auto;
+    @media screen and (max-width: 676px) {
+        flex-direction: ${(props)=>props.top ? "column" : props.content ? "row" : "row"};
+        align-items: ${(props)=>props.top ? "flex-start" : props.content ? "center" : "center"};
+        text-align: left;
+    }
+    @media screen and (max-width: 505px) {
+        flex-direction: ${(props)=>props.top ? "column" : props.content ? "column" : "row"};
+        align-items: ${(props)=>props.top ? "flex-start" : props.content ? "flex-start" : "center"};
+    }
+    @media screen and (max-width: 489px) {
+        h6 {
+            font-size: 16px;
+            line-height: 27px;
+            color: #212B36;
         }
     }
+    @media screen and (max-width: 392px) {
+        h6 {
+            font-size: 14px;
+            line-height: 27px;
+            color: #212B36;
+        }
+    } 
 `;
 
 export const ImageCart = styled.img`
@@ -186,9 +204,9 @@ export const ImageCart = styled.img`
     height: 156px;
     object-fit: cover;
     
-    @media screen and (max-width: 461px) {
-        width: 120px;
-        height: 120px;
+    @media screen and (max-width: 718px) {
+        width: 80px;
+        height: 80px;
     }
 `;
 
@@ -201,16 +219,15 @@ export const PartTrashButtons = styled.div`
     align-items: right;
     margin-top: auto;
     margin-left: auto;
-    @media screen and (max-width: 718px) {
-        margin-top:0;
-        margin-left:0;
-    }
 `;
 
 export const Shopping = styled(AiFillShopping)`
     font-size: 24px;
     color: #9B51E0;
     margin-right:9px;
+    @media screen and (max-width: 489px) {
+        font-size: 22px;
+    }    
 `;
 
 export const LinkChat = styled(Link)`
@@ -224,7 +241,7 @@ export const LinkChat = styled(Link)`
     &:hover{
         text-decoration: underline;
     }
-    @media screen and (max-width: 718px) {
+    @media screen and (max-width: 676px) {
         margin-left: 0;
     }
 `;
@@ -246,8 +263,11 @@ export const NoteInput = styled.input`
         outline: none;
         color:black;
     }
-    @media screen and (max-width: 461px) {
+    @media screen and (max-width: 550px) {
         width: 150px;
+    }
+    @media screen and (max-width: 416px) {
+        width: 170px;
     }
 `;
 
@@ -312,6 +332,7 @@ export const EmailConfirm = styled.div`
         font-weight: bold;
         margin: 0 5px;
     }
+    text-align:${(props)=>props.need ? "center" : "left"};
 `;
 
 export const ButtonLacak = styled.button`
@@ -332,6 +353,7 @@ export const ButtonLacak = styled.button`
     @media screen and (max-width: 525px) {
         width: 80%;
     }
+
 `;
 
 export const ButtonApartas = styled.div`
@@ -339,4 +361,10 @@ export const ButtonApartas = styled.div`
     flex-direction: row;
     column-gap: 20px;
     width: 60%;
+    @media screen and (max-width: 950px) {
+        width: 100%;
+    }
+    @media screen and (max-width: 603px) {
+        flex-direction: column;
+    }
 `;

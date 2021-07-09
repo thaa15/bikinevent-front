@@ -49,12 +49,13 @@ export const getImageBank = (item) => {
 
 const PembayaranPembeliPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [actButton, setActButton] = useState("");
+
   const [idxButton, setIdxButton] = useState(0);
   const [condTerm, setCondTerm] = useState(false);
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const [paymentData, setPaymentData] = useState();
   const [dpStatus, setDpStatus] = useState(false);
+  const [actButton, setActButton] = useState();
   //Cuma mainin data sabi ganti
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const PembayaranPembeliPage = (props) => {
       const response = await paymentService.getPayment();
       const data = response.data;
       setPaymentData(data);
+      setActButton(data.bank[0]);
       setIsLoading(false);
     };
     fetchData();
@@ -92,8 +94,10 @@ const PembayaranPembeliPage = (props) => {
           ) : (
             <>
               <PembeliHeaderWithStep
-                title="Keranjang Belanja"
-                subtitle="Keperluan yang anda butuhkan."
+                title="Pembayaran"
+                subtitle="Tahapan pembayaran akan dilakukan konfirmasi manual melalui email."
+                path="/client-purchase/information"
+                buttonTitle="Kembali ke Informasi Pembeli"
                 act="pembayaran"
               />
 

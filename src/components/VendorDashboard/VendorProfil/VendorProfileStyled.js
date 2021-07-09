@@ -162,7 +162,7 @@ color: #212B36;
 export const DivButton = styled.div`
     width: fit-content;
     cursor:pointer;
-    &:hover{
-        font-weight: bold;
-    }
+    font-size: 20px;
+    font-weight: bold;
+    color:${(props)=>props.review ? "#EC1C24" : "#212B36"};
 `;

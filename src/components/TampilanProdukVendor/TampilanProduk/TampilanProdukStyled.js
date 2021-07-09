@@ -34,5 +34,5 @@ export const BoxImageTampilan = styled.div`
 `;
 
 export const Imagees = styled.img`
-  width:100%;
+    width:100%;
 `;

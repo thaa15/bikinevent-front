@@ -12,7 +12,7 @@ import {
     ChatIcon,
     ProfileIcon,
     ButtonBottom,
-    SearchIcon
+    TrackIcon
 } from "./SidebarStyled";
 import SidebarVendor from "./SidebarVendor"
 
@@ -21,6 +21,8 @@ const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
         localStorage.removeItem("token");
         localStorage.removeItem("nama");
         localStorage.removeItem("vendor_id");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("pembeliId");
         localStorage.removeItem("role");
 
         window.location.reload();
@@ -62,8 +64,17 @@ const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
                                     <ProfileIcon />Profile
                                 </SideBtnWrap>
                             </SidebarLink>
+
+                            {role === "pembeli" ? (
+                                <SidebarLink to="/track-order/records" onClick={toggling}>
+                                    <SideBtnWrap>
+                                        <TrackIcon />Pesanan
+                                    </SideBtnWrap>
+                                </SidebarLink>
+                            ) : (<></>)}
+
                         </SidebarWrapper>
-                        {role.length > 4 ? (
+                        {role === "pembeli" ? (
                             <div style={{ width: "50%", margin: "0 auto" }}>
                                 <ButtonBottom onClick={removed}>Logout</ButtonBottom>
                             </div>

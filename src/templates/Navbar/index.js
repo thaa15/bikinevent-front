@@ -118,7 +118,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                     <Dropdownlist>Perlengkapan</Dropdownlist>
                   </ElementLink>
                   <ElementLink to="/">
-                    <Dropdownlist>Vanue</Dropdownlist>
+                    <Dropdownlist>Venue</Dropdownlist>
                   </ElementLink>
                   <ElementLink to="/">
                     <Dropdownlist>Talent</Dropdownlist>
@@ -173,7 +173,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                         <ElementLink to="/client-profil">
                           <Dropdownlist>Profile</Dropdownlist>
                         </ElementLink>
-                        <ElementLink to="/">
+                        <ElementLink to="/track-order/records">
                           <Dropdownlist>Pesanan</Dropdownlist>
                         </ElementLink>
                         <ElementLink onClick={removed}>

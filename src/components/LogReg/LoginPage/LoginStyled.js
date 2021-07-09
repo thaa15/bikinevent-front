@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import {AiFillGooglePlusCircle} from "react-icons/ai";
 
 export const LoginBg = styled.div`
     min-height: 500px;
@@ -168,7 +169,7 @@ export const OrLine = styled.div`
     color: #212B36;
 `;
 
-export const Buttonsgoogle = styled(Link)`
+export const Buttonsgoogle = styled.a`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -184,4 +185,16 @@ export const Buttonsgoogle = styled(Link)`
     letter-spacing: -0.2px;
     padding: 8px 32px;
     margin: 10px auto 0;
+    &:hover {
+        background-color:#286dc9;
+    }
+    &:active{
+        background-color:#1f58a3;
+    }
+`;
+
+export const GooglePlus = styled(AiFillGooglePlusCircle)`
+    font-size: 24px;
+    color: white;
+    margin: 0 5px;
 `;

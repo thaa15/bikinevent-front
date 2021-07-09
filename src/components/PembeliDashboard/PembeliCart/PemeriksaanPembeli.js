@@ -3,10 +3,13 @@ import { Redirect } from "react-router-dom";
 import LoadingPage from "../../../templates/Loading";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
-import { ProfilePembeli } from "../../../datas/vendordata";
-import { AuthCliCheck, AuthCliSuccess } from "../../../AllAuth";
+import {
+  AuthClinformation,
+  AuthCliPay,
+  AuthCliCheck,
+  AuthCliSuccess,
+} from "../../../AllAuth";
 import { TitleName, InformationContent } from "../PembeliProfil/PembeliProfil";
-import { getImageBank } from "./PembayaranPembeli";
 import {
   MulaiBelanja,
   PurchaseContentApart,

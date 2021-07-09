@@ -42,7 +42,12 @@ import InformasiPembeliPage from "./components/PembeliDashboard/PembeliCart/Info
 import PembayaranPembeliPage from "./components/PembeliDashboard/PembeliCart/PembayaranPembeli";
 import PemeriksaanBelanjaPage from "./components/PembeliDashboard/PembeliCart/PemeriksaanPembeli";
 import SuccessCart from "./components/PembeliDashboard/PembeliCart/SuccessCart";
+import MenungguPembayaranPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/WaitingPayment";
 import { PembeliProfil } from "./pages/pembelidashboard";
+import PembeliPesananPage from "./components/PembeliDashboard/PembeliPesanan/AllOrder";
+import KonfirmasiPembayaranPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/ConfirmOrder";
+import PelaksanaanPesananPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/ImplementOrder";
+import PesananSelesaiPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/DoneOrder";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,9 +68,10 @@ function App() {
 
   const [loginInfo, setLoginInfo] = useState({
     token: "",
-    id: "",
+    userId: "",
     name: "",
     role: "",
+    pembeliId: null
   });
 
   const [clientCart, setClientCart] = useState({
@@ -234,6 +240,41 @@ function App() {
                       exact
                       component={PembeliProfil}
                       isAuth={loginInfo.token}
+                    />
+                    <ProtectedPembeliLogin
+                      role={loginInfo.role}
+                      component={PembeliPesananPage}
+                      isAuth={loginInfo.token}
+                      path="/track-order/records"
+                      exact
+                    />
+                    <ProtectedPembeliLogin
+                      role={loginInfo.role}
+                      component={KonfirmasiPembayaranPage}
+                      isAuth={loginInfo.token}
+                      path="/detailed-order/confirm/:id"
+                      exact
+                    />
+                    <ProtectedPembeliLogin
+                      role={loginInfo.role}
+                      component={MenungguPembayaranPage}
+                      isAuth={loginInfo.token}
+                      path="/detailed-order/waiting/:id"
+                      exact
+                    />
+                    <ProtectedPembeliLogin
+                      role={loginInfo.role}
+                      component={PelaksanaanPesananPage}
+                      isAuth={loginInfo.token}
+                      path="/detailed-order/implement/:id"
+                      exact
+                    />
+                    <ProtectedPembeliLogin
+                      path="/detailed-order/done/:id"
+                      role={loginInfo.role}
+                      component={PesananSelesaiPage}
+                      isAuth={loginInfo.token}
+                      exact
                     />
                     <ProtectedVendor
                       path="/detailed-product/:id"

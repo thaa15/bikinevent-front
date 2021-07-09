@@ -38,7 +38,6 @@ const InformasiPembeliPage = (props) => {
     no_hp_pembeli: null,
     alamat_pembeli: null,
   });
-  const data = ProfilePembeli.filter((dats) => dats.name === "Ernia Watson");
   useEffect(() => {
     const fetchData = async () => {
       const response = await pembeliService.getPembeliById(
@@ -86,8 +85,10 @@ const InformasiPembeliPage = (props) => {
           ) : (
             <>
               <PembeliHeaderWithStep
-                title="Keranjang Belanja"
-                subtitle="Keperluan yang anda butuhkan."
+                title="Informasi Pembeli"
+                subtitle="Isi form dibawah ini dengan informasi secara lengkap."
+                path="/client-purchase/cart"
+                buttonTitle="Kembali ke Keranjang"
                 act="informasi"
               />
               <GlobalTemplate>
@@ -273,7 +274,6 @@ const InformasiPembeliPage = (props) => {
                   </PurchasePrice>
                 </PurchaseContentApart>
               </GlobalTemplate>
-              );
             </>
           )}
         </>
