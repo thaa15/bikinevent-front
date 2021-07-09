@@ -33,23 +33,23 @@ export const PembeliHeaderWithStep = ({
                 <PartSubTitle>
                     <SubTitle>{subtitle}</SubTitle>
                     <ButtonPart>
-                        <BackHome 
-                        onClick={() => {
-                            if(path === "/client-purchase/cart") {
-                                AuthClinformation.outclinfo(() => {
-                                    history.push(path);
-                                })
-                            }else if(path === "/client-purchase/information"){
-                                AuthCliPay.outclipay(() => {
-                                    history.push(path);
-                                })
-                            }else if(path === "/client-purchase/payment"){
-                                AuthCliCheck.outclicheck(() => {
-                                    history.push(path);
-                                })
-                            }
-                        }}
-                        to={path}>
+                        <BackHome
+                            onClick={() => {
+                                if (path === "/client-purchase/cart") {
+                                    AuthClinformation.outclinfo(() => {
+                                        history.push(path);
+                                    })
+                                } else if (path === "/client-purchase/information") {
+                                    AuthCliPay.outclipay(() => {
+                                        history.push(path);
+                                    })
+                                } else if (path === "/client-purchase/payment") {
+                                    AuthCliCheck.outclicheck(() => {
+                                        history.push(path);
+                                    })
+                                }
+                            }}
+                            to={path}>
                             &lt; {buttonTitle}
                         </BackHome>
                     </ButtonPart>
@@ -132,6 +132,8 @@ export const PembeliHeaderWithStep = ({
 export const PesananPembeliHeader = ({
     title,
     subtitle,
+    path,
+    buttonTitle
 }) => {
     return (
         <HeaderBgPembeli step>
@@ -140,11 +142,69 @@ export const PesananPembeliHeader = ({
                 <PartSubTitle>
                     <SubTitle>{subtitle}</SubTitle>
                     <ButtonPart>
-                        <BackHome to="/">
-                            &lt; Kembali Berbelanja
+                        <BackHome to={path}>
+                            &lt; {buttonTitle}
                         </BackHome>
                     </ButtonPart>
                 </PartSubTitle>
+            </GlobalTemplate>
+        </HeaderBgPembeli>
+    )
+};
+
+export const PesananPembeliHeaderWithStep = ({
+    title,
+    subtitle,
+    act
+}) => {
+    const history = useHistory()
+    return (
+        <HeaderBgPembeli step>
+            <GlobalTemplate>
+                <TitleHeader>{title}</TitleHeader>
+                <PartSubTitle>
+                    <SubTitle>{subtitle}</SubTitle>
+                    <ButtonPart>
+                        <BackHome to="/track-order/records">
+                            &lt; Kembali Lacak Pesanan
+                        </BackHome>
+                    </ButtonPart>
+                </PartSubTitle>
+                <StepBg>
+                    <StepWrited aktif={act === "menunggu"} track>
+                        <span>1</span>Menunggu Pembayaran
+                    </StepWrited>
+
+                    <Arrow>
+                        &#8594;
+                    </Arrow>
+
+                    <StepWrited aktif={act === "konfirmasi"} track>
+                        <span>2</span>Mengonfirmasi Pembayaran
+                    </StepWrited>
+
+                    <Arrow>
+                        &#8594;
+                    </Arrow>
+
+                    <StepWrited
+                        aktif={act === "pelaksanaan"}
+                        track
+                    >
+                        <span>3</span>Pelaksanaan
+                    </StepWrited>
+
+                    <Arrow>
+                        &#8594;
+                    </Arrow>
+
+                    <StepWrited
+                        aktif={act === "selesai"}
+                        track
+                    >
+                        <span>4</span>Selesai
+                    </StepWrited>
+                </StepBg>
             </GlobalTemplate>
         </HeaderBgPembeli>
     )

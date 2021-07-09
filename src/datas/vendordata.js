@@ -204,49 +204,91 @@ export const ProfilePembeli = [
                         price: "5000000"
                     },
                     {
-                        image:wedfod,
-                        judul:"Laoek Mak Imah",
-                        price:"10000000"
+                        image: wedfod,
+                        judul: "Laoek Mak Imah",
+                        price: "10000000"
                     }
                 ]
             },
         ],
-        payment:[
+        payment: [
             {
-                bank:"BNI",
-                account:"07983761",
-                name:"Saffan Firdaus",
-                type:"bank"
+                bank: "BNI",
+                account: "07983761",
+                name: "Saffan Firdaus",
+                type: "bank"
             },
             {
-                bank:"Mandiri",
-                account:"07983761",
-                name:"Saffan Firdaus",
-                type:"bank"
+                bank: "Mandiri",
+                account: "07983761",
+                name: "Saffan Firdaus",
+                type: "bank"
             },
             {
-                bank:"BRI",
-                account:"07983761",
-                name:"Saffan Firdaus",
-                type:"bank"
+                bank: "BRI",
+                account: "07983761",
+                name: "Saffan Firdaus",
+                type: "bank"
             },
             {
-                bank:"OVO",
-                account:"07983761",
-                name:"Saffan Firdaus",
-                type:"wallet"
+                bank: "OVO",
+                account: "07983761",
+                name: "Saffan Firdaus",
+                type: "wallet"
             },
             {
-                bank:"BCA",
-                account:"07983761",
-                name:"Saffan Firdaus",
-                type:"bank"
+                bank: "BCA",
+                account: "07983761",
+                name: "Saffan Firdaus",
+                type: "bank"
             },
             {
-                bank:"Gopay",
-                account:"07983761",
-                name:"Saffan Firdaus",
-                type:"wallet"
+                bank: "Gopay",
+                account: "07983761",
+                name: "Saffan Firdaus",
+                type: "wallet"
+            },
+        ],
+        orderRecords: [
+            {
+                id:"1",
+                vendor_name: "Katering Nina",
+                image: takjil,
+                judul: "3 Course Food Custom untuk BU EMMA NURANGSI SIMALAKAMA",
+                price: "3000000",
+                invoice: "INV/20210326/MPL/1128690183",
+                status:"menunggu",
+                created:"20 April 2021, 10:22 WIB"
+            },
+            {
+                id:"2",
+                vendor_name: "Katering Nina",
+                image: wedding1,
+                judul: "Unlimited Drinks (Soda dan Jus) 300 px include peralatan minum",
+                price: "2100000",
+                invoice: "INV/20210326/MPL/1128690183",
+                status:"pelaksanaan",
+                created:"20 April 2021, 10:22 WIB"
+            },
+            {
+                id:"3",
+                vendor_name: "Pusat Stage Challange",
+                image: wedding2,
+                judul: "Panggung Pernikahan Lengkap",
+                price: "5000000",
+                invoice: "INV/20210326/MPL/1128690183",
+                status:"selesai",
+                created:"20 April 2021, 10:22 WIB"
+            },
+            {
+                id:"4",
+                vendor_name: "Nasgor Intel",
+                image: pentas1,
+                judul: "Nasi Goreng Depan Rumah",
+                price: "12000",
+                invoice: "INV/20210326/MPL/1128690183",
+                status:"konfirmasi",
+                created:"20 April 2021, 10:22 WIB"
             },
         ]
     }

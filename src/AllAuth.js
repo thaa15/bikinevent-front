@@ -98,16 +98,38 @@ class AuthClientSuccess {
     }
 }
 
+class AuthClientTrack {
+    constructor() {
+        this.autclitrack = false;
+    }
+
+    inclitrack(cb) {
+        this.autclitrack = true;
+        cb();
+    }
+
+    outclitrack(cb) {
+        this.autclitrack = false;
+        cb();
+    }
+
+    isAutclitrack() {
+        return this.autclitrack;
+    }
+}
+
 const AuthSucRegs = new AuthSucReg();
 const AuthClinformation = new AuthClientInformation();
 const AuthCliPay = new AuthClientPayment();
 const AuthCliCheck = new AuthClientCheck();
 const AuthCliSuccess = new AuthClientSuccess();
+const AuthCliTrack = new AuthClientTrack();
 
 export {
     AuthSucRegs,
     AuthClinformation,
     AuthCliPay,
     AuthCliCheck,
-    AuthCliSuccess
+    AuthCliSuccess,
+    AuthCliTrack
 }

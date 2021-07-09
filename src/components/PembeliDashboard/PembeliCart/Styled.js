@@ -161,16 +161,18 @@ export const DivRowContent = styled.div`
     align-self: center;
     align-items: ${(props)=>props.top ? "center" : props.content ? "center" : "center"};
     width: 100%;
-    margin-bottom: ${(props)=>props.top ? "0" : "10px"};
+    margin-bottom: ${(props)=>props.top ? "0" : props.titlee ? "3px" : "10px"};
     p {
         font-size: 14px;
         line-height: 21px;
         color: #212B36;
+        margin: 3px 0;
     }
     h6 {
         font-size: 18px;
         line-height: 27px;
         color: #212B36;
+        margin: 3px 0;
     }
     @media screen and (max-width: 676px) {
         flex-direction: ${(props)=>props.top ? "column" : props.content ? "row" : "row"};

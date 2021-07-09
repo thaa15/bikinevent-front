@@ -118,7 +118,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                     <Dropdownlist>Perlengkapan</Dropdownlist>
                   </ElementLink>
                   <ElementLink to="/">
-                    <Dropdownlist>Vanue</Dropdownlist>
+                    <Dropdownlist>Venue</Dropdownlist>
                   </ElementLink>
                   <ElementLink to="/">
                     <Dropdownlist>Talent</Dropdownlist>

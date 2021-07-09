@@ -14,10 +14,11 @@ import {
   Buttons,
   Liner,
   OrLine,
+  Buttonsgoogle,
+  GooglePlus
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import GoogleLogin from "react-google-login";
 import line from "../../../images/line.png";
 import { authService } from "../../../services/Auth";
 import {
@@ -223,32 +224,21 @@ const LoginPage = (props) => {
               </Buttonslog>
             </form>
 
-            <Liner img={line}>
-              <OrLine>atau</OrLine>
-            </Liner>
+            <>
+              {role === "pembeli" ? (
+                <>
+                  <Liner img={line}>
+                    <OrLine>atau</OrLine>
+                  </Liner>
 
-            <a
-              href="https://bikinevent.id/api/connect/google"
-              style={{ textDecoration: "none" }}
-            >
-              <GoogleLogin
-                clientId={null}
-                buttonText="Login"
-                onSuccess={null}
-                onFailure={null}
-                cookiePolicy={"single_host_origin"}
-                disabledStyle={{
-                  width: "100%",
-                  display: "flex",
-                  alignSelf: "center",
-                  background: "white",
-                  alignItems: "center",
-                  borderRadius: "10px",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                }}
-              />
-            </a>
+                  <Buttonsgoogle
+                    href="https://bikinevent.id/api/connect/google"
+                  >
+                    <GooglePlus />Google
+                  </Buttonsgoogle>
+                </>
+              ) : (<></>)}
+            </>
 
             {loginUser.wrong ? (
               <PopBgSuccess>

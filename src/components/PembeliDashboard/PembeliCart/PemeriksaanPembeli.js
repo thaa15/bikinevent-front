@@ -4,11 +4,11 @@ import LoadingPage from "../../../templates/Loading";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import { ProfilePembeli } from "../../../datas/vendordata";
-import { 
+import {
     AuthClinformation,
     AuthCliPay,
-    AuthCliCheck, 
-    AuthCliSuccess 
+    AuthCliCheck,
+    AuthCliSuccess
 } from "../../../AllAuth";
 import { TitleName, InformationContent } from "../PembeliProfil/PembeliProfil";
 import { getImageBank } from "./PembayaranPembeli";
@@ -80,10 +80,15 @@ const PemeriksaanBelanjaPage = (props) => {
                                                                                         <ImageCart src={orderan.image} />
                                                                                         <div>
                                                                                             <DivRowContent top>
-                                                                                                <DivRowContent need>
+                                                                                                <DivRowContent need
+                                                                                                titlee>
                                                                                                     <Shopping />
                                                                                                     <p
-                                                                                                    style={{fontSize: "14px", lineHeight: "21px", color:"#212B36",}}
+                                                                                                        style={{
+                                                                                                            fontSize: "14px",
+                                                                                                            lineHeight: "21px",
+                                                                                                            color: "#909DAA"
+                                                                                                        }}
                                                                                                     >{dats.vendor_name}</p>
                                                                                                 </DivRowContent>
                                                                                             </DivRowContent>

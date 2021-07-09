@@ -8,8 +8,8 @@ export const GlobalTemplate = styled.div`
     flex-direction: ${(props) => props.row ? "row" : "column"};
     margin: ${(props)=> props.need ? "0 auto" : "5px auto 25px"};
     width: 80%;
-    overflow: hidden;
-    transition: .3s ease-out
+    overflow: ${(props)=>props.top ? "visible" : "hidden"};
+    transition: .3s ease-out;
     opacity:1;
 `;
 
@@ -19,7 +19,7 @@ export const PopUpBg = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: ${(props)=>props.need ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.8)"};
+    background-color: ${(props)=>props.need ? "rgba(0,0,0,0.3)" : props.review ? "transparent" :"rgba(0,0,0,0.8)"};
     z-index: 51;
     padding: 15px;
     overflow-y: ${(props)=>props.needs ? "scroll" : "visible"};
@@ -53,8 +53,10 @@ export const ContentDrop = styled.div`
     z-index: 52;
     align-items: center;
     justify-content: center;
+    -webkit-animation: anvil 0.6s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    animation: anvil 0.6s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
     display: ${({ played }) => (played ? "flex" : "none")};
-    background-color: transparent;
+    background-color: ${(props) => props.need ? "white" : "transparent"};
     @media screen and (max-width: 574px) {
         max-width: 600px;
     }
@@ -105,6 +107,8 @@ export const PopBgSuccess = styled.div`
     margin: 0 auto;
     width: 100%;
     z-index:100;
+    -webkit-animation: anvil 0.6s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+    animation: anvil 0.6s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 `;
 
 export const BgSuccess = styled.div`

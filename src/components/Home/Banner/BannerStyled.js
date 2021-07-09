@@ -12,6 +12,6 @@ import styled from "styled-components";
 export const BannerContainer = styled.img`
   min-height: 330px;
   max-height: 390px;
-  max-width: 100%;
+  width: 100%;
   object-fit: cover;
 `;

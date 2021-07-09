@@ -101,7 +101,7 @@ export const StepWrited = styled.div`
     display: ${(props)=>props.aktif ? "block" : "block"};
     color: ${(props)=>props.aktif ? "#E30045" : "#909DAA"};
     margin: 0 8px;
-    cursor: pointer;
+    cursor: ${(props)=>props.track ? "auto" : "pointer"};
     span{
         text-align: center;
         font-size: 14px;
