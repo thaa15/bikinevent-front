@@ -80,6 +80,7 @@ function App() {
     clientInfo: null,
     product: [],
     statusDp: false,
+    notif: 0
   });
 
   const toggling = () => {
@@ -97,7 +98,6 @@ function App() {
     });
   }, []);
 
-  console.log(clientCart);
   return (
     <>
       <Router>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState ,useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Nav,
@@ -29,8 +29,7 @@ import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import gambartest from "../../images/logocomp.png";
 import NavbarVendor from "./NavbarVendor";
-import { searchContext } from "../../context";
-import { ProfilePembeli } from "../../datas/vendordata";
+import { clientCartContext,searchContext } from "../../context";
 
 const Navbar = ({ toggling, isAuth, nama, role }) => {
   const history = useHistory();
@@ -38,6 +37,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
   const [getsearch, setGetsearch] = useState("");
   const [placehldr, setPlacehldr] = useState("");
   const [searchContent, setSearchContent] = useState(false);
+  const { clientCart } = useContext(clientCartContext);
 
   const removed = () => {
     localStorage.removeItem("token");
@@ -61,10 +61,8 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     setPlacehldr("");
     setSearchContent(false);
   };
-  const data = ProfilePembeli.filter(
-    (dats) => dats.name === "Ernia Watson"
-  ).map((item) => item.order);
-  const sum = data[0].reduce((a, b) => a + b.items.length, 0);
+  
+
   return (
     <>
       {isAuth.length > 4 && role === "vendor" ? (
@@ -160,7 +158,8 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                   <>
                     <ElementLink to="/client-purchase/cart">
                       <ShoppingCartIcon />
-                      <NotifBadge>{sum}</NotifBadge>
+                      {clientCart.notif === 0 ? (<></>) : (
+                      <NotifBadge>{clientCart.notif}</NotifBadge>)}
                     </ElementLink>
                     <ElementLink to="/">
                       <ChatIcon />

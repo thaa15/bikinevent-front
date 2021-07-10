@@ -2,8 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import LoadingPage from "../../../templates/Loading";
 import { Redirect } from "react-router-dom";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
-import { GlobalTemplate } from "../../../templates/GlobalTemplate";
-import { ProfilePembeli } from "../../../datas/vendordata";
+import { 
+  GlobalTemplate,
+  PopBgSuccess,
+  BgSuccess,
+  Failedicon,
+} from "../../../templates/GlobalTemplate";
 import { AuthClinformation, AuthCliPay } from "../../../AllAuth";
 import { TitleName, InformationContent } from "../PembeliProfil/PembeliProfil";
 import { InputCityApart } from "../../LogReg/RegisterPage/RegisterStyled";
@@ -28,6 +32,7 @@ const InformasiPembeliPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [actButton, setActButton] = useState(0);
   const [addNewInfo, setAddNewInfo] = useState(false);
+  const [failed, setFailed] = useState(false)
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [pembeliData, setPembeliData] = useState([]);
@@ -260,17 +265,43 @@ const InformasiPembeliPage = (props) => {
                     <MulaiBelanja
                       need
                       onClick={() => {
-                        setClientCart({
-                          ...clientCart,
-                          clientInfo: pembeliData[actButton],
-                        });
-                        AuthCliPay.inclipay(() => {
-                          props.history.push("/client-purchase/payment");
-                        });
+                        if (pembeliData[actButton] === undefined) {
+                          setFailed(true);
+                          setTimeout(() => {
+                            setFailed(false)
+                          }, 1500);
+                        }else{
+                          setClientCart({
+                            ...clientCart,
+                            clientInfo: pembeliData[actButton],
+                          });
+                          AuthCliPay.inclipay(() => {
+                            props.history.push("/client-purchase/payment");
+                          });
+                        }
                       }}
                     >
                       Lanjutkan Pembelian
                     </MulaiBelanja>
+                    {failed ? (
+                      <PopBgSuccess>
+                        <BgSuccess aktif={failed === true}>
+                          <Failedicon />
+                          <div
+                            style={{
+                              display: "flex",
+                              width: "100%",
+                              flexDirection: "column",
+                            }}
+                          >
+                            <b>FAILED</b>
+                            Harus Memilih Satu Informasi
+                          </div>
+                        </BgSuccess>
+                      </PopBgSuccess>
+                    ) : (
+                      <></>
+                    )}
                   </PurchasePrice>
                 </PurchaseContentApart>
               </GlobalTemplate>

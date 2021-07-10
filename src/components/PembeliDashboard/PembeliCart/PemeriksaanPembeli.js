@@ -59,8 +59,10 @@ const PemeriksaanBelanjaPage = (props) => {
           ) : (
             <>
               <PembeliHeaderWithStep
-                title="Keranjang Belanja"
-                subtitle="Keperluan yang anda butuhkan."
+                title="Pemeriksaan"
+                subtitle="Periksa kembali mengenai semua info pembelian anda.."
+                path="/client-purchase/payment"
+                buttonTitle="Kembali ke Pembayaran"
                 act="pemeriksaan"
               />
               <GlobalTemplate>

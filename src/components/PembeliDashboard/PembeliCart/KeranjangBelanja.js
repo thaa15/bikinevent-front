@@ -36,9 +36,12 @@ import { pembeliService } from "../../../services/Pembeli";
 const KeranjangBelanjaPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [prices, setPrices] = useState("0");
+  const [tempVendorName, setTempVendorName] = useState([]);
+  const [failed, setFailed] = useState(false)
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await pembeliService.getPembeliById(
@@ -46,11 +49,19 @@ const KeranjangBelanjaPage = (props) => {
         loginInfo.token
       );
       const data = response.data;
+      
       setCartData(data.cart);
     };
     fetchData();
     setIsLoading(false);
-  }, []);
+    
+    setTempVendorName([(cartData.filter((a, id) => id == 0).map(item => item.vendor.nama_vendor).toString())])
+    for (let i = 1; i < cartData.length; i++) {
+      if ((cartData.sort((a, b) => a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)).filter((a, id) => id == i).map(item => item.vendor.nama_vendor).toString()) !== (cartData.sort((a, b) => a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)).filter((a, id) => id == (i - 1)).map(item => item.vendor.nama_vendor).toString())) {
+        setTempVendorName(old => [...old, (cartData.filter((a, id) => id == i).map(item => item.vendor.nama_vendor).toString())])
+      }
+    }
+  }, [cartData.length]);
 
   return (
     <>
@@ -61,6 +72,8 @@ const KeranjangBelanjaPage = (props) => {
           <PembeliHeaderWithStep
             title="Keranjang Belanja"
             subtitle="Keperluan yang anda butuhkan."
+            path="/"
+            buttonTitle="Kembali ke Berbelanja"
             act="keranjang"
           />
           <GlobalTemplate>
@@ -81,78 +94,92 @@ const KeranjangBelanjaPage = (props) => {
             ) : (
               <PurchaseContentApart>
                 <PurchaseContent>
-                  <BoxContentCart>
-                    {cartData.map((item) => {
-                      return (
-                        <>
-                          <DivRow>
-                            <CheckBoks
-                              type="checkbox"
-                              value={item.harga}
-                              onClick={(e) => {
-                                let arrWithObject = [];
-                                let arrWithArr = [...clientCart.product];
-                                if (e.target.checked) {
-                                  setPrices(
-                                    `${
-                                      parseInt(prices) +
-                                      parseInt(e.target.value)
-                                    }`
-                                  );
-                                  arrWithObject.push(item.nama);
-                                  arrWithArr.push(arrWithObject);
-                                } else {
-                                  setPrices(
-                                    `${
-                                      parseInt(prices) -
-                                      parseInt(e.target.value)
-                                    }`
-                                  );
-                                  arrWithArr.splice(
-                                    arrWithArr.findIndex(
-                                      (elemen) => elemen == item.nama
-                                    ),
-                                    1
-                                  );
-                                }
-                                setClientCart({
-                                  ...clientCart,
-                                  product: arrWithArr,
-                                });
-                              }}
-                            />
-                            <DivRowContent needs>
-                              <ImageCart src={item.foto_produk[0].url} />
-                              <div>
-                                <p>{item.nama}</p>
-                                <h6>
-                                  Rp
-                                  {parseInt(item.harga).toLocaleString("id-ID")}
-                                </h6>
-                                <NoteInput
-                                  type="text"
-                                  placeholder="Tanggal, waktu, lokasi dan lainnya"
-                                />
-                                <NoteButton>Simpan</NoteButton>
-                              </div>
-                              <PartTrashButtons>
-                                <TrashButton>
-                                  <TrashsIcon need />
-                                </TrashButton>
-                              </PartTrashButtons>
+                  {tempVendorName.map((item, ids) => {
+                    return (
+                      <BoxContentCart>
+                        <DivRow>
+                          <CheckBoks type="checkbox" />
+                          <DivRowContent top>
+                            <DivRowContent need>
+                              <Shopping />
+                              <h6>{item}</h6>
                             </DivRowContent>
-                          </DivRow>
-                          <div
-                            style={{
-                              borderBottom: "1px solid #E0E0E0",
-                              width: "100%",
-                              marginBottom: "10px",
-                            }}
-                          />
-                        </>
-                      );
-                    })}
-                  </BoxContentCart>
+                            <LinkChat>Hubungi Vendor</LinkChat>
+                          </DivRowContent>
+                        </DivRow>
+                        {cartData
+                          .filter(el => el.vendor.nama_vendor === tempVendorName[ids])
+                          .map((items) => {
+                            return (
+                              <>
+                                <DivRow>
+                                  <CheckBoks
+                                    type="checkbox"
+                                    value={items.harga}
+                                    onClick={(e) => {
+                                      let arrWithObject = [];
+                                      let arrWithArr = [...clientCart.product];
+                                      if (e.target.checked) {
+                                        setPrices(
+                                          `${parseInt(prices) +
+                                          parseInt(e.target.value)
+                                          }`
+                                        );
+                                        arrWithObject.push(items.nama);
+                                        arrWithArr.push(arrWithObject);
+                                      } else {
+                                        setPrices(
+                                          `${parseInt(prices) -
+                                          parseInt(e.target.value)
+                                          }`
+                                        );
+                                        arrWithArr.splice(
+                                          arrWithArr.findIndex(
+                                            (elemen) => elemen == items.nama
+                                          ),
+                                          1
+                                        );
+                                      }
+                                      setClientCart({
+                                        ...clientCart,
+                                        product: arrWithArr,
+                                      });
+                                    }}
+                                  />
+                                  <DivRowContent needs>
+                                    <ImageCart src={items.foto_produk[0].url} />
+                                    <div>
+                                      <p>{items.nama}</p>
+                                      <h6>
+                                        Rp
+                                        {parseInt(items.harga).toLocaleString("id-ID")}
+                                      </h6>
+                                      <NoteInput
+                                        type="text"
+                                        placeholder="Tanggal, waktu, lokasi dan lainnya"
+                                      />
+                                      <NoteButton>Simpan</NoteButton>
+                                    </div>
+                                    <PartTrashButtons>
+                                      <TrashButton>
+                                        <TrashsIcon need />
+                                      </TrashButton>
+                                    </PartTrashButtons>
+                                  </DivRowContent>
+                                </DivRow>
+                                <div
+                                  style={{
+                                    borderBottom: "1px solid #E0E0E0",
+                                    width: "100%",
+                                    marginBottom: "10px",
+                                  }}
+                                />
+                              </>
+                            );
+                          })}
+                      </BoxContentCart>
+                    )
+                  })}
                 </PurchaseContent>
 
                 <PurchasePrice>
@@ -164,15 +191,42 @@ const KeranjangBelanjaPage = (props) => {
                   <MulaiBelanja
                     need
                     onClick={() => {
-                      setClientCart({ ...clientCart, price: prices });
-                      AuthClinformation.inclinfo(() => {
-                        props.history.push("/client-purchase/information");
-                      });
+                      if (clientCart.product.length === 0 || parseInt(prices) == 0) {
+                        setFailed(true);
+                        setTimeout(() => {
+                          setFailed(false)
+                        }, 1500);
+                      }
+                      else {
+                        setClientCart({ ...clientCart, price: prices });
+                        AuthClinformation.inclinfo(() => {
+                          props.history.push("/client-purchase/information");
+                        });
+                      }
                     }}
                   >
                     Lanjutkan Pembelian
                   </MulaiBelanja>
                 </PurchasePrice>
+                {failed ? (
+                  <PopBgSuccess>
+                    <BgSuccess aktif={failed === true}>
+                      <Failedicon />
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <b>FAILED</b>
+                        Harus Memilih Minimal Satu Barang
+                      </div>
+                    </BgSuccess>
+                  </PopBgSuccess>
+                ) : (
+                  <></>
+                )}
               </PurchaseContentApart>
             )}
           </GlobalTemplate>
