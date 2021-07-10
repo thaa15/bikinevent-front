@@ -45,7 +45,7 @@ const PemeriksaanBelanjaPage = (props) => {
     fetchData();
     setIsLoading(false);
   }, []);
-  console.log(loginInfo);
+  console.log(cartData)
   return (
     <>
       {!AuthCliCheck.isAutclicheck() ? (
