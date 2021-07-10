@@ -8,6 +8,10 @@ import {
   AngleLeft,
   AngleRight,
   ContentDrop,
+  PopBgSuccess,
+  BgSuccess,
+  Failedicon,
+  Succesicon
 } from "../GlobalTemplate";
 import { Imagees } from "../../components/TampilanProdukVendor/TampilanProduk/TampilanProdukStyled";
 import {
@@ -43,7 +47,7 @@ import {
   PartOfImage,
 } from "./TampilanStyled";
 import { BoxNotEntry } from "../../components/VendorDashboard/VendorPesanan/VendorPesananStyle";
-import { loginContext } from "../../context";
+import { clientCartContext,loginContext } from "../../context";
 import { pembeliService } from "../../services/Pembeli";
 
 const ShowAtTopProduk = ({
@@ -60,15 +64,18 @@ const ShowAtTopProduk = ({
   const [rates, setRates] = useState(rating);
   const [handles, setHandles] = useState(false);
   const { loginInfo, setLoginInfo } = useContext(loginContext);
-  useEffect(() => {
-    if (rating === undefined) setRates(0);
-    else setRates(rating);
-
-    if (prices.length > 11) setHandles(true);
-  }, []);
+  const [successAdd, setSuccessAdd] = useState({
+    right: false,
+    wrong: false,
+  });
+  const { clientCart, setClientCart } = useContext(clientCartContext);
 
   const addToCart = async () => {
+    let not = clientCart.notif
     let body = null;
+    not++;
+    setClientCart({ ...clientCart, notif: not });
+    setSuccessAdd({...successAdd,right: true});
     if (loginInfo.pembeliId == "null") {
       body = {
         user: loginInfo.userId,
@@ -96,7 +103,17 @@ const ShowAtTopProduk = ({
       );
       return putResponse;
     }
+    setTimeout(() => {
+      setSuccessAdd(false)
+    }, 1500);
   };
+
+  useEffect(() => {
+    if (rating === undefined) setRates(0);
+    else setRates(rating);
+
+    if (prices.length > 11) setHandles(true);
+  }, [clientCart.notif]);
   return (
     <BgTop prod>
       <GlobalTemplate need>
@@ -128,6 +145,41 @@ const ShowAtTopProduk = ({
             </GetButBot>
           </GetApart>
         </ShowedObj>
+        {successAdd.wrong ? (
+              <PopBgSuccess>
+                <BgSuccess aktif={successAdd.wrong === true}>
+                  <Failedicon />
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <b>FAILED</b>
+                    Gagal Menambahkan
+                  </div>
+                </BgSuccess>
+              </PopBgSuccess>
+            ) : successAdd.right ? (
+              <PopBgSuccess>
+                <BgSuccess aktif={successAdd.right === true} right>
+                  <Succesicon />
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <b>SUCCESS</b>
+                    Berhasil Menambahkan
+                  </div>
+                </BgSuccess>
+              </PopBgSuccess>
+            ) : (
+              <></>
+            )}
       </GlobalTemplate>
     </BgTop>
   );
