@@ -27,6 +27,7 @@ import {
 } from "./Styled";
 import { clientCartContext, loginContext } from "../../../context";
 import { pembeliService } from "../../../services/Pembeli";
+import { orderService } from "../../../services/OrderHistory";
 
 const PemeriksaanBelanjaPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,12 +41,58 @@ const PemeriksaanBelanjaPage = (props) => {
         loginInfo.token
       );
       const data = response.data;
-      setCartData(data.cart);
+      const filteredCart = data.cart.filter((item) =>
+        clientCart.product.every((prod) => item.id === prod)
+      );
+      setCartData(filteredCart);
     };
     fetchData();
     setIsLoading(false);
   }, []);
-  console.log(loginInfo);
+
+  const submitOrder = async () => {
+    let noteTemp = [];
+    for (let i = 0; i < clientCart.notes.length; i++) {
+      let tempContent = {
+        note_content: clientCart.notes[i],
+      };
+      noteTemp.push(tempContent);
+    }
+    let body = {
+      produks: clientCart.product,
+      pembeli: loginInfo.pembeliId,
+      informasi_pembeli: {
+        nama_pembeli: clientCart.clientInfo.nama_pembeli,
+        no_hp_pembeli: clientCart.clientInfo.no_hp_pembeli,
+        alamat_pembeli: clientCart.clientInfo.alamat_pembeli,
+      },
+      metode_pembayaran: clientCart.payment_method.nama,
+      sistem_dp: clientCart.statusDp,
+      status: "Pending",
+      total_price: clientCart.price,
+      notes: noteTemp,
+    };
+    const response = await orderService.postOrder(loginInfo.token, body);
+    const getPembeli = await pembeliService.getPembeliById(
+      loginInfo.pembeliId,
+      loginInfo.token
+    );
+    const newCart = getPembeli.data.cart.filter((item) =>
+      clientCart.product.every((prod) => item.id !== prod)
+    );
+    let pembeliBody = {
+      cart: newCart,
+    };
+    const pembeliRes = await pembeliService.editPembeliById(
+      loginInfo.pembeliId,
+      loginInfo.token,
+      pembeliBody
+    );
+    AuthCliSuccess.incliSuccess(() => {
+      props.history.push("/client-purchase/success-cart");
+    });
+  };
+
   return (
     <>
       {!AuthCliCheck.isAutclicheck() ? (
@@ -174,9 +221,7 @@ const PemeriksaanBelanjaPage = (props) => {
                     <MulaiBelanja
                       need
                       onClick={() => {
-                        AuthCliSuccess.incliSuccess(() => {
-                          props.history.push("/client-purchase/success-cart");
-                        });
+                        submitOrder();
                       }}
                     >
                       Lanjutkan Pembelian

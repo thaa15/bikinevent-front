@@ -71,7 +71,7 @@ function App() {
     userId: "",
     name: "",
     role: "",
-    pembeliId: null
+    pembeliId: null,
   });
 
   const [clientCart, setClientCart] = useState({
@@ -80,6 +80,7 @@ function App() {
     clientInfo: null,
     product: [],
     statusDp: false,
+    notes: [],
   });
 
   const toggling = () => {

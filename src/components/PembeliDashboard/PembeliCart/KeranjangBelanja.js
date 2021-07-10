@@ -39,6 +39,7 @@ const KeranjangBelanjaPage = (props) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
+  const [notes, setNotes] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await pembeliService.getPembeliById(
@@ -51,6 +52,8 @@ const KeranjangBelanjaPage = (props) => {
     fetchData();
     setIsLoading(false);
   }, []);
+
+  console.log(clientCart);
 
   return (
     <>
@@ -82,7 +85,7 @@ const KeranjangBelanjaPage = (props) => {
               <PurchaseContentApart>
                 <PurchaseContent>
                   <BoxContentCart>
-                    {cartData.map((item) => {
+                    {cartData.map((item, idx) => {
                       return (
                         <>
                           <DivRow>
@@ -90,8 +93,7 @@ const KeranjangBelanjaPage = (props) => {
                               type="checkbox"
                               value={item.harga}
                               onClick={(e) => {
-                                let arrWithObject = [];
-                                let arrWithArr = [...clientCart.product];
+                                let arrWithArr = clientCart.product;
                                 if (e.target.checked) {
                                   setPrices(
                                     `${
@@ -99,8 +101,7 @@ const KeranjangBelanjaPage = (props) => {
                                       parseInt(e.target.value)
                                     }`
                                   );
-                                  arrWithObject.push(item.nama);
-                                  arrWithArr.push(arrWithObject);
+                                  arrWithArr.push(item.id);
                                 } else {
                                   setPrices(
                                     `${
@@ -108,12 +109,10 @@ const KeranjangBelanjaPage = (props) => {
                                       parseInt(e.target.value)
                                     }`
                                   );
-                                  arrWithArr.splice(
-                                    arrWithArr.findIndex(
-                                      (elemen) => elemen == item.nama
-                                    ),
-                                    1
-                                  );
+                                  let index = arrWithArr.indexOf(item.id);
+                                  if (index !== -1) {
+                                    arrWithArr.splice(index, 1);
+                                  }
                                 }
                                 setClientCart({
                                   ...clientCart,
@@ -132,6 +131,14 @@ const KeranjangBelanjaPage = (props) => {
                                 <NoteInput
                                   type="text"
                                   placeholder="Tanggal, waktu, lokasi dan lainnya"
+                                  onChange={(e) => {
+                                    let array = clientCart.notes;
+                                    array[idx] = e.target.value;
+                                    setClientCart({
+                                      ...clientCart,
+                                      notes: array,
+                                    });
+                                  }}
                                 />
                                 <NoteButton>Simpan</NoteButton>
                               </div>
