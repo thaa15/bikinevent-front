@@ -53,7 +53,6 @@ const KeranjangBelanjaPage = (props) => {
       setCartData(data.cart);
     };
     fetchData();
-    setIsLoading(false);
 
     setTempVendorName([
       cartData
@@ -87,6 +86,7 @@ const KeranjangBelanjaPage = (props) => {
         ]);
       }
     }
+    setIsLoading(false);
   }, [cartData.length]);
 
   console.log(clientCart);
