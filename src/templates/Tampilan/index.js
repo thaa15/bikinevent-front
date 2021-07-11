@@ -71,11 +71,11 @@ const ShowAtTopProduk = ({
   const { clientCart, setClientCart } = useContext(clientCartContext);
 
   const addToCart = async () => {
-    let not = clientCart.notif
     let body = null;
-    not++;
-    setClientCart({ ...clientCart, notif: not });
     setSuccessAdd({...successAdd,right: true});
+    setTimeout(() => {
+      setSuccessAdd(false)
+    }, 1500);
     if (loginInfo.pembeliId == "null") {
       body = {
         user: loginInfo.userId,
@@ -84,6 +84,7 @@ const ShowAtTopProduk = ({
       const response = await pembeliService.postPembeli(loginInfo.token, body);
       const data = response.data;
       setLoginInfo({ ...loginInfo, pembeliId: data.id });
+      setClientCart({ ...clientCart, notif: 1 });
       return response;
     } else {
       const response = await pembeliService.getPembeliById(
@@ -96,6 +97,7 @@ const ShowAtTopProduk = ({
       body = {
         cart: newCart,
       };
+      setClientCart({ ...clientCart, notif: newCart.length });
       const putResponse = await pembeliService.editPembeliById(
         loginInfo.pembeliId,
         loginInfo.token,
@@ -103,9 +105,6 @@ const ShowAtTopProduk = ({
       );
       return putResponse;
     }
-    setTimeout(() => {
-      setSuccessAdd(false)
-    }, 1500);
   };
 
   useEffect(() => {
