@@ -52,6 +52,8 @@ const KeranjangBelanjaPage = (props) => {
       setCartData(data.cart);
     };
     fetchData();
+    setIsLoading(false);
+    setClientCart({ ...clientCart, notif: cartData.length });
     setTempVendorName([
       cartData
         .filter((a, id) => id == 0)
@@ -85,7 +87,6 @@ const KeranjangBelanjaPage = (props) => {
         ]);
       }
     }
-    setIsLoading(false);
   }, [cartData.length]);
 
   return (
