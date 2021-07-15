@@ -82,6 +82,7 @@ function App() {
     statusDp: false,
     notes: [],
     notif: 0,
+    vendor: [],
   });
 
   const toggling = () => {

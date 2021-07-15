@@ -23,7 +23,6 @@ import {
   Shopping,
   InformationContents,
   BankImage,
-  EmailConfirm,
 } from "./Styled";
 import { clientCartContext, loginContext } from "../../../context";
 import { pembeliService } from "../../../services/Pembeli";
@@ -41,13 +40,13 @@ const PemeriksaanBelanjaPage = (props) => {
         loginInfo.token
       );
       const data = response.data;
-      const filteredCart = data.cart.filter((item) =>
-        clientCart.product.every((prod) => item.id === prod)
+      const filteredCart = data.cart.filter(
+        (item, idx) => item.id === clientCart.product[idx]
       );
       setCartData(filteredCart);
+      setIsLoading(false);
     };
     fetchData();
-    setIsLoading(false);
   }, []);
 
   const submitOrder = async () => {
@@ -61,6 +60,7 @@ const PemeriksaanBelanjaPage = (props) => {
     let body = {
       produks: clientCart.product,
       pembeli: loginInfo.pembeliId,
+      vendors: clientCart.vendor,
       informasi_pembeli: {
         nama_pembeli: clientCart.clientInfo.nama_pembeli,
         no_hp_pembeli: clientCart.clientInfo.no_hp_pembeli,

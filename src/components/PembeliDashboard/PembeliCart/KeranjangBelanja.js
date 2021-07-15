@@ -41,7 +41,6 @@ const KeranjangBelanjaPage = (props) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
-  const [notes, setNotes] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await pembeliService.getPembeliById(
@@ -53,13 +52,13 @@ const KeranjangBelanjaPage = (props) => {
       setCartData(data.cart);
     };
     fetchData();
-
     setTempVendorName([
       cartData
         .filter((a, id) => id == 0)
         .map((item) => item.vendor.nama_vendor)
         .toString(),
     ]);
+
     for (let i = 1; i < cartData.length; i++) {
       if (
         cartData
@@ -88,8 +87,6 @@ const KeranjangBelanjaPage = (props) => {
     }
     setIsLoading(false);
   }, [cartData.length]);
-
-  console.log(clientCart);
 
   return (
     <>
@@ -149,6 +146,7 @@ const KeranjangBelanjaPage = (props) => {
                                     value={items.harga}
                                     onClick={(e) => {
                                       let arrWithArr = clientCart.product;
+                                      let arrVendor = clientCart.vendor;
                                       if (e.target.checked) {
                                         setPrices(
                                           `${
@@ -157,6 +155,13 @@ const KeranjangBelanjaPage = (props) => {
                                           }`
                                         );
                                         arrWithArr.push(items.id);
+                                        if (
+                                          arrVendor.every((ven) => {
+                                            return ven !== items.vendor.id;
+                                          })
+                                        ) {
+                                          arrVendor.push(items.vendor.id);
+                                        }
                                       } else {
                                         setPrices(
                                           `${
@@ -167,13 +172,20 @@ const KeranjangBelanjaPage = (props) => {
                                         let index = arrWithArr.indexOf(
                                           items.id
                                         );
+                                        let indexV = arrVendor.indexOf(
+                                          items.vendor.id
+                                        );
                                         if (index !== -1) {
                                           arrWithArr.splice(index, 1);
+                                        }
+                                        if (indexV !== -1) {
+                                          arrVendor.splice(indexV, 1);
                                         }
                                       }
                                       setClientCart({
                                         ...clientCart,
                                         product: arrWithArr,
+                                        vendor: arrVendor,
                                       });
                                     }}
                                   />

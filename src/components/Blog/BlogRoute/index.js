@@ -8,7 +8,8 @@ import {
   BlogWritedContent,
   TempBlog,
 } from "./BlogRouteStyled";
-
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 const BlogRoute = ({ data, datas, ids }) => {
   return (
     <GlobalTemplate>
@@ -26,7 +27,13 @@ const BlogRoute = ({ data, datas, ids }) => {
           <>
             <BlogBoxImage src={data.media_artikel.url} />
             <BlogWritedContent title>{data.judul_artikel}</BlogWritedContent>
-            <BlogWritedContent>{data.konten_blog}</BlogWritedContent>
+            <BlogWritedContent>
+              <ReactMarkdown
+                children={data.konten_blog}
+                plugins={[[gfm, { singleTilde: false }]]}
+                allowDangerousHtml={true}
+              />
+            </BlogWritedContent>
           </>
         </MainBlog>
       </TempBlog>
