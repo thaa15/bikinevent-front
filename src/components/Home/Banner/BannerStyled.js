@@ -1,17 +1,12 @@
 import styled from "styled-components";
 
-/*export const BannerContainer = styled.div`
-  min-height: 330px;
+export const BannerContainers = styled.div`
+  max-height: 370px;
   width: 100%;
-  background-image: url(${(props) => props.src});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-`;*/
+  min-width: 100%;
+`;
 
 export const BannerContainer = styled.img`
-  min-height: 330px;
-  max-height: 390px;
+height: auto;
   width: 100%;
-  object-fit: cover;
 `;

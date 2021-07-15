@@ -14,6 +14,7 @@ export const ChatList = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
     height: 500px;
+    background: white;
     overflow-y: scroll;
     padding: 7px;
     ::-webkit-scrollbar{
@@ -39,6 +40,7 @@ export const ChatListResp = styled.div`
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
+    background: white;
     height: 500px;
     overflow-y: scroll;
     padding: 7px;
@@ -65,6 +67,7 @@ export const ChatContent = styled.div`
     width: 100%;
     height: 500px;
     padding: 7px 10px;
+    background: white;
     display:flex;
     flex-direction: column;
     @media screen and (max-width: 957px) {
@@ -81,6 +84,7 @@ export const ChatContentResp = styled.div`
     padding: 7px 10px;
     display:flex;
     flex-direction: column;
+    background: white;
 `;
 
 export const ChatPerson = styled.div`

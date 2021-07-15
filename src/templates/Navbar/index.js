@@ -161,7 +161,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                       {clientCart.notif === 0 ? (<></>) : (
                       <NotifBadge>{clientCart.notif}</NotifBadge>)}
                     </ElementLink>
-                    <ElementLink to="/">
+                    <ElementLink to="/client-chat">
                       <ChatIcon />
                     </ElementLink>
                     <LogOutContent need>
@@ -186,7 +186,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                     <ElementLink to="/client-purchase/cart">
                       <ShoppingCartIcon />
                     </ElementLink>
-                    <ElementLink to="/">
+                    <ElementLink to="/client-chat">
                       <ChatIcon />
                     </ElementLink>
                     <ElementLink to="/client-profil">

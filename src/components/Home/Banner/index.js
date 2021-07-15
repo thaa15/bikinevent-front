@@ -1,10 +1,15 @@
 import React from "react";
-import {BannerContainer} from "./BannerStyled";
-import bannerhome from "../../../images/homebanner.png"
+import {
+    BannerContainer,
+    BannerContainers
+} from "./BannerStyled";
+import bannerhome from "../../../images/homebanner.png";
 
 const Banner = () => {
-    return(
-        <BannerContainer src={bannerhome} />
+    return (
+        <BannerContainers>
+            <BannerContainer src={bannerhome} width="1000" height="500"/>
+        </BannerContainers>
     )
 };
 

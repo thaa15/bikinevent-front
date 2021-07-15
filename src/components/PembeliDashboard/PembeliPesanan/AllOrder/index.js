@@ -25,11 +25,10 @@ const getButtonStatus = (stats) => {
     "Pesanan\nSelesai",
   ];
 
-  for (let i = 0; i < defaultStatus.length; i++) {
-    if (defaultStatus[i].toLowerCase().includes(stats.toLowerCase())) {
-      return defaultStatus[i];
-    }
-  }
+  if(stats === "Pending") return defaultStatus[0];
+  else if(stats === "Confirmed") return defaultStatus[1];
+  else if(stats === "Implemented") return defaultStatus[2];
+  else return defaultStatus[3];
 };
 
 const PembeliPesananPage = (props) => {

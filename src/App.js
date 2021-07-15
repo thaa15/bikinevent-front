@@ -48,6 +48,7 @@ import PembeliPesananPage from "./components/PembeliDashboard/PembeliPesanan/All
 import KonfirmasiPembayaranPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/ConfirmOrder";
 import PelaksanaanPesananPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/ImplementOrder";
 import PesananSelesaiPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/DoneOrder";
+import PembeliChatPage from "./components/PembeliDashboard/PembeliChat";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -241,6 +242,13 @@ function App() {
                       role={loginInfo.role}
                       exact
                       component={PembeliProfil}
+                      isAuth={loginInfo.token}
+                    />
+                    <ProtectedPembeliLogin
+                      path="/client-chat"
+                      role={loginInfo.role}
+                      exact
+                      component={PembeliChatPage}
                       isAuth={loginInfo.token}
                     />
                     <ProtectedPembeliLogin
