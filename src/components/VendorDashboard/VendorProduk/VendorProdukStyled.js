@@ -164,3 +164,51 @@ export const ButtonsArsip = styled.button`
         background-color:#a3143f;
     }
 `;
+
+export const ExpTags = styled.span`
+    font-size: 13px;
+    line-height: 18px;
+    color: white;
+`;
+
+export const BoxTags = styled.span`
+    display: inline-block;
+    width: fit-content;
+    padding: 6px;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    column-gap: 10px;
+    background: #E30045;
+    align-items: center;
+`;
+
+export const RemoveTag = styled.div`
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    margin-left: auto;
+    color: #E30045;
+    border: 1px solid #E30045;
+    padding: 1px 5px;
+    outline: none;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    background: white;
+    border-radius: 100%;
+    &:hover {
+        font-weight: bold;
+    }
+`;
+
+export const ContentTags = styled.div`
+    display: grid;
+    margin-top: 20px;
+    width: auto;
+    grid-template-columns: repeat(4, 150px);
+    column-gap: 5px;
+    row-gap: 5px;
+`;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, createRef } from "react";
 import Dropzone from "react-dropzone";
 import { TitleStats } from "../VendorPesanan/VendorPesananStyle";
 import { Buttonslog, Buttons } from "../../LogReg/LoginPage/LoginStyled";
@@ -15,6 +15,10 @@ import {
   UploadFile,
   DivPrice,
   ButtonsArsip,
+  ExpTags,
+  RemoveTag,
+  BoxTags,
+  ContentTags
 } from "./VendorProdukStyled";
 import { GridButton } from "../VendorPesanan/VendorPesananStyle";
 import {
@@ -31,6 +35,7 @@ import {
 import { Kategories } from "../../../datas/vendordata";
 
 const VendorProdukForm = () => {
+  var tagInput = createRef();
   const dropRef = useRef();
   const [previewFoto, setPreviewFoto] = useState([]);
   const [isPreviewFoto, setIsPreviewFoto] = useState([]);
@@ -39,6 +44,7 @@ const VendorProdukForm = () => {
   const [showSubCath, setShowSubCath] = useState(false);
   const [tester, setTester] = useState("");
   const { loginInfo } = useContext(loginContext);
+  const [tags, setTags] = useState([]);
   const vendor_id = localStorage.getItem("vendor_id");
   const [formData, setFormData] = useState({
     nama: "",
@@ -61,6 +67,24 @@ const VendorProdukForm = () => {
     "Foto 6",
     "Foto 7",
   ];
+
+  const keyTagsHandler = (e) => {
+    const values = e.target.value;
+    if (e.key === 'Enter' && values) {
+      if (tags.find(tag => tag.toLowerCase() === values.toLowerCase())) {
+        return;
+      }
+      setTags(old => [...old, values]);
+      tagInput.value = null;
+    }
+  }
+
+  const removeTags = (i) => {
+    const newTags = [...tags];
+    newTags.splice(i, 1);
+    setTags(newTags);
+  }
+
   const submitHandler = async (e, archive) => {
     e.preventDefault();
     const {
@@ -181,6 +205,8 @@ const VendorProdukForm = () => {
       </div>
     );
   };
+
+  console.log(tags);
   return (
     <>
       <TitleStats>Tambah Produk Baru</TitleStats>
@@ -237,8 +263,10 @@ const VendorProdukForm = () => {
               required
               value={tester}
               onChange={(e) => {
-                setTester(e.target.value);
-                setFormData({ ...formData, subcategory: e.target.value });
+                if (e.target.value !== "Pilih Sub-Kategori") {
+                  setTester(e.target.value);
+                  setFormData({ ...formData, subcategory: e.target.value });
+                }
               }}
             >
               <Options non>Pilih Sub-Kategori</Options>
@@ -304,13 +332,34 @@ const VendorProdukForm = () => {
         </FotoUploadApartProduct>
 
         <LabelVendorProduk>Tags</LabelVendorProduk>
-        <InputModifArea rows="4" required name="description" />
+        <InputModif
+          type="text"
+          required
+          name="description"
+          onKeyDown={keyTagsHandler}
+          ref={c => { tagInput = c; }}
+        />
+        <ContentTags>
+          {tags.map((item, idx) => {
+            return (
+              <BoxTags>
+                <ExpTags key={idx}>{item}</ExpTags>
+                <RemoveTag
+                  type="button"
+                  onClick={() => (removeTags(idx))}
+                >
+                  x
+                </RemoveTag>
+              </BoxTags>
+            )
+          })}
+        </ContentTags>
 
         <GridButton>
-          <Buttonslog onClick={(e) => submitHandler(e, false)}>
+          <Buttonslog type="button" onClick={(e) => submitHandler(e, false)}>
             <Buttons>Tampilkan</Buttons>
           </Buttonslog>
-          <ButtonsArsip onClick={(e) => submitHandler(e, true)}>
+          <ButtonsArsip type="button" onClick={(e) => submitHandler(e, true)}>
             <Buttons>Arsipkan</Buttons>
           </ButtonsArsip>
         </GridButton>
