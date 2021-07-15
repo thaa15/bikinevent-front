@@ -43,6 +43,31 @@
   }
 }
 
+.awssld {
+  --slider-height-percentage: 62% !important;
+  --slider-transition-duration: 785ms !important;
+  --organic-arrow-thickness: 7px !important;
+  --organic-arrow-border-radius: 3px !important;
+  --organic-arrow-height: 32px !important;
+  --organic-arrow-color: transparent !important;
+  --control-button-width: 5% !important;
+  --control-button-height: 27% !important;
+  --control-button-background: transparent !important;
+  --control-bullet-color: #c4c4c4 !important;
+  --control-bullet-active-color: #E30045 !important;
+  --loader-bar-color: #26456f !important;
+  --loader-bar-height: 5px !important;
+  --timer-background-color: transparent !important;
+  height: fit-content !important;
+  width: 100%;
+  display: block !important;
+  }
+  .fade-enter
+  .fade-appear {
+    opacity: 0;
+    z-index: 1;
+}
+
 .content-wrap{
   flex:1;
 }

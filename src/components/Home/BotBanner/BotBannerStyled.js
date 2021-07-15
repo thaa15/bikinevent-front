@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const BotBanTemp = styled.div`
     border-radius: 20px;
     width: 100%;
-    background-image: url(${(props) => props.img});
+    background-image: url(${(props) => props.src});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 290px;
+    height: 290px;
 `;
 
 export const BannerWrited = styled.div`

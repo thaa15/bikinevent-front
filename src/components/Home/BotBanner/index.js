@@ -2,16 +2,12 @@ import React from "react";
 import {BotBanTemp,BannerWrited} from "./BotBannerStyled";
 import fotban from "../../../images/botban.png";
 import {GlobalTemplate} from "../../../templates/GlobalTemplate";
+import bannerBawah from "../../../images/bannerbawah.png";
 
 const BotBanner = () => {
     return(
         <GlobalTemplate>
-            <BotBanTemp img={fotban}>
-                <BannerWrited>
-                <b style={{color:"#E30045"}}>BikinEvent </b> 
-                memberikan kemudahan dalam membuat event impian anda dengan aman dan nyaman
-                </BannerWrited>
-            </BotBanTemp>
+            <BotBanTemp src={bannerBawah}/>
         </GlobalTemplate>
     )
 }
