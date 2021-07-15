@@ -117,7 +117,7 @@ const PembeliPesananPage = (props) => {
                                     </p>
                                   </DivRowContent>
                                 </DivRowContent>
-                                <p>{item.nama}</p>
+                                <p>{prod.nama}</p>
                                 <h6>
                                   Rp
                                   {parseInt(prod.harga).toLocaleString("id-ID")}
