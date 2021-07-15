@@ -18,7 +18,7 @@ import {
   ExpTags,
   RemoveTag,
   BoxTags,
-  ContentTags
+  ContentTags,
 } from "./VendorProdukStyled";
 import { GridButton } from "../VendorPesanan/VendorPesananStyle";
 import {
@@ -70,20 +70,20 @@ const VendorProdukForm = () => {
 
   const keyTagsHandler = (e) => {
     const values = e.target.value;
-    if (e.key === 'Enter' && values) {
-      if (tags.find(tag => tag.toLowerCase() === values.toLowerCase())) {
+    if (e.key === "Enter" && values) {
+      if (tags.find((tag) => tag.toLowerCase() === values.toLowerCase())) {
         return;
       }
-      setTags(old => [...old, values]);
+      setTags((old) => [...old, values]);
       tagInput.value = null;
     }
-  }
+  };
 
   const removeTags = (i) => {
     const newTags = [...tags];
     newTags.splice(i, 1);
     setTags(newTags);
-  }
+  };
 
   const submitHandler = async (e, archive) => {
     e.preventDefault();
@@ -97,6 +97,13 @@ const VendorProdukForm = () => {
       subcategory,
       vendor,
     } = formData;
+    let tagBody = [];
+    for (let i = 0; i < tags.length; i++) {
+      tagBody.push({
+        tag_name: tags[i],
+      });
+    }
+    console.log(tagBody);
     const productData = new FormData();
     productData.append(
       "data",
@@ -109,6 +116,7 @@ const VendorProdukForm = () => {
         category,
         subcategory,
         isArchived: archive,
+        tag: tagBody,
       })
     );
     setsuccessave(true);
@@ -337,21 +345,20 @@ const VendorProdukForm = () => {
           required
           name="description"
           onKeyDown={keyTagsHandler}
-          ref={c => { tagInput = c; }}
+          ref={(c) => {
+            tagInput = c;
+          }}
         />
         <ContentTags>
           {tags.map((item, idx) => {
             return (
               <BoxTags>
                 <ExpTags key={idx}>{item}</ExpTags>
-                <RemoveTag
-                  type="button"
-                  onClick={() => (removeTags(idx))}
-                >
+                <RemoveTag type="button" onClick={() => removeTags(idx)}>
                   x
                 </RemoveTag>
               </BoxTags>
-            )
+            );
           })}
         </ContentTags>
 

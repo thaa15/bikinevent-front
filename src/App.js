@@ -73,6 +73,7 @@ function App() {
     name: "",
     role: "",
     pembeliId: null,
+    vendorId: null,
   });
 
   const [clientCart, setClientCart] = useState({
@@ -98,6 +99,7 @@ function App() {
       token: `${localStorage.getItem("token")}`,
       role: `${localStorage.getItem("role")}`,
       pembeliId: `${localStorage.getItem("pembeliId")}`,
+      vendorId: `${localStorage.getItem("vendor_id")}`,
     });
   }, []);
 

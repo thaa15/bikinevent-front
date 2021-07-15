@@ -39,10 +39,20 @@ export const VendorChat = () => {
 
 export const VendorPesanan = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [pesanan, setPesanan] = useState();
+  const { loginInfo } = useContext(loginContext);
+  useEffect(() => {
+    const fetchData = async () => {
+      const vendorResponse = await vendorService.getVendorById(
+        loginInfo.vendorId
+      );
+      const vendorData = vendorResponse.data;
+      setPesanan(vendorData);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [loginInfo.token]);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1500);
   return (
     <>
       {isLoading ? (
@@ -52,7 +62,7 @@ export const VendorPesanan = () => {
       ) : (
         <>
           <VendorHeader />
-          <VendorPesananContent data={PesananVendor} />
+          <VendorPesananContent data={pesanan.order_histories} />
         </>
       )}
     </>
@@ -93,13 +103,21 @@ export const VendorProduk = () => {
 
 export const VendorKeuangan = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [vendorData, setVendorData] = useState();
+  const { loginInfo } = useContext(loginContext);
+  useEffect(() => {
+    const fetchData = async () => {
+      const vendorResponse = await vendorService.getVendorById(
+        loginInfo.vendorId
+      );
+      const vendorData = vendorResponse.data;
+      setVendorData(vendorData);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, [loginInfo.vendorId]);
 
-  //Ini nanti lu ganti jadi GET apa gitu yg sama sama nama yg ditarik
-  const data = KeuanganVendor.filter((dats) => dats.name === "Ernia");
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1500);
-  console.log(data);
+  console.log(vendorData);
   return (
     <>
       {isLoading ? (
@@ -109,19 +127,16 @@ export const VendorKeuangan = () => {
       ) : (
         <>
           <VendorHeader />
-          {/*Ini karena dapet Array, sabi ganti*/}
-          {data.map((item, idx) => (
-            <VendorKeuanganContent
-              key={idx}
-              balance_released={item.balance_release}
-              seller_balance={item.seller_price}
-              account_number={item.account_number}
-              bank={item.bank}
-              account_name={item.name}
-              income_history={item.income_history}
-              balance_withdrawal={item.balance_withdrawal}
-            />
-          ))}
+          <VendorKeuanganContent
+            balance_released={vendorData.keuangan.sudah_dilepas}
+            to_be_released={vendorData.keuangan.akan_dilepas}
+            seller_balance={vendorData.keuangan.saldo_penjual}
+            account_number={vendorData.no_rekening}
+            bank={vendorData.nama_bank}
+            account_name={vendorData.nama_rekening}
+            income_history={vendorData.order_histories}
+            balance_withdrawal={vendorData.penarikan}
+          />
         </>
       )}
     </>
@@ -141,7 +156,6 @@ export const VendorProfil = () => {
     };
     fetchData();
   }, []);
-  console.log(profilData);
   return (
     <>
       {isLoading ? (
