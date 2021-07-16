@@ -52,7 +52,26 @@ import { IoLogoDropbox } from "react-icons/io";
 
 const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
-  const [checkSubcath, setCheckSubcath] = useState(StableCheck);
+  const [checkSubcath, setCheckSubcath] = useState([
+    [
+      false, false, false, false, false, false, false, false
+    ],
+    [
+      false, false, false, false
+    ],
+    [
+      false, false, false, false, false, false
+    ],
+    [
+      false, false, false, false, false, false, false, false, false
+    ],
+    [
+      false, false, false, false, false
+    ],
+    [
+      false, false, false
+    ]]
+  );
   const [produk, setProduk] = useState(true);
   const [checkliststable, setCheckliststable] = useState([
     false,
@@ -137,16 +156,10 @@ const SearchContent = () => {
   };
 
   const checkHandler = (row, state, idx) => {
-    const arrRow = [8, 4, 6, 9, 5, 3]
-    setCheckSubcath((old) => [
-      ...old.slice(0, row),
-        ...old.slice(0, idx),
-        state,
-        ...old.slice(
-          idx+1,
-          arrRow[row]+1
-        ),
-      ...old.slice(row + 1, 7)]);
+    const arrRow = [8, 4, 6, 9, 5, 3];
+    let newArrs = [...checkSubcath];
+    newArrs[row][idx] = state;
+    setCheckSubcath(newArrs)
   }
   return (
     <>
@@ -406,6 +419,27 @@ const SearchContent = () => {
                             false,
                             false,
                           ]);
+
+                          setCheckSubcath([
+                            [
+                              false, false, false, false, false, false, false, false
+                            ],
+                            [
+                              false, false, false, false
+                            ],
+                            [
+                              false, false, false, false, false, false
+                            ],
+                            [
+                              false, false, false, false, false, false, false, false, false
+                            ],
+                            [
+                              false, false, false, false, false
+                            ],
+                            [
+                              false, false, false
+                            ]]
+                          )
                         }}
                       />
                     </form>

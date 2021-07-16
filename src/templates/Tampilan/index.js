@@ -47,7 +47,7 @@ import {
   PartOfImage,
 } from "./TampilanStyled";
 import { BoxNotEntry } from "../../components/VendorDashboard/VendorPesanan/VendorPesananStyle";
-import { clientCartContext,loginContext } from "../../context";
+import { clientCartContext, loginContext } from "../../context";
 import { pembeliService } from "../../services/Pembeli";
 
 const ShowAtTopProduk = ({
@@ -71,39 +71,41 @@ const ShowAtTopProduk = ({
   const { clientCart, setClientCart } = useContext(clientCartContext);
 
   const addToCart = async () => {
-    let body = null;
-    setSuccessAdd({...successAdd,right: true});
-    setTimeout(() => {
-      setSuccessAdd(false)
-    }, 1500);
-    if (loginInfo.pembeliId == "null") {
-      body = {
-        user: loginInfo.userId,
-        cart: [id],
-      };
-      const response = await pembeliService.postPembeli(loginInfo.token, body);
-      const data = response.data;
-      setLoginInfo({ ...loginInfo, pembeliId: data.id });
-      setClientCart({ ...clientCart, notif: 1 });
-      return response;
-    } else {
-      const response = await pembeliService.getPembeliById(
-        loginInfo.pembeliId,
-        loginInfo.token
-      );
-      const dataPembeli = response.data;
-      let newCart = dataPembeli.cart;
-      newCart.push(id);
-      body = {
-        cart: newCart,
-      };
-      setClientCart({ ...clientCart, notif: newCart.length });
-      const putResponse = await pembeliService.editPembeliById(
-        loginInfo.pembeliId,
-        loginInfo.token,
-        body
-      );
-      return putResponse;
+    if (loginInfo.role === "pembeli") {
+      let body = null;
+      setSuccessAdd({ ...successAdd, right: true });
+      setTimeout(() => {
+        setSuccessAdd(false)
+      }, 1500);
+      if (loginInfo.pembeliId == "null") {
+        body = {
+          user: loginInfo.userId,
+          cart: [id],
+        };
+        const response = await pembeliService.postPembeli(loginInfo.token, body);
+        const data = response.data;
+        setLoginInfo({ ...loginInfo, pembeliId: data.id });
+        setClientCart({ ...clientCart, notif: 1 });
+        return response;
+      } else {
+        const response = await pembeliService.getPembeliById(
+          loginInfo.pembeliId,
+          loginInfo.token
+        );
+        const dataPembeli = response.data;
+        let newCart = dataPembeli.cart;
+        newCart.push(id);
+        body = {
+          cart: newCart,
+        };
+        setClientCart({ ...clientCart, notif: newCart.length });
+        const putResponse = await pembeliService.editPembeliById(
+          loginInfo.pembeliId,
+          loginInfo.token,
+          body
+        );
+        return putResponse;
+      }
     }
   };
 
@@ -145,40 +147,40 @@ const ShowAtTopProduk = ({
           </GetApart>
         </ShowedObj>
         {successAdd.wrong ? (
-              <PopBgSuccess>
-                <BgSuccess aktif={successAdd.wrong === true}>
-                  <Failedicon />
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <b>FAILED</b>
-                    Gagal Menambahkan
-                  </div>
-                </BgSuccess>
-              </PopBgSuccess>
-            ) : successAdd.right ? (
-              <PopBgSuccess>
-                <BgSuccess aktif={successAdd.right === true} right>
-                  <Succesicon />
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <b>SUCCESS</b>
-                    Berhasil Menambahkan
-                  </div>
-                </BgSuccess>
-              </PopBgSuccess>
-            ) : (
-              <></>
-            )}
+          <PopBgSuccess>
+            <BgSuccess aktif={successAdd.wrong === true}>
+              <Failedicon />
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
+                <b>FAILED</b>
+                Gagal Menambahkan
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : successAdd.right ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={successAdd.right === true} right>
+              <Succesicon />
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
+                <b>SUCCESS</b>
+                Berhasil Menambahkan
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : (
+          <></>
+        )}
       </GlobalTemplate>
     </BgTop>
   );

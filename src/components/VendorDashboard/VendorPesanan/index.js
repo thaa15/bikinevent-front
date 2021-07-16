@@ -17,7 +17,7 @@ import {
 } from "./VendorPesananStyle";
 
 const VendorPesananContent = ({ data }) => {
-  const pesanan = data.filter((stat) => stat.status === "Pending");
+  const pesanan = data.filter((stat) => stat.status !== "Completed");
   const ended = data.filter((stat) => stat.status === "Completed");
   const convertDate = (string) => {
     const date = new Date(string);
@@ -46,7 +46,7 @@ const VendorPesananContent = ({ data }) => {
                           </BoxPesananContent>
                           <BoxPesananContent>
                             <JudulHarga judul>{prod.nama}</JudulHarga>
-                            <JudulHarga>Rp{prod.harga}</JudulHarga>
+                            <JudulHarga>Rp{prod.harga.toLocaleString("id-ID")}</JudulHarga>
                             <SubJudul>Nomor Invoice</SubJudul>
                             {item.invoice == null ? (
                               <SubJudulContent invoice>
@@ -102,7 +102,7 @@ const VendorPesananContent = ({ data }) => {
                           </BoxPesananContent>
                           <BoxPesananContent>
                             <JudulHarga judul>{prod.nama}</JudulHarga>
-                            <JudulHarga>Rp{prod.harga}</JudulHarga>
+                            <JudulHarga>Rp{prod.harga.toLocaleString("id-ID")}</JudulHarga>
                             <SubJudul>Nomor Invoice</SubJudul>
 
                             {item.invoice == null ? (

@@ -39,6 +39,7 @@ const VendorProdukForm = () => {
   const dropRef = useRef();
   const [previewFoto, setPreviewFoto] = useState([]);
   const [isPreviewFoto, setIsPreviewFoto] = useState([]);
+  const [newArrPhotos, setNewArrPhotos] = useState([]);
   const [successave, setsuccessave] = useState(false);
   const [idxFoto, setIdxFoto] = useState(0);
   const [showSubCath, setShowSubCath] = useState(false);
@@ -119,7 +120,6 @@ const VendorProdukForm = () => {
         tag: tagBody,
       })
     );
-    setsuccessave(true);
     for (let i = 0; i < formData.foto_produk.length; i++) {
       productData.append(
         `files.foto_produk`,
@@ -136,6 +136,7 @@ const VendorProdukForm = () => {
         },
       }
     );
+    setsuccessave(true);
     setTimeout(() => {
       setsuccessave(false);
       window.location.reload();
@@ -145,9 +146,14 @@ const VendorProdukForm = () => {
 
   const onDropFoto = (files) => {
     const [uploadedFile] = files;
+
     let newArr = [...formData.foto_produk];
-    newArr.push(files[0]);
+    newArr[idxFoto] = files[0]
+    
+    console.log(newArr)
+
     setFormData({ ...formData, foto_produk: newArr });
+    
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewFoto((oldArray) => [
@@ -156,12 +162,14 @@ const VendorProdukForm = () => {
         ...oldArray.slice(idxFoto + 1, previewFoto.length + 1),
       ]);
     };
+
     fileReader.readAsDataURL(uploadedFile);
     setIsPreviewFoto((oldArray) => [
       ...oldArray.slice(0, idxFoto),
       uploadedFile.name.match(/\.(jpeg|jpg|png|PNG)$/),
       ...oldArray.slice(idxFoto + 1, isPreviewFoto.length + 1),
     ]);
+
   };
 
   const renderPhotos = (np, id) => {
@@ -214,7 +222,6 @@ const VendorProdukForm = () => {
     );
   };
 
-  console.log(tags);
   return (
     <>
       <TitleStats>Tambah Produk Baru</TitleStats>
