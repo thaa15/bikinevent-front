@@ -321,9 +321,16 @@ const VendorProfileContent = ({
                 );
               })}
 
-              <UploadFile onClick={() => setPortofolios(true)}>
+              <UploadFile onClick={() => {
+                setPortofolios(true)
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+                }}>
                 <PlusImage>+</PlusImage>
               </UploadFile>
+
               <Buttonslog onClick={submitEdit}>
                 <Buttons>Simpan</Buttons>
               </Buttonslog>

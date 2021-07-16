@@ -13,6 +13,7 @@ import {
   TitleProfileVendor,
   FileViewStyle,
   ExpUploadPhoto,
+  AnimationPortofolio
 } from "./VendorProfileStyled";
 import { loginContext } from "../../../context";
 import axios from "axios";
@@ -73,7 +74,7 @@ const NewPortofolioForm = ({ portofolio }) => {
   const onDropFoto = (files) => {
     const [uploadedFile] = files;
     let newArr = foto_portfolio;
-    newArr.push(files[0]);
+    newArr[idxFoto] = files[0];
     setFoto_Portfolio(newArr);
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -144,7 +145,7 @@ const NewPortofolioForm = ({ portofolio }) => {
   console.log(loginInfo.token);
 
   return (
-    <>
+    <AnimationPortofolio>
       <TitleVendorKeu>Tambah Portofolio Baru</TitleVendorKeu>
 
       <LabelVendorProduk>Nama Event</LabelVendorProduk>
@@ -181,7 +182,7 @@ const NewPortofolioForm = ({ portofolio }) => {
       ) : (
         <></>
       )}
-    </>
+    </AnimationPortofolio>
   );
 };
 

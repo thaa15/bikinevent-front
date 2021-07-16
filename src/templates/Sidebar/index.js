@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
                                 </SideBtnWrap>
                             </SidebarLink>
 
-                            <SidebarLink to="/" onClick={toggling}>
+                            <SidebarLink to="/client-chat" onClick={toggling}>
                                 <SideBtnWrap>
                                     <ChatIcon />Chat
                                 </SideBtnWrap>

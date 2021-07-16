@@ -368,3 +368,11 @@ export const ButtonApartas = styled.div`
         flex-direction: column;
     }
 `;
+
+export const Notes =styled.p`
+    font-style: italic;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    color: #909DAA;
+`;

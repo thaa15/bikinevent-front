@@ -40,7 +40,7 @@ export const MainVendash = styled.div`
     padding: 0 10px;
     width: 100%;
     background: #FFFFFF;
-
+    animation: myopacity 0.8s linear;
     @media screen and (max-width: 957px) {
         -webkit-box-ordinal-group: 1;
         -moz-box-ordinal-group: 1;

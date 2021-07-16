@@ -156,6 +156,7 @@ export const VendorProfil = () => {
     };
     fetchData();
   }, []);
+  console.log(profilData)
   return (
     <>
       {isLoading ? (

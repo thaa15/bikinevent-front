@@ -10,7 +10,7 @@ export const GlobalTemplate = styled.div`
     width: 80%;
     overflow: ${(props)=>props.top ? "visible" : "hidden"};
     transition: .3s ease-out;
-    opacity:1;
+    animation: global 0.5s linear;
 `;
 
 export const PopUpBg = styled.div`

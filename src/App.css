@@ -17,12 +17,33 @@
   display:flex;
   flex-direction:column;
   min-height:100vh;
-  animation: myopacity 2s;
 }
 
 @keyframes myopacity {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+@keyframes global {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes global {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 @keyframes anvil {
@@ -40,6 +61,52 @@
     transform: scale(1) translateY(0px);
     opacity: 1;
     box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+  }
+}
+
+@-webkit-keyframes slideLeft {
+  from {
+      margin-left: 100%;
+      width: 300%;
+  }
+
+  to {
+      margin-left: 0%;
+      width: 100%;
+  }
+}
+
+@-moz-keyframes slideLeft {
+  from {
+      margin-left: 100%;
+      width: 300%;
+  }
+
+  to {
+      margin-left: 0%;
+      width: 100%;
+  }
+}
+@-o-keyframes slideLeft {
+  from {
+      margin-left: 100%;
+      width: 300%;
+  }
+
+  to {
+      margin-left: 0%;
+      width: 100%;
+  }
+}
+@keyframes slideLeft {
+  from {
+      margin-left: 100%;
+      width: 300%;
+  }
+
+  to {
+      margin-left: 0%;
+      width: 100%;
   }
 }
 

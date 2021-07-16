@@ -4,6 +4,7 @@ import { TitleStats } from "../VendorPesanan/VendorPesananStyle";
 import { Buttonslog, Buttons } from "../../LogReg/LoginPage/LoginStyled";
 import axios from "axios";
 import { loginContext } from "../../../context";
+import { AnimationPortofolio } from "../VendorProfil/VendorProfileStyled";
 import {
   LabelVendorProduk,
   InputModif,
@@ -223,7 +224,7 @@ const VendorProdukForm = () => {
   };
 
   return (
-    <>
+    <AnimationPortofolio>
       <TitleStats>Tambah Produk Baru</TitleStats>
       <form>
         <LabelVendorProduk awal>Nama Produk</LabelVendorProduk>
@@ -397,7 +398,7 @@ const VendorProdukForm = () => {
           <></>
         )}
       </form>
-    </>
+    </AnimationPortofolio>
   );
 };
 

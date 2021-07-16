@@ -166,3 +166,8 @@ export const DivButton = styled.div`
     font-weight: bold;
     color:${(props)=>props.review ? "#EC1C24" : "#212B36"};
 `;
+
+export const AnimationPortofolio = styled.div`
+    width: 100%;
+    animation: slideLeft 1s forwards;
+`;

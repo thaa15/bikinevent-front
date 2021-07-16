@@ -28,6 +28,7 @@ import {
   LinkChat,
   NoteInput,
   NoteButton,
+  Notes
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
 import { clientCartContext, loginContext } from "../../../context";
@@ -41,6 +42,9 @@ const KeranjangBelanjaPage = (props) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
+  const [notesDisplay, setNotesDisplay] = useState(false);
+  const [noteContent,setNoteContent] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await pembeliService.getPembeliById(
@@ -56,6 +60,9 @@ const KeranjangBelanjaPage = (props) => {
     setClientCart({ ...clientCart, notif: cartData.length });
     setTempVendorName([
       cartData
+        .sort((a, b) =>
+          a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
+        )
         .filter((a, id) => id == 0)
         .map((item) => item.vendor.nama_vendor)
         .toString(),
@@ -88,6 +95,7 @@ const KeranjangBelanjaPage = (props) => {
       }
     }
   }, [cartData.length]);
+  console.log(clientCart.notes)
 
   return (
     <>
@@ -150,9 +158,8 @@ const KeranjangBelanjaPage = (props) => {
                                       let arrVendor = clientCart.vendor;
                                       if (e.target.checked) {
                                         setPrices(
-                                          `${
-                                            parseInt(prices) +
-                                            parseInt(e.target.value)
+                                          `${parseInt(prices) +
+                                          parseInt(e.target.value)
                                           }`
                                         );
                                         arrWithArr.push(items.id);
@@ -165,9 +172,8 @@ const KeranjangBelanjaPage = (props) => {
                                         }
                                       } else {
                                         setPrices(
-                                          `${
-                                            parseInt(prices) -
-                                            parseInt(e.target.value)
+                                          `${parseInt(prices) -
+                                          parseInt(e.target.value)
                                           }`
                                         );
                                         let index = arrWithArr.indexOf(
@@ -200,19 +206,40 @@ const KeranjangBelanjaPage = (props) => {
                                           "id-ID"
                                         )}
                                       </h6>
-                                      <NoteInput
-                                        type="text"
-                                        placeholder="Tanggal, waktu, lokasi dan lainnya"
-                                        onChange={(e) => {
-                                          let array = clientCart.notes;
-                                          array[idx] = e.target.value;
-                                          setClientCart({
-                                            ...clientCart,
-                                            notes: array,
-                                          });
-                                        }}
-                                      />
-                                      <NoteButton>Simpan</NoteButton>
+                                      {notesDisplay ? (
+                                        <>
+                                          <Notes></Notes>
+                                          <NoteButton
+                                            onClick={() => (setNotesDisplay(false))}>
+                                            Ubah Catatan
+                                          </NoteButton>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <NoteInput
+                                            type="text"
+                                            placeholder="Tanggal, waktu, lokasi dan lainnya"
+                                            onChange={(e) => {
+                                              let array = clientCart.notes;
+                                              let index = 0;
+                                              for(let i=0;i<ids;i++){
+                                                index += cartData
+                                                .filter(
+                                                  (el) =>
+                                                    el.vendor.nama_vendor === tempVendorName[i]
+                                                ).length
+                                              }
+                                              array[(index + idx)] = e.target.value;
+                                              setClientCart({
+                                                ...clientCart,
+                                                notes: array,
+                                              });
+                                            }}
+                                          />
+                                          <NoteButton
+                                            onClick={() => (setNotesDisplay(true))}>Simpan</NoteButton>
+                                        </>
+                                      )}
                                     </div>
                                     <PartTrashButtons>
                                       <TrashButton>

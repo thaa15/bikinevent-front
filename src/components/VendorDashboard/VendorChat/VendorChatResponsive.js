@@ -22,11 +22,12 @@ import {
     ChatContentResp
 } from "./VendorChatStyled";
 import EllipsisText from "react-ellipsis-text";
+import { AnimationPortofolio } from "../VendorProfil/VendorProfileStyled";
 
 const ChatResponsive = () => {
     const [openchat, setOpenchat] = useState(true);
     return (
-        <>
+        <AnimationPortofolio>
             <GlobalTemplate>
                 {openchat ? (<>
                     <ChatListResp>
@@ -125,7 +126,7 @@ const ChatResponsive = () => {
                     </ChatContentResp>
                 </>)}
             </GlobalTemplate>
-        </>
+        </AnimationPortofolio>
     )
 }
 export default ChatResponsive;

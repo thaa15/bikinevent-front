@@ -2,6 +2,7 @@ import React from "react";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import DashboardSite from "../DashboardSideVendor";
 import { MainVendash, TempVendash } from "../VendorDashboardStyled";
+import { BoxNotEntry } from "../VendorPesanan/VendorPesananStyle";
 import {
   TitleVendorKeu,
   ContentSeparator,
@@ -22,7 +23,9 @@ const VendorKeuanganContent = ({
   account_name,
   income_history,
   balance_withdrawal,
+  to_be_released,
 }) => {
+  console.log(income_history)
   return (
     <GlobalTemplate>
       <TempVendash>
@@ -32,15 +35,15 @@ const VendorKeuanganContent = ({
           <ContentSeparator>
             <div>
               <TitleSubKeu>Saldo Penjual</TitleSubKeu>
-              <InfoKeuWrited>Rp{seller_balance}</InfoKeuWrited>
+              <InfoKeuWrited>Rp{parseInt(seller_balance).toLocaleString("id-ID")}</InfoKeuWrited>
             </div>
             <div>
               <TitleSubKeu>Akan Dilepas</TitleSubKeu>
-              <InfoKeuWrited>Rp{seller_balance}</InfoKeuWrited>
+              <InfoKeuWrited>Rp{parseInt(to_be_released).toLocaleString("id-ID")}</InfoKeuWrited>
             </div>
             <div>
               <TitleSubKeu>Sudah Dilepas</TitleSubKeu>
-              <InfoKeuWrited>Rp{balance_released}</InfoKeuWrited>
+              <InfoKeuWrited>Rp{parseInt(balance_released).toLocaleString("id-ID")}</InfoKeuWrited>
             </div>
             <div>
               <ButtonKeu>Tarik Saldo</ButtonKeu>
@@ -67,31 +70,45 @@ const VendorKeuanganContent = ({
           </ContentSeparator>
 
           <TitleVendorKeu>Riwayat Penghasilan</TitleVendorKeu>
-          {income_history.map((data, idx) => {
-            return <IncomeWrite key={idx}>{data.invoice}</IncomeWrite>;
-          })}
-          <div style={{ marginBottom: "20px" }} />
+          {income_history.length === 0 ?
+            (
+              <BoxNotEntry>Belum ada penghasilan</BoxNotEntry>
+            )
+            : (
+              <>
+                {income_history.map((data, idx) => {
+                  return <IncomeWrite key={idx}>{data.invoice}</IncomeWrite>;
+                })}
+                <div style={{ marginBottom: "20px" }} />
+              </>
+            )}
 
           <TitleVendorKeu>Riwayat Penarikan Saldo</TitleVendorKeu>
-          <ManageTable>
-            <BalanceTable>
-              {balance_withdrawal.map((item, idx) => {
-                return (
-                  <tr>
-                    <WithdrawalWrite key={idx}>
-                      {item.nama_bank}
-                    </WithdrawalWrite>
-                    <WithdrawalWrite>{item.no_rekening}</WithdrawalWrite>
-                    <WithdrawalWrite>{item.pemilik_rekening}</WithdrawalWrite>
-                    <WithdrawalWrite>
-                      {item.jumlah.toLocaleString("id-ID")}
-                    </WithdrawalWrite>
-                    <WithdrawalWrite>{item.tanggal_penarikan}</WithdrawalWrite>
-                  </tr>
-                );
-              })}
-            </BalanceTable>
-          </ManageTable>
+          {balance_withdrawal.length === 0 ?
+            (
+              <BoxNotEntry>Belum ada penarikan saldo!</BoxNotEntry>
+            )
+            : (
+              <ManageTable>
+                <BalanceTable>
+                  {balance_withdrawal.map((item, idx) => {
+                    return (
+                      <tr>
+                        <WithdrawalWrite key={idx}>
+                          {item.nama_bank}
+                        </WithdrawalWrite>
+                        <WithdrawalWrite>{item.no_rekening}</WithdrawalWrite>
+                        <WithdrawalWrite>{item.pemilik_rekening}</WithdrawalWrite>
+                        <WithdrawalWrite>
+                          {parseInt(item.jumlah).toLocaleString("id-ID")}
+                        </WithdrawalWrite>
+                        <WithdrawalWrite>{item.tanggal_penarikan}</WithdrawalWrite>
+                      </tr>
+                    );
+                  })}
+                </BalanceTable>
+              </ManageTable>
+            )}
         </MainVendash>
       </TempVendash>
     </GlobalTemplate>
