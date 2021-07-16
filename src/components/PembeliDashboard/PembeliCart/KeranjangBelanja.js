@@ -42,8 +42,6 @@ const KeranjangBelanjaPage = (props) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
-  const [notesDisplay, setNotesDisplay] = useState(false);
-  const [noteContent, setNoteContent] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
