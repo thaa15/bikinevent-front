@@ -319,8 +319,7 @@ const VendorProdukForm = () => {
         >
           <Options non>Pilih Kota</Options>
           <Options value="Jakarta">Jakarta</Options>
-          <Options value="Bandung">Bandung</Options>
-          <Options value="Semarang">Semarang</Options>
+          <Options value="Bogor">Bogor</Options>
           <Options value="Depok">Depok</Options>
           <Options value="Bekasi">Bekasi</Options>
           <Options value="Tangerang">Tangerang</Options>

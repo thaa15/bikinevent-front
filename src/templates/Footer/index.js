@@ -10,7 +10,7 @@ import {
   SocialIcons,
   ImageFooter,
 } from "./FooterStyled";
-import gambartest from "../../images/logocomp.png";
+import gambartest from "../../images/bikineventLogo.png";
 import {
   AiFillFacebook,
   AiFillInstagram,

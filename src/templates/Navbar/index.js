@@ -1,4 +1,4 @@
-import React, { useContext, useState ,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Nav,
@@ -27,9 +27,9 @@ import { FiSearch } from "react-icons/fi";
 import EllipsisText from "react-ellipsis-text";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
-import gambartest from "../../images/logocomp.png";
+import gambartest from "../../images/bikineventLogo.png";
 import NavbarVendor from "./NavbarVendor";
-import { clientCartContext,searchContext } from "../../context";
+import { clientCartContext, searchContext } from "../../context";
 
 const Navbar = ({ toggling, isAuth, nama, role }) => {
   const history = useHistory();
@@ -37,7 +37,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
   const [getsearch, setGetsearch] = useState("");
   const [placehldr, setPlacehldr] = useState("");
   const [searchContent, setSearchContent] = useState(false);
-  const { clientCart } = useContext(clientCartContext);
+  const { clientCart, setClientCart } = useContext(clientCartContext);
 
   const removed = () => {
     localStorage.removeItem("token");
@@ -61,7 +61,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     setPlacehldr("");
     setSearchContent(false);
   };
-  
+
 
   return (
     <>
@@ -156,10 +156,22 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
               <ProfButton>
                 {nama !== "null" ? (
                   <>
-                    <ElementLink to="/client-purchase/cart">
+                    <ElementLink to="/client-purchase/cart"
+                    onClick={() => {
+                      setClientCart({
+                        ...clientCart,
+                        price: "",
+                        payment_method: null,
+                        clientInfo: null,
+                        product: [],
+                        statusDp: false,
+                        notes: [],
+                        vendor: [],
+                      });
+                    }}>
                       <ShoppingCartIcon />
                       {clientCart.notif === 0 ? (<></>) : (
-                      <NotifBadge>{clientCart.notif}</NotifBadge>)}
+                        <NotifBadge>{clientCart.notif}</NotifBadge>)}
                     </ElementLink>
                     <ElementLink to="/client-chat">
                       <ChatIcon />

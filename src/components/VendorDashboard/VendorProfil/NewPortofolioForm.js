@@ -141,9 +141,7 @@ const NewPortofolioForm = ({ portofolio }) => {
       </div>
     );
   };
-
-  console.log(loginInfo.token);
-
+  
   return (
     <AnimationPortofolio>
       <TitleVendorKeu>Tambah Portofolio Baru</TitleVendorKeu>

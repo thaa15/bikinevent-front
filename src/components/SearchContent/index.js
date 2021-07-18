@@ -78,7 +78,6 @@ const SearchContent = () => {
   const [searchedProduct, setSearchedProduct] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
   const [searchedVendor, setSearchedVendor] = useState([]);
-  const [filteredVendor, setFilteredVendor] = useState([]);
 
   const filterHandler = (e) => {
     e.preventDefault();
@@ -492,6 +491,22 @@ const SearchContent = () => {
                         onClick={() => {
                           setProduk(false);
                           setSearched({ ...searched, loading: true });
+                          setGetFilter({
+                            subcategory: [],
+                            lokasi: [],
+                          });
+    
+                          setGetRangeFilter({
+                            hargaMin: "",
+                            hargaMax: "",
+                            rating: "",
+                          });
+    
+                          setSearched({
+                            ...searched,
+                            filter: getFilter,
+                            rangeFilter: getRangeFilter,
+                          });
                         }}
                       >
                         <ShopVendor />
@@ -523,7 +538,7 @@ const SearchContent = () => {
                   </TopHeader>
                   {filteredProduct.length === 0 ? (
                     <BoxNotEntry>
-                      "{searched.searchFill}" Tidak Ditemukan!
+                      "{searched.searchFill}" Tidak Ditemukan Pada Pencarian Produk!
                     </BoxNotEntry>
                   ) : (
                     <GridTempProduk>
@@ -560,7 +575,11 @@ const SearchContent = () => {
           ) : (
             <>
               {/*BUAT VENDOR*/}
-              <VendorSearch vendor={setProduk} datas={searchedVendor} />
+              <VendorSearch 
+              vendor={setProduk} 
+              datas={searchedVendor} 
+              searchResult={searched.searchFill}
+              />
             </>
           )}
         </>

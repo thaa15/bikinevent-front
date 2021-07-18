@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { PesananPembeliHeader } from "../../../../templates/HeaderSmall/PembeliHeader";
 import LoadingPage from "../../../../templates/Loading";
 import { GlobalTemplate } from "../../../../templates/GlobalTemplate";
-import { ProfilePembeli } from "../../../../datas/vendordata";
 import { BoxNotEntry } from "../../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { DivRowContent, Shopping } from "../../PembeliCart/Styled";
 import {
@@ -12,6 +11,7 @@ import {
   BoxManage,
   BoxManageContent,
   ImageOrder,
+  BoxTrackContent
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
 import { pembeliService } from "../../../../services/Pembeli";
@@ -25,9 +25,9 @@ const getButtonStatus = (stats) => {
     "Pesanan\nSelesai",
   ];
 
-  if(stats === "Pending") return defaultStatus[0];
-  else if(stats === "Confirmed") return defaultStatus[1];
-  else if(stats === "Implemented") return defaultStatus[2];
+  if (stats === "Pending") return defaultStatus[0];
+  else if (stats === "Confirmed") return defaultStatus[1];
+  else if (stats === "Implemented") return defaultStatus[2];
   else return defaultStatus[3];
 };
 
@@ -52,6 +52,7 @@ const PembeliPesananPage = (props) => {
   const progress = pesananData.filter((order) => order.status !== "Completed");
 
   const done = pesananData.filter((order) => order.status === "Completed");
+  console.log(progress)
 
   return (
     <>
@@ -98,34 +99,36 @@ const PembeliPesananPage = (props) => {
                       }}
                     >
                       <BoxManage>
-                        {item.produks.map((prod) => {
-                          return (
-                            <BoxManageContent>
-                              <ImageOrder src={prod.foto_produk[0].url} />
-                              <div>
-                                <DivRowContent top>
-                                  <DivRowContent titlee need>
-                                    <Shopping />
-                                    <p
-                                      style={{
-                                        fontSize: "14px",
-                                        lineHeight: "21px",
-                                        color: "#909DAA",
-                                      }}
-                                    >
-                                      {prod.vendor.nama_vendor}
-                                    </p>
+                        <BoxTrackContent>
+                          {item.produks.map((prod) => {
+                            return (
+                              <BoxManageContent>
+                                <ImageOrder src={prod.foto_produk[0].url} />
+                                <div>
+                                  <DivRowContent top>
+                                    <DivRowContent titlee need>
+                                      <Shopping />
+                                      <p
+                                        style={{
+                                          fontSize: "14px",
+                                          lineHeight: "21px",
+                                          color: "#909DAA",
+                                        }}
+                                      >
+                                        {prod.vendor.nama_vendor}
+                                      </p>
+                                    </DivRowContent>
                                   </DivRowContent>
-                                </DivRowContent>
-                                <p>{prod.nama}</p>
-                                <h6>
-                                  Rp
-                                  {parseInt(prod.harga).toLocaleString("id-ID")}
-                                </h6>
-                              </div>
-                            </BoxManageContent>
-                          );
-                        })}
+                                  <p>{prod.nama}</p>
+                                  <h6>
+                                    Rp
+                                    {parseInt(prod.harga).toLocaleString("id-ID")}
+                                  </h6>
+                                </div>
+                              </BoxManageContent>
+                            );
+                          })}
+                        </BoxTrackContent>
 
                         <ButtonStatus>
                           {getButtonStatus(item.status)}
@@ -152,6 +155,7 @@ const PembeliPesananPage = (props) => {
                       }}
                     >
                       <BoxManage>
+                        <BoxTrackContent>
                         {item.produks.map((prod) => {
                           return (
                             <BoxManageContent>
@@ -180,6 +184,7 @@ const PembeliPesananPage = (props) => {
                             </BoxManageContent>
                           );
                         })}
+                        </BoxTrackContent>
 
                         <ButtonStatus>
                           {getButtonStatus(item.status)}

@@ -75,7 +75,7 @@ const TampilanVendorPage = ({ match }) => {
         });
         setTotalRating(tempTotal / data.comments.length);
       };
-      calculateTotalRating();
+      if(data.comments.length !== 0) {calculateTotalRating();}
       setIsLoading(false);
     };
     fetchData();

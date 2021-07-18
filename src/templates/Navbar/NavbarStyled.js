@@ -152,7 +152,7 @@ export const ProfButton = styled.div`
 export const DisplayProf = styled.div`
     cursor: ${(props)=>props.need ? "auto" : "pointer" };
     font-size: ${(props) => props.name ? "18px" : "12px"};
-    line-height: ${(props) => props.name ? "27px" : "18px"};
+    line-height: ${(props) => props.name ? "23px" : "18px"};
     color: ${(props) => props.name ? "#212B36" : "#909DAA"};
 
     @media screen and (max-width: 1063px) {

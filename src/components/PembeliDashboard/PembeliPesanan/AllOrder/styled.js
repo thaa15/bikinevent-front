@@ -22,6 +22,13 @@ export const BoxManage = styled.div`
     }
 `;
 
+export const BoxTrackContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    flex:1;
+`;
+
 export const BoxManageContent = styled.div`
     display: flex;
     flex-direction: row;

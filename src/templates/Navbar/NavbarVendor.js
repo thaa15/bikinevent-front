@@ -12,7 +12,7 @@ import {
     Dropdownlist
 } from "./NavbarStyled";
 import { FaBars } from "react-icons/fa";
-import gambartest from "../../images/logocomp.png";
+import gambartest from "../../images/bikineventLogo.png";
 
 const NavbarVendor = ({ toggling, nama }) => {
     const removed = () => {

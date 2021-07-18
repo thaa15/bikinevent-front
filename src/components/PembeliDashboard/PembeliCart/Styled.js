@@ -71,6 +71,8 @@ export const PurchaseContent = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
+    width: 100%;
+    overflow-X: hidden;
 `;
 
 export const PurchasePrice = styled.div`
@@ -121,6 +123,7 @@ export const BoxContentCart = styled.div`
     border-radius: 10px;
     width: 100%;
     margin-bottom: 30px;
+    animation: slideLeft 1s forwards;
 `;
 
 export const DivRow = styled.div`
@@ -131,6 +134,7 @@ export const DivRow = styled.div`
     align-self:center;
     margin-bottom: 10px;
     width: 100%;
+    animation: slideLeft 1s forwards;
 `;
 
 export const BankRow = styled.div`
@@ -311,6 +315,7 @@ export const PaymentContentGrid = styled.div`
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     grid-gap: 5px;
+    animation: slideLeft 1s forwards;
     @media screen and (max-width: 653px) {
         grid-template-columns: repeat(1, 1fr);
     }

@@ -44,55 +44,59 @@ const KeranjangBelanjaPage = (props) => {
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await pembeliService.getPembeliById(
-        loginInfo.pembeliId,
-        loginInfo.token
-      );
-      const data = response.data;
-      setCartData(data.cart);
-    };
-    fetchData();
-    setIsLoading(false);
-    setClientCart({ ...clientCart, notif: cartData.length });
-    setTempVendorName([
-      cartData
-        .sort((a, b) =>
-          a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
-        )
-        .filter((a, id) => id == 0)
-        .map((item) => item.vendor.nama_vendor)
-        .toString(),
-    ]);
+    if (loginInfo.pembeliId != "null" && loginInfo.token != "null") {
+      const fetchData = async () => {
+        const response = await pembeliService.getPembeliById(
+          loginInfo.pembeliId,
+          loginInfo.token
+        );
+        const data = response.data;
+        setCartData(data.cart);
+      };
+      fetchData();
+      setIsLoading(false);
+      setClientCart({ ...clientCart, notif: cartData.length });
+      setTempVendorName([
+        cartData
+          .sort((a, b) =>
+            a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
+          )
+          .filter((a, id) => id == 0)
+          .map((item) => item.vendor.nama_vendor)
+          .toString(),
+      ]);
 
-    for (let i = 1; i < cartData.length; i++) {
-      if (
-        cartData
-          .sort((a, b) =>
-            a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
-          )
-          .filter((a, id) => id == i)
-          .map((item) => item.vendor.nama_vendor)
-          .toString() !==
-        cartData
-          .sort((a, b) =>
-            a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
-          )
-          .filter((a, id) => id == i - 1)
-          .map((item) => item.vendor.nama_vendor)
-          .toString()
-      ) {
-        setTempVendorName((old) => [
-          ...old,
+      for (let i = 1; i < cartData.length; i++) {
+        if (
           cartData
+            .sort((a, b) =>
+              a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
+            )
             .filter((a, id) => id == i)
             .map((item) => item.vendor.nama_vendor)
-            .toString(),
-        ]);
+            .toString() !==
+          cartData
+            .sort((a, b) =>
+              a.vendor.nama_vendor.localeCompare(b.vendor.nama_vendor)
+            )
+            .filter((a, id) => id == i - 1)
+            .map((item) => item.vendor.nama_vendor)
+            .toString()
+        ) {
+          setTempVendorName((old) => [
+            ...old,
+            cartData
+              .filter((a, id) => id == i)
+              .map((item) => item.vendor.nama_vendor)
+              .toString(),
+          ]);
+        }
       }
+    }else{
+      setIsLoading(true)
     }
   }, [cartData.length]);
-
+  
   const findedIndex = (n) => {
     let index = 0;
     for (let i = 0; i < n; i++) {
@@ -186,9 +190,8 @@ const KeranjangBelanjaPage = (props) => {
                                       let arrVendor = clientCart.vendor;
                                       if (e.target.checked) {
                                         setPrices(
-                                          `${
-                                            parseInt(prices) +
-                                            parseInt(e.target.value)
+                                          `${parseInt(prices) +
+                                          parseInt(e.target.value)
                                           }`
                                         );
                                         arrWithArr.push(items.id);
@@ -201,9 +204,8 @@ const KeranjangBelanjaPage = (props) => {
                                         }
                                       } else {
                                         setPrices(
-                                          `${
-                                            parseInt(prices) -
-                                            parseInt(e.target.value)
+                                          `${parseInt(prices) -
+                                          parseInt(e.target.value)
                                           }`
                                         );
                                         let index = arrWithArr.indexOf(

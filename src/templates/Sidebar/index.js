@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import {
     SidebarContainer,
     Icon,
@@ -14,9 +14,11 @@ import {
     ButtonBottom,
     TrackIcon
 } from "./SidebarStyled";
-import SidebarVendor from "./SidebarVendor"
+import SidebarVendor from "./SidebarVendor";
+import { clientCartContext, searchContext } from "../../context";
 
 const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
+    const { clientCart, setClientCart } = useContext(clientCartContext);
     const removed = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("nama");
@@ -47,7 +49,20 @@ const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
                                 </SideBtnWrap>
                             </SidebarLink>
 
-                            <SidebarLink to="/client-purchase/cart" onClick={toggling}>
+                            <SidebarLink to="/client-purchase/cart"
+                                onClick={() => {
+                                    toggling()
+                                    setClientCart({
+                                        ...clientCart,
+                                        price: "",
+                                        payment_method: null,
+                                        clientInfo: null,
+                                        product: [],
+                                        statusDp: false,
+                                        notes: [],
+                                        vendor: [],
+                                    });
+                                }}>
                                 <SideBtnWrap>
                                     <ShoppingCartIcon />Cart
                                 </SideBtnWrap>

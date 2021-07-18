@@ -218,9 +218,9 @@ const PembeliProfilContent = ({
               return (
                 <BoxClientInformation key={idx}>
                   <ContentInformation>
-                    <TitleName>{item.title_name}</TitleName>
-                    <InformationContent>{item.number}</InformationContent>
-                    <InformationContent>{item.address}</InformationContent>
+                    <TitleName>{item.nama_pembeli}</TitleName>
+                    <InformationContent>{item.no_hp_pembeli}</InformationContent>
+                    <InformationContent>{item.alamat_pembeli}</InformationContent>
                   </ContentInformation>
 
                   <PartTrashButton>

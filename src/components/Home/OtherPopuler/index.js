@@ -6,6 +6,7 @@ import { PopulerGrid } from "../Populer/PopulerStyled";
 import { DataLoadingProduct } from "../../../datas/populerdata";
 import { BoxHarga } from "../../../templates/Box";
 import { homeService } from "../../../services/Home";
+import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 
 const OtherPopuler = () => {
   const [productData, setProductData] = useState([]);
@@ -56,31 +57,34 @@ const OtherPopuler = () => {
                       <LinkTitle to="/">Lihat Semua</LinkTitle>
                     </TitleHome>
                   </ApartView>
-
-                  <PopulerGrid>
-                    {data.produks.slice(0, 5).map((data, idx) => {
-                      return (
-                        <Link
-                          to={`/detailed-product/${data._id}`}
-                          style={{
-                            height: "fit-content",
-                            cursor: "pointer",
-                            textDecoration: "none",
-                          }}
-                        >
-                          <BoxHarga
-                            key={idx}
-                            image={data.foto_produk[0].url}
-                            city={data.lokasi}
-                            judul={data.nama}
-                            harga={data.harga}
-                            rate={data.rating}
-                            review={data.penilaian.length}
-                          />
-                        </Link>
-                      );
-                    })}
-                  </PopulerGrid>
+                  {data.produks.length === 0 ? (
+                    <BoxNotEntry>Tidak ada produk populer di "{data.category}"</BoxNotEntry>
+                  ) : (
+                    <PopulerGrid>
+                      {data.produks.slice(0, 5).map((data, idx) => {
+                        return (
+                          <Link
+                            to={`/detailed-product/${data._id}`}
+                            style={{
+                              height: "fit-content",
+                              cursor: "pointer",
+                              textDecoration: "none",
+                            }}
+                          >
+                            <BoxHarga
+                              key={idx}
+                              image={data.foto_produk[0].url}
+                              city={data.lokasi}
+                              judul={data.nama}
+                              harga={data.harga}
+                              rate={data.rating}
+                              review={data.penilaian.length}
+                            />
+                          </Link>
+                        );
+                      })}
+                    </PopulerGrid>
+                  )}
                 </>
               );
             })}

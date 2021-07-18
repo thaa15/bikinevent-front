@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GlobalTemplate } from "../GlobalTemplate";
 import { useHistory } from "react-router";
 import {
@@ -17,6 +17,7 @@ import {
     AuthCliPay,
     AuthCliCheck,
 } from "../../AllAuth";
+import { clientCartContext, searchContext } from "../../context";
 
 export const PembeliHeaderWithStep = ({
     title,
@@ -25,7 +26,8 @@ export const PembeliHeaderWithStep = ({
     buttonTitle,
     act
 }) => {
-    const history = useHistory()
+    const history = useHistory();
+    const { clientCart, setClientCart } = useContext(clientCartContext);
     return (
         <HeaderBgPembeli step>
             <GlobalTemplate>
@@ -39,14 +41,35 @@ export const PembeliHeaderWithStep = ({
                                     AuthClinformation.outclinfo(() => {
                                         history.push(path);
                                     })
+                                    setClientCart({
+                                        ...clientCart,
+                                        price: "",
+                                        payment_method: null,
+                                        clientInfo: null,
+                                        product: [],
+                                        statusDp: false,
+                                        notes: [],
+                                        vendor: [],
+                                    });
                                 } else if (path === "/client-purchase/information") {
                                     AuthCliPay.outclipay(() => {
                                         history.push(path);
                                     })
+                                    setClientCart({
+                                        ...clientCart,
+                                        payment_method: null,
+                                        clientInfo: null,
+                                        statusDp: false,
+                                    });
                                 } else if (path === "/client-purchase/payment") {
                                     AuthCliCheck.outclicheck(() => {
                                         history.push(path);
                                     })
+                                    setClientCart({
+                                        ...clientCart,
+                                        payment_method: null,
+                                        statusDp: false,
+                                    });
                                 }
                             }}
                             to={path}>
@@ -68,6 +91,16 @@ export const PembeliHeaderWithStep = ({
                             AuthCliCheck.outclicheck(() => {
                                 history.push("/client-purchase/cart");
                             })
+                            setClientCart({
+                                ...clientCart,
+                                price: "",
+                                payment_method: null,
+                                clientInfo: null,
+                                product: [],
+                                statusDp: false,
+                                notes: [],
+                                vendor: [],
+                            });
                         }}
                     >
                         <span>1</span>Keranjang
@@ -87,6 +120,12 @@ export const PembeliHeaderWithStep = ({
                                 AuthCliCheck.outclicheck(() => {
                                     history.push("/client-purchase/information");
                                 })
+                                setClientCart({
+                                    ...clientCart,
+                                    payment_method: null,
+                                    clientInfo: null,
+                                    statusDp: false,
+                                });
                             }
                         }}>
                         <span>2</span>Informasi Pembeli
@@ -103,6 +142,11 @@ export const PembeliHeaderWithStep = ({
                                 AuthCliCheck.outclicheck(() => {
                                     history.push("/client-purchase/payment");
                                 })
+                                setClientCart({
+                                    ...clientCart,
+                                    payment_method: null,
+                                    statusDp: false,
+                                });
                             }
                         }}
                     >

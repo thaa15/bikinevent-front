@@ -28,7 +28,7 @@ export const PembeliProfil = () => {
     fetchProfil();
   }, []);
 
-  console.log(loginInfo);
+  console.log(infoData);
   return (
     <>
       {isLoading ? (

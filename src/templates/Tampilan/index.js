@@ -227,7 +227,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
   const [rates, setRates] = useState(rating);
 
   useEffect(() => {
-    if (rates === undefined) setRates(0);
+    if (rates === undefined || rates === 0) setRates(0);
     else setRates(rating);
   }, []);
   return (
@@ -260,23 +260,28 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
             </TampilanApart>
           </TampilanCommentsVendor>
         </VendorCommentsPhoto>
-        {comments.map((data, idx) => {
-          return (
-            <CommentsPart key={idx}>
-              <CommentProfile profile>
-                <UserPhoto img={data.user.foto_profil.url} />
-                <UserName>{data.user.nama_lengkap}</UserName>
-              </CommentProfile>
-              <CommentProfile>
-                <UserComment>{data.komentar}</UserComment>
-                <UserRate>
-                  <StarUserRate />
-                  {data.rating} / 5.0
-                </UserRate>
-              </CommentProfile>
-            </CommentsPart>
-          );
-        })}
+        {comments.length === 0 ? (
+          <BoxNotEntry>Belum Terdapat Penilaian!</BoxNotEntry>
+        ) : (
+          <>
+            {comments.map((data, idx) => {
+              return (
+                <CommentsPart key={idx}>
+                  <CommentProfile profile>
+                    <UserPhoto img={data.user.foto_profil.url} />
+                    <UserName>{data.user.nama_lengkap}</UserName>
+                  </CommentProfile>
+                  <CommentProfile>
+                    <UserComment>{data.komentar}</UserComment>
+                    <UserRate>
+                      <StarUserRate />
+                      {data.rating} / 5.0
+                    </UserRate>
+                  </CommentProfile>
+                </CommentsPart>
+              );
+            })}
+          </>)}
       </TampilanComments>
     </GlobalTemplate>
   );
