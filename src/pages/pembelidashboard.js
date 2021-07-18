@@ -1,39 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import HeaderSmall from "../templates/HeaderSmall";
 import LoadingPage from "../templates/Loading";
 import PembeliProfilContent from "../components/PembeliDashboard/PembeliProfil";
 import { ProfilePembeli } from "../datas/vendordata";
+import { pembeliService } from "../services/Pembeli";
+import { authService } from "../services/Auth";
+import { loginContext } from "../context";
 
 export const PembeliProfil = () => {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const { loginInfo } = useContext(loginContext);
+  const [userData, setUserData] = useState();
+  const [infoData, setInfoData] = useState();
+  useEffect(() => {
+    const fetchProfil = async () => {
+      const response = await authService.getDetails(loginInfo.token);
+      const data = response.data;
+      setUserData(data);
+      const responsePembeli = await pembeliService.getPembeliById(
+        data.pembeli,
+        loginInfo.token
+      );
+      const dataPembeli = responsePembeli.data;
+      setInfoData(dataPembeli.informasi_pembeli);
+      setIsLoading(false);
+    };
+    fetchProfil();
+  }, []);
 
-    const data = ProfilePembeli.filter((dats) => dats.name === "Ernia Watson");
-    setTimeout(() => {
-        setIsLoading(false);
-    }, 1500);
-    setTimeout(() => {
-        setIsLoading(false);
-    }, 1500)
-    return (
+  console.log(loginInfo);
+  return (
+    <>
+      {isLoading ? (
         <>
-            {isLoading ? (
-                <>
-                    <LoadingPage />
-                </>) : (
-                <>
-                    <HeaderSmall text="Pengaturan Profile" />
-                    {/*Ini karena dapet Array, sabi ganti*/}
-                    {data.map((item, idx) => (
-                        <PembeliProfilContent
-                            key={idx}
-                            owner={item.name}
-                            email={item.email}
-                            phone_number={item.phone_number}
-                            client_information={item.client_information}
-                        />
-                    ))}
-                </>
-            )}
+          <LoadingPage />
         </>
-    )
-}
+      ) : (
+        <>
+          <HeaderSmall text="Pengaturan Profile" />
+
+          <PembeliProfilContent
+            owner={userData.nama_lengkap}
+            email={userData.email}
+            phone_number={userData.phone_number}
+            client_information={infoData}
+            info={loginInfo}
+          />
+        </>
+      )}
+    </>
+  );
+};

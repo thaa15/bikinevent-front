@@ -3,6 +3,7 @@ export const authService = {
   login,
   register,
   getDetails,
+  editUser,
 };
 
 async function login(body) {
@@ -25,6 +26,16 @@ async function getDetails(token) {
   const response = await gatewayHelper.http(
     "GET_AUTH",
     "users/me",
+    token,
+    body
+  );
+  return response;
+}
+
+async function editUser(userId, token, body) {
+  const response = await gatewayHelper.http(
+    "PUT_AUTH",
+    "users/" + userId,
     token,
     body
   );

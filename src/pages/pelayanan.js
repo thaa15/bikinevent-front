@@ -2,13 +2,6 @@ import React, { useEffect, useState } from "react";
 import HeaderSmall from "../templates/HeaderSmall";
 import LegalLayanContent from "../components/LegalAndLayanan";
 import LoadingPage from "../templates/Loading";
-import {
-  FAQData,
-  AboutUsData,
-  PanduanData,
-  PrivasiData,
-  RefundData,
-} from "../datas/legaldata";
 import { layananService } from "../services/Layanan";
 
 const FAQ = () => {

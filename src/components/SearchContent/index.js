@@ -49,29 +49,18 @@ import { productService } from "../../services/Product";
 import { BoxNotEntry } from "../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { ImLocation2 } from "react-icons/im";
 import { IoLogoDropbox } from "react-icons/io";
+import { vendorService } from "../../services/Vendor";
 
 const SearchContent = () => {
   const { searched, setSearched } = useContext(searchContext);
   const [checkSubcath, setCheckSubcath] = useState([
-    [
-      false, false, false, false, false, false, false, false
-    ],
-    [
-      false, false, false, false
-    ],
-    [
-      false, false, false, false, false, false
-    ],
-    [
-      false, false, false, false, false, false, false, false, false
-    ],
-    [
-      false, false, false, false, false
-    ],
-    [
-      false, false, false
-    ]]
-  );
+    [false, false, false, false, false, false, false, false],
+    [false, false, false, false],
+    [false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false],
+    [false, false, false],
+  ]);
   const [produk, setProduk] = useState(true);
   const [checkliststable, setCheckliststable] = useState([
     false,
@@ -85,16 +74,24 @@ const SearchContent = () => {
   const [getFilter, setGetFilter] = useState(searched.filter);
   const [getRangeFilter, setGetRangeFilter] = useState(searched.rangeFilter);
   const [productData, setProductData] = useState([]);
+  const [vendorData, setVendorData] = useState([]);
   const [searchedProduct, setSearchedProduct] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
+  const [searchedVendor, setSearchedVendor] = useState([]);
+  const [filteredVendor, setFilteredVendor] = useState([]);
 
   const filterHandler = (e) => {
     e.preventDefault();
-    setSearched({ ...searched, filter: getFilter, rangeFilter: getRangeFilter });
+    setSearched({
+      ...searched,
+      filter: getFilter,
+      rangeFilter: getRangeFilter,
+    });
     setActive(false);
   };
 
   useEffect(() => {
+    //fetch and filter product
     const fetchData = async () => {
       const response = await productService.getAllProduct();
       const data = response.data;
@@ -114,6 +111,27 @@ const SearchContent = () => {
       setFilteredProduct(filterTemp);
     };
     filterData(productData);
+
+    //fetch and filter vendor
+    const fetchVendors = async () => {
+      const response = await vendorService.getAllVendor();
+      const data = response.data;
+      setVendorData(data);
+    };
+    fetchVendors();
+    const filterVendor = (data) => {
+      let filterTemp = data.filter((item) => {
+        if (
+          item.nama_vendor
+            .toLowerCase()
+            .includes(searched.searchFill.toLowerCase())
+        ) {
+          return item;
+        }
+      });
+      setSearchedVendor(filterTemp);
+    };
+    filterVendor(vendorData);
   }, [searched.loading]);
 
   const Pilihan = [
@@ -159,8 +177,8 @@ const SearchContent = () => {
     const arrRow = [8, 4, 6, 9, 5, 3];
     let newArrs = [...checkSubcath];
     newArrs[row][idx] = state;
-    setCheckSubcath(newArrs)
-  }
+    setCheckSubcath(newArrs);
+  };
   return (
     <>
       {searched.loading ? (
@@ -375,8 +393,8 @@ const SearchContent = () => {
                                       });
                                     }}
                                     checked={
-                                      checkliststable[ids]
-                                      || checkSubcath[ids][idx]
+                                      checkliststable[ids] ||
+                                      checkSubcath[ids][idx]
                                     }
                                     sub
                                   />
@@ -403,13 +421,13 @@ const SearchContent = () => {
                             hargaMin: "",
                             hargaMax: "",
                             rating: "",
-                          })
+                          });
 
                           setSearched({
                             ...searched,
                             filter: getFilter,
-                            rangeFilter: getRangeFilter
-                          })
+                            rangeFilter: getRangeFilter,
+                          });
 
                           setCheckliststable([
                             false,
@@ -422,24 +440,31 @@ const SearchContent = () => {
 
                           setCheckSubcath([
                             [
-                              false, false, false, false, false, false, false, false
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
                             ],
+                            [false, false, false, false],
+                            [false, false, false, false, false, false],
                             [
-                              false, false, false, false
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
+                              false,
                             ],
-                            [
-                              false, false, false, false, false, false
-                            ],
-                            [
-                              false, false, false, false, false, false, false, false, false
-                            ],
-                            [
-                              false, false, false, false, false
-                            ],
-                            [
-                              false, false, false
-                            ]]
-                          )
+                            [false, false, false, false, false],
+                            [false, false, false],
+                          ]);
                         }}
                       />
                     </form>
@@ -535,7 +560,7 @@ const SearchContent = () => {
           ) : (
             <>
               {/*BUAT VENDOR*/}
-              <VendorSearch vendor={setProduk} />
+              <VendorSearch vendor={setProduk} datas={searchedVendor} />
             </>
           )}
         </>

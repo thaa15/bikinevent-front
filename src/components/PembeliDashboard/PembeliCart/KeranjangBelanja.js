@@ -28,7 +28,7 @@ import {
   LinkChat,
   NoteInput,
   NoteButton,
-  Notes
+  Notes,
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
 import { clientCartContext, loginContext } from "../../../context";
@@ -50,7 +50,6 @@ const KeranjangBelanjaPage = (props) => {
         loginInfo.token
       );
       const data = response.data;
-
       setCartData(data.cart);
     };
     fetchData();
@@ -97,15 +96,34 @@ const KeranjangBelanjaPage = (props) => {
   const findedIndex = (n) => {
     let index = 0;
     for (let i = 0; i < n; i++) {
-      index += cartData
-        .filter(
-          (el) =>
-            el.vendor.nama_vendor === tempVendorName[i]
-        ).length
+      index += cartData.filter(
+        (el) => el.vendor.nama_vendor === tempVendorName[i]
+      ).length;
     }
     return index;
-  }
-  console.log(clientCart.notes)
+  };
+
+  const deleteCart = async (id) => {
+    let tempCart = cartData.map((cart) => cart.id);
+    let index = tempCart.indexOf(id);
+    if (index !== -1) {
+      tempCart.splice(index, 1);
+    }
+    let body = {
+      cart: tempCart,
+    };
+    const response = await pembeliService.editPembeliById(
+      loginInfo.pembeliId,
+      loginInfo.token,
+      body
+    );
+    console.log(response);
+    window.location.reload();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -168,8 +186,9 @@ const KeranjangBelanjaPage = (props) => {
                                       let arrVendor = clientCart.vendor;
                                       if (e.target.checked) {
                                         setPrices(
-                                          `${parseInt(prices) +
-                                          parseInt(e.target.value)
+                                          `${
+                                            parseInt(prices) +
+                                            parseInt(e.target.value)
                                           }`
                                         );
                                         arrWithArr.push(items.id);
@@ -182,8 +201,9 @@ const KeranjangBelanjaPage = (props) => {
                                         }
                                       } else {
                                         setPrices(
-                                          `${parseInt(prices) -
-                                          parseInt(e.target.value)
+                                          `${
+                                            parseInt(prices) -
+                                            parseInt(e.target.value)
                                           }`
                                         );
                                         let index = arrWithArr.indexOf(
@@ -223,7 +243,7 @@ const KeranjangBelanjaPage = (props) => {
                                           let array = clientCart.notes;
                                           let indx = findedIndex(ids);
 
-                                          array[(indx + idx)] = e.target.value;
+                                          array[indx + idx] = e.target.value;
                                           setClientCart({
                                             ...clientCart,
                                             notes: array,
@@ -233,7 +253,11 @@ const KeranjangBelanjaPage = (props) => {
                                       {/*<NoteButton>Simpan</NoteButton>*/}
                                     </div>
                                     <PartTrashButtons>
-                                      <TrashButton>
+                                      <TrashButton
+                                        onClick={() => {
+                                          deleteCart(items.id);
+                                        }}
+                                      >
                                         <TrashsIcon need />
                                       </TrashButton>
                                     </PartTrashButtons>

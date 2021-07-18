@@ -15,7 +15,7 @@ import {
   Liner,
   OrLine,
   Buttonsgoogle,
-  GooglePlus
+  GooglePlus,
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
@@ -92,6 +92,9 @@ const LoginPage = (props) => {
           );
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
+          if (userData.user.vendor.verified == false) {
+            return setError("Vendor is not Verified");
+          }
           localStorage.setItem("token", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
           localStorage.setItem("vendor_id", userData.user.vendor._id);
@@ -211,7 +214,6 @@ const LoginPage = (props) => {
                   <LoginLabel for="vendor">Vendor</LoginLabel>
                 </div>
               </div>
-
               <HaveAccount>
                 Belum memiliki akun?
                 <HaveAccountLink to="/register">
@@ -231,13 +233,14 @@ const LoginPage = (props) => {
                     <OrLine>atau</OrLine>
                   </Liner>
 
-                  <Buttonsgoogle
-                    href="https://bikinevent.id/api/connect/google"
-                  >
-                    <GooglePlus />Google
+                  <Buttonsgoogle href="https://bikinevent.id/api/connect/google">
+                    <GooglePlus />
+                    Google
                   </Buttonsgoogle>
                 </>
-              ) : (<></>)}
+              ) : (
+                <></>
+              )}
             </>
 
             {loginUser.wrong ? (

@@ -42,10 +42,7 @@ const Footer = () => {
           <FootSet>
             <FooterBox>
               <ImageFooter src={gambartest} alt="logo" />
-              <FooterExp>
-                Tower C Taman Melati Jl. ABC Tengah no 18 RT 04 RW 11 Kelurahan
-                Zebra, Kecamatan Cikutra Kota Bandung, 40123
-              </FooterExp>
+              <FooterExp>{footerData.alamat}</FooterExp>
             </FooterBox>
 
             <FooterBox>

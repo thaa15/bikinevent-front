@@ -54,12 +54,14 @@ const Pembeliregs = (props) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setAccountCreated(true);
-    const { username, email, password, nama_lengkap, role } = formData;
+    const { username, email, password, nama_lengkap, role, phone_number } =
+      formData;
     const body = {
       username,
       email,
       password,
       nama_lengkap,
+      phone_number,
       role,
     };
     const response = await authService.register(body);

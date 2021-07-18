@@ -1,6 +1,6 @@
 import { gatewayHelper } from "../utility/index";
 
-export const vendorService = { getVendorById, editVendorById };
+export const vendorService = { getVendorById, editVendorById, getAllVendor };
 
 async function getVendorById(vendorId) {
   const body = {};
@@ -10,6 +10,12 @@ async function getVendorById(vendorId) {
     null,
     body
   );
+  return response;
+}
+
+async function getAllVendor() {
+  const body = {};
+  const response = await gatewayHelper.http("GET", "vendors", null, body);
   return response;
 }
 
