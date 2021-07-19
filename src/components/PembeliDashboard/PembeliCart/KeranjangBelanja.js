@@ -183,7 +183,6 @@ const KeranjangBelanjaPage = (props) => {
                                 <DivRow>
                                   <label>
                                     <CheckBox
-                                      //type="checkbox"
                                       value={items.harga}
                                       onClick={(e) => {
                                         let arrWithArr = clientCart.product;
@@ -234,7 +233,7 @@ const KeranjangBelanjaPage = (props) => {
                                       checked={checks[(findedIndex(ids)+idx)]}
                                     />
                                   </label>
-                                  <DivRowContent needs>
+                                  <DivRowContent content>
                                     <ImageCart src={items.foto_produk[0].url} />
                                     <div>
                                       <p>{items.nama}</p>
