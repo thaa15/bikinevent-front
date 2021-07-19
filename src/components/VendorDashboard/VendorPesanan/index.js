@@ -35,7 +35,7 @@ const VendorPesananContent = ({ data }) => {
             <BoxNotEntry>Tidak Ada Pesanan</BoxNotEntry>
           ) : (
             <>
-              {pesanan.map((item, idx) => {
+              {pesanan.map((item) => {
                 return (
                   <>
                     {item.produks.map((prod, idx) => {

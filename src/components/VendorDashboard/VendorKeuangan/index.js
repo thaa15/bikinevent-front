@@ -1,5 +1,8 @@
-import React from "react";
-import { GlobalTemplate } from "../../../templates/GlobalTemplate";
+import React,{useState} from "react";
+import { 
+  GlobalTemplate,
+  PopUpBg
+} from "../../../templates/GlobalTemplate";
 import DashboardSite from "../DashboardSideVendor";
 import { MainVendash, TempVendash } from "../VendorDashboardStyled";
 import { BoxNotEntry } from "../VendorPesanan/VendorPesananStyle";
@@ -14,6 +17,21 @@ import {
   BalanceTable,
   ManageTable,
 } from "./VendorKeuanganStyled";
+import { 
+  ChangePwBg,
+  TitleApart,
+  DivisionTitle,
+  TitleChangepw,
+  DivButton
+} from "../VendorProfil/VendorProfileStyled";
+import { 
+  LabelVendorProduk,
+  InputModif
+} from "../VendorProduk/VendorProdukStyled";
+import { 
+  Buttonslog,
+  Buttons
+} from "../../LogReg/LoginPage/LoginStyled";
 
 const VendorKeuanganContent = ({
   balance_released,
@@ -25,7 +43,11 @@ const VendorKeuanganContent = ({
   balance_withdrawal,
   to_be_released,
 }) => {
-  console.log(income_history)
+  const [changeAccount, setChangeAccount] = useState(false);
+  const [withdrawal, setWithdrawal] = useState(false);
+  const [sureWithdrawal, setSureWithdrawal] = useState(false);
+  const [withdrawalNominal, setWithdrawalNominal] = useState(0);
+
   return (
     <GlobalTemplate>
       <TempVendash>
@@ -46,8 +68,83 @@ const VendorKeuanganContent = ({
               <InfoKeuWrited>Rp{parseInt(balance_released).toLocaleString("id-ID")}</InfoKeuWrited>
             </div>
             <div>
-              <ButtonKeu>Tarik Saldo</ButtonKeu>
+              <ButtonKeu
+              onClick={() => { setWithdrawal(true) }}>Tarik Saldo</ButtonKeu>
             </div>
+
+            {/* POP UP TARIK SALDO */}
+            <>
+                {withdrawal ? (
+                  <PopUpBg need>
+                    <ChangePwBg>
+                      <TitleApart>
+                        <DivisionTitle>
+                          <TitleChangepw>Tarik Saldo</TitleChangepw>
+                        </DivisionTitle>
+                        <DivisionTitle button onClick={() => { setWithdrawal(false) }}>
+                          <DivButton>
+                            X
+                          </DivButton>
+                        </DivisionTitle>
+                      </TitleApart>
+                      <LabelVendorProduk awal>Saldo Penjual</LabelVendorProduk>
+                      <InfoKeuWrited>Rp{parseInt(seller_balance).toLocaleString("id-ID")}</InfoKeuWrited>
+                      <LabelVendorProduk>Nominal Penarikan Saldo</LabelVendorProduk>
+                      <InputModif
+                        type="number"
+                        required
+                        name="nominal"
+                        onChange={(e)=>{setWithdrawalNominal(e.target.value)}}
+                      />
+                      <LabelVendorProduk>Password Penjual</LabelVendorProduk>
+                      <InputModif
+                        type="password"
+                        required
+                        pattern=".{6,}"
+                        title="Enam atau lebih karakter"
+                        name="pwvendors"
+                      />
+                      <Buttonslog>
+                        <Buttons
+                        onClick={() => { 
+                          setWithdrawal(false)
+                          setSureWithdrawal(true)
+                        }}>Selanjutnya</Buttons>
+                      </Buttonslog>
+                    </ChangePwBg>
+                  </PopUpBg>
+                ) : (<></>)}
+              </>
+
+              {/* POP UP TARIK SALDO */}
+            <>
+                {sureWithdrawal ? (
+                  <PopUpBg need>
+                    <ChangePwBg>
+                      <TitleApart>
+                        <DivisionTitle>
+                          <TitleChangepw>Tarik Saldo</TitleChangepw>
+                        </DivisionTitle>
+                        <DivisionTitle button onClick={() => { setSureWithdrawal(false) }}>
+                          <DivButton>
+                            X
+                          </DivButton>
+                        </DivisionTitle>
+                      </TitleApart>
+                      <LabelVendorProduk awal>Anda akan melakukan penarikan senilai</LabelVendorProduk>
+                      <InfoKeuWrited>Rp{parseInt(withdrawalNominal).toLocaleString("id-ID")}</InfoKeuWrited>
+                      <LabelVendorProduk>Rekening Tujuan</LabelVendorProduk>
+                      <InfoKeuWrited>{account_number}</InfoKeuWrited>    
+                      <InfoKeuWrited>{bank}</InfoKeuWrited>
+                      <InfoKeuWrited>{account_name}</InfoKeuWrited>              
+                      <Buttonslog>
+                        <Buttons>Tarik Saldo</Buttons>
+                      </Buttonslog>
+                    </ChangePwBg>
+                  </PopUpBg>
+                ) : (<></>)}
+              </>
+              
           </ContentSeparator>
 
           <TitleVendorKeu>Rekening Penjualan</TitleVendorKeu>
@@ -65,8 +162,59 @@ const VendorKeuanganContent = ({
               <InfoKeuWrited>{account_name}</InfoKeuWrited>
             </div>
             <div>
-              <ButtonKeu account>Ubah Rekening</ButtonKeu>
+              <ButtonKeu 
+              account 
+              onClick={() => { setChangeAccount(true) }}>Ubah Rekening</ButtonKeu>
             </div>
+            {/* POP UP GANTI REKENING */}
+            <>
+                {changeAccount ? (
+                  <PopUpBg need>
+                    <ChangePwBg>
+                      <TitleApart>
+                        <DivisionTitle>
+                          <TitleChangepw>Ubah Rekening</TitleChangepw>
+                        </DivisionTitle>
+                        <DivisionTitle button onClick={() => { setChangeAccount(false) }}>
+                          <DivButton>
+                            X
+                          </DivButton>
+                        </DivisionTitle>
+                      </TitleApart>
+                      <LabelVendorProduk awal>Nomor Rekening Baru</LabelVendorProduk>
+                      <InputModif
+                        type="number"
+                        required
+                        name="newacc"
+                      />
+                      <LabelVendorProduk>Nama Bank Baru</LabelVendorProduk>
+                      <InputModif
+                        type="text"
+                        required
+                        placeholder="(BNI, BCA, BRI, CIMB dll)"
+                        name="newbank"
+                      />
+                      <LabelVendorProduk>Nama Pemilik Rekening Baru</LabelVendorProduk>
+                      <InputModif
+                        type="text"
+                        required
+                        name="newaccname"
+                      />
+                      <LabelVendorProduk>Password Penjual</LabelVendorProduk>
+                      <InputModif
+                        type="password"
+                        required
+                        pattern=".{6,}"
+                        title="Enam atau lebih karakter"
+                        name="pwvendor"
+                      />
+                      <Buttonslog>
+                        <Buttons>Simpan</Buttons>
+                      </Buttonslog>
+                    </ChangePwBg>
+                  </PopUpBg>
+                ) : (<></>)}
+              </>
           </ContentSeparator>
 
           <TitleVendorKeu>Riwayat Penghasilan</TitleVendorKeu>

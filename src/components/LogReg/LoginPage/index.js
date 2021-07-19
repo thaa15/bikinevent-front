@@ -93,6 +93,10 @@ const LoginPage = (props) => {
         }
         if (userData.user.role._id != pembeliId && role == "vendor") {
           if (userData.user.vendor.verified == false) {
+            setLoginUser({ ...loginUser, wrong: true });
+            setTimeout(() => {
+              setLoginUser({ ...loginUser, wrong: false });
+            }, 2000);
             return setError("Vendor is not Verified");
           }
           localStorage.setItem("token", userData.jwt);

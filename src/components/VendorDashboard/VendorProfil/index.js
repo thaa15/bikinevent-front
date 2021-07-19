@@ -256,8 +256,7 @@ const VendorProfileContent = ({
               >
                 <Options non>Pilih Kota</Options>
                 <Options value="Jakarta">Jakarta</Options>
-                <Options value="Bandung">Bandung</Options>
-                <Options value="Semarang">Semarang</Options>
+                <Options value="Bogor">Bogor</Options>
                 <Options value="Depok">Depok</Options>
                 <Options value="Bekasi">Bekasi</Options>
                 <Options value="Tangerang">Tangerang</Options>
@@ -325,7 +324,6 @@ const VendorProfileContent = ({
                 setPortofolios(true)
                 window.scrollTo({
                   top: 0,
-                  behavior: "smooth",
                 });
                 }}>
                 <PlusImage>+</PlusImage>

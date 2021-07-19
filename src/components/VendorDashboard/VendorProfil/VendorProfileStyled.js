@@ -132,7 +132,6 @@ margin: -10px auto 0;
 
 export const ChangePwBg = styled.div`
     max-width: 584px;
-    max-height: 403px;
     padding: 40px;
     background: white;
     border-radius: 20px;
