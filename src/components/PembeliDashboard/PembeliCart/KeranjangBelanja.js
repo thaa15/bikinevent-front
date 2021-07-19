@@ -121,14 +121,12 @@ const KeranjangBelanjaPage = (props) => {
       loginInfo.token,
       body
     );
-    console.log(response);
     window.location.reload();
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
-  console.log(clientCart)
   return (
     <>
       {isLoading ? (

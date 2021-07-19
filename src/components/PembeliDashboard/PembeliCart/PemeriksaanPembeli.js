@@ -40,9 +40,10 @@ const PemeriksaanBelanjaPage = (props) => {
         loginInfo.token
       );
       const data = response.data;
-      const filteredCart = data.cart.filter(
-        (item, idx) => item.id === clientCart.product[idx]
-      );
+      const filteredCart = data.cart
+        .filter(
+          (item) => (clientCart.product.includes(item.id))
+        );
       setCartData(filteredCart);
       setIsLoading(false);
     };
