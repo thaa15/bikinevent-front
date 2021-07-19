@@ -26,13 +26,12 @@ import {
   PartTrashButtons,
   Shopping,
   LinkChat,
-  NoteInput,
-  NoteButton,
-  Notes,
+  NoteInput
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
 import { clientCartContext, loginContext } from "../../../context";
 import { pembeliService } from "../../../services/Pembeli";
+import CheckBox from "./CheckBox";
 
 const KeranjangBelanjaPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,6 +41,7 @@ const KeranjangBelanjaPage = (props) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
+  const [checks,setChecks] = useState([]);
 
   useEffect(() => {
     if (loginInfo.pembeliId != "null" && loginInfo.token != "null") {
@@ -92,11 +92,11 @@ const KeranjangBelanjaPage = (props) => {
           ]);
         }
       }
-    }else{
+    } else {
       setIsLoading(true)
     }
   }, [cartData.length]);
-  
+
   const findedIndex = (n) => {
     let index = 0;
     for (let i = 0; i < n; i++) {
@@ -128,7 +128,7 @@ const KeranjangBelanjaPage = (props) => {
       behavior: "smooth",
     });
   };
-
+  console.log(clientCart)
   return (
     <>
       {isLoading ? (
@@ -164,7 +164,6 @@ const KeranjangBelanjaPage = (props) => {
                     return (
                       <BoxContentCart>
                         <DivRow>
-                          <CheckBoks type="checkbox" />
                           <DivRowContent top>
                             <DivRowContent need>
                               <Shopping />
@@ -182,52 +181,59 @@ const KeranjangBelanjaPage = (props) => {
                             return (
                               <>
                                 <DivRow>
-                                  <CheckBoks
-                                    type="checkbox"
-                                    value={items.harga}
-                                    onClick={(e) => {
-                                      let arrWithArr = clientCart.product;
-                                      let arrVendor = clientCart.vendor;
-                                      if (e.target.checked) {
-                                        setPrices(
-                                          `${parseInt(prices) +
-                                          parseInt(e.target.value)
-                                          }`
-                                        );
-                                        arrWithArr.push(items.id);
-                                        if (
-                                          arrVendor.every((ven) => {
-                                            return ven !== items.vendor.id;
-                                          })
-                                        ) {
-                                          arrVendor.push(items.vendor.id);
+                                  <label>
+                                    <CheckBox
+                                      //type="checkbox"
+                                      value={items.harga}
+                                      onClick={(e) => {
+                                        let arrWithArr = clientCart.product;
+                                        let arrVendor = clientCart.vendor;
+                                        let chck = checks;
+                                        if (e.target.checked) {
+                                          setPrices(
+                                            `${parseInt(prices) +
+                                            parseInt(e.target.value)
+                                            }`
+                                          );
+                                          arrWithArr.push(items.id);
+                                          chck[(findedIndex(ids)+idx)] = true
+                                          if (
+                                            arrVendor.every((ven) => {
+                                              return ven !== items.vendor.id;
+                                            })
+                                          ) {
+                                            arrVendor.push(items.vendor.id);
+                                          }
+                                        } else {
+                                          setPrices(
+                                            `${parseInt(prices) -
+                                            parseInt(e.target.value)
+                                            }`
+                                          );
+                                          chck[(findedIndex(ids)+idx)] = false;
+                                          let index = arrWithArr.indexOf(
+                                            items.id
+                                          );
+                                          let indexV = arrVendor.indexOf(
+                                            items.vendor.id
+                                          );
+                                          if (index !== -1) {
+                                            arrWithArr.splice(index, 1);
+                                          }
+                                          if (indexV !== -1) {
+                                            arrVendor.splice(indexV, 1);
+                                          }
                                         }
-                                      } else {
-                                        setPrices(
-                                          `${parseInt(prices) -
-                                          parseInt(e.target.value)
-                                          }`
-                                        );
-                                        let index = arrWithArr.indexOf(
-                                          items.id
-                                        );
-                                        let indexV = arrVendor.indexOf(
-                                          items.vendor.id
-                                        );
-                                        if (index !== -1) {
-                                          arrWithArr.splice(index, 1);
-                                        }
-                                        if (indexV !== -1) {
-                                          arrVendor.splice(indexV, 1);
-                                        }
-                                      }
-                                      setClientCart({
-                                        ...clientCart,
-                                        product: arrWithArr,
-                                        vendor: arrVendor,
-                                      });
-                                    }}
-                                  />
+                                        setChecks(chck)
+                                        setClientCart({
+                                          ...clientCart,
+                                          product: arrWithArr,
+                                          vendor: arrVendor,
+                                        });
+                                      }}
+                                      checked={checks[(findedIndex(ids)+idx)]}
+                                    />
+                                  </label>
                                   <DivRowContent needs>
                                     <ImageCart src={items.foto_produk[0].url} />
                                     <div>
