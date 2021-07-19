@@ -73,10 +73,7 @@ const ShowAtTopProduk = ({
   const addToCart = async () => {
     if (loginInfo.role === "pembeli") {
       let body = null;
-      setSuccessAdd({ ...successAdd, right: true });
-      setTimeout(() => {
-        setSuccessAdd(false)
-      }, 1500);
+
       if (loginInfo.pembeliId == "null") {
         body = {
           user: loginInfo.userId,
@@ -85,6 +82,10 @@ const ShowAtTopProduk = ({
         const response = await pembeliService.postPembeli(loginInfo.token, body);
         const data = response.data;
         setLoginInfo({ ...loginInfo, pembeliId: data.id });
+        setSuccessAdd({ ...successAdd, right: true });
+        setTimeout(() => {
+          setSuccessAdd(false)
+        }, 1200);
         setClientCart({ ...clientCart, notif: 1 });
         return response;
       } else {
@@ -94,17 +95,28 @@ const ShowAtTopProduk = ({
         );
         const dataPembeli = response.data;
         let newCart = dataPembeli.cart;
-        newCart.push(id);
-        body = {
-          cart: newCart,
-        };
-        setClientCart({ ...clientCart, notif: newCart.length });
-        const putResponse = await pembeliService.editPembeliById(
-          loginInfo.pembeliId,
-          loginInfo.token,
-          body
-        );
-        return putResponse;
+        if ((newCart.filter((item) => (item.id.includes(id))).length < 1)) {
+          newCart.push(id);
+          body = {
+            cart: newCart,
+          };
+          setSuccessAdd({ ...successAdd, right: true });
+          setTimeout(() => {
+            setSuccessAdd(false)
+          }, 1200);
+          setClientCart({ ...clientCart, notif: newCart.length });
+          const putResponse = await pembeliService.editPembeliById(
+            loginInfo.pembeliId,
+            loginInfo.token,
+            body
+          );
+          return putResponse;
+        } else {
+          setSuccessAdd({ ...successAdd, wrong: true });
+          setTimeout(() => {
+            setSuccessAdd(false)
+          }, 1500);
+        }
       }
     }
   };
@@ -158,7 +170,7 @@ const ShowAtTopProduk = ({
                 }}
               >
                 <b>FAILED</b>
-                Gagal Menambahkan
+                Gagal Menambahkan, Barang sudah di keranjang!
               </div>
             </BgSuccess>
           </PopBgSuccess>

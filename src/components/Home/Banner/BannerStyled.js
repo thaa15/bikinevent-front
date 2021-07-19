@@ -11,9 +11,13 @@ export const BannerContainers = styled(Link)`
   z-index: 10;
 `;
 
-export const BannerContainer = styled.img`
+export const BannerContainer = styled.div`
   height: 361px;
   width: 100%;
+  background-image: url(${(props) => props.src});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 `;
 
 export const Slider = styled(AwesomeSlider)`
@@ -21,10 +25,6 @@ export const Slider = styled(AwesomeSlider)`
   margin: 0 auto !important;
   display: block;
   height: 361px;
-  @media screen and (max-width: 1064px) {
-    min-height: 350px;
-    height: 350;
-  }
 }
 .awssld__bullets{
   bottom: 10px;

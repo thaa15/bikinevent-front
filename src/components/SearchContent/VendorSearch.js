@@ -77,31 +77,29 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
     });
     setActive(false);
   };
-  console.log(getFilter)
 
   const useFilterHandler = () => {
     const filterKeys = Object.keys(getFilter);
     let tempProds = searchedVendor;
 
     if (Object.values(getFilter).some((arr) => arr.length > 0)) {
-      tempProds = searchedVendor.filter((product) => {
+      tempProds = searchedVendor.filter((vendor) => {
         return filterKeys.some((key) => {
-          if (Array.isArray(product[key])) {
-            return product[key].some((keyVal) => {
+          if (Array.isArray(vendor["location"])) {
+            return vendor["location"].some((keyVal) => {
               getFilter[key].includes(keyVal);
             });
           }
-          return getFilter[key].some((item) => item.includes(product[key]));
+          return getFilter[key].some((item) => item.includes(vendor["location"]));
         });
       });
     }
     if (getRangeFilter.rating !== "") {
-      tempProds = tempProds.filter((product) => {
-        return product.rating > 3;
+      tempProds = tempProds.filter((vendor) => {
+        return vendor.rating > 3;
       });
     }
     setFilteredVendor(tempProds);
-    console.log(filteredVendor)
   };
 
   return (
@@ -170,7 +168,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                       type="checkbox"
                       id="Three Up"
                       name="rating"
-                      value="Three Up"
+                      value="3 ke atas"
                       onChange={(e) => {
                         if (e.target.checked)
                           setGetRangeFilter({
