@@ -42,10 +42,10 @@ const LoginSuccess = (props) => {
       }
 
       setIsLoading(false);
-      // setTimeout(() => {
-      //   window.location.reload();
-      //   window.location.href = "/";
-      // }, 100);
+      setTimeout(() => {
+        window.location.reload();
+        window.location.href = "/";
+      }, 100);
       return response;
     };
     postNewUser();
