@@ -1,91 +1,116 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { PesananPembeliHeaderWithStep } from "../../../../templates/HeaderSmall/PembeliHeader";
 import LoadingPage from "../../../../templates/Loading";
 import { Redirect } from "react-router";
 import { GlobalTemplate } from "../../../../templates/GlobalTemplate";
 import { ProfilePembeli } from "../../../../datas/vendordata";
-import { ButtonBottom, ChatShop } from "../../../../templates/Tampilan/TampilanStyled";
-import { BoxNotEntry } from "../../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import {
-    BoxRowDetailed,
-    ImageDetailed,
-    ButtonBottoms,
-    LabelDetailTrack,
-    ContentDetailTrack,
-    EmailWrited
+  ButtonBottom,
+  ChatShop,
+} from "../../../../templates/Tampilan/TampilanStyled";
+import {
+  BoxRowDetailed,
+  ImageDetailed,
+  ButtonBottoms,
+  LabelDetailTrack,
+  ContentDetailTrack,
+  EmailWrited,
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
+import { loginContext } from "../../../../context";
+import { orderService } from "../../../../services/OrderHistory";
 
 const MenungguPembayaranPage = ({ match }) => {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [orderData, setOrderData] = useState();
+  const { loginInfo } = useContext(loginContext);
+  const [date, setDate] = useState();
 
-    const data = ProfilePembeli.filter((dats) => dats.name === "Ernia Watson");
-    const matching = data.map(el => el.orderRecords.filter(elmen => { return (elmen.id === match.params.id) }));
-    const dataUsed = matching[0][0]
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await orderService.getOrderById(
+        match.params.id,
+        loginInfo.token
+      );
+      const data = response.data;
+      setOrderData(data);
+      const format = new Intl.DateTimeFormat("id", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      const date = new Date(data.createdAt);
+      const dateFormatted = format.format(date);
+      setDate(dateFormatted);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false)
-        }, 1000);
-    }, []);
-
-    return (
+  return (
+    <>
+      {!AuthCliTrack.isAutclitrack() ? (
+        <Redirect to="/track-order/records" />
+      ) : (
         <>
-            {!AuthCliTrack.isAutclitrack() ? (
-                <Redirect to="/track-order/records" />
-            ) : (
-                <>
-                    {isLoading ? (
-                        <LoadingPage />
-                    ) : (
-                        <>
-                            <PesananPembeliHeaderWithStep
-                                title="Detail Pesanan"
-                                subtitle="Ketahui dan lacak status pesanan anda."
-                                act="menunggu"
-                            />
-                            <GlobalTemplate top>
-                                <BoxRowDetailed>
-                                    <ImageDetailed src={dataUsed.image} />
-                                    <div style={{ rowGap: "5px" }}>
-                                        <p>{dataUsed.judul}</p>
-                                        <h6>Rp{parseInt(dataUsed.price).toLocaleString("id-ID")}</h6>
-                                        <ButtonBottoms call>
-                                            <ChatShop />
-                                            Hubungi Vendor
-                                        </ButtonBottoms>
-                                    </div>
-                                </BoxRowDetailed>
-
-                                <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                                <ContentDetailTrack invoice>{dataUsed.invoice}</ContentDetailTrack>
-                                <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
-                                <ContentDetailTrack invoice>{dataUsed.vendor_name}</ContentDetailTrack>
-                                <LabelDetailTrack>Tanggal Pesanan</LabelDetailTrack>
-                                <ContentDetailTrack>{dataUsed.created}</ContentDetailTrack>
-                                <LabelDetailTrack>Status</LabelDetailTrack>
-                                <ContentDetailTrack status>Menunggu Pembayaran</ContentDetailTrack>
-
-                                <EmailWrited>
-                                    Mohon periksa email <span> {data.map(el => { return el.email })}</span>
-                                </EmailWrited>
-                                <BoxRowDetailed>
-                                    <ButtonBottoms need>
-                                        Sudah Dibayar
-                                    </ButtonBottoms>
-                                    <ButtonBottoms call need>
-                                        Ajukan Pembatalan
-                                    </ButtonBottoms>
-                                </BoxRowDetailed>
-
-                            </GlobalTemplate>
-                        </>
-                    )}
-                </>
-            )}
+          {isLoading ? (
+            <LoadingPage />
+          ) : (
+            <>
+              <PesananPembeliHeaderWithStep
+                title="Detail Pesanan"
+                subtitle="Ketahui dan lacak status pesanan anda."
+                act="menunggu"
+              />
+              {orderData.produks.map((prod, idx) => {
+                return (
+                  <GlobalTemplate top key={idx}>
+                    <BoxRowDetailed>
+                      <ImageDetailed src={prod.foto_produk[0].url} />
+                      <div style={{ rowGap: "5px" }}>
+                        <p>{prod.nama}</p>
+                        <h6>
+                          Rp{parseInt(prod.harga).toLocaleString("id-ID")}
+                        </h6>
+                        <ButtonBottoms call>
+                          <ChatShop />
+                          Hubungi Vendor
+                        </ButtonBottoms>
+                      </div>
+                    </BoxRowDetailed>
+                    <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
+                    <ContentDetailTrack invoice>
+                      {orderData.kode_invoice}
+                    </ContentDetailTrack>
+                    <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
+                    <ContentDetailTrack invoice>
+                      {prod.vendor.nama_vendor}
+                    </ContentDetailTrack>
+                    <LabelDetailTrack>Tanggal Pesanan</LabelDetailTrack>
+                    <ContentDetailTrack>{date}</ContentDetailTrack>
+                    <LabelDetailTrack>Status</LabelDetailTrack>
+                    <ContentDetailTrack status>
+                      Menunggu Pembayaran
+                    </ContentDetailTrack>
+                    <EmailWrited>
+                      Mohon periksa email{" "}
+                      <span>{orderData.pembeli.user.email}</span>
+                    </EmailWrited>
+                    <BoxRowDetailed>
+                      <ButtonBottoms need>Sudah Dibayar</ButtonBottoms>
+                      <ButtonBottoms call need>
+                        Ajukan Pembatalan
+                      </ButtonBottoms>
+                    </BoxRowDetailed>
+                  </GlobalTemplate>
+                );
+              })}
+            </>
+          )}
         </>
-    )
-
-}
+      )}
+    </>
+  );
+};
 
 export default MenungguPembayaranPage;

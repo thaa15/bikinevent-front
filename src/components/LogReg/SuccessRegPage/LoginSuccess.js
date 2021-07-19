@@ -4,6 +4,7 @@ import { SucRegBg, SucRegBox, SucRegWrited, GoHome } from "./SuccessRegStyled";
 import sucregcheck from "../../../images/sucregcheck.png";
 import LoadingPage from "../../../templates/Loading";
 import axios from "axios";
+import { pembeliService } from "../../../services/Pembeli";
 
 const LoginSuccess = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,20 +16,36 @@ const LoginSuccess = (props) => {
         `https://bikinevent.id/api/auth/google/callback${search}`
       );
       const data = response.data;
-
       const { jwt, user } = data;
-      localStorage.setItem("token", jwt);
-      localStorage.setItem("nama", user.username);
-      localStorage.setItem("userId", user.id);
-      if (user.pembeli) {
-        localStorage.setItem("pembeliId", user.pembeli);
+      console.log(data);
+      if (typeof user.pembeli === "undefined") {
+        if (data) {
+          const bodyPembeli = {
+            user: user._id,
+          };
+          const pembeliRes = await pembeliService
+            .postPembeli(data.jwt, bodyPembeli)
+            .then((res) => {
+              localStorage.setItem("token", jwt);
+              localStorage.setItem("nama", user.username);
+              localStorage.setItem("userId", user.id);
+              localStorage.setItem("pembeliId", res.data._id);
+              localStorage.setItem("role", "pembeli");
+            });
+        }
+      } else {
+        localStorage.setItem("token", jwt);
+        localStorage.setItem("nama", user.username);
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("pembeliId", user.pembeli._id);
+        localStorage.setItem("role", "pembeli");
       }
-      localStorage.setItem("role", "pembeli");
+
       setIsLoading(false);
-      setTimeout(() => {
-        window.location.reload();
-        window.location.href = "/";
-      }, 100);
+      // setTimeout(() => {
+      //   window.location.reload();
+      //   window.location.href = "/";
+      // }, 100);
       return response;
     };
     postNewUser();

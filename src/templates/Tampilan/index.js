@@ -11,7 +11,7 @@ import {
   PopBgSuccess,
   BgSuccess,
   Failedicon,
-  Succesicon
+  Succesicon,
 } from "../GlobalTemplate";
 import { Imagees } from "../../components/TampilanProdukVendor/TampilanProduk/TampilanProdukStyled";
 import {
@@ -73,50 +73,33 @@ const ShowAtTopProduk = ({
   const addToCart = async () => {
     if (loginInfo.role === "pembeli") {
       let body = null;
-
-      if (loginInfo.pembeliId == "null") {
+      const response = await pembeliService.getPembeliById(
+        loginInfo.pembeliId,
+        loginInfo.token
+      );
+      const dataPembeli = response.data;
+      let newCart = dataPembeli.cart;
+      if (newCart.filter((item) => item.id.includes(id)).length < 1) {
+        newCart.push(id);
         body = {
-          user: loginInfo.userId,
-          cart: [id],
+          cart: newCart,
         };
-        const response = await pembeliService.postPembeli(loginInfo.token, body);
-        const data = response.data;
-        setLoginInfo({ ...loginInfo, pembeliId: data.id });
         setSuccessAdd({ ...successAdd, right: true });
         setTimeout(() => {
-          setSuccessAdd(false)
+          setSuccessAdd(false);
         }, 1200);
-        setClientCart({ ...clientCart, notif: 1 });
-        return response;
-      } else {
-        const response = await pembeliService.getPembeliById(
+        setClientCart({ ...clientCart, notif: newCart.length });
+        const putResponse = await pembeliService.editPembeliById(
           loginInfo.pembeliId,
-          loginInfo.token
+          loginInfo.token,
+          body
         );
-        const dataPembeli = response.data;
-        let newCart = dataPembeli.cart;
-        if ((newCart.filter((item) => (item.id.includes(id))).length < 1)) {
-          newCart.push(id);
-          body = {
-            cart: newCart,
-          };
-          setSuccessAdd({ ...successAdd, right: true });
-          setTimeout(() => {
-            setSuccessAdd(false)
-          }, 1200);
-          setClientCart({ ...clientCart, notif: newCart.length });
-          const putResponse = await pembeliService.editPembeliById(
-            loginInfo.pembeliId,
-            loginInfo.token,
-            body
-          );
-          return putResponse;
-        } else {
-          setSuccessAdd({ ...successAdd, wrong: true });
-          setTimeout(() => {
-            setSuccessAdd(false)
-          }, 1500);
-        }
+        return putResponse;
+      } else {
+        setSuccessAdd({ ...successAdd, wrong: true });
+        setTimeout(() => {
+          setSuccessAdd(false);
+        }, 1500);
       }
     }
   };
@@ -293,7 +276,8 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
                 </CommentsPart>
               );
             })}
-          </>)}
+          </>
+        )}
       </TampilanComments>
     </GlobalTemplate>
   );
