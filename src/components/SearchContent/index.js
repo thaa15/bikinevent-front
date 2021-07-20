@@ -98,7 +98,7 @@ const SearchContent = () => {
       setSearched({ ...searched, loading: false });
     };
     fetchData();
-    
+
     if (searched.fromFilter == false) {
       const filterData = (data) => {
         let filterTemp = data.filter((item) => {
@@ -111,29 +111,43 @@ const SearchContent = () => {
         setSearchedProduct(filterTemp);
         setFilteredProduct(filterTemp);
       };
+      setGetFilter({
+        subcategory: [],
+        lokasi: [],
+      });
       filterData(productData);
-    } else if(searched.fromFilter == true) {
-      setSearchedProduct(productData);
+    } else {
       setGetFilter(searched.filter);
-      
-      const filterFrom = () => {
-        const filterKeys = Object.keys(getFilter);
-        let tempProds = searchedProduct;
-        if (Object.values(getFilter).some((arr) => arr.length > 0)) {
-          tempProds = searchedProduct.filter((product) => {
+      setCheckliststable([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ]);
+
+      const filterFrom = (data) => {
+        const filterKeys = Object.keys(data);
+        let tempProds = productData;
+
+        if (Object.values(data).some((arr) => arr.length > 0)) {
+          tempProds = productData.filter((product) => {
             return filterKeys.some((key) => {
+
               if (Array.isArray(product[key])) {
                 return product[key].some((keyVal) => {
-                  getFilter[key].includes(keyVal);
+                  data[key].includes(keyVal);
                 });
               }
-              return getFilter[key].some((item) => item.includes(product[key]));
+              return data[key].some((item) => item.includes(product[key]));
             });
           });
         }
         setFilteredProduct(tempProds);
+        setSearchedProduct(tempProds);
       }
-      filterFrom();
+      filterFrom(searched.filter);
     }
     //fetch and filter vendor
     const fetchVendors = async () => {
@@ -164,6 +178,7 @@ const SearchContent = () => {
     "Harga Terendah",
   ];
   const Location = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"];
+  console.log(getFilter,getRangeFilter)
 
   const useFilterHandler = () => {
     const filterKeys = Object.keys(getFilter);
@@ -171,11 +186,14 @@ const SearchContent = () => {
     if (Object.values(getFilter).some((arr) => arr.length > 0)) {
       tempProds = searchedProduct.filter((product) => {
         return filterKeys.some((key) => {
+          console.log(Array.isArray(product[key]))
           if (Array.isArray(product[key])) {
             return product[key].some((keyVal) => {
+              
               getFilter[key].includes(keyVal);
             });
           }
+          
           return getFilter[key].some((item) => item.includes(product[key]));
         });
       });
@@ -333,102 +351,107 @@ const SearchContent = () => {
                       </CheckFlex>
                       <div style={{ marginBottom: "15px" }} />
 
-                      <LabelSearch>Kategori</LabelSearch>
-                      {Kategories.map((data, ids) => {
-                        return (
-                          <>
-                            <CheckFlex key={ids}>
-                              <CheckBoks
-                                type="checkbox"
-                                id={ids}
-                                name="kategori"
-                                value={data.cath}
-                                onClick={(e) => {
-                                  let arrWithObject = data.subcath;
-                                  let arrWithArr = [...getFilter.subcategory];
-                                  if (e.target.checked) {
-                                    arrWithArr.push(arrWithObject);
-                                    setCheckliststable((old) => [
-                                      ...old.slice(0, ids),
-                                      true,
-                                      ...old.slice(
-                                        ids + 1,
-                                        checkliststable.length + 1
-                                      ),
-                                    ]);
-                                  } else if (!e.target.checked) {
-                                    arrWithArr.splice(
-                                      arrWithArr.findIndex(
-                                        (elemen) => elemen === data.subcath
-                                      ),
-                                      1
-                                    );
-                                    setCheckliststable((old) => [
-                                      ...old.slice(0, ids),
-                                      false,
-                                      ...old.slice(
-                                        ids + 1,
-                                        checkliststable.length + 1
-                                      ),
-                                    ]);
-                                  }
-                                  setGetFilter({
-                                    ...getFilter,
-                                    subcategory: arrWithArr,
-                                  });
-                                }}
-                              />
-                              <LabelCheck for={data.cath}>
-                                {data.cath}
-                              </LabelCheck>
-                            </CheckFlex>
-                            {data.subcath.map((item, idx) => {
-                              return (
-                                <CheckFlex key={idx}>
+                      {searched.fromFilter ? (<></>) : (
+                        <>
+                          <LabelSearch>Kategori</LabelSearch>
+                          {Kategories.map((data, ids) => {
+                            return (
+                              <>
+                                <CheckFlex key={ids}>
                                   <CheckBoks
                                     type="checkbox"
-                                    id={item}
-                                    name={ids}
-                                    value={item}
+                                    id={ids}
+                                    name="kategori"
+                                    value={data.cath}
                                     onClick={(e) => {
-                                      let arrWithObjects = [];
-                                      let arrWithArr = [
-                                        ...getFilter.subcategory,
-                                      ];
+                                      let arrWithObject = data.subcath;
+                                      let arrWithArr = [...getFilter.subcategory];
                                       if (e.target.checked) {
-                                        checkHandler(ids, true, idx);
-                                        arrWithObjects.push(e.target.value);
-                                        arrWithArr.push(arrWithObjects);
-                                      } else if (
-                                        checkliststable[ids] === false
-                                      ) {
-                                        checkHandler(ids, false, idx);
+                                        arrWithArr.push(arrWithObject);
+                                        setCheckliststable((old) => [
+                                          ...old.slice(0, ids),
+                                          true,
+                                          ...old.slice(
+                                            ids + 1,
+                                            checkliststable.length + 1
+                                          ),
+                                        ]);
+                                      } else if (!e.target.checked) {
                                         arrWithArr.splice(
                                           arrWithArr.findIndex(
-                                            (elemen) => elemen == e.target.value
+                                            (elemen) => elemen === data.subcath
                                           ),
                                           1
                                         );
+                                        setCheckliststable((old) => [
+                                          ...old.slice(0, ids),
+                                          false,
+                                          ...old.slice(
+                                            ids + 1,
+                                            checkliststable.length + 1
+                                          ),
+                                        ]);
                                       }
-
                                       setGetFilter({
                                         ...getFilter,
                                         subcategory: arrWithArr,
                                       });
                                     }}
-                                    checked={
-                                      checkliststable[ids] ||
-                                      checkSubcath[ids][idx]
-                                    }
-                                    sub
+                                    checked={checkliststable[ids]}
                                   />
-                                  <LabelCheck for={item}>{item}</LabelCheck>
+                                  <LabelCheck for={data.cath}>
+                                    {data.cath}
+                                  </LabelCheck>
                                 </CheckFlex>
-                              );
-                            })}
-                          </>
-                        );
-                      })}
+                                {data.subcath.map((item, idx) => {
+                                  return (
+                                    <CheckFlex key={idx}>
+                                      <CheckBoks
+                                        type="checkbox"
+                                        id={item}
+                                        name={ids}
+                                        value={item}
+                                        onClick={(e) => {
+                                          let arrWithObjects = [];
+                                          let arrWithArr = [
+                                            ...getFilter.subcategory,
+                                          ];
+                                          if (e.target.checked) {
+                                            checkHandler(ids, true, idx);
+                                            arrWithObjects.push(e.target.value);
+                                            arrWithArr.push(arrWithObjects);
+                                          } else if (
+                                            checkliststable[ids] === false
+                                          ) {
+                                            checkHandler(ids, false, idx);
+                                            arrWithArr.splice(
+                                              arrWithArr.findIndex(
+                                                (elemen) => elemen == e.target.value
+                                              ),
+                                              1
+                                            );
+                                          }
+
+                                          setGetFilter({
+                                            ...getFilter,
+                                            subcategory: arrWithArr,
+                                          });
+                                        }}
+                                        checked={
+                                          checkliststable[ids] ||
+                                          checkSubcath[ids][idx]
+                                        }
+                                        sub
+                                      />
+                                      <LabelCheck for={item}>{item}</LabelCheck>
+                                    </CheckFlex>
+                                  );
+                                })}
+                              </>
+                            );
+                          })}
+                        </>
+                      )}
                       <ButtonsSearch type="submit" onClick={useFilterHandler}>
                         Gunakan Filter
                       </ButtonsSearch>
@@ -436,10 +459,17 @@ const SearchContent = () => {
                         type="reset"
                         value="Reset"
                         onClick={() => {
-                          setGetFilter({
-                            subcategory: [],
-                            lokasi: [],
-                          });
+                          if (searched.fromFilter) {
+                            setGetFilter({
+                              ...getFilter,
+                              lokasi: [],
+                            });
+                          } else {
+                            setGetFilter({
+                              subcategory: [],
+                              lokasi: [],
+                            });
+                          }
 
                           setGetRangeFilter({
                             hargaMin: "",

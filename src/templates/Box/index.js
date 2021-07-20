@@ -195,9 +195,9 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
 
 
 const KategoriBox = ({ imagee, desc }) => {
-  const history = useHistory();
+  let history = useHistory();
   const { searched, setSearched } = useContext(searchContext);
-  console.log(searched.filter)
+
   return (
     <BoxKat src={imagee}
       onClick={() => {
@@ -205,16 +205,16 @@ const KategoriBox = ({ imagee, desc }) => {
           ...searched,
           filter: {
             lokasi: [],
-            subcategory: Kategories.find(item => item.cath === desc).subcath,
+            subcategory: [Kategories.find(item => item.cath === desc).subcath],
           },
           fromFilter: true,
           searchFill: `Produk Kategori ${desc}`,
           loading: true
         });
 
-        setTimeout(() => {
-          history.push("/searched");
-        }, 100);
+        history.push({
+          pathname: "/searched",
+        });
       }}
     >
       <BoxKatOpac>

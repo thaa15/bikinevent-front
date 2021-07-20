@@ -139,7 +139,7 @@ export const ProtectedSearch = ({ searchs,role, isAuth,component: Component, ...
     <Route
       {...rest}
       render={(props) => {
-        if ((searched.searchFill.length != 0 || searched.fromFilter) 
+        if ((searched.searchFill.length != 0 || searched.fromFilter == true) 
         && (isAuth.length <= 4 || role !== "vendor")) {
           return <Component {...props} />;
         } else {

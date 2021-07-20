@@ -34,7 +34,7 @@ import { Kategories } from "../../datas/vendordata";
 
 const Navbar = ({ toggling, isAuth, nama, role }) => {
   const { searched, setSearched } = useContext(searchContext);
-  const history = useHistory();
+  let history = useHistory();
   const [getsearch, setGetsearch] = useState("");
   const [placehldr, setPlacehldr] = useState("");
   const [searchContent, setSearchContent] = useState(false);
@@ -121,17 +121,16 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                               ...searched,
                               filter: {
                                 lokasi: [],
-                                subcategory: data.subcath,
+                                subcategory: [data.subcath],
                               },
                               fromFilter: true,
                               searchFill: `Produk Kategori ${data.cath}`,
                               loading: true
                             });
 
-                            setTimeout(() => {
-                              history.push("/searched");
-                            }, 100);
-                            
+                            history.push({
+                              pathname: "/searched",
+                            });
                         }}>
                         <Dropdownlist>{data.cath}</Dropdownlist>
                       </ElementLinks>
