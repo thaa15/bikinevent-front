@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   BoxedPrice,
   BoxImage,
@@ -27,6 +28,8 @@ import {
   BgSuccess,
   Succesicon,
 } from "../../templates/GlobalTemplate";
+import { Kategories } from "../../datas/vendordata";
+import { searchContext } from "../../context";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
   const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
@@ -115,7 +118,6 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
       loginInfo.token
     );
     const data = response.data;
-    console.log(response);
     setTimeout(() => {
       setLoginUser({ ...loginUser, hapus: false });
       window.location.reload();
@@ -191,15 +193,34 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
   );
 };
 
+
 const KategoriBox = ({ imagee, desc }) => {
+  const history = useHistory();
+  const { searched, setSearched } = useContext(searchContext);
+  console.log(searched.filter)
   return (
-    <>
-      <BoxKat imge={imagee}>
-        <BoxKatOpac>
-          <BoxKatExp>{desc}</BoxKatExp>
-        </BoxKatOpac>
-      </BoxKat>
-    </>
+    <BoxKat src={imagee}
+      onClick={() => {
+        setSearched({
+          ...searched,
+          filter: {
+            lokasi: [],
+            subcategory: Kategories.find(item => item.cath === desc).subcath,
+          },
+          fromFilter: true,
+          searchFill: `Produk Kategori ${desc}`,
+          loading: true
+        });
+
+        setTimeout(() => {
+          history.push("/searched");
+        }, 100);
+      }}
+    >
+      <BoxKatOpac>
+        <BoxKatExp>{desc}</BoxKatExp>
+      </BoxKatOpac>
+    </BoxKat>
   );
 };
 

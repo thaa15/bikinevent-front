@@ -32,6 +32,7 @@ import {
   PopBgSuccess,
   BgSuccess,
   Succesicon,
+  Failedicon
 } from "../../../templates/GlobalTemplate";
 import { Kategories } from "../../../datas/vendordata";
 
@@ -41,13 +42,16 @@ const VendorProdukForm = () => {
   const [previewFoto, setPreviewFoto] = useState([]);
   const [isPreviewFoto, setIsPreviewFoto] = useState([]);
   const [newArrPhotos, setNewArrPhotos] = useState([]);
-  const [successave, setsuccessave] = useState(false);
+  const [successave, setsuccessave] = useState({
+    wrong: false,
+    right: false
+  });
   const [idxFoto, setIdxFoto] = useState(0);
   const [showSubCath, setShowSubCath] = useState(false);
   const [tester, setTester] = useState("");
   const { loginInfo } = useContext(loginContext);
   const [tags, setTags] = useState([]);
-  const vendor_id = localStorage.getItem("vendor_id");
+  const vendor_id = loginInfo.vendorId;
   const [formData, setFormData] = useState({
     nama: "",
     lokasi: "",
@@ -105,7 +109,6 @@ const VendorProdukForm = () => {
         tag_name: tags[i],
       });
     }
-    console.log(tagBody);
     const productData = new FormData();
     productData.append(
       "data",
@@ -136,13 +139,19 @@ const VendorProdukForm = () => {
           Authorization: `Bearer ${loginInfo.token}`,
         },
       }
-    );
-    setsuccessave(true);
-    setTimeout(() => {
-      setsuccessave(false);
-      window.location.reload();
-    }, 900);
-    return productRes;
+    ).then(() => {
+      setsuccessave({ ...successave, right: true });
+      setTimeout(() => {
+        setsuccessave({ ...successave, right: false });
+        window.location.reload();
+      }, 900);
+    }).catch(() => {
+      setsuccessave({ ...successave, wrong: true });
+      setTimeout(() => {
+        setsuccessave({ ...successave, wrong: false });
+      }, 2000);
+    })
+
   };
 
   const onDropFoto = (files) => {
@@ -150,11 +159,11 @@ const VendorProdukForm = () => {
 
     let newArr = [...formData.foto_produk];
     newArr[idxFoto] = files[0]
-    
+
     console.log(newArr)
 
     setFormData({ ...formData, foto_produk: newArr });
-    
+
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewFoto((oldArray) => [
@@ -377,9 +386,26 @@ const VendorProdukForm = () => {
             <Buttons>Arsipkan</Buttons>
           </ButtonsArsip>
         </GridButton>
-        {successave ? (
+
+        {successave.wrong ? (
           <PopBgSuccess>
-            <BgSuccess aktif={successave === true} right>
+            <BgSuccess aktif={successave.wrong === true}>
+              <Failedicon />
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
+                <b>FAILED</b>
+                Data Produk Belum Lengkap!
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : successave.right ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={successave.right === true} right>
               <Succesicon />
               <div
                 style={{

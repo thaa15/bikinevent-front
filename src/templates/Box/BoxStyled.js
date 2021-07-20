@@ -66,7 +66,7 @@ export const Trash = styled(BsFillTrashFill)`
 
 export const BoxKat = styled.div`
     border-radius: 10px;
-    background-image: url(${(props) => props.imge});
+    background-image: url(${(props) => props.src});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -74,6 +74,10 @@ export const BoxKat = styled.div`
     width: 100%;
     height: 140px;
     cursor: pointer;
+    transition: .3s linear;
+    &:hover{
+        transform: scale(1.01);
+    }
 `;
 
 export const BoxKatOpac = styled.div`

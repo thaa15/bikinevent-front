@@ -43,7 +43,7 @@ const Banner = () => {
       {banner.map((item, idx) => {
         return (
           <div>
-            <BannerContainers to={item.link}>
+            <BannerContainers href={item.link}>
               <BannerContainer src={item.promo_banner.url} key={idx} />
             </BannerContainers>
           </div>

@@ -28,7 +28,6 @@ export const PembeliProfil = () => {
     fetchProfil();
   }, []);
 
-  console.log(infoData);
   return (
     <>
       {isLoading ? (

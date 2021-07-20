@@ -30,10 +30,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 import gambartest from "../../images/bikineventLogo.png";
 import NavbarVendor from "./NavbarVendor";
 import { clientCartContext, searchContext } from "../../context";
+import { Kategories } from "../../datas/vendordata";
 
 const Navbar = ({ toggling, isAuth, nama, role }) => {
-  const history = useHistory();
   const { searched, setSearched } = useContext(searchContext);
+  const history = useHistory();
   const [getsearch, setGetsearch] = useState("");
   const [placehldr, setPlacehldr] = useState("");
   const [searchContent, setSearchContent] = useState(false);
@@ -54,14 +55,13 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setPlacehldr("Cari Keperluan Event Anda..");
-    setSearched({ ...searched, searchFill: getsearch, loading: true });
+    setSearched({ ...searched, searchFill: getsearch, loading: true, fromFilter: false });
     history.push({
       pathname: "/searched",
     });
     setPlacehldr("");
     setSearchContent(false);
   };
-
 
   return (
     <>
@@ -112,24 +112,31 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
               <Cathe>
                 Kategori <Dropdownbut />
                 <DropdownContent>
-                  <ElementLink to="/">
-                    <Dropdownlist>Perlengkapan</Dropdownlist>
-                  </ElementLink>
-                  <ElementLink to="/">
-                    <Dropdownlist>Venue</Dropdownlist>
-                  </ElementLink>
-                  <ElementLink to="/">
-                    <Dropdownlist>Talent</Dropdownlist>
-                  </ElementLink>
-                  <ElementLink to="/">
-                    <Dropdownlist>Jasa</Dropdownlist>
-                  </ElementLink>
-                  <ElementLink to="/">
-                    <Dropdownlist>Catering</Dropdownlist>
-                  </ElementLink>
-                  <ElementLink to="/">
-                    <Dropdownlist>Dekorasi</Dropdownlist>
-                  </ElementLink>
+                  {Kategories.map((data, idx) => {
+                    return (
+                      <ElementLinks
+                        key={idx}
+                        onClick={() => {
+                            setSearched({
+                              ...searched,
+                              filter: {
+                                lokasi: [],
+                                subcategory: data.subcath,
+                              },
+                              fromFilter: true,
+                              searchFill: `Produk Kategori ${data.cath}`,
+                              loading: true
+                            });
+
+                            setTimeout(() => {
+                              history.push("/searched");
+                            }, 100);
+                            
+                        }}>
+                        <Dropdownlist>{data.cath}</Dropdownlist>
+                      </ElementLinks>
+                    )
+                  })}
                 </DropdownContent>
               </Cathe>
               <form
@@ -157,18 +164,18 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                 {nama !== "null" ? (
                   <>
                     <ElementLink to="/client-purchase/cart"
-                    onClick={() => {
-                      setClientCart({
-                        ...clientCart,
-                        price: "",
-                        payment_method: null,
-                        clientInfo: null,
-                        product: [],
-                        statusDp: false,
-                        notes: [],
-                        vendor: [],
-                      });
-                    }}>
+                      onClick={() => {
+                        setClientCart({
+                          ...clientCart,
+                          price: "",
+                          payment_method: null,
+                          clientInfo: null,
+                          product: [],
+                          statusDp: false,
+                          notes: [],
+                          vendor: [],
+                        });
+                      }}>
                       <ShoppingCartIcon />
                       {clientCart.notif === 0 ? (<></>) : (
                         <NotifBadge>{clientCart.notif}</NotifBadge>)}

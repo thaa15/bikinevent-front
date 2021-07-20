@@ -98,19 +98,43 @@ const SearchContent = () => {
       setSearched({ ...searched, loading: false });
     };
     fetchData();
-    const filterData = (data) => {
-      let filterTemp = data.filter((item) => {
-        if (
-          item.nama.toLowerCase().includes(searched.searchFill.toLowerCase())
-        ) {
-          return item;
+    
+    if (searched.fromFilter == false) {
+      const filterData = (data) => {
+        let filterTemp = data.filter((item) => {
+          if (
+            item.nama.toLowerCase().includes(searched.searchFill.toLowerCase())
+          ) {
+            return item;
+          }
+        });
+        setSearchedProduct(filterTemp);
+        setFilteredProduct(filterTemp);
+      };
+      filterData(productData);
+    } else if(searched.fromFilter == true) {
+      setSearchedProduct(productData);
+      setGetFilter(searched.filter);
+      
+      const filterFrom = () => {
+        const filterKeys = Object.keys(getFilter);
+        let tempProds = searchedProduct;
+        if (Object.values(getFilter).some((arr) => arr.length > 0)) {
+          tempProds = searchedProduct.filter((product) => {
+            return filterKeys.some((key) => {
+              if (Array.isArray(product[key])) {
+                return product[key].some((keyVal) => {
+                  getFilter[key].includes(keyVal);
+                });
+              }
+              return getFilter[key].some((item) => item.includes(product[key]));
+            });
+          });
         }
-      });
-      setSearchedProduct(filterTemp);
-      setFilteredProduct(filterTemp);
-    };
-    filterData(productData);
-
+        setFilteredProduct(tempProds);
+      }
+      filterFrom();
+    }
     //fetch and filter vendor
     const fetchVendors = async () => {
       const response = await vendorService.getAllVendor();
@@ -178,6 +202,7 @@ const SearchContent = () => {
     newArrs[row][idx] = state;
     setCheckSubcath(newArrs);
   };
+
   return (
     <>
       {searched.loading ? (
@@ -495,13 +520,13 @@ const SearchContent = () => {
                             subcategory: [],
                             lokasi: [],
                           });
-    
+
                           setGetRangeFilter({
                             hargaMin: "",
                             hargaMax: "",
                             rating: "",
                           });
-    
+
                           setSearched({
                             ...searched,
                             filter: getFilter,
@@ -575,10 +600,10 @@ const SearchContent = () => {
           ) : (
             <>
               {/*BUAT VENDOR*/}
-              <VendorSearch 
-              vendor={setProduk} 
-              datas={searchedVendor} 
-              searchResult={searched.searchFill}
+              <VendorSearch
+                vendor={setProduk}
+                datas={searchedVendor}
+                searchResult={searched.searchFill}
               />
             </>
           )}

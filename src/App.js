@@ -65,8 +65,8 @@ function App() {
       rating: "",
     },
     loading: true,
+    fromFilter: false
   });
-
   const [loginInfo, setLoginInfo] = useState({
     token: "",
     userId: "",

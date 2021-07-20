@@ -2,7 +2,8 @@ import styled from "styled-components";
 import AwesomeSlider from 'react-awesome-slider';
 import { Link } from "react-router-dom";
 
-export const BannerContainers = styled(Link)`
+export const BannerContainers = styled.a`
+  display: block;
   height: 361px;
   width: 100%;
   min-width: 100%;

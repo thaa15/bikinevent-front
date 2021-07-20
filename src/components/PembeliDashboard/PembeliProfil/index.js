@@ -6,6 +6,7 @@ import {
   BgSuccess,
   Succesicon,
   PopUpBg,
+  Failedicon
 } from "../../../templates/GlobalTemplate";
 import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { Buttons, Buttonslog } from "../../LogReg/LoginPage/LoginStyled";
@@ -54,6 +55,10 @@ const PembeliProfilContent = ({
   const [changePw, setChangePw] = useState(false);
   const [pwChanged, setPwChanged] = useState(false);
   const [fotoProfil, setFotoProfil] = useState();
+  const [successave, setsuccessave] = useState({
+    wrong: false,
+    right: false
+  });
 
   const onDropProfile = (files) => {
     const [uploadedFile] = files;
@@ -70,26 +75,36 @@ const PembeliProfilContent = ({
   const submitEdit = async (e) => {
     e.preventDefault();
     let profilData = new FormData();
-    profilData.append("files", fotoProfil, fotoProfil.name);
-    const response = await axios.post(
-      `https://bikinevent.id/api/upload`,
-      profilData,
-      {
-        headers: {
-          Authorization: `Bearer ${info.token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    let body = {
-      foto_profil: response.data[0],
-    };
-    const responseProfil = await authService.editUser(
-      info.userId,
-      info.token,
-      body
-    );
-    console.log(responseProfil);
+    if (fotoProfil !== undefined) {
+      profilData.append("files", fotoProfil, fotoProfil.name);
+      const response = await axios.post(
+        `https://bikinevent.id/api/upload`,
+        profilData,
+        {
+          headers: {
+            Authorization: `Bearer ${info.token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      setsuccessave({ ...successave, right: true });
+      setTimeout(() => {
+        setsuccessave({ ...successave, right: false });
+      }, 900);
+      let body = {
+        foto_profil: response.data[0],
+      };
+      const responseProfil = await authService.editUser(
+        info.userId,
+        info.token,
+        body
+      );
+    } else {
+      setsuccessave({ ...successave, wrong: true });
+      setTimeout(() => {
+        setsuccessave({ ...successave, wrong: false });
+      }, 2000);
+    }
   };
 
   return (
@@ -268,6 +283,41 @@ const PembeliProfilContent = ({
         <Buttonslog>
           <Buttons onClick={(e) => submitEdit(e)}>Simpan</Buttons>
         </Buttonslog>
+        {successave.wrong ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={successave.wrong === true}>
+              <Failedicon />
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
+                <b>FAILED</b>
+                Belum memilih foto profil!
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : successave.right ? (
+          <PopBgSuccess>
+            <BgSuccess aktif={successave.right === true} right>
+              <Succesicon />
+              <div
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  flexDirection: "column",
+                }}
+              >
+                <b>SUCCESS</b>
+                Data Berhasil Disimpan!
+              </div>
+            </BgSuccess>
+          </PopBgSuccess>
+        ) : (
+          <></>
+        )}
       </ProfilMax>
     </GlobalTemplate>
   );

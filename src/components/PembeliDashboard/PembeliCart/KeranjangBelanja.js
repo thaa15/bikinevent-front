@@ -121,11 +121,8 @@ const KeranjangBelanjaPage = (props) => {
       loginInfo.token,
       body
     );
-    window.location.reload();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    setCartData(cartData.filter(item => item.id !== id))
+    return response
   };
   return (
     <>
