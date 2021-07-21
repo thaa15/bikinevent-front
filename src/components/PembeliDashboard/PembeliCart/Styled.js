@@ -324,6 +324,7 @@ export const PaymentContentGrid = styled.div`
 export const BankImage = styled.img`
     margin: 8px 0;
     max-width: 170px;
+    max-height: 50px;
     filter: ${(props)=>props.nonact ? "grayscale(100%)" : "grayscale(0%)"};
 `;
 

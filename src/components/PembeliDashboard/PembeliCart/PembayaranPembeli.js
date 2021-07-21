@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import LoadingPage from "../../../templates/Loading";
-import bni from "../../../images/bni.png";
-import bri from "../../../images/bri.png";
-import mandiri from "../../../images/mandiri.png";
-import bca from "../../../images/bca.png";
-import ovo from "../../../images/ovo.png";
-import gopay from "../../../images/gopay.png";
 import { Redirect } from "react-router-dom";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
@@ -38,14 +32,6 @@ import { Buttons, Buttonslog } from "../../LogReg/LoginPage/LoginStyled";
 import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
 import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { paymentService } from "../../../services/Payment";
-
-export const getImageBank = (item) => {
-  const bankArrImage = [bni, bri, mandiri, bca, ovo, gopay];
-  const bankArr = ["BNI", "BRI", "MANDIRI", "BCA", "OVO", "GOPAY"];
-  for (let i = 0; i < 6; i++) {
-    if (bankArr[i] === item.toUpperCase()) return bankArrImage[i];
-  }
-};
 
 const PembayaranPembeliPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
