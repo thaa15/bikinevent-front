@@ -28,7 +28,8 @@ const getButtonStatus = (stats) => {
   if (stats === "Pending") return defaultStatus[0];
   else if (stats === "Confirmed") return defaultStatus[1];
   else if (stats === "Implemented") return defaultStatus[2];
-  else return defaultStatus[3];
+  else if(stats==="Completed")return defaultStatus[3];
+  else return "Inappropiate Status"
 };
 
 const PembeliPesananPage = (props) => {

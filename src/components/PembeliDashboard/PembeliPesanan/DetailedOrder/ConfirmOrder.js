@@ -48,7 +48,7 @@ const KonfirmasiPembayaranPage = ({ match }) => {
     };
     fetchData();
   }, []);
-
+  console.log(orderData.kode_invoice)
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (
@@ -81,9 +81,15 @@ const KonfirmasiPembayaranPage = ({ match }) => {
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    <ContentDetailTrack invoice>
-                      {orderData.kode_invoice}
-                    </ContentDetailTrack>
+                    {orderData.kode_invoice.length == 0 ? (
+                      <ContentDetailTrack invoice>
+                        Wait for Confirmation
+                      </ContentDetailTrack>
+                    ) : (
+                      <ContentDetailTrack invoice>
+                        {orderData.kode_invoice}
+                      </ContentDetailTrack>
+                    )}
                     <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
                     <ContentDetailTrack invoice>
                       {prod.vendor.nama_vendor}

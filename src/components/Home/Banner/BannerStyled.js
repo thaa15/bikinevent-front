@@ -12,6 +12,12 @@ export const BannerContainers = styled.a`
   z-index: 10;
 `;
 
+export const CarouselContainer = styled.div`
+  overflow: hidden;
+  visibility: visible;
+  position: relative
+`;
+
 export const BannerContainer = styled.div`
   height: 361px;
   width: 100%;
