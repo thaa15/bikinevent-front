@@ -24,11 +24,13 @@ export const ApartView = styled.div`
     width:100%;
 `;
 
-export const LinkTitle = styled(Link)`
+export const LinkTitle = styled.div`
     text-decoration: none;
     display: flex;
     flex-direction: row-reverse;
     width: fit-content;
+    margin-left: auto;
+    cursor: pointer;
     color: #E30045;
     &:hover,&:active{
         color: #b5073c;

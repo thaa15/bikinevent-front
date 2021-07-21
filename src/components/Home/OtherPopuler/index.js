@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import { TitleHome, ApartView, LinkTitle } from "../HomeGlobal";
 import { Link } from "react-router-dom";
@@ -7,10 +8,15 @@ import { DataLoadingProduct } from "../../../datas/populerdata";
 import { BoxHarga } from "../../../templates/Box";
 import { homeService } from "../../../services/Home";
 import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
+import { Kategories } from "../../../datas/vendordata";
+import { searchContext } from "../../../context";
 
 const OtherPopuler = () => {
   const [productData, setProductData] = useState([]);
   const [loading, setLoading] = useState(false);
+  let history = useHistory();
+  const { searched, setSearched } = useContext(searchContext);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -29,7 +35,7 @@ const OtherPopuler = () => {
             <ApartView>
               <TitleHome>Populer di 'Loading...'</TitleHome>
               <TitleHome view>
-                <LinkTitle to="/">Lihat Semua</LinkTitle>
+                <LinkTitle>Lihat Semua</LinkTitle>
               </TitleHome>
             </ApartView>
             <PopulerGrid>
@@ -54,7 +60,23 @@ const OtherPopuler = () => {
                   <ApartView key={idx}>
                     <TitleHome>Populer di "{data.category}"</TitleHome>
                     <TitleHome view>
-                      <LinkTitle to="/">Lihat Semua</LinkTitle>
+                      <LinkTitle
+                        onClick={() => {
+                          setSearched({
+                            ...searched,
+                            filter: {
+                              lokasi: [],
+                              subcategory: [Kategories.find(item => item.cath === data.category).subcath],
+                            },
+                            fromFilter: true,
+                            searchFill: `Produk Kategori ${data.category}`,
+                            loading: true
+                          });
+
+                          history.push({
+                            pathname: "/searched",
+                          });
+                        }}>Lihat Semua</LinkTitle>
                     </TitleHome>
                   </ApartView>
                   {data.produks.length === 0 ? (
