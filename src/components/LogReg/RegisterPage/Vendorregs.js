@@ -287,14 +287,18 @@ const Vendorregs = (props) => {
         <LoginLabel for="nik">NIK</LoginLabel>
         <br />
         <LoginInput
-          type="number"
+          type="text"
           required
           name="nik"
+          value={(formData.NIK)}
           onChange={(e) => {
-            setFormData({
-              ...formData,
-              NIK: e.target.value,
-            });
+            let regexp = /^[0-9\b]+$/
+            if (e.target.value === '' || regexp.test(e.target.value)) {
+              setFormData({
+                ...formData,
+                NIK: e.target.value,
+              });
+            }
           }}
         />
         <br />
@@ -400,14 +404,18 @@ const Vendorregs = (props) => {
             <LoginLabel for="pos">Kode Pos</LoginLabel>
             <br />
             <LoginInput
-              type="number"
+              type="text"
               required
               name="pos"
+              value={(formData.kode_pos)}
               onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  kode_pos: e.target.value,
-                });
+                let regexp = /^[0-9\b]+$/
+                if (e.target.value === '' || regexp.test(e.target.value)) {
+                  setFormData({
+                    ...formData,
+                    kode_pos: e.target.value,
+                  });
+                }
               }}
             />
             <br />
@@ -417,14 +425,18 @@ const Vendorregs = (props) => {
         <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
         <br />
         <LoginInput
-          type="tel"
+          type="text"
           required
+          value={(formData.phone_number)}
           name="num"
           onChange={(e) => {
-            setFormData({
-              ...formData,
-              phone_number: e.target.value,
-            });
+            let regexp = /^[0-9\b]+$/
+            if (e.target.value === '' || regexp.test(e.target.value)) {
+              setFormData({
+                ...formData,
+                phone_number: e.target.value,
+              });
+            }
           }}
         />
         <br />
@@ -432,14 +444,18 @@ const Vendorregs = (props) => {
         <LoginLabel for="rek">Nomor Rekening</LoginLabel>
         <br />
         <LoginInput
-          type="number"
+          type="text"
           required
           name="rek"
+          value={(formData.no_rekening)}
           onChange={(e) => {
-            setFormData({
-              ...formData,
-              no_rekening: e.target.value,
-            });
+            let regexp = /^[0-9\b]+$/
+            if (e.target.value === '' || regexp.test(e.target.value)) {
+              setFormData({
+                ...formData,
+                no_rekening: e.target.value,
+              });
+            }
           }}
         />
         <br />

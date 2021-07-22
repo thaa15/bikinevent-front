@@ -340,11 +340,15 @@ const VendorProdukForm = () => {
           <PriceLabel>Rp</PriceLabel>
           <InputModif
             harga
-            type="number"
+            type="text"
             required
             name="price"
+            value={(formData.harga)}
             onChange={(e) => {
-              setFormData({ ...formData, harga: e.target.value });
+              let regexp = /^[0-9\b]+$/
+              if (e.target.value === '' || regexp.test(e.target.value)) {
+                setFormData({ ...formData, harga: e.target.value });
+              }
             }}
           />
         </DivPrice>

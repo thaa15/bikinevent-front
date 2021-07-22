@@ -13,6 +13,7 @@ import {
   WithdrawalWrite,
   BalanceTable,
   ManageTable,
+  ErrorMessage
 } from "./VendorKeuanganStyled";
 import {
   ChangePwBg,
@@ -44,7 +45,7 @@ const VendorKeuanganContent = ({
   const [changeAccount, setChangeAccount] = useState(false);
   const [withdrawal, setWithdrawal] = useState(false);
   const [sureWithdrawal, setSureWithdrawal] = useState(false);
-  const [withdrawalNominal, setWithdrawalNominal] = useState(0);
+  const [withdrawalNominal, setWithdrawalNominal] = useState("");
   const { loginInfo } = useContext(loginContext);
   const [infoKeuangan, setInfoKeuangan] = useState({
     no_rekening: 0,
@@ -81,6 +82,7 @@ const VendorKeuanganContent = ({
         loginInfo.token,
         bodyOrder
       );
+      window.location.reload()
       console.log(responseOrder);
       return responseOrder;
     }
@@ -156,13 +158,23 @@ const VendorKeuanganContent = ({
                       Nominal Penarikan Saldo
                     </LabelVendorProduk>
                     <InputModif
-                      type="number"
+                      type="text"
+                      value={(withdrawalNominal)}
+                      pattern="[0-9]"
                       required
                       name="nominal"
                       onChange={(e) => {
-                        setWithdrawalNominal(e.target.value);
+                        let regexp = /^[0-9\b]+$/
+                        if (e.target.value === '' || regexp.test(e.target.value)) {
+                          setWithdrawalNominal(e.target.value);
+                        }
                       }}
                     />
+                    {parseInt(seller_balance) < parseInt(withdrawalNominal) ? (
+                      <ErrorMessage>
+                        Penarikan tidak boleh lebih dari saldo penjualan
+                      </ErrorMessage>
+                    ) : (<></>)}
                     {/* <LabelVendorProduk>Password Penjual</LabelVendorProduk>
                     <InputModif
                       type="password"
@@ -174,8 +186,10 @@ const VendorKeuanganContent = ({
                     <Buttonslog>
                       <Buttons
                         onClick={() => {
-                          setWithdrawal(false);
-                          setSureWithdrawal(true);
+                          if (parseInt(seller_balance) > parseInt(withdrawalNominal)) {
+                            setWithdrawal(false);
+                            setSureWithdrawal(true);
+                          }
                         }}
                       >
                         Selanjutnya
@@ -361,8 +375,8 @@ const VendorKeuanganContent = ({
                       <WithdrawalWrite>
                         {item.tanggal_penarikan}
                       </WithdrawalWrite>
-                      <WithdrawalWrite>
-                        {item.withdrawn ? "Telah Dikirim" : "Sedang Diproses"}
+                      <WithdrawalWrite proses={item.withdrawn === false} dikirim={item.withdrawn === true}>
+                        {item.withdrawn ? "Berhasil" : "Pending"}
                       </WithdrawalWrite>
                     </tr>
                   );

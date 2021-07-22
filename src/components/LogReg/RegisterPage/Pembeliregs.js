@@ -156,12 +156,16 @@ const Pembeliregs = (props) => {
         <LoginLabel for="num">No HP (Terhubung WA)</LoginLabel>
         <br />
         <LoginInput
-          type="number"
+          type="text"
+          value={(formData.phone_number)}
           required
           name="phone_number"
-          onChange={(e) =>
-            setFormData({ ...formData, phone_number: e.target.value })
-          }
+          onChange={(e) => {
+            let regexp = /^[0-9\b]+$/
+            if (e.target.value === '' || regexp.test(e.target.value)) {
+              setFormData({ ...formData, phone_number: e.target.value })
+            }
+          }}
         />
         <br />
 

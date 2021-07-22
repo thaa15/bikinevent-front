@@ -78,7 +78,10 @@ export const WithdrawalWrite = styled.td`
     width:20%;
     font-size: 13px;
     line-height: 18px;
-    color: #212B36;
+    color: ${(props)=>props.proses ? "#F2994A" : props.dikirim ? "#219653" : "#212B36"};
+    background: ${(props)=>props.proses ? "rgba(242, 201, 76,0.2)" : props.dikirim ? "rgba(33, 150, 83,0.2)" : "white"};
+    border-radius: 5px;
+    padding: ${(props)=>props.proses ? "5px" : props.dikirim ? "5px" : "0"};
     margin-bottom:6px;
 `;
 
@@ -98,4 +101,11 @@ export const ManageTable = styled.div`
         background: rgba(158, 158, 158,0.9);
         border-radius: 8px;
     }
+`;
+
+export const ErrorMessage = styled.p`
+    font-size: 14px;
+    line-height: 15px;
+    color: #E30045;
+    margin: 5px 0 15px;
 `;

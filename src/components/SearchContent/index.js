@@ -78,6 +78,7 @@ const SearchContent = () => {
   const [searchedProduct, setSearchedProduct] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
   const [searchedVendor, setSearchedVendor] = useState([]);
+  const [stableLocation,setStableLocation] = useState(false)
 
   const filterHandler = (e) => {
     e.preventDefault();
@@ -183,25 +184,40 @@ const SearchContent = () => {
     const filterKeys = Object.keys(getFilter);
     let tempProds = searchedProduct;
     if (Object.values(getFilter).some((arr) => arr.length > 0)) {
-      tempProds = searchedProduct.filter((product) => {
-        return filterKeys.some((key) => {
-          console.log(Array.isArray(product[key]))
-          if (Array.isArray(product[key])) {
-            return product[key].some((keyVal) => {
-              
-              getFilter[key].includes(keyVal);
-            });
-          }
-          
-          return getFilter[key].some((item) => item.includes(product[key]));
+      if (searched.fromFilter === true && stableLocation === false) {
+        tempProds = searchedProduct.filter((product) => {
+          return filterKeys.some((key) => {
+            if (Array.isArray(product["lokasi"])) {
+              return product["lokasi"].some((keyVal) => {
+
+                getFilter["lokasi"].includes(keyVal);
+              });
+            }
+
+            return getFilter["lokasi"].some((item) => item.includes(product["lokasi"]));
+          });
         });
-      });
+      } else if(searched.fromFilter === false || stableLocation === true){
+        tempProds = searchedProduct.filter((product) => {
+          return filterKeys.some((key) => {
+            if (Array.isArray(product[key])) {
+              return product[key].some((keyVal) => {
+
+                getFilter[key].includes(keyVal);
+              });
+            }
+
+            return getFilter[key].some((item) => item.includes(product[key]));
+          });
+        });
+      }
+      setStableLocation(false)
     }
     if (getRangeFilter.hargaMin !== "" && getRangeFilter.hargaMax !== "") {
       tempProds = tempProds.filter((product) => {
         return (
-          product.harga > getRangeFilter.hargaMin &&
-          product.harga < getRangeFilter.hargaMax
+          parseInt(product.harga) > parseInt(getRangeFilter.hargaMin) &&
+          parseInt(product.harga) < parseInt(getRangeFilter.hargaMax)
         );
       });
     }
@@ -291,17 +307,19 @@ const SearchContent = () => {
                         <PriceLabel>Rp</PriceLabel>
                         <InputModif
                           harga
-                          pattern="[1-9]"
-                          title="harus angka!"
-                          type="number"
+                          type="text"
                           placeholder="Harga Minimum"
                           name="priceMin"
                           lang="id"
+                          value={(getRangeFilter.hargaMin)}
                           onChange={(e) => {
-                            setGetRangeFilter({
-                              ...getRangeFilter,
-                              hargaMin: e.target.value,
-                            });
+                            let regexp = /^[0-9\b]+$/
+                            if (e.target.value === '' || regexp.test(e.target.value)) {
+                              setGetRangeFilter({
+                                ...getRangeFilter,
+                                hargaMin: e.target.value,
+                              });
+                            }
                           }}
                         />
                       </DivPrice>
@@ -310,17 +328,19 @@ const SearchContent = () => {
                         <PriceLabel>Rp</PriceLabel>
                         <InputModif
                           harga
-                          type="number"
-                          pattern="[1-9]"
+                          type="text"
                           lang="id"
-                          title="harus angka!"
                           placeholder="Harga Maksimum"
                           name="priceMaks"
+                          value={(getRangeFilter.hargaMax)}
                           onChange={(e) => {
-                            setGetRangeFilter({
-                              ...getRangeFilter,
-                              hargaMax: e.target.value,
-                            });
+                            let regexp = /^[0-9\b]+$/
+                            if (e.target.value === '' || regexp.test(e.target.value)) {
+                              setGetRangeFilter({
+                                ...getRangeFilter,
+                                hargaMax: e.target.value,
+                              });
+                            }
                           }}
                         />
                       </DivPrice>
@@ -469,6 +489,7 @@ const SearchContent = () => {
                               lokasi: [],
                             });
                           }
+                          setStableLocation(true)
 
                           setGetRangeFilter({
                             hargaMin: "",
