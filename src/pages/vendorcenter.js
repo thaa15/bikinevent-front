@@ -118,6 +118,7 @@ export const VendorKeuangan = () => {
   }, [loginInfo.vendorId]);
 
   console.log(vendorData);
+
   return (
     <>
       {isLoading ? (
@@ -128,6 +129,7 @@ export const VendorKeuangan = () => {
         <>
           <VendorHeader />
           <VendorKeuanganContent
+            vendorId={vendorData.id}
             balance_released={vendorData.keuangan.sudah_dilepas}
             to_be_released={vendorData.keuangan.akan_dilepas}
             seller_balance={vendorData.keuangan.saldo_penjual}
@@ -135,7 +137,7 @@ export const VendorKeuangan = () => {
             bank={vendorData.nama_bank}
             account_name={vendorData.nama_rekening}
             income_history={vendorData.order_histories}
-            balance_withdrawal={vendorData.penarikan}
+            balance_withdrawal={vendorData.order_penarikans}
           />
         </>
       )}
@@ -156,7 +158,7 @@ export const VendorProfil = () => {
     };
     fetchData();
   }, []);
-  console.log(profilData)
+  console.log(profilData);
   return (
     <>
       {isLoading ? (
@@ -168,7 +170,7 @@ export const VendorProfil = () => {
           <VendorHeader />
           <VendorProfilContent
             vendor_name={profilData.nama_vendor}
-            owner={profilData.user.username}
+            owner={profilData.user.nama_lengkap}
             email={profilData.user.email}
             phone_number={profilData.user.phone_number}
             password=""

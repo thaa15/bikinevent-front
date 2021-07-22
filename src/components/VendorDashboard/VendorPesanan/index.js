@@ -25,6 +25,8 @@ const VendorPesananContent = ({ data }) => {
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
     );
   };
+
+  console.log(pesanan);
   return (
     <GlobalTemplate>
       <TempVendash>
@@ -46,7 +48,9 @@ const VendorPesananContent = ({ data }) => {
                           </BoxPesananContent>
                           <BoxPesananContent>
                             <JudulHarga judul>{prod.nama}</JudulHarga>
-                            <JudulHarga>Rp{prod.harga.toLocaleString("id-ID")}</JudulHarga>
+                            <JudulHarga>
+                              Rp{prod.harga.toLocaleString("id-ID")}
+                            </JudulHarga>
                             <SubJudul>Nomor Invoice</SubJudul>
                             {item.invoice == null ? (
                               <SubJudulContent invoice>
@@ -102,7 +106,9 @@ const VendorPesananContent = ({ data }) => {
                           </BoxPesananContent>
                           <BoxPesananContent>
                             <JudulHarga judul>{prod.nama}</JudulHarga>
-                            <JudulHarga>Rp{prod.harga.toLocaleString("id-ID")}</JudulHarga>
+                            <JudulHarga>
+                              Rp{prod.harga.toLocaleString("id-ID")}
+                            </JudulHarga>
                             <SubJudul>Nomor Invoice</SubJudul>
 
                             {item.invoice == null ? (
