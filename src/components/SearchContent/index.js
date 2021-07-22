@@ -44,11 +44,9 @@ import {
 } from "../VendorDashboard/VendorProduk/VendorProdukStyled";
 import { BoxHarga } from "../../templates/Box";
 import LoadingPage from "../../templates/Loading";
-import { Kategories, StableCheck } from "../../datas/vendordata";
+import { Kategories } from "../../datas/vendordata";
 import { productService } from "../../services/Product";
 import { BoxNotEntry } from "../VendorDashboard/VendorPesanan/VendorPesananStyle";
-import { ImLocation2 } from "react-icons/im";
-import { IoLogoDropbox } from "react-icons/io";
 import { vendorService } from "../../services/Vendor";
 
 const SearchContent = () => {

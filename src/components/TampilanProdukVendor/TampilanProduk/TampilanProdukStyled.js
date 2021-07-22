@@ -34,5 +34,6 @@ export const BoxImageTampilan = styled.div`
 `;
 
 export const Imagees = styled.img`
-    width:100%;
+    max-width:70vw;
+    max-height: 70vh;
 `;

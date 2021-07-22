@@ -62,6 +62,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
           return item;
         }
       });
+      setSearched({ ...searched, loading: false });
       setSearchedVendor(filterTemp);
       setFilteredVendor(filterTemp);
     };

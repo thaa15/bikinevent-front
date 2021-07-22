@@ -67,7 +67,7 @@ const TampilanProduk = ({ descprod, fotoproduk, lengths }) => {
                         <AngleRight role="button" onClick={carouseleft} />
                         {fotoproduk.map((dats, index) => {
                           return (
-                            <ContentDrop played={index === current} key={index}>
+                            <ContentDrop played={index === current} key={index} needs>
                               {index === current && <Imagees src={dats.url} />}
                             </ContentDrop>
                           );
