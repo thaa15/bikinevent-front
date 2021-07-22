@@ -224,6 +224,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
   useEffect(() => {
     if (rates === undefined || rates === 0) setRates(0);
     else setRates(rating);
+
   }, []);
   return (
     <GlobalTemplate>

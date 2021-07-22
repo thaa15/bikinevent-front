@@ -9,19 +9,27 @@ import TampilanProduk from "../components/TampilanProdukVendor/TampilanProduk";
 import { productService } from "../services/Product";
 import TampilanVendor from "../components/TampilanProdukVendor/TampilanVendor";
 import { vendorService } from "../services/Vendor";
+import grey from "../images/grey.png"
 
 const TampilanProdukPage = ({ match }) => {
   const [productData, setProductData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [stableVendor, setStableVendor] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await productService.getProductById(match.params.id);
       const data = response.data;
       await setProductData(data);
+
+      if (typeof(productData.vendor.foto_profil) === "undefined") {setStableVendor(grey);}
+      else setStableVendor(productData.vendor.foto_profil.url)
+
       setIsLoading(false);
     };
     fetchData();
-  }, [match.params.id]);
+
+  }, [match.params.id, stableVendor]);
 
   return (
     <>
@@ -47,7 +55,7 @@ const TampilanProdukPage = ({ match }) => {
             lengths={productData.foto_produk.length}
           />
           <PenilaianVendor
-            fotovendor={productData.vendor.foto_profil.url}
+            fotovendor={stableVendor}
             vendor={productData.vendor}
             rating={productData.rating}
             ulasan={productData.penilaian.length}
@@ -63,6 +71,8 @@ const TampilanVendorPage = ({ match }) => {
   const [vendorData, setVendorData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [totalRating, setTotalRating] = useState(0);
+  const [stableVendor, setStableVendor] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await vendorService.getVendorById(match.params.vendor);
@@ -75,7 +85,11 @@ const TampilanVendorPage = ({ match }) => {
         });
         setTotalRating(tempTotal / data.comments.length);
       };
-      if(data.comments.length !== 0) {calculateTotalRating();}
+
+      if (typeof(vendorData.foto_profil) === "undefined") setStableVendor(grey);
+      else setStableVendor(vendorData.foto_profil.url)
+
+      if (data.comments.length !== 0) { calculateTotalRating(); }
       setIsLoading(false);
     };
     fetchData();
@@ -89,7 +103,7 @@ const TampilanVendorPage = ({ match }) => {
       ) : (
         <>
           <ShowAtTopVendor
-            fotovendor={vendorData.foto_profil.url}
+            fotovendor={stableVendor}
             vendor={vendorData.nama_vendor}
             ratingvendor={totalRating}
             ulasanvendor={vendorData.comments.length}

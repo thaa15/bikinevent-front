@@ -178,7 +178,6 @@ const SearchContent = () => {
     "Harga Terendah",
   ];
   const Location = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"];
-  console.log(getFilter,getRangeFilter)
 
   const useFilterHandler = () => {
     const filterKeys = Object.keys(getFilter);

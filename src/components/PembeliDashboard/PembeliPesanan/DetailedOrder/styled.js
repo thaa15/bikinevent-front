@@ -186,11 +186,12 @@ export const ReviewBg = styled.div`
     background: #FFFFFF;
     border-radius: 10px;
     padding: 30px;
-    display: flex;
+    display: ${(props)=>props.should ? "flex" : "none"};
     flex-direction: row;
     column-gap: 20px;
     width: 60%;
     max-height: 512px;
+    z-index: ${(props)=>props.should ? "60" : "0"};
     overflow-Y: scroll;
     box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.4);
     -webkit-animation: anvil 1s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;

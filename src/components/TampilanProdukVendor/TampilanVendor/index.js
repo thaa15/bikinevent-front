@@ -22,34 +22,47 @@ const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
     <GlobalTemplate>
       <div style={{ width: "100%" }}>
         <TitleTampilan>Deskripsi Vendor</TitleTampilan>
-        <TampilanWritedWidth>
-          <TampilanWritedContent>{descvendor}</TampilanWritedContent>
-        </TampilanWritedWidth>
+        {descvendor == undefined ? (
+          <BoxNotEntry>
+            Belum Terdapat Deskripsi Vendor!
+          </BoxNotEntry>
+        ) : (
+          <TampilanWritedWidth>
+            <TampilanWritedContent>{descvendor}</TampilanWritedContent>
+          </TampilanWritedWidth>
+        )}
+
         <TitleTampilan>Produk</TitleTampilan>
-        <GridVendorTampilan>
-          {produkvendor.map((data, idx) => {
-            return (
-              <Link
-                to={`/detailed-product/${data.id}`}
-                style={{
-                  height: "fit-content",
-                  cursor: "pointer",
-                  textDecoration: "none",
-                }}
-              >
-                <BoxHarga
-                  key={idx}
-                  image={data.foto_produk[0].url}
-                  city={data.lokasi}
-                  judul={data.nama}
-                  harga={data.harga}
-                  rate={data.rating}
-                  review={data.penilaian.length}
-                />
-              </Link>
-            );
-          })}
-        </GridVendorTampilan>
+        {produkvendor.length === 0 ? (
+          <BoxNotEntry>
+            Vendor Belum Memiliki Produk!
+          </BoxNotEntry>
+        ) : (
+          <GridVendorTampilan>
+            {produkvendor.map((data, idx) => {
+              return (
+                <Link
+                  to={`/detailed-product/${data.id}`}
+                  style={{
+                    height: "fit-content",
+                    cursor: "pointer",
+                    textDecoration: "none",
+                  }}
+                >
+                  <BoxHarga
+                    key={idx}
+                    image={data.foto_produk[0].url}
+                    city={data.lokasi}
+                    judul={data.nama}
+                    harga={data.harga}
+                    rate={data.rating}
+                    review={data.penilaian.length}
+                  />
+                </Link>
+              );
+            })}
+          </GridVendorTampilan>
+        )}
         <TitleTampilan>Penilaian Vendor</TitleTampilan>
         <PenilaianVendorVendor comments={comments} />
         <TitleTampilan>Portofolio Vendor</TitleTampilan>
