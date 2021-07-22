@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { GlobalTemplate } from "../../templates/GlobalTemplate";
 import LegalTemp from "./LegalTemp";
 import { MainLegal, LegalWritedContent, TempLegal } from "./LegalTempStyled";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
+
 const LegalLayanContent = ({ data, type }) => {
+  const [lastIdx, setLastIdx] = useState([])
+  useEffect(() => {
+    if (type == "faq") {
+      let newArr = [...lastIdx]
+      for (let i = 0; i < data.length-1; i++) {
+        newArr[i] = true;
+      }
+      setLastIdx(newArr)
+    }
+  }, []);
+
   return (
     <GlobalTemplate>
       <TempLegal>
@@ -18,7 +30,7 @@ const LegalLayanContent = ({ data, type }) => {
                     <LegalWritedContent title key={idx}>
                       {item.title}
                     </LegalWritedContent>
-                    <LegalWritedContent>
+                    <LegalWritedContent last={lastIdx[idx]}>
                       <ReactMarkdown
                         children={item.desc}
                         plugins={[[gfm, { singleTilde: false }]]}

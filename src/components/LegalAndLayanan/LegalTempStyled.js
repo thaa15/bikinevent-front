@@ -41,6 +41,7 @@ export const MainLegal = styled.div`
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 10px;
+    overflow-x: hidden;
 
     @media screen and (max-width: 957px) {
         -webkit-box-ordinal-group: 1;
@@ -52,9 +53,16 @@ export const MainLegal = styled.div`
 export const LegalWritedContent = styled.div`
     white-space: pre-line;  
     vertical-align: bottom;
-    margin: ${(props) => props.title ? "10px 0 5px" : "0 0 20px"};
-    font-weight: ${(props) => props.title ? "600" : "normal"};
-    font-size: 14px;
+    margin: ${(props) => props.title ? "10px 0 6px" : props.last ? "0 0 60px": "0 0 20px"};
+    font-weight: ${(props) => props.title ? "bold" : "normal"};
+    font-size: ${(props) => props.title ? "22px" : "14px"};
     line-height: 20px;
     color: #212B36;
+    ul {
+        padding-left: 20px;
+    }
+    img{
+        width: 90%;
+        margin: 0 auto;
+    }
 `;
