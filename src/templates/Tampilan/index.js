@@ -107,7 +107,6 @@ const ShowAtTopProduk = ({
   useEffect(() => {
     if (rating === undefined) setRates(0);
     else setRates(rating);
-
     if (prices.length > 11) setHandles(true);
   }, [clientCart.notif]);
   return (
@@ -188,7 +187,7 @@ const ShowAtTopVendor = ({
   ulasanvendor,
 }) => {
   const [rates, setRates] = useState(ratingvendor);
-
+  console.log(fotovendor);
   useEffect(() => {
     if (rates === undefined) setRates(0);
     else setRates(ratingvendor);
@@ -224,7 +223,6 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
   useEffect(() => {
     if (rates === undefined || rates === 0) setRates(0);
     else setRates(rating);
-
   }, []);
   return (
     <GlobalTemplate>

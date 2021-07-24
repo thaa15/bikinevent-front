@@ -18,7 +18,7 @@ const LoginSuccess = (props) => {
       const data = response.data;
       const { jwt, user } = data;
       console.log(data);
-      if (typeof user.pembeli === "undefined") {
+      if (typeof user.pembeli === "undefined" || user.pembeli == null) {
         if (data) {
           const bodyPembeli = {
             user: user._id,

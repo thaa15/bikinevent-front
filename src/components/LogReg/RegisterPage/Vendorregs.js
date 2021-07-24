@@ -24,10 +24,7 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import axios from "axios";
 import { AuthSucRegs } from "../../../AllAuth";
-import {
-  PopUpBg,
-  ContentPopUp
-} from "../../../templates/GlobalTemplate";
+import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -263,7 +260,10 @@ const Vendorregs = (props) => {
           />
           {visible ? (
             <IconBg>
-              <BsFillEyeSlashFill onClick={toggle} style={{ color: "#909DAA" }} />
+              <BsFillEyeSlashFill
+                onClick={toggle}
+                style={{ color: "#909DAA" }}
+              />
             </IconBg>
           ) : (
             <IconBg>
@@ -290,10 +290,10 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="nik"
-          value={(formData.NIK)}
+          value={formData.NIK}
           onChange={(e) => {
-            let regexp = /^[0-9\b]+$/
-            if (e.target.value === '' || regexp.test(e.target.value)) {
+            let regexp = /^[0-9\b]+$/;
+            if (e.target.value === "" || regexp.test(e.target.value)) {
               setFormData({
                 ...formData,
                 NIK: e.target.value,
@@ -407,10 +407,10 @@ const Vendorregs = (props) => {
               type="text"
               required
               name="pos"
-              value={(formData.kode_pos)}
+              value={formData.kode_pos}
               onChange={(e) => {
-                let regexp = /^[0-9\b]+$/
-                if (e.target.value === '' || regexp.test(e.target.value)) {
+                let regexp = /^[0-9\b]+$/;
+                if (e.target.value === "" || regexp.test(e.target.value)) {
                   setFormData({
                     ...formData,
                     kode_pos: e.target.value,
@@ -427,11 +427,11 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
-          value={(formData.phone_number)}
+          value={formData.phone_number}
           name="num"
           onChange={(e) => {
-            let regexp = /^[0-9\b]+$/
-            if (e.target.value === '' || regexp.test(e.target.value)) {
+            let regexp = /^[0-9\b]+$/;
+            if (e.target.value === "" || regexp.test(e.target.value)) {
               setFormData({
                 ...formData,
                 phone_number: e.target.value,
@@ -447,10 +447,10 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="rek"
-          value={(formData.no_rekening)}
+          value={formData.no_rekening}
           onChange={(e) => {
-            let regexp = /^[0-9\b]+$/
-            if (e.target.value === '' || regexp.test(e.target.value)) {
+            let regexp = /^[0-9\b]+$/;
+            if (e.target.value === "" || regexp.test(e.target.value)) {
               setFormData({
                 ...formData,
                 no_rekening: e.target.value,
@@ -624,7 +624,12 @@ const Vendorregs = (props) => {
 
         <CheckBoxInput>
           <input type="checkbox" style={{ marginRight: "4px" }} />
-          <div style={{ width: "100%" }} onClick={() => { setCondTerm(true) }}>
+          <div
+            style={{ width: "100%" }}
+            onClick={() => {
+              setCondTerm(true);
+            }}
+          >
             Saya setuju dengan <TermanConds>Syarat dan Ketentuan</TermanConds>
           </div>
         </CheckBoxInput>
@@ -651,22 +656,49 @@ const Vendorregs = (props) => {
               <CondTermBg>
                 <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
                 <CondTermContent>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
                   <br />
                   <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
                   <br />
                   <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
                   <br />
                 </CondTermContent>
-                <Buttonslog onClick={() => { setCondTerm(false) }}>
+                <Buttonslog
+                  onClick={() => {
+                    setCondTerm(false);
+                  }}
+                >
                   <Buttons>Tutup</Buttons>
                 </Buttonslog>
               </CondTermBg>
             </ContentPopUp>
           </PopUpBg>
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </>
     </>
   );

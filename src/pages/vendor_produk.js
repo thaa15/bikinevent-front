@@ -9,7 +9,7 @@ import TampilanProduk from "../components/TampilanProdukVendor/TampilanProduk";
 import { productService } from "../services/Product";
 import TampilanVendor from "../components/TampilanProdukVendor/TampilanVendor";
 import { vendorService } from "../services/Vendor";
-import grey from "../images/grey.png"
+import grey from "../images/grey.png";
 
 const TampilanProdukPage = ({ match }) => {
   const [productData, setProductData] = useState([]);
@@ -24,7 +24,6 @@ const TampilanProdukPage = ({ match }) => {
       setIsLoading(false);
     };
     fetchData();
-
   }, [match.params.id]);
 
   return (
@@ -50,13 +49,24 @@ const TampilanProdukPage = ({ match }) => {
             fotoproduk={productData.foto_produk}
             lengths={productData.foto_produk.length}
           />
-          <PenilaianVendor
-            fotovendor={productData.vendor.foto_profil.url}
-            vendor={productData.vendor}
-            rating={productData.rating}
-            ulasan={productData.penilaian.length}
-            comments={productData.penilaian}
-          />
+          {typeof productData.vendor.foto_profil === "undefined" ||
+          productData.vendor.foto_profil == null ? (
+            <PenilaianVendor
+              fotovendor={grey}
+              vendor={productData.vendor}
+              rating={productData.rating}
+              ulasan={productData.penilaian.length}
+              comments={productData.penilaian}
+            />
+          ) : (
+            <PenilaianVendor
+              fotovendor={productData.vendor.foto_profil.url}
+              vendor={productData.vendor}
+              rating={productData.rating}
+              ulasan={productData.penilaian.length}
+              comments={productData.penilaian}
+            />
+          )}
         </>
       )}
     </>
@@ -81,7 +91,9 @@ const TampilanVendorPage = ({ match }) => {
         setTotalRating(tempTotal / data.comments.length);
       };
 
-      if (data.comments.length !== 0) { calculateTotalRating(); }
+      if (data.comments.length !== 0) {
+        calculateTotalRating();
+      }
       setIsLoading(false);
     };
     fetchData();
@@ -94,12 +106,23 @@ const TampilanVendorPage = ({ match }) => {
         </>
       ) : (
         <>
-          <ShowAtTopVendor
-            fotovendor={vendorData.foto_profil.url}
-            vendor={vendorData.nama_vendor}
-            ratingvendor={totalRating}
-            ulasanvendor={vendorData.comments.length}
-          />
+          {typeof vendorData.foto_profil === "undefined" ||
+          vendorData.foto_profil.url == null ? (
+            <ShowAtTopVendor
+              fotovendor={grey}
+              vendor={vendorData.nama_vendor}
+              ratingvendor={totalRating}
+              ulasanvendor={vendorData.comments.length}
+            />
+          ) : (
+            <ShowAtTopVendor
+              fotovendor={vendorData.foto_profil.url}
+              vendor={vendorData.nama_vendor}
+              ratingvendor={totalRating}
+              ulasanvendor={vendorData.comments.length}
+            />
+          )}
+
           <TampilanVendor
             descvendor={vendorData.deskripsi}
             produkvendor={vendorData.produks}
