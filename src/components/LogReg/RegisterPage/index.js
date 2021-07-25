@@ -26,7 +26,7 @@ import Vendorregs from "./Vendorregs"
 const RegisterPage = (props) => {
     const [checkreg, setCheckreg] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
-    console.log(props.history);
+
     setTimeout(() => {
         setIsLoading(false);
     }, 1000)

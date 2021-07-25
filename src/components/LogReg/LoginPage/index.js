@@ -16,6 +16,8 @@ import {
   OrLine,
   Buttonsgoogle,
   GooglePlus,
+  ForgotPass,
+  BgForgot
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
@@ -24,14 +26,30 @@ import { authService } from "../../../services/Auth";
 import {
   PopBgSuccess,
   BgSuccess,
+  PopUpBg,
   Succesicon,
   Failedicon,
+  ContentPopUp
 } from "../../../templates/GlobalTemplate";
+import sucregcheck from "../../../images/sucregcheck.png";
+import { SucRegWrited, GoHome, SucRegBox, SucRegBg } from "../SuccessRegPage/SuccessRegStyled";
+import { 
+  ChangePwBg,
+  TitleApart,
+  DivButton,
+  DivisionTitle,
+  TitleChangepw,
+} from "../../VendorDashboard/VendorProfil/VendorProfileStyled";
+import { InputModif,LabelVendorProduk } from "../../VendorDashboard/VendorProduk/VendorProdukStyled";
 
 const LoginPage = (props) => {
   const [visible, setVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [typepw, setTypepw] = useState("");
+  const [visibles, setVisibles] = useState({
+    rate: false,
+    dons: false,
+  });
   const [loginUser, setLoginUser] = useState({
     right: false,
     wrong: false,
@@ -153,8 +171,10 @@ const LoginPage = (props) => {
               />
               <br />
 
-              <LoginLabel for="password">Password</LoginLabel>
-              <br />
+              <div style={{ width: "100%", display: "flex", flexDirection: "row", marginTop: "10px" }}>
+                <LoginLabel for="password">Password</LoginLabel>
+                <ForgotPass onClick={() => { setVisibles({ dons: false, rate: true }); }}>Lupa Password</ForgotPass>
+              </div>
               <LogApart>
                 <LoginInput
                   type={typepw}
@@ -181,6 +201,69 @@ const LoginPage = (props) => {
                   </IconBg>
                 )}
               </LogApart>
+
+              {visibles.rate ? (
+                <>
+                  <PopUpBg>
+                    <ContentPopUp>
+                      <BgForgot>
+                        <TitleApart>
+                          <DivisionTitle>
+                            <TitleChangepw>Lupa Password</TitleChangepw>
+                          </DivisionTitle>
+                          <DivisionTitle button onClick={() => { setVisibles({ dons: false, rate: false }); }}>
+                            <DivButton>
+                              X
+                            </DivButton>
+                          </DivisionTitle>
+                        </TitleApart>
+                        <LabelVendorProduk awal>Email Pengguna</LabelVendorProduk>
+                        <InputModif
+                          type="email"
+                          required
+                          pattern=".{6,}"
+                          title="Enam atau lebih karakter"
+                          name="pwlama"
+                        />
+                        <LabelVendorProduk>Jenis Akun</LabelVendorProduk>
+                        <p>{role}</p>
+                        
+                        <Buttonslog onClick={() => {
+                          setVisibles({ dons: true, rate: false });
+                        }}>
+                          <Buttons>Selanjutnya</Buttons>
+                        </Buttonslog>
+                      </BgForgot>
+                    </ContentPopUp>
+                  </PopUpBg>
+
+                </>
+              ) : visibles.dons ? (
+                <>
+                  <PopUpBg>
+                    <ContentPopUp>
+                      <SucRegBox>
+                        <img
+                          src={sucregcheck}
+                          alt="success"
+                          style={{ margin: "12px auto" }}
+                        />
+                        <SucRegWrited>Permintaan Ubah Password Berhasil</SucRegWrited>
+                        <SucRegWrited message>
+                          Klik link pada email anda untuk mengubah password
+                        </SucRegWrited>
+                        <GoHome
+                          onClick={() => {
+                            setVisibles({ dons: false, rate: false });
+                          }}
+                        >
+                          Tutup
+                        </GoHome>
+                      </SucRegBox>
+                    </ContentPopUp>
+                  </PopUpBg>
+                </>
+              ) : (<></>)}
 
               <div
                 style={{

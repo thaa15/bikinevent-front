@@ -3,7 +3,6 @@ import {
   BannerContainer, 
   BannerContainers, 
   Slider,
-  CarouselContainer
 } from "./BannerStyled";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
@@ -23,17 +22,16 @@ const Banner = () => {
   return (
     <AutoplaySlider
       play={true}
-      cancelOnInteraction={false}
-      interval={3000}
+      interval={5000}
       className="aws-btn"
     >
       {banner.map((item, idx) => {
         return (
-          <CarouselContainer>
+          <div>
             <BannerContainers href={item.link}>
               <BannerContainer src={item.promo_banner.url} key={idx} />
             </BannerContainers>
-          </CarouselContainer>
+          </div>
         );
       })}
     </AutoplaySlider>

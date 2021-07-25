@@ -148,10 +148,10 @@ export const VendorKeuangan = () => {
 export const VendorProfil = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [profilData, setProfilData] = useState();
-  const vendorId = localStorage.getItem("vendor_id");
+  const { loginInfo } = useContext(loginContext);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await vendorService.getVendorById(vendorId);
+      const response = await vendorService.getVendorById(loginInfo.vendorId);
       const data = response.data;
       setProfilData(data);
       setIsLoading(false);
@@ -177,7 +177,7 @@ export const VendorProfil = () => {
             portofolio={profilData.portfolios}
             description={profilData.deskripsi}
             location={profilData.location}
-            vendorId={vendorId}
+            vendorId={loginInfo.vendorId}
           />
         </>
       )}

@@ -41,6 +41,7 @@ import {
 } from "../../templates/Tampilan/TampilanStyled";
 import { Link } from "react-router-dom";
 import { BoxNotEntry } from "../VendorDashboard/VendorPesanan/VendorPesananStyle";
+import grey from "../../images/grey.png";
 
 const VendorSearch = ({ vendor, datas, searchResult }) => {
   const { searched, setSearched } = useContext(searchContext);
@@ -290,7 +291,11 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                         }}
                       >
                         <ShowedVendor key={idx}>
-                          <VendorPhotos src={data.foto_profil.url} />
+                          {typeof data.foto_profil == "undefined" ||
+                            data.foto_profil == null ? (
+                            <VendorPhotos src={grey} /> ) : (
+                            <VendorPhotos src={data.foto_profil.url} />)}
+
                           <GetApart>
                             <BoxsExpVendor titlee>
                               <Shopping />
