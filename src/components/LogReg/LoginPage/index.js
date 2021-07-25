@@ -102,6 +102,7 @@ const LoginPage = (props) => {
           localStorage.setItem("token", userData.jwt);
           localStorage.setItem("nama", userData.user.nama_lengkap);
           localStorage.setItem("vendor_id", userData.user.vendor._id);
+          localStorage.setItem("userId", userData.user.id);
           localStorage.setItem("role", "vendor");
           setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
