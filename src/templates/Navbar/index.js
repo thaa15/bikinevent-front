@@ -62,7 +62,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     setPlacehldr("");
     setSearchContent(false);
   };
-
+  console.log(nama)
   return (
     <>
       {isAuth.length > 4 && role === "vendor" ? (
@@ -214,7 +214,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                 )}
 
                 <LogOutContent>
-                  {nama !== "null" ? (
+                  {nama !== "null" || nama.length > 4 ? (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <DisplayProf need>Hello</DisplayProf>
                       <DisplayProf name need>

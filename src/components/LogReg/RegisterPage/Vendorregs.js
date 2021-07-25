@@ -217,6 +217,7 @@ const Vendorregs = (props) => {
   useEffect(() => {
     toggle();
   }, []);
+
   return (
     <>
       <form encType="multipart/form-data" onSubmit={submitHandler}>
@@ -636,17 +637,17 @@ const Vendorregs = (props) => {
 
         <Buttonslog
           type="submit"
-          disabled={!(previewWajah && previewKTP && previewTab && previewSrc)}
-          allowed={!(previewWajah && previewKTP && previewTab && previewSrc)}
+          disabled={!(previewWajah.length == 0 && previewKTP.length == 0 && previewTab.length == 0 && previewSrc.length ==0)}
+          allowed={!(previewWajah.length == 0 && previewKTP.length == 0 && previewTab.length == 0 && previewSrc.length ==0)}
         >
           <Buttons>Daftar</Buttons>
         </Buttonslog>
-        {formData ? (
+        {previewWajah.length !== 0 && previewKTP.length !== 0 && previewTab.length !== 0 && previewSrc.length !==0 ? (
+          <></>
+        ) : (
           <span style={{ color: "#ff0000", fontSize: "12px" }}>
             Data belum lengkap!
           </span>
-        ) : (
-          <span></span>
         )}
       </form>
       <>

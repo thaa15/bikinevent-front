@@ -80,9 +80,32 @@ export const LoginLabel = styled.label`
 `;
 
 export const RadioButton = styled.input`
+&[type="radio"]{
     cursor: pointer;
-    background-color: white;
-    margin: 0 5px;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    &:checked:before{
+        content:"";
+        position:absolute;
+        width: 45%;
+        height: 45%;
+        background: white;
+        border: 6px solid #007BFF;
+        border-radius: 100%;
+      }
+  
+    @media screen and (max-width: 426px) {
+        width: 15px;
+    height: 15px;
+    margin: 0 5px 0 8px;
+    &:checked:before{
+        width: 30%;
+        height: 30%;
+      }
+    }
+  }
 `;
 
 export const HaveAccount = styled.div`
@@ -197,4 +220,24 @@ export const GooglePlus = styled(AiFillGooglePlusCircle)`
     font-size: 24px;
     color: white;
     margin: 0 5px;
+`;
+
+export const ForgotPass = styled.div`
+    display: inline-block;
+    margin-left: auto;
+    font-size: 12px;
+    line-height: 18px;
+    color: #969696;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
+`;
+
+export const BgForgot = styled.div`
+    width: 584px;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    margin: 30px auto;
 `;

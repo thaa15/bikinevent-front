@@ -93,7 +93,6 @@ function App() {
 
   useEffect(() => {
     setLoginInfo({
-      ...loginInfo,
       userId: `${localStorage.getItem("userId")}`,
       name: `${localStorage.getItem("nama")}`,
       token: `${localStorage.getItem("token")}`,
@@ -104,14 +103,13 @@ function App() {
   }, []);
 
   return (
-    <>
+    <loginContext.Provider value={{ loginInfo, setLoginInfo }}>
       <Router>
         <div className="page-container">
           <div className="content-wrap">
             <ScrollToTop />
             <searchContext.Provider value={{ searched, setSearched }}>
               <clientCartContext.Provider value={{ clientCart, setClientCart }}>
-                <loginContext.Provider value={{ loginInfo, setLoginInfo }}>
                   <Sidebar
                     isOpen={isOpen}
                     toggling={toggling}
@@ -303,14 +301,13 @@ function App() {
                       isAuth={loginInfo.token}
                     />
                   </Switch>
-                </loginContext.Provider>
               </clientCartContext.Provider>
             </searchContext.Provider>
           </div>
           <Footer />
         </div>
       </Router>
-    </>
+      </loginContext.Provider>
   );
 }
 

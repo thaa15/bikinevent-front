@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import LoadingPage from "../../../templates/Loading";
 import fotoNoEntry from "../../../images/fotoNoEntry.png";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
@@ -33,7 +33,7 @@ import { clientCartContext, loginContext } from "../../../context";
 import { pembeliService } from "../../../services/Pembeli";
 import CheckBox from "./CheckBox";
 
-const KeranjangBelanjaPage = (props) => {
+const KeranjangBelanjaPage = memo((props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [prices, setPrices] = useState("0");
   const [tempVendorName, setTempVendorName] = useState([]);
@@ -42,13 +42,16 @@ const KeranjangBelanjaPage = (props) => {
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
   const [checks,setChecks] = useState([]);
-
+/*
+loginInfo.pembeliId,
+          loginInfo.token
+*/
   useEffect(() => {
     if (loginInfo.pembeliId != "null" && loginInfo.token != "null") {
       const fetchData = async () => {
         const response = await pembeliService.getPembeliById(
-          loginInfo.pembeliId,
-          loginInfo.token
+          localStorage.getItem("pembeliId"),
+          localStorage.getItem("token")
         );
         const data = response.data;
         setCartData(data.cart);
@@ -334,6 +337,6 @@ const KeranjangBelanjaPage = (props) => {
       )}
     </>
   );
-};
+});
 
 export default KeranjangBelanjaPage;
