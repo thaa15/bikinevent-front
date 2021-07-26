@@ -11,6 +11,7 @@ export const GlobalTemplate = styled.div`
     overflow: ${(props)=>props.top ? "visible" : "hidden"};
     transition: .3s ease-out;
     animation: global 0.5s linear;
+    word-wrap:break-word;
 `;
 
 export const PopUpBg = styled.div`

@@ -266,12 +266,14 @@ export const UserName = styled.div`
     line-height: 20px;
     text-align: center;
     color: #909DAA;
+    word-wrap:break-word;
 `;
 
 export const UserComment = styled.div`
     font-size: 12px;
     line-height: 20px;
     color: #212B36;
+    word-wrap:break-word;
 `;
 
 export const UserRate = styled.div`

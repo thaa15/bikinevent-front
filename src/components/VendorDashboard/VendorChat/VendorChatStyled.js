@@ -130,6 +130,9 @@ export const LastChatDisplay = styled.div`
     font-size: 12px;
     line-height: 18px;
     color: #909DAA;
+    word-wrap:break-word;
+    white-space: pre-line;  
+    vertical-align: bottom;
 `;
 
 export const TimeDisplay = styled.span`

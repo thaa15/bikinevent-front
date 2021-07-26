@@ -262,7 +262,12 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
               return (
                 <CommentsPart key={idx}>
                   <CommentProfile profile>
-                    <UserPhoto img={data.user.foto_profil.url} />
+                  {typeof data.user.foto_profil.url === "undefined" ||
+                    data.user.foto_profil.url == null ? (
+                      <UserPhoto  />
+                    ):(
+                      <UserPhoto img={data.user.foto_profil.url} />
+                    )}
                     <UserName>{data.user.nama_lengkap}</UserName>
                   </CommentProfile>
                   <CommentProfile>

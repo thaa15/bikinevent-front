@@ -155,7 +155,7 @@ const VendorChatContent = () => {
                                       text={
                                         room.messages[room.messages.length - 1].text
                                       }
-                                      length={"25"}
+                                      length={"20"}
                                     />
                                   </LastChatDisplay>
                                 </ListChatPart>
