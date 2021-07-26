@@ -31,15 +31,21 @@ import {
 import ChatResponsiveClient from "./ChatResponsiveClient";
 import EllipsisText from "react-ellipsis-text";
 import { roomService } from "../../../services/Room";
-
+import { socket } from "../../../config/web-sockets";
+import { messageService } from "../../../services/Message";
+import { format } from "timeago.js";
 const PembeliChatPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { loginInfo } = useContext(loginContext);
   const [conversations, setConversations] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [currentChat, setCurrentChat] = useState();
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
 
   useEffect(() => {
     const fetchConversations = async () => {
-      const response = await roomService.getVendorRoom(
+      const response = await roomService.getUserRoom(
         loginInfo.userId,
         loginInfo.token
       );
@@ -50,6 +56,49 @@ const PembeliChatPage = (props) => {
     fetchConversations();
   }, [loginInfo.userId, loginInfo.token]);
 
+  useEffect(() => {
+    socket.emit("addUser", loginInfo.userId);
+    socket.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.sender,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat.vendorId.id.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [currentChat, arrivalMessage]);
+
+  const submitChat = async (e, roomId) => {
+    e.preventDefault();
+    const message = {
+      sender: loginInfo.userId,
+      text: newMessage,
+      room: roomId,
+    };
+    socket.emit("sendMessage", {
+      sender: loginInfo.userId,
+      receiver: currentChat.vendorId.id,
+      text: newMessage,
+    });
+
+    try {
+      const response = await messageService.postNewChat(
+        loginInfo.token,
+        message
+      );
+      setMessages([...messages, response.data]);
+      setNewMessage("");
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [responsive, setResponsive] = useState(true);
 
   useEffect(() => {
@@ -57,6 +106,7 @@ const PembeliChatPage = (props) => {
     else setResponsive(true);
   }, [window.innerWidth]);
 
+  console.log(conversations);
   return (
     <>
       {isLoading ? (
@@ -88,11 +138,21 @@ const PembeliChatPage = (props) => {
             <BgChat exist>
               {responsive ? (
                 <>
-                  {conversations.map((room, idx) => {
-                    return (
-                      <TemplateChat>
-                        <ChatList>
-                          <ChatPerson active>
+                  <TemplateChat>
+                    <ChatList>
+                      {conversations.map((room, idx) => {
+                        return (
+                          <ChatPerson
+                            active
+                            key={idx}
+                            onClick={(e) => {
+                              if (currentChat === room) {
+                                return null;
+                              }
+                              setCurrentChat(room);
+                              setMessages(room.messages);
+                            }}
+                          >
                             <ListChatPart photo>
                               <ProfilePhoto content />
                             </ListChatPart>
@@ -102,121 +162,83 @@ const PembeliChatPage = (props) => {
                               </ProfileName>
                               <LastChatDisplay>
                                 <EllipsisText
-                                  text="Iyaaaa..... Terima kasih banyak ya kaaaaaaa"
+                                  text={
+                                    room.messages[room.messages.length - 1].text
+                                  }
                                   length={"25"}
                                 />
                               </LastChatDisplay>
                             </ListChatPart>
                           </ChatPerson>
-                          <div
-                            style={{
-                              borderBottom: "1px solid #E0E0E0",
-                              width: "100%",
-                            }}
-                          />
+                        );
+                      })}
+                      <div
+                        style={{
+                          borderBottom: "1px solid #E0E0E0",
+                          width: "100%",
+                        }}
+                      />
+                      <div
+                        style={{
+                          borderBottom: "1px solid #E0E0E0",
+                          width: "100%",
+                        }}
+                      />
+                    </ChatList>
 
-                          <ChatPerson>
-                            <ListChatPart photo>
-                              <ProfilePhoto content />
-                            </ListChatPart>
-                            <ListChatPart>
-                              <ProfileName>
-                                {room.vendorId.nama_lengkap}
-                              </ProfileName>
-                              <LastChatDisplay>
-                                <EllipsisText
-                                  text="Makasih mangkok"
-                                  length={"25"}
-                                />
-                              </LastChatDisplay>
-                            </ListChatPart>
-                          </ChatPerson>
-                          <div
-                            style={{
-                              borderBottom: "1px solid #E0E0E0",
-                              width: "100%",
-                            }}
-                          />
-                        </ChatList>
-
-                        <ChatContent>
+                    <ChatContent>
+                      {typeof currentChat === "undefined" ||
+                      currentChat == null ? (
+                        <div>No Chat</div>
+                      ) : (
+                        <>
                           <DisplayChatProfileContent>
                             <ProfilePhoto content />
-                            <ProfileName>Emma</ProfileName>
+                            <ProfileName>
+                              {currentChat.vendorId.nama_lengkap}
+                            </ProfileName>
                           </DisplayChatProfileContent>
-
                           <ChatContetnDisplay>
-                            <PlacedChatBox>
-                              <ChatBox>Ka boleh nego?</ChatBox>
-                            </PlacedChatBox>
-
-                            <PlacedChatBox user>
-                              <ChatBox user>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa
-                                qui officia deserunt mollit anim id est laborum.
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa
-                                qui officia deserunt mollit anim id est laborum.
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut
-                                enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in
-                                reprehenderit in voluptate velit esse cillum
-                                dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa
-                                qui officia deserunt mollit anim id est laborum.
-                                \n Spesifikasi : App Name : Fitpro/HryFine Versi
-                                Bluetooth : 5.0 Layar : Warna 0,96 Inch Sensor
-                                Optik : Mikro Epco Bahan Host : Plastik Bahan
-                                Gelang : TPU Diameter Jam : 2 cm Metode Operasi
-                                ： Operasi Tombol Sentuh Tunggal Standby selama
-                                lebih dari 5 hari Sistem Operasi : -Android 5.0
-                                or higher -iOS 9.0 or higher Paket sudah
-                                termasuk : 1 x M4 1x Charging Dock Cable 1 x
-                                Instruksi
-                              </ChatBox>
-                            </PlacedChatBox>
-
-                            <PlacedChatBox>
-                              <ChatBox>Apa itu ka?</ChatBox>
-                            </PlacedChatBox>
-
-                            <PlacedChatBox>
-                              <ChatBox>
-                                Iyaaaa..... Terima kasih banyak ya kaaaaaaa
-                              </ChatBox>
-                            </PlacedChatBox>
+                            {messages.map((chat, idx) => {
+                              return (
+                                <>
+                                  {chat.sender == loginInfo.userId ? (
+                                    <PlacedChatBox user key={idx}>
+                                      <ChatBox>{chat.text}</ChatBox>
+                                      <span>{format(chat.createdAt)}</span>
+                                    </PlacedChatBox>
+                                  ) : (
+                                    <PlacedChatBox key={idx}>
+                                      <ChatBox>{chat.text}</ChatBox>
+                                      <span>{format(chat.createdAt)}</span>
+                                    </PlacedChatBox>
+                                  )}
+                                </>
+                              );
+                            })}
                           </ChatContetnDisplay>
+                        </>
+                      )}
 
-                          <TypingPart>
-                            <TextType
-                              type="text"
-                              name="type"
-                              placeholder="tulis pesan.."
-                            />
-                            <ButtonSend type="submit">Kirim</ButtonSend>
-                          </TypingPart>
-                        </ChatContent>
-                      </TemplateChat>
-                    );
-                  })}
+                      <TypingPart>
+                        <TextType
+                          type="text"
+                          name="type"
+                          placeholder="tulis pesan.."
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          value={newMessage}
+                        />
+                        <ButtonSend
+                          type="submit"
+                          onClick={(e) => {
+                            submitChat(e, currentChat.id);
+                          }}
+                        >
+                          Kirim
+                        </ButtonSend>
+                      </TypingPart>
+                    </ChatContent>
+                  </TemplateChat>
                 </>
               ) : (
                 <>

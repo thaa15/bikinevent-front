@@ -58,10 +58,11 @@ const VendorChatContent = () => {
       });
     });
   }, [socket]);
+  console.log("current", currentChat);
 
   useEffect(() => {
     arrivalMessage &&
-      currentChat?.includes(arrivalMessage.sender) &&
+      currentChat.userId.id.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [currentChat, arrivalMessage]);
 
@@ -96,6 +97,8 @@ const VendorChatContent = () => {
     else setResponsive(true);
   }, [window.innerWidth]);
 
+  console.log(conversations);
+
   return (
     <>
       {responsive ? (
@@ -105,16 +108,20 @@ const VendorChatContent = () => {
               <DashboardSite typeVendash="chat" />
               <MainVendash>
                 <TemplateChat>
-                  {conversations.map((room, idx) => {
-                    return (
-                      <ChatList
-                        key={idx}
-                        onClick={(e) => {
-                          setCurrentChat(room);
-                          setMessages(room.messages);
-                        }}
-                      >
-                        <ChatPerson active>
+                  <ChatList>
+                    {conversations.map((room, idx) => {
+                      return (
+                        <ChatPerson
+                          active
+                          key={idx}
+                          onClick={(e) => {
+                            if (currentChat === room) {
+                              return null;
+                            }
+                            setCurrentChat(room);
+                            setMessages(room.messages);
+                          }}
+                        >
                           <ListChatPart photo>
                             <ProfilePhoto content />
                           </ListChatPart>
@@ -123,30 +130,38 @@ const VendorChatContent = () => {
                               {room.userId.nama_lengkap}
                             </ProfileName>
                             <LastChatDisplay>
-                              <EllipsisText
-                                text={
-                                  room.messages[room.messages.length - 1].text
-                                }
-                                length={"25"}
-                              />
+                              {room.messages.length == 0 ? (
+                                <EllipsisText
+                                  text={"Start Chatting"}
+                                  length={"25"}
+                                />
+                              ) : (
+                                <EllipsisText
+                                  text={
+                                    room.messages[room.messages.length - 1].text
+                                  }
+                                  length={"25"}
+                                />
+                              )}
                             </LastChatDisplay>
                           </ListChatPart>
                         </ChatPerson>
-                        <div
-                          style={{
-                            borderBottom: "1px solid #E0E0E0",
-                            width: "100%",
-                          }}
-                        />
-                        <div
-                          style={{
-                            borderBottom: "1px solid #E0E0E0",
-                            width: "100%",
-                          }}
-                        />
-                      </ChatList>
-                    );
-                  })}
+                      );
+                    })}
+                    <div
+                      style={{
+                        borderBottom: "1px solid #E0E0E0",
+                        width: "100%",
+                      }}
+                    />
+                    <div
+                      style={{
+                        borderBottom: "1px solid #E0E0E0",
+                        width: "100%",
+                      }}
+                    />
+                  </ChatList>
+
                   <ChatContent>
                     {typeof currentChat === "undefined" ||
                     currentChat == null ? (
