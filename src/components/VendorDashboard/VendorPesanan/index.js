@@ -52,13 +52,13 @@ const VendorPesananContent = ({ data }) => {
                               Rp{prod.harga.toLocaleString("id-ID")}
                             </JudulHarga>
                             <SubJudul>Nomor Invoice</SubJudul>
-                            {item.invoice == null ? (
+                            {item.kode_invoice == null ? (
                               <SubJudulContent invoice>
                                 Wait for Confirmation
                               </SubJudulContent>
                             ) : (
                               <SubJudulContent invoice>
-                                {item.invoice}
+                                {item.kode_invoice}
                               </SubJudulContent>
                             )}
                             <SubJudul>Nama Pembeli</SubJudul>
