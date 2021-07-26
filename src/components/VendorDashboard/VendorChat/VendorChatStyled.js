@@ -70,6 +70,7 @@ export const ChatContent = styled.div`
     padding: 7px 10px;
     background: white;
     display:flex;
+    margin-left: 10px;
     flex-direction: column;
     @media screen and (max-width: 957px) {
         flex-basis:65%;
