@@ -71,20 +71,20 @@ const PembeliChatPage = (props) => {
             buttonTitle="Kembali ke Beranda"
           />
           <GlobalTemplate top>
-            {/* INI CHAT KALO KOSONG
-                        <BgChat>
-                            <NoEntryContent>
-                                <ImageNoEntry src={nochat} alt="No Entry" />
-                                <h4 style={{ fontSize: "18px", color: "#212B36" }}>
-                                    Chat-mu Kosong!
-                                </h4>
-                                <p style={{ fontSize: "14px", color: "#909DAA" }}>
-                                    Hubungi Vendor untuk memulai perbincangan
-                                </p>
-                                <MulaiBelanja to="/">Mulai Belanja</MulaiBelanja>
-                            </NoEntryContent>
-                        </BgChat>
-                        */}
+            {conversations.length == 0 ? (
+            <BgChat>
+              <NoEntryContent>
+                <ImageNoEntry src={nochat} alt="No Entry" />
+                <h4 style={{ fontSize: "18px", color: "#212B36" }}>
+                  Chat-mu Kosong!
+                </h4>
+                <p style={{ fontSize: "14px", color: "#909DAA" }}>
+                  Hubungi Vendor untuk memulai perbincangan
+                </p>
+                <MulaiBelanja to="/">Mulai Belanja</MulaiBelanja>
+              </NoEntryContent>
+            </BgChat>
+            ) : (
             <BgChat exist>
               {responsive ? (
                 <>
@@ -224,6 +224,7 @@ const PembeliChatPage = (props) => {
                 </>
               )}
             </BgChat>
+            )}
           </GlobalTemplate>
         </>
       )}

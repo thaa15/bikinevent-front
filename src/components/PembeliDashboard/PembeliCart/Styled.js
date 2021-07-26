@@ -28,7 +28,7 @@ export const NoEntryContent = styled.div`
 `;
 
 export const ImageNoEntry = styled.img`
-    width: 60%;
+    width: ${(props)=>props.need ? "85%" : "60%"};
     margin-bottom: 30px;
     @media screen and (max-width: 611px) {
         width: 80%;
