@@ -62,7 +62,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     setPlacehldr("");
     setSearchContent(false);
   };
-  console.log(nama)
+  
   return (
     <>
       {isAuth.length > 4 && role === "vendor" ? (

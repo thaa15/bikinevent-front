@@ -154,6 +154,7 @@ export const DisplayProf = styled.div`
     font-size: ${(props) => props.name ? "18px" : "12px"};
     line-height: ${(props) => props.name ? "23px" : "18px"};
     color: ${(props) => props.name ? "#212B36" : "#909DAA"};
+    word-wrap:break-word;
 
     @media screen and (max-width: 1063px) {
         font-size: ${(props) => props.name ? "14px" : "10px"};

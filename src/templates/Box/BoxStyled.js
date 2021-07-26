@@ -20,7 +20,7 @@ export const BoxImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-color:#cfcaca;
+    background-color: #F2994A;
     margin-bottom: 4px;
     @media screen and (max-width: 443px) {
         height: 150px;
@@ -33,7 +33,7 @@ export const BoxExp = styled.div`
     color: ${(props)=> props.titlee ? "#212B36":"#909DAA"};
     display: flex;
     align-self: center;
-    
+    word-wrap:break-word;
 `;
 
 export const Price = styled.h3`

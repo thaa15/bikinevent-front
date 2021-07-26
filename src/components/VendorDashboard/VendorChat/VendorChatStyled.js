@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { IoIosArrowBack } from "react-icons/io";
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 export const TemplateChat = styled.div`
     display:flex;
@@ -100,6 +101,10 @@ export const ChatPerson = styled.div`
     align-items:center;
     padding: 8px;
     cursor: pointer;
+    margin-top: 4px;
+    &:hover{
+        background: ${(props)=>props.active ? "#DAF3E5" : "#DAF3E5"};
+    }
 `;
 
 export const ProfilePhoto = styled.div`
@@ -125,6 +130,17 @@ export const LastChatDisplay = styled.div`
     font-size: 12px;
     line-height: 18px;
     color: #909DAA;
+    word-wrap:break-word;
+    white-space: pre-line;  
+    vertical-align: bottom;
+`;
+
+export const TimeDisplay = styled.span`
+    font-size: 11px;
+    line-height: 18px;
+    color: #909DAA;
+    margin: 8px 4px 0 4px;
+    margin-top: auto;
 `;
 
 export const ListChatPart = styled.div`
@@ -148,24 +164,24 @@ export const DisplayChatProfileContent = styled.div`
     
 `;
 
-export const ChatContetnDisplay = styled.div`
+export const ChatContetnDisplay = styled(ScrollToBottom)`
     height: 100%;
     width: 100%;
     overflow-y: auto;
     display:table-cell;
     vertical-align:bottom;
     ::-webkit-scrollbar{
-        width: 10px;
+        width: 10px !important;
     }
       
     ::-webkit-scrollbar-thumb{
-        background: rgba(158, 158, 158,0.6);
-        border-radius: 8px;
+        background: rgba(158, 158, 158,0.6) !important;
+        border-radius: 8px !important;
     }
       
     ::-webkit-scrollbar-thumb:hover{
-        background: rgba(158, 158, 158,0.9);
-        border-radius: 8px;
+        background: rgba(158, 158, 158,0.9) !important;
+        border-radius: 8px !important;
     }
     
 `;
@@ -218,6 +234,7 @@ export const ChatBox = styled.div`
     padding: 6px 14px;
     color: #212B36;
     display:flex;
+    word-wrap:break-word;
     flex-direction:column;
     white-space: pre-line;  
     vertical-align: bottom;
@@ -235,4 +252,12 @@ font-size: 16px;
 color: #212B36;
 margin: 0 5px;
 cursor:pointer;
+`;
+
+export const ChatNotOpen = styled.div`
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
 `;

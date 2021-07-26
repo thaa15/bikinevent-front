@@ -97,8 +97,6 @@ const VendorChatContent = () => {
     else setResponsive(true);
   }, [window.innerWidth]);
 
-  console.log(conversations);
-
   return (
     <>
       {responsive ? (
