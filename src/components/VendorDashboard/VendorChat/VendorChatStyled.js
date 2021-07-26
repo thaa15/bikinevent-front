@@ -137,6 +137,7 @@ export const TimeDisplay = styled.span`
     line-height: 18px;
     color: #909DAA;
     margin: 8px 4px 0 4px;
+    margin-top: auto;
 `;
 
 export const ListChatPart = styled.div`
@@ -230,6 +231,7 @@ export const ChatBox = styled.div`
     padding: 6px 14px;
     color: #212B36;
     display:flex;
+    word-wrap:break-word;
     flex-direction:column;
     white-space: pre-line;  
     vertical-align: bottom;

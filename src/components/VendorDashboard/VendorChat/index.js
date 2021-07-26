@@ -40,10 +40,8 @@ const VendorChatContent = () => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const { loginInfo } = useContext(loginContext);
-  const messagesEndRef = useRef()
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView()
     const fetchConversations = async () => {
       const response = await roomService.getVendorRoom(
         loginInfo.userId,
@@ -218,7 +216,6 @@ const VendorChatContent = () => {
                                   </>
                                 );
                               })}
-                              <div ref={messagesEndRef} />
                             </ChatContetnDisplay>{" "}
                             <TypingPart>
                               <TextType
