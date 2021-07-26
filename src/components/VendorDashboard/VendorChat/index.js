@@ -155,7 +155,7 @@ const VendorChatContent = () => {
                                   <LastChatDisplay>
                                     <EllipsisText
                                       text={
-                                        "halo"
+                                        room.messages[room.messages.length - 1].text
                                       }
                                       length={"25"}
                                     />
