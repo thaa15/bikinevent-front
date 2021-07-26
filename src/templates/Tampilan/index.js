@@ -49,7 +49,9 @@ import {
 import { BoxNotEntry } from "../../components/VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { clientCartContext, loginContext } from "../../context";
 import { pembeliService } from "../../services/Pembeli";
-
+import { roomService } from "../../services/Room";
+import { vendorService } from "../../services/Vendor";
+import { useHistory } from "react-router-dom";
 const ShowAtTopProduk = ({
   id,
   image,
@@ -59,6 +61,7 @@ const ShowAtTopProduk = ({
   rating,
   ulasan,
   harga,
+  vendorId,
 }) => {
   const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
   const [rates, setRates] = useState(rating);
@@ -69,7 +72,7 @@ const ShowAtTopProduk = ({
     wrong: false,
   });
   const { clientCart, setClientCart } = useContext(clientCartContext);
-
+  const history = useHistory();
   const addToCart = async () => {
     if (loginInfo.role === "pembeli") {
       let body = null;
@@ -104,6 +107,40 @@ const ShowAtTopProduk = ({
     }
   };
 
+  const contactVendor = async () => {
+    const response = await roomService.getUserRoom(
+      loginInfo.userId,
+      loginInfo.token
+    );
+    const dataRoomUser = response.data;
+    const responseVendor = await vendorService.getVendorById(vendorId);
+    const dataVendor = responseVendor.data;
+    const resRoomVendor = await roomService.getVendorRoom(
+      dataVendor.user.id,
+      loginInfo.token
+    );
+    const dataRoom = resRoomVendor.data;
+    console.log(
+      dataRoom.filter((room) =>
+        dataRoomUser.some((roomUser) => roomUser.id === room.id)
+      ).length
+    );
+    if (
+      dataRoom.filter((room) =>
+        dataRoomUser.some((roomUser) => roomUser.id === room.id)
+      ).length > 0
+    ) {
+      return history.push("/client-chat");
+    } else {
+      let body = {
+        userId: loginInfo.userId,
+        vendorId: dataVendor.user.id,
+      };
+      const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      return history.push("/client-chat");
+    }
+  };
+
   useEffect(() => {
     if (rating === undefined) setRates(0);
     else setRates(rating);
@@ -132,7 +169,7 @@ const ShowAtTopProduk = ({
                   <CartShop />
                   Masukkan Keranjang
                 </ButtonBottom>
-                <ButtonBottom call>
+                <ButtonBottom call onClick={contactVendor}>
                   <ChatShop />
                   Hubungi Vendor
                 </ButtonBottom>
@@ -262,10 +299,10 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
               return (
                 <CommentsPart key={idx}>
                   <CommentProfile profile>
-                  {typeof data.user.foto_profil.url === "undefined" ||
+                    {typeof data.user.foto_profil.url === "undefined" ||
                     data.user.foto_profil.url == null ? (
-                      <UserPhoto  />
-                    ):(
+                      <UserPhoto />
+                    ) : (
                       <UserPhoto img={data.user.foto_profil.url} />
                     )}
                     <UserName>{data.user.nama_lengkap}</UserName>

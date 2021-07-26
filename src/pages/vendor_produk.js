@@ -36,6 +36,7 @@ const TampilanProdukPage = ({ match }) => {
         <>
           <ShowAtTopProduk
             id={productData.id}
+            vendorId={productData.vendor.id}
             image={productData.foto_produk[0].url}
             kota={productData.lokasi}
             judul={productData.nama}

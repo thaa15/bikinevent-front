@@ -28,7 +28,7 @@ import {
   PlacedChatBox,
   ChatBox,
   TimeDisplay,
-  ChatNotOpen
+  ChatNotOpen,
 } from "../../VendorDashboard/VendorChat/VendorChatStyled";
 import ChatResponsiveClient from "./ChatResponsiveClient";
 import EllipsisText from "react-ellipsis-text";
@@ -156,14 +156,18 @@ const PembeliChatPage = (props) => {
                               }}
                               active={currentChat == room}
                             >
-                              {typeof room.vendorId.foto_profil === "undefined" ||
-                                room.vendorId.foto_profil == null ? (
+                              {typeof room.vendorId.foto_profil ===
+                                "undefined" ||
+                              room.vendorId.foto_profil == null ? (
                                 <ListChatPart photo>
                                   <ProfilePhoto content />
                                 </ListChatPart>
                               ) : (
                                 <ListChatPart photo>
-                                  <ProfilePhoto content src={room.vendorId.foto_profil.url} />
+                                  <ProfilePhoto
+                                    content
+                                    src={room.vendorId.foto_profil.url}
+                                  />
                                 </ListChatPart>
                               )}
                               <ListChatPart>
@@ -171,12 +175,20 @@ const PembeliChatPage = (props) => {
                                   {room.vendorId.nama_lengkap}
                                 </ProfileName>
                                 <LastChatDisplay>
-                                  <EllipsisText
-                                    text={
-                                      room.messages[room.messages.length - 1].text
-                                    }
-                                    length={"20"}
-                                  />
+                                  {room.messages.length === 0 ? (
+                                    <EllipsisText
+                                      text={"Start Chatting"}
+                                      length={"20"}
+                                    />
+                                  ) : (
+                                    <EllipsisText
+                                      text={
+                                        room.messages[room.messages.length - 1]
+                                          .text
+                                      }
+                                      length={"20"}
+                                    />
+                                  )}
                                 </LastChatDisplay>
                               </ListChatPart>
                             </ChatPerson>
@@ -192,26 +204,33 @@ const PembeliChatPage = (props) => {
 
                       <ChatContent>
                         {typeof currentChat === "undefined" ||
-                          currentChat == null ? (
+                        currentChat == null ? (
                           <ChatNotOpen>
                             <NoEntryContent>
                               <ImageNoEntry src={nochat} alt="No Entry" />
-                              <h4 style={{ fontSize: "18px", color: "#212B36" }}>
+                              <h4
+                                style={{ fontSize: "18px", color: "#212B36" }}
+                              >
                                 Menampilkan pesan
                               </h4>
                               <p style={{ fontSize: "14px", color: "#909DAA" }}>
-                                Tekan salah satu pesan dengan pembeli untuk memulai display ini
+                                Tekan salah satu pesan dengan pembeli untuk
+                                memulai display ini
                               </p>
                             </NoEntryContent>
                           </ChatNotOpen>
                         ) : (
                           <>
                             <DisplayChatProfileContent>
-                              {typeof currentChat.vendorId.foto_profil === "undefined" ||
-                                currentChat.vendorId.foto_profil == null ? (
+                              {typeof currentChat.vendorId.foto_profil ===
+                                "undefined" ||
+                              currentChat.vendorId.foto_profil == null ? (
                                 <ProfilePhoto content />
                               ) : (
-                                <ProfilePhoto content src={currentChat.vendorId.foto_profil.url} />
+                                <ProfilePhoto
+                                  content
+                                  src={currentChat.vendorId.foto_profil.url}
+                                />
                               )}
                               <ProfileName>
                                 {currentChat.vendorId.nama_lengkap}
@@ -224,12 +243,16 @@ const PembeliChatPage = (props) => {
                                     {chat.sender == loginInfo.userId ? (
                                       <PlacedChatBox user key={idx}>
                                         <ChatBox>{chat.text}</ChatBox>
-                                        <TimeDisplay>{format(chat.createdAt)}</TimeDisplay>
+                                        <TimeDisplay>
+                                          {format(chat.createdAt)}
+                                        </TimeDisplay>
                                       </PlacedChatBox>
                                     ) : (
                                       <PlacedChatBox key={idx}>
                                         <ChatBox>{chat.text}</ChatBox>
-                                        <TimeDisplay>{format(chat.createdAt)}</TimeDisplay>
+                                        <TimeDisplay>
+                                          {format(chat.createdAt)}
+                                        </TimeDisplay>
                                       </PlacedChatBox>
                                     )}
                                   </>

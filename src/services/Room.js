@@ -1,6 +1,6 @@
 import { gatewayHelper } from "../utility/index";
 
-export const roomService = { getUserRoom, getVendorRoom };
+export const roomService = { getUserRoom, getVendorRoom, postRoom };
 
 async function getUserRoom(userId, token) {
   const body = {};
@@ -21,5 +21,10 @@ async function getVendorRoom(vendorId, token) {
     token,
     body
   );
+  return response;
+}
+
+async function postRoom(token, body) {
+  const response = await gatewayHelper.http("POST_AUTH", "rooms", token, body);
   return response;
 }
