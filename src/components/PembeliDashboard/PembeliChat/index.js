@@ -142,69 +142,76 @@ const PembeliChatPage = (props) => {
                   <>
                     <TemplateChat>
                       <ChatList>
-                        {conversations.map((room, idx) => {
-                          return (
-                            <ChatPerson
-                              active
-                              key={idx}
-                              onClick={(e) => {
-                                if (currentChat === room) {
-                                  return null;
-                                }
-                                setCurrentChat(room);
-                                setMessages(room.messages);
-                              }}
-                              active={currentChat == room}
-                            >
-                              {typeof room.vendorId.foto_profil ===
-                                "undefined" ||
-                              room.vendorId.foto_profil == null ? (
-                                <ListChatPart photo>
-                                  <ProfilePhoto content />
-                                </ListChatPart>
-                              ) : (
-                                <ListChatPart photo>
-                                  <ProfilePhoto
-                                    content
-                                    src={room.vendorId.foto_profil.url}
-                                  />
-                                </ListChatPart>
-                              )}
-                              <ListChatPart>
-                                <ProfileName>
-                                  {room.vendorId.nama_lengkap}
-                                </ProfileName>
-                                <LastChatDisplay>
-                                  {room.messages.length === 0 ? (
-                                    <EllipsisText
-                                      text={"Start Chatting"}
-                                      length={"20"}
-                                    />
+                        {conversations
+                          .sort((a, b) => {
+                            if(a.messages.length !== 0 && b.messages.length !== 0){
+                            return new Date(b.messages[b.messages.length - 1].createdAt)
+                              - new Date(a.messages[a.messages.length - 1].createdAt)}
+                          })
+                          .map((room, idx) => {
+                            return (
+                              <>
+                                <ChatPerson
+                                  key={idx}
+                                  onClick={(e) => {
+                                    if (currentChat === room) {
+                                      return null;
+                                    }
+                                    setCurrentChat(room);
+                                    setMessages(room.messages);
+                                  }}
+                                  active={currentChat == room}
+                                >
+                                  {typeof room.vendorId.foto_profil ===
+                                    "undefined" ||
+                                    room.vendorId.foto_profil == null ? (
+                                    <ListChatPart photo>
+                                      <ProfilePhoto content />
+                                    </ListChatPart>
                                   ) : (
-                                    <EllipsisText
-                                      text={
-                                        room.messages[room.messages.length - 1]
-                                          .text
-                                      }
-                                      length={"20"}
-                                    />
+                                    <ListChatPart photo>
+                                      <ProfilePhoto
+                                        content
+                                        src={room.vendorId.foto_profil.url}
+                                      />
+                                    </ListChatPart>
                                   )}
-                                </LastChatDisplay>
-                              </ListChatPart>
-                            </ChatPerson>
-                          );
-                        })}
-                        <div
-                          style={{
-                            borderBottom: "1px solid #E0E0E0",
-                            width: "100%",
-                          }}
-                        />
+                                  <ListChatPart>
+                                    <ProfileName>
+                                      {room.vendorId.nama_lengkap}
+                                    </ProfileName>
+                                    <LastChatDisplay>
+                                      {room.messages.length === 0 ? (
+                                        <EllipsisText
+                                          text={"Start Chatting"}
+                                          length={"20"}
+                                        />
+                                      ) : (
+                                        <EllipsisText
+                                          text={
+                                            room.messages[room.messages.length - 1]
+                                              .text
+                                          }
+                                          length={"20"}
+                                        />
+                                      )}
+                                    </LastChatDisplay>
+                                  </ListChatPart>
+                                </ChatPerson>
+                                <div
+                                  style={{
+                                    borderBottom: "1px solid #E0E0E0",
+                                    width: "100%",
+                                  }}
+                                />
+                              </>
+                            );
+                          })}
                       </ChatList>
 
                       <ChatContent>
                         {typeof currentChat === "undefined" ||
-                        currentChat == null ? (
+                          currentChat == null ? (
                           <ChatNotOpen>
                             <NoEntryContent>
                               <ImageNoEntry src={nochat} alt="No Entry" />
@@ -224,7 +231,7 @@ const PembeliChatPage = (props) => {
                             <DisplayChatProfileContent>
                               {typeof currentChat.vendorId.foto_profil ===
                                 "undefined" ||
-                              currentChat.vendorId.foto_profil == null ? (
+                                currentChat.vendorId.foto_profil == null ? (
                                 <ProfilePhoto content />
                               ) : (
                                 <ProfilePhoto
