@@ -20,12 +20,16 @@ import {
 import { AuthCliTrack } from "../../../../AllAuth";
 import { orderService } from "../../../../services/OrderHistory";
 import { loginContext } from "../../../../context";
+import { roomService } from "../../../../services/Room";
+import { vendorService } from "../../../../services/Vendor";
+import { useHistory } from "react-router-dom";
 
 const PelaksanaanPesananPage = ({ match }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderData, setOrderData] = useState();
   const { loginInfo } = useContext(loginContext);
   const [date, setDate] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +52,35 @@ const PelaksanaanPesananPage = ({ match }) => {
     };
     fetchData();
   }, []);
+
+  const contactVendor = async (vendorId) => {
+    const response = await roomService.getUserRoom(
+      loginInfo.userId,
+      loginInfo.token
+    );
+    const dataRoomUser = response.data;
+    const responseVendor = await vendorService.getVendorById(vendorId);
+    const dataVendor = responseVendor.data;
+    const resRoomVendor = await roomService.getVendorRoom(
+      dataVendor.user.id,
+      loginInfo.token
+    );
+    const dataRoom = resRoomVendor.data;
+    if (
+      dataRoom.filter((room) =>
+        dataRoomUser.some((roomUser) => roomUser.id === room.id)
+      ).length > 0
+    ) {
+      return history.push("/client-chat");
+    } else {
+      let body = {
+        userId: loginInfo.userId,
+        vendorId: dataVendor.user.id,
+      };
+      const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      return history.push("/client-chat");
+    }
+  };
 
   return (
     <>
@@ -96,8 +129,13 @@ const PelaksanaanPesananPage = ({ match }) => {
                     </ContentDetailTrack>
 
                     <BoxRowDetailed>
-                      <ButtonBottoms need>
-                        Hubungi Vendor via WhatsApp
+                      <ButtonBottoms
+                        need
+                        onClick={() => {
+                          contactVendor(prod.vendor.id);
+                        }}
+                      >
+                        Hubungi Vendor
                       </ButtonBottoms>
                       <ButtonBottoms call need>
                         Pesanan Selesai

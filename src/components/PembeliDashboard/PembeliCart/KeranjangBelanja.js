@@ -10,6 +10,7 @@ import {
 } from "../../../templates/GlobalTemplate";
 import { TrashsIcon, TrashButton } from "../PembeliProfil/PembeliProfil";
 import { AuthClinformation } from "../../../AllAuth";
+import { useHistory } from "react-router-dom";
 import {
   BgNoEntry,
   NoEntryContent,
@@ -26,12 +27,14 @@ import {
   PartTrashButtons,
   Shopping,
   LinkChat,
-  NoteInput
+  NoteInput,
 } from "./Styled";
 import { CheckBoks } from "../../SearchContent/Style/ProdukSearchStyled";
 import { clientCartContext, loginContext } from "../../../context";
 import { pembeliService } from "../../../services/Pembeli";
 import CheckBox from "./CheckBox";
+import { roomService } from "../../../services/Room";
+import { vendorService } from "../../../services/Vendor";
 
 const KeranjangBelanjaPage = memo((props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,8 +44,9 @@ const KeranjangBelanjaPage = memo((props) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [cartData, setCartData] = useState([]);
-  const [checks,setChecks] = useState([]);
-/*
+  const [checks, setChecks] = useState([]);
+  const history = useHistory();
+  /*
 loginInfo.pembeliId,
           loginInfo.token
 */
@@ -96,7 +100,7 @@ loginInfo.pembeliId,
         }
       }
     } else {
-      setIsLoading(true)
+      setIsLoading(true);
     }
   }, [cartData.length]);
 
@@ -108,6 +112,35 @@ loginInfo.pembeliId,
       ).length;
     }
     return index;
+  };
+
+  const contactVendor = async (vendorId) => {
+    const response = await roomService.getUserRoom(
+      loginInfo.userId,
+      loginInfo.token
+    );
+    const dataRoomUser = response.data;
+    const responseVendor = await vendorService.getVendorById(vendorId);
+    const dataVendor = responseVendor.data;
+    const resRoomVendor = await roomService.getVendorRoom(
+      dataVendor.user.id,
+      loginInfo.token
+    );
+    const dataRoom = resRoomVendor.data;
+    if (
+      dataRoom.filter((room) =>
+        dataRoomUser.some((roomUser) => roomUser.id === room.id)
+      ).length > 0
+    ) {
+      return history.push("/client-chat");
+    } else {
+      let body = {
+        userId: loginInfo.userId,
+        vendorId: dataVendor.user.id,
+      };
+      const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      return history.push("/client-chat");
+    }
   };
 
   const deleteCart = async (id) => {
@@ -124,9 +157,11 @@ loginInfo.pembeliId,
       loginInfo.token,
       body
     );
-    setCartData(cartData.filter(item => item.id !== id))
-    return response
+    setCartData(cartData.filter((item) => item.id !== id));
+    return response;
   };
+
+  console.log(tempVendorName);
   return (
     <>
       {isLoading ? (
@@ -167,7 +202,17 @@ loginInfo.pembeliId,
                               <Shopping />
                               <h6>{item}</h6>
                             </DivRowContent>
-                            <LinkChat>Hubungi Vendor</LinkChat>
+                            <LinkChat
+                              onClick={() => {
+                                contactVendor(
+                                  cartData.find(
+                                    (prod) => prod.vendor.nama_vendor === item
+                                  ).vendor.id
+                                );
+                              }}
+                            >
+                              Hubungi Vendor
+                            </LinkChat>
                           </DivRowContent>
                         </DivRow>
                         {cartData
@@ -188,12 +233,13 @@ loginInfo.pembeliId,
                                         let chck = checks;
                                         if (e.target.checked) {
                                           setPrices(
-                                            `${parseInt(prices) +
-                                            parseInt(e.target.value)
+                                            `${
+                                              parseInt(prices) +
+                                              parseInt(e.target.value)
                                             }`
                                           );
                                           arrWithArr.push(items.id);
-                                          chck[(findedIndex(ids)+idx)] = true
+                                          chck[findedIndex(ids) + idx] = true;
                                           if (
                                             arrVendor.every((ven) => {
                                               return ven !== items.vendor.id;
@@ -203,11 +249,12 @@ loginInfo.pembeliId,
                                           }
                                         } else {
                                           setPrices(
-                                            `${parseInt(prices) -
-                                            parseInt(e.target.value)
+                                            `${
+                                              parseInt(prices) -
+                                              parseInt(e.target.value)
                                             }`
                                           );
-                                          chck[(findedIndex(ids)+idx)] = false;
+                                          chck[findedIndex(ids) + idx] = false;
                                           let index = arrWithArr.indexOf(
                                             items.id
                                           );
@@ -221,14 +268,14 @@ loginInfo.pembeliId,
                                             arrVendor.splice(indexV, 1);
                                           }
                                         }
-                                        setChecks(chck)
+                                        setChecks(chck);
                                         setClientCart({
                                           ...clientCart,
                                           product: arrWithArr,
                                           vendor: arrVendor,
                                         });
                                       }}
-                                      checked={checks[(findedIndex(ids)+idx)]}
+                                      checked={checks[findedIndex(ids) + idx]}
                                     />
                                   </label>
                                   <DivRowContent content>

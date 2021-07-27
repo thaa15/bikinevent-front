@@ -37,6 +37,7 @@ import { orderService } from "../../../../services/OrderHistory";
 import { loginContext } from "../../../../context";
 import { productService } from "../../../../services/Product";
 import { vendorService } from "../../../../services/Vendor";
+import { roomService } from "../../../../services/Room";
 const PesananSelesaiPage = ({ match }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
@@ -97,6 +98,35 @@ const PesananSelesaiPage = ({ match }) => {
     );
     return response;
   };
+
+  const contactVendor = async (vendorId) => {
+    const response = await roomService.getUserRoom(
+      loginInfo.userId,
+      loginInfo.token
+    );
+    const dataRoomUser = response.data;
+    const responseVendor = await vendorService.getVendorById(vendorId);
+    const dataVendor = responseVendor.data;
+    const resRoomVendor = await roomService.getVendorRoom(
+      dataVendor.user.id,
+      loginInfo.token
+    );
+    const dataRoom = resRoomVendor.data;
+    if (
+      dataRoom.filter((room) =>
+        dataRoomUser.some((roomUser) => roomUser.id === room.id)
+      ).length > 0
+    ) {
+      return history.push("/client-chat");
+    } else {
+      let body = {
+        userId: loginInfo.userId,
+        vendorId: dataVendor.user.id,
+      };
+      const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      return history.push("/client-chat");
+    }
+  };
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (
@@ -122,7 +152,10 @@ const PesananSelesaiPage = ({ match }) => {
                         <h6>
                           Rp{parseInt(prod.harga).toLocaleString("id-ID")}
                         </h6>
-                        <ButtonBottoms call>
+                        <ButtonBottoms
+                          call
+                          onClick={() => contactVendor(prod.vendor.id)}
+                        >
                           <ChatShop />
                           Hubungi Vendor
                         </ButtonBottoms>
@@ -146,8 +179,8 @@ const PesananSelesaiPage = ({ match }) => {
                       <ButtonBottoms
                         need
                         onClick={() => {
-                          setVisible({ ...visible, rate: true })
-                          setOpenRate(ids)
+                          setVisible({ ...visible, rate: true });
+                          setOpenRate(ids);
                         }}
                       >
                         Berikan Penilaian
@@ -163,7 +196,9 @@ const PesananSelesaiPage = ({ match }) => {
                                       <ContentPopUp>
                                         <ReviewBg should={openRate === idx}>
                                           <BoxRowReview>
-                                            <ImageReview src={prod.foto_produk[0].url} />
+                                            <ImageReview
+                                              src={prod.foto_produk[0].url}
+                                            />
                                             <div
                                               style={{
                                                 rowGap: "15px",
@@ -187,8 +222,12 @@ const PesananSelesaiPage = ({ match }) => {
                                               </div>
                                               <p>{prod.nama}</p>
                                               <div>
-                                                <SubtitleReview>Penilaian</SubtitleReview>
-                                                <div style={{ marginTop: "-15px" }} />
+                                                <SubtitleReview>
+                                                  Penilaian
+                                                </SubtitleReview>
+                                                <div
+                                                  style={{ marginTop: "-15px" }}
+                                                />
                                                 <ReactStars
                                                   count={5}
                                                   size={40}
@@ -200,7 +239,9 @@ const PesananSelesaiPage = ({ match }) => {
                                                 />
                                               </div>
                                               <div>
-                                                <SubtitleReview>Ulasan</SubtitleReview>
+                                                <SubtitleReview>
+                                                  Ulasan
+                                                </SubtitleReview>
                                                 <InputModifArea
                                                   rows="5"
                                                   required
@@ -213,7 +254,10 @@ const PesananSelesaiPage = ({ match }) => {
                                               <ButtonBottomss
                                                 need
                                                 onClick={(e) => {
-                                                  setVisible({ dons: true, rate: false });
+                                                  setVisible({
+                                                    dons: true,
+                                                    rate: false,
+                                                  });
                                                   submitReview(
                                                     e,
                                                     prod._id,
@@ -230,7 +274,10 @@ const PesananSelesaiPage = ({ match }) => {
                                           <div
                                             style={{ marginLeft: "auto" }}
                                             onClick={() => {
-                                              setVisible({ ...visible, rate: false });
+                                              setVisible({
+                                                ...visible,
+                                                rate: false,
+                                              });
                                             }}
                                           >
                                             <DivButton review>X</DivButton>
@@ -256,8 +303,8 @@ const PesananSelesaiPage = ({ match }) => {
                                 />
                                 <SucRegWrited>Penilaian Terkirim!</SucRegWrited>
                                 <SucRegWrited message>
-                                  Terima kasih sudah membantu kami berkembang dengan
-                                  mengirimkan penilaian pelayanan kami
+                                  Terima kasih sudah membantu kami berkembang
+                                  dengan mengirimkan penilaian pelayanan kami
                                 </SucRegWrited>
                                 <GoHome
                                   onClick={() => {

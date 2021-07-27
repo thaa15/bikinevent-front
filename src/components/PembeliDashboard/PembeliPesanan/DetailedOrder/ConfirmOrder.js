@@ -20,13 +20,15 @@ import {
 import { AuthCliTrack } from "../../../../AllAuth";
 import { orderService } from "../../../../services/OrderHistory";
 import { loginContext } from "../../../../context";
-
+import { roomService } from "../../../../services/Room";
+import { vendorService } from "../../../../services/Vendor";
+import { useHistory } from "react-router-dom";
 const KonfirmasiPembayaranPage = ({ match }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderData, setOrderData] = useState();
   const { loginInfo } = useContext(loginContext);
   const [date, setDate] = useState();
-
+  const history = useHistory();
   useEffect(() => {
     const fetchData = async () => {
       const response = await orderService.getOrderById(
@@ -48,7 +50,35 @@ const KonfirmasiPembayaranPage = ({ match }) => {
     };
     fetchData();
   }, []);
-  console.log(orderData.kode_invoice)
+
+  const contactVendor = async (vendorId) => {
+    const response = await roomService.getUserRoom(
+      loginInfo.userId,
+      loginInfo.token
+    );
+    const dataRoomUser = response.data;
+    const responseVendor = await vendorService.getVendorById(vendorId);
+    const dataVendor = responseVendor.data;
+    const resRoomVendor = await roomService.getVendorRoom(
+      dataVendor.user.id,
+      loginInfo.token
+    );
+    const dataRoom = resRoomVendor.data;
+    if (
+      dataRoom.filter((room) =>
+        dataRoomUser.some((roomUser) => roomUser.id === room.id)
+      ).length > 0
+    ) {
+      return history.push("/client-chat");
+    } else {
+      let body = {
+        userId: loginInfo.userId,
+        vendorId: dataVendor.user.id,
+      };
+      const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      return history.push("/client-chat");
+    }
+  };
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (
@@ -74,7 +104,12 @@ const KonfirmasiPembayaranPage = ({ match }) => {
                         <h6>
                           Rp{parseInt(prod.harga).toLocaleString("id-ID")}
                         </h6>
-                        <ButtonBottoms call>
+                        <ButtonBottoms
+                          call
+                          onClick={() => {
+                            contactVendor(prod.vendor.id);
+                          }}
+                        >
                           <ChatShop />
                           Hubungi Vendor
                         </ButtonBottoms>
