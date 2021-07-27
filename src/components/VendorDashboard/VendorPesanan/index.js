@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { loginContext } from "../../../context";
+import { roomService } from "../../../services/Room";
 import { GlobalTemplate } from "../../../templates/GlobalTemplate";
 import DashboardSite from "../DashboardSideVendor";
 import { MainVendash, TempVendash } from "../VendorDashboardStyled";
@@ -19,6 +22,8 @@ import {
 const VendorPesananContent = ({ data }) => {
   const pesanan = data.filter((stat) => stat.status !== "Completed");
   const ended = data.filter((stat) => stat.status === "Completed");
+  const { loginInfo } = useContext(loginContext);
+  const history = useHistory();
   const convertDate = (string) => {
     const date = new Date(string);
     return (
@@ -26,7 +31,30 @@ const VendorPesananContent = ({ data }) => {
     );
   };
 
-  console.log(pesanan);
+  const contactUser = async (userId) => {
+    const responseVendor = await roomService.getVendorRoom(
+      loginInfo.userId,
+      loginInfo.token
+    );
+    const dataRoomVendor = responseVendor.data;
+    const resRoomUser = await roomService.getUserRoom(userId, loginInfo.token);
+    const dataRoom = resRoomUser.data;
+    console.log(dataRoom, dataRoomVendor);
+    if (
+      dataRoom.filter((room) =>
+        dataRoomVendor.some((roomUser) => roomUser.id === room.id)
+      ).length > 0
+    ) {
+      return history.push("/vendor-chat");
+    } else {
+      let body = {
+        userId: userId,
+        vendorId: loginInfo.userId,
+      };
+      const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      return history.push("/vendor-chat");
+    }
+  };
   return (
     <GlobalTemplate>
       <TempVendash>
@@ -74,7 +102,11 @@ const VendorPesananContent = ({ data }) => {
                               Menunggu Pembayaran
                             </SubJudulContent>
                             <GridButton>
-                              <ButtonChat to="/vendor-chat">
+                              <ButtonChat
+                                onClick={() =>
+                                  contactUser(item.pembeli.user.id)
+                                }
+                              >
                                 Hubungi Pembeli
                               </ButtonChat>
                               <ButtonPengaduan>
