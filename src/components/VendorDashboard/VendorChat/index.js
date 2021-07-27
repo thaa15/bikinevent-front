@@ -66,7 +66,6 @@ const VendorChatContent = () => {
       });
     });
   }, [socket]);
-  console.log("current", currentChat);
 
   useEffect(() => {
     arrivalMessage &&
@@ -127,72 +126,78 @@ const VendorChatContent = () => {
                   ) : (
                     <>
                       <ChatList>
-                        {conversations.map((room, idx) => {
-                          return (
-                            <>
-                              <ChatPerson
-                                active
-                                key={idx}
-                                onClick={(e) => {
-                                  if (currentChat === room) {
-                                    return null;
-                                  }
-                                  setCurrentChat(room);
-                                  setMessages(room.messages);
-                                }}
-                                active={currentChat == room}
-                              >
-                                {typeof room.userId.foto_profil ===
-                                  "undefined" ||
-                                room.userId.foto_profil == null ? (
-                                  <ListChatPart photo>
-                                    <ProfilePhoto content />
-                                  </ListChatPart>
-                                ) : (
-                                  <ListChatPart photo>
-                                    <ProfilePhoto
-                                      content
-                                      src={room.userId.foto_profil.url}
-                                    />
-                                  </ListChatPart>
-                                )}
-                                <ListChatPart>
-                                  <ProfileName>
-                                    {room.userId.nama_lengkap}
-                                  </ProfileName>
-                                  <LastChatDisplay>
-                                    {room.messages.length == 0 ? (
-                                      <EllipsisText
-                                        text={"Start Chatting"}
-                                        length={"20"}
+                        {conversations
+                          .sort((a, b) =>{
+                            if(a.messages.length !== 0 && b.messages.length !== 0){
+                            return new Date(b.messages[b.messages.length - 1].createdAt)
+                              - new Date(a.messages[a.messages.length - 1].createdAt)}
+                          })
+                          .map((room, idx) => {
+                            return (
+                              <>
+                                <ChatPerson
+                                  active
+                                  key={idx}
+                                  onClick={(e) => {
+                                    if (currentChat === room) {
+                                      return null;
+                                    }
+                                    setCurrentChat(room);
+                                    setMessages(room.messages);
+                                  }}
+                                  active={currentChat == room}
+                                >
+                                  {typeof room.userId.foto_profil ===
+                                    "undefined" ||
+                                    room.userId.foto_profil == null ? (
+                                    <ListChatPart photo>
+                                      <ProfilePhoto content />
+                                    </ListChatPart>
+                                  ) : (
+                                    <ListChatPart photo>
+                                      <ProfilePhoto
+                                        content
+                                        src={room.userId.foto_profil.url}
                                       />
-                                    ) : (
-                                      <EllipsisText
-                                        text={
-                                          room.messages[
-                                            room.messages.length - 1
-                                          ].text
-                                        }
-                                        length={"20"}
-                                      />
-                                    )}
-                                  </LastChatDisplay>
-                                </ListChatPart>
-                              </ChatPerson>
-                              <div
-                                style={{
-                                  borderBottom: "1px solid #E0E0E0",
-                                  width: "100%",
-                                }}
-                              />
-                            </>
-                          );
-                        })}
+                                    </ListChatPart>
+                                  )}
+                                  <ListChatPart>
+                                    <ProfileName>
+                                      {room.userId.nama_lengkap}
+                                    </ProfileName>
+                                    <LastChatDisplay>
+                                      {room.messages.length == 0 ? (
+                                        <EllipsisText
+                                          text={"Start Chatting"}
+                                          length={"20"}
+                                        />
+                                      ) : (
+                                        <EllipsisText
+                                          text={
+                                            room.messages[
+                                              room.messages.length - 1
+                                            ].text
+                                          }
+                                          length={"20"}
+                                        />
+                                      )}
+                                    </LastChatDisplay>
+                                  </ListChatPart>
+                                </ChatPerson>
+                                <div
+                                  style={{
+                                    borderBottom: "1px solid #E0E0E0",
+                                    width: "100%",
+                                  }}
+                                />
+                              </>
+                            );
+                          })}
                       </ChatList>
 
                       <ChatContent>
                         {typeof currentChat === "undefined" ||
-                        currentChat == null ? (
+                          currentChat == null ? (
                           <ChatNotOpen>
                             <NoEntryContent>
                               <ImageNoEntry src={nochat} alt="No Entry" />
@@ -212,12 +217,12 @@ const VendorChatContent = () => {
                             <DisplayChatProfileContent>
                               {typeof currentChat.userId.foto_profil ===
                                 "undefined" ||
-                              currentChat.userId.foto_profil.url == null ? (
+                                currentChat.userId.foto_profil == null ? (
                                 <ProfilePhoto content />
                               ) : (
                                 <ProfilePhoto
                                   content
-                                  src={currentChat.userId.foto_profil}
+                                  src={currentChat.userId.foto_profil.url}
                                 />
                               )}
                               <ProfileName>
