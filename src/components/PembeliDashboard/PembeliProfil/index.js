@@ -41,6 +41,9 @@ import {
 } from "./PembeliProfil";
 import { authService } from "../../../services/Auth";
 import axios from "axios";
+import { ButtonAddInformation } from "../PembeliCart/Styled";
+import { LoginLabel, LoginInput } from "../../LogReg/LoginPage/LoginStyled";
+import { InputCityApart } from "../../LogReg/RegisterPage/RegisterStyled";
 
 const PembeliProfilContent = ({
   owner,
@@ -59,6 +62,12 @@ const PembeliProfilContent = ({
     wrong: false,
     right: false
   });
+  const [newData, setNewData] = useState({
+    nama_pembeli: null,
+    no_hp_pembeli: null,
+    alamat_pembeli: null,
+  });
+  const [addNewInfo, setAddNewInfo] = useState(false);
 
   const onDropProfile = (files) => {
     const [uploadedFile] = files;
@@ -230,11 +239,13 @@ const PembeliProfilContent = ({
         ) : (
           <GridInformasi>
             {client_information.map((item, idx) => {
+              console.log(client_information)
               return (
                 <BoxClientInformation key={idx}>
                   <ContentInformation>
                     <TitleName>{item.nama_pembeli}</TitleName>
                     <InformationContent>{item.no_hp_pembeli}</InformationContent>
+                    <InformationContent>{`Email`}</InformationContent>
                     <InformationContent>{item.alamat_pembeli}</InformationContent>
                   </ContentInformation>
 
@@ -248,6 +259,97 @@ const PembeliProfilContent = ({
             })}
           </GridInformasi>
         )}
+        <>
+          {addNewInfo ? (
+            <>
+              <ButtonAddInformation
+                onClick={() => setAddNewInfo(false)}
+              >
+                - Batal Tambah
+              </ButtonAddInformation>
+
+              <h6
+                style={{
+                  margin: "40px 0 15px",
+                  fontSize: "18px",
+                  color: "#212b36",
+                }}
+              >
+                Informasi Pembeli Baru
+              </h6>
+
+              <form>
+                <LoginLabel for="address">Nama Lengkap</LoginLabel>
+                <LoginInput
+                  type="text"
+                  required
+                  name="name"
+                  onChange={(e) => {
+                    setNewData({
+                      ...newData,
+                      nama_pembeli: e.target.value,
+                    });
+                  }}
+                />
+
+                <InputCityApart>
+                  <div style={{ flexBasis: "50%" }}>
+                    <LoginLabel for="city">E-mail</LoginLabel>
+                    <br />
+                    <LoginInput
+                      type="email"
+                      required
+                      name="email"
+                    />
+                    <br />
+                  </div>
+                  <div style={{ flexBasis: "48%" }}>
+                    <LoginLabel for="pos">Nomor HP</LoginLabel>
+                    <br />
+                    <LoginInput
+                      type="text"
+                      autocomplete="off"
+                      required
+                      name="telephone"
+                      value={(newData.no_hp_pembeli)}
+                      onChange={(e) => {
+                        let regexp = /^[0-9\b]+$/
+                        if (e.target.value === '' || regexp.test(e.target.value)) {
+                          setNewData({
+                            ...newData,
+                            no_hp_pembeli: e.target.value,
+                          });
+                        }
+                      }}
+                    />
+                    <br />
+                  </div>
+                </InputCityApart>
+
+                <LoginLabel for="address">
+                  Alamat Tempat Tinggal
+                </LoginLabel>
+                <LoginInput
+                  type="text"
+                  required
+                  name="address"
+                  onChange={(e) => {
+                    setNewData({
+                      ...newData,
+                      alamat_pembeli: e.target.value,
+                    });
+                  }}
+                />
+              </form>
+            </>
+          ) : (
+            <ButtonAddInformation
+              onClick={() => setAddNewInfo(true)}
+            >
+              + Tambah Pembeli Baru
+            </ButtonAddInformation>
+          )}
+        </>
 
         <TitleProfileVendor>Foto Profil</TitleProfileVendor>
         <UploadFile>

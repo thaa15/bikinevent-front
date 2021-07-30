@@ -24,6 +24,9 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import axios from "axios";
 import { AuthSucRegs } from "../../../AllAuth";
+import { layananService } from "../../../services/Layanan";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
 
 const Vendorregs = (props) => {
@@ -42,6 +45,7 @@ const Vendorregs = (props) => {
   const [isPreviewTabAv, setIsPreviewTabAv] = useState(false);
   const [isPreviewAvailable, setIsPreviewAvailable] = useState(false);
   const [condTerm, setCondTerm] = useState(false);
+  const [syarat, setSyarat] = useState([]);
   const [formData, setFormData] = useState({
     nama_lengkap: "",
     email: "",
@@ -216,6 +220,12 @@ const Vendorregs = (props) => {
 
   useEffect(() => {
     toggle();
+    const fetchData = async () => {
+      const response = await layananService.getLayanan();
+      const data = response.data;
+      setSyarat(data.syarat_ketentuan);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -227,6 +237,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="username"
           onChange={(e) => {
             setFormData({ ...formData, username: e.target.value });
@@ -239,6 +250,7 @@ const Vendorregs = (props) => {
           type="email"
           required
           name="email"
+          autocomplete="off"
           onChange={(e) => {
             setFormData({ ...formData, email: e.target.value });
           }}
@@ -255,6 +267,7 @@ const Vendorregs = (props) => {
             title="Enam atau lebih karakter"
             name="password"
             pw
+            autocomplete="off"
             onChange={(e) => {
               setFormData({ ...formData, password: e.target.value });
             }}
@@ -278,6 +291,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="nama_lengkap"
           onChange={(e) => {
             setFormData({ ...formData, nama_lengkap: e.target.value });
@@ -291,6 +305,7 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="nik"
+          autocomplete="off"
           value={formData.NIK}
           onChange={(e) => {
             let regexp = /^[0-9\b]+$/;
@@ -310,6 +325,7 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="birth"
+          autocomplete="off"
           onChange={(e) => {
             setFormData({
               ...formData,
@@ -360,6 +376,7 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="nameven"
+          autocomplete="off"
           onChange={(e) => {
             setFormData({
               ...formData,
@@ -373,6 +390,7 @@ const Vendorregs = (props) => {
         <br />
         <LoginInput
           type="text"
+          autocomplete="off"
           required
           name="address"
           onChange={(e) => {
@@ -391,6 +409,7 @@ const Vendorregs = (props) => {
             <LoginInput
               type="text"
               required
+              autocomplete="off"
               name="city"
               onChange={(e) => {
                 setFormData({
@@ -406,6 +425,7 @@ const Vendorregs = (props) => {
             <br />
             <LoginInput
               type="text"
+              autocomplete="off"
               required
               name="pos"
               value={formData.kode_pos}
@@ -427,6 +447,7 @@ const Vendorregs = (props) => {
         <br />
         <LoginInput
           type="text"
+          autocomplete="off"
           required
           value={formData.phone_number}
           name="num"
@@ -446,6 +467,7 @@ const Vendorregs = (props) => {
         <br />
         <LoginInput
           type="text"
+          autocomplete="off"
           required
           name="rek"
           value={formData.no_rekening}
@@ -466,6 +488,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="bank"
           onChange={(e) => {
             setFormData({
@@ -481,6 +504,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="rekan"
           onChange={(e) => {
             setFormData({
@@ -655,37 +679,13 @@ const Vendorregs = (props) => {
           <PopUpBg need>
             <ContentPopUp>
               <CondTermBg>
-                <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+              <CondTermTitle>{syarat.title}</CondTermTitle>
                 <CondTermContent>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
+                  <ReactMarkdown
+                    children={syarat.desc}
+                    plugins={[[gfm, { singleTilde: false }]]}
+                    allowDangerousHtml={true}
+                  />
                 </CondTermContent>
                 <Buttonslog
                   onClick={() => {

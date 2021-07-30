@@ -340,6 +340,7 @@ const VendorProdukForm = () => {
           <PriceLabel>Rp</PriceLabel>
           <InputModif
             harga
+            autocomplete="off"
             type="text"
             required
             name="price"

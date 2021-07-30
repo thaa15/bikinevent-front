@@ -58,8 +58,13 @@ export const LegalWritedContent = styled.div`
     font-size: ${(props) => props.title ? "22px" : "14px"};
     line-height: 20px;
     color: #212B36;
-    ul {
+    ul,ol {
         padding-left: 20px;
+    }
+    h1,h2,h3,h4,h5,h6{
+        line-height: 20px;
+        margin: 10px 0 6px;
+        color: #212B36;
     }
     img{
         width: 90%;

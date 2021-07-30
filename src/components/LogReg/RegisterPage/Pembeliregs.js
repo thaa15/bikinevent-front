@@ -25,6 +25,9 @@ import {
   ContentPopUp,
 } from "../../../templates/GlobalTemplate";
 import { pembeliService } from "../../../services/Pembeli";
+import { layananService } from "../../../services/Layanan";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 import { loginContext } from "../../../context";
 
 const Pembeliregs = (props) => {
@@ -41,6 +44,15 @@ const Pembeliregs = (props) => {
     role: "609d0717322f2d5510e1a0a7",
   });
   const [error, setError] = useState([]);
+  const [syarat, setSyarat] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await layananService.getLayanan();
+      const data = response.data;
+      setSyarat(data.syarat_ketentuan);
+    };
+    fetchData();
+  }, []);
 
   const toggle = () => {
     setVisible(!visible);
@@ -109,6 +121,7 @@ const Pembeliregs = (props) => {
           type="text"
           required
           name="username"
+          autocomplete="off"
           onChange={(e) =>
             setFormData({ ...formData, username: e.target.value })
           }
@@ -120,6 +133,7 @@ const Pembeliregs = (props) => {
         <LoginInput
           type="email"
           required
+          autocomplete="off"
           name="email"
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
@@ -132,6 +146,7 @@ const Pembeliregs = (props) => {
             type={typepw}
             required
             pattern=".{6,}"
+            autocomplete="off"
             title="Enam atau lebih karakter"
             name="password"
             pw
@@ -160,6 +175,7 @@ const Pembeliregs = (props) => {
           value={(formData.phone_number)}
           required
           name="phone_number"
+          autocomplete="off"
           onChange={(e) => {
             let regexp = /^[0-9\b]+$/
             if (e.target.value === '' || regexp.test(e.target.value)) {
@@ -209,37 +225,13 @@ const Pembeliregs = (props) => {
           <PopUpBg need>
             <ContentPopUp>
               <CondTermBg>
-                <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+                <CondTermTitle>{syarat.title}</CondTermTitle>
                 <CondTermContent>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
+                  <ReactMarkdown
+                    children={syarat.desc}
+                    plugins={[[gfm, { singleTilde: false }]]}
+                    allowDangerousHtml={true}
+                  />
                 </CondTermContent>
                 <Buttonslog
                   onClick={() => {

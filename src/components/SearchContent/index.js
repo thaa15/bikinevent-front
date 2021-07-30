@@ -305,6 +305,7 @@ const SearchContent = () => {
                         <PriceLabel>Rp</PriceLabel>
                         <InputModif
                           harga
+                          autocomplete="off"
                           type="text"
                           placeholder="Harga Minimum"
                           name="priceMin"
@@ -328,6 +329,7 @@ const SearchContent = () => {
                           harga
                           type="text"
                           lang="id"
+                          autocomplete="off"
                           placeholder="Harga Maksimum"
                           name="priceMaks"
                           value={(getRangeFilter.hargaMax)}

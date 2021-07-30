@@ -78,9 +78,10 @@ export const CopyWright = styled.div`
 `;
 
 export const SocialIcons = styled.div`
-  display: flex;
+  display: grid;
   align-items: center;
   width: 175px;
+  grid-template-columns: repeat(4, 1fr);
 `;
 
 export const SocialIconLink = styled.a`
