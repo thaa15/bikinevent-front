@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import {AiFillGooglePlusCircle} from "react-icons/ai";
 
 export const LoginBg = styled.div`
-    min-height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +13,6 @@ export const LoginBg = styled.div`
 export const LoginBox = styled.div`
     min-width: 400px;
     width: 30%;
-    min-height: 400px;
     background: white;
     border-radius: 10px;
     padding: 36px;

@@ -50,6 +50,8 @@ import PelaksanaanPesananPage from "./components/PembeliDashboard/PembeliPesanan
 import PesananSelesaiPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/DoneOrder";
 import PembeliChatPage from "./components/PembeliDashboard/PembeliChat";
 import { useHistory } from "react-router-dom";
+import ForgotPasswordPage from "./components/LogReg/LoginPage/ForgotPassPage";
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -202,6 +204,7 @@ function App() {
                     <Route path="/privasi" component={Privasi} exact />
                     <Route path="/refund" component={Refund} exact />
                     <Route path="/syarat" component={Syarat} exact />
+                    <Route path="/forgot-password" component={ForgotPasswordPage} exact/>
                     <ProtectedPembeliLogin
                       path="/client-purchase/cart"
                       role={loginInfo.role}

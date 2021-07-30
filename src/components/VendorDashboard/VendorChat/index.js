@@ -281,7 +281,8 @@ const VendorChatContent = () => {
         </>
       ) : (
         <>
-          <ChatResponsive />
+          <ChatResponsive 
+          conversations={conversations} />
         </>
       )}
     </>

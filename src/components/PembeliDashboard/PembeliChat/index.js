@@ -106,7 +106,7 @@ const PembeliChatPage = (props) => {
   useEffect(() => {
     if (window.innerWidth < 861) setResponsive(false);
     else setResponsive(true);
-  }, [window.innerWidth]);
+  }, []);
 
   console.log(conversations);
   return (
@@ -290,7 +290,8 @@ const PembeliChatPage = (props) => {
                   </>
                 ) : (
                   <>
-                    <ChatResponsiveClient />
+                    <ChatResponsiveClient 
+                    conversations={conversations}/>
                   </>
                 )}
               </BgChat>
