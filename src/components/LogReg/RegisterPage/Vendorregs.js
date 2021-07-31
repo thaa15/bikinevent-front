@@ -25,6 +25,9 @@ import upfil from "../../../images/uploadfile.png";
 import axios from "axios";
 import { AuthSucRegs } from "../../../AllAuth";
 import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
+import { layananService } from "../../../services/Layanan";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -42,6 +45,7 @@ const Vendorregs = (props) => {
   const [isPreviewTabAv, setIsPreviewTabAv] = useState(false);
   const [isPreviewAvailable, setIsPreviewAvailable] = useState(false);
   const [condTerm, setCondTerm] = useState(false);
+  const [syarat, setSyarat] = useState();
   const [formData, setFormData] = useState({
     nama_lengkap: "",
     email: "",
@@ -66,6 +70,15 @@ const Vendorregs = (props) => {
     role: "609d0be1b3f24575108f0a88",
   });
   const [error, setError] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await layananService.getLayanan();
+      const data = response.data;
+      setSyarat(data.syarat_ketentuan);
+    };
+    fetchData();
+  }, []);
 
   const onDropWajah = (files) => {
     const [uploadedFile] = files;
@@ -637,12 +650,29 @@ const Vendorregs = (props) => {
 
         <Buttonslog
           type="submit"
-          disabled={!(previewWajah.length == 0 && previewKTP.length == 0 && previewTab.length == 0 && previewSrc.length ==0)}
-          allowed={!(previewWajah.length == 0 && previewKTP.length == 0 && previewTab.length == 0 && previewSrc.length ==0)}
+          disabled={
+            !(
+              previewWajah.length == 0 &&
+              previewKTP.length == 0 &&
+              previewTab.length == 0 &&
+              previewSrc.length == 0
+            )
+          }
+          allowed={
+            !(
+              previewWajah.length == 0 &&
+              previewKTP.length == 0 &&
+              previewTab.length == 0 &&
+              previewSrc.length == 0
+            )
+          }
         >
           <Buttons>Daftar</Buttons>
         </Buttonslog>
-        {previewWajah.length !== 0 && previewKTP.length !== 0 && previewTab.length !== 0 && previewSrc.length !==0 ? (
+        {previewWajah.length !== 0 &&
+        previewKTP.length !== 0 &&
+        previewTab.length !== 0 &&
+        previewSrc.length !== 0 ? (
           <></>
         ) : (
           <span style={{ color: "#ff0000", fontSize: "12px" }}>
@@ -655,37 +685,13 @@ const Vendorregs = (props) => {
           <PopUpBg need>
             <ContentPopUp>
               <CondTermBg>
-                <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+                {/* <CondTermTitle>Syarat dan Ketentuan</CondTermTitle> */}
                 <CondTermContent>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
+                  <ReactMarkdown
+                    children={syarat.desc}
+                    plugins={[[gfm, { singleTilde: false }]]}
+                    allowDangerousHtml={true}
+                  />
                 </CondTermContent>
                 <Buttonslog
                   onClick={() => {

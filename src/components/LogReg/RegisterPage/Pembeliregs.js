@@ -26,6 +26,9 @@ import {
 } from "../../../templates/GlobalTemplate";
 import { pembeliService } from "../../../services/Pembeli";
 import { loginContext } from "../../../context";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+import { layananService } from "../../../services/Layanan";
 
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -41,6 +44,7 @@ const Pembeliregs = (props) => {
     role: "609d0717322f2d5510e1a0a7",
   });
   const [error, setError] = useState([]);
+  const [syarat, setSyarat] = useState();
 
   const toggle = () => {
     setVisible(!visible);
@@ -50,6 +54,15 @@ const Pembeliregs = (props) => {
       setTypepw("password");
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await layananService.getLayanan();
+      const data = response.data;
+      setSyarat(data.syarat_ketentuan);
+    };
+    fetchData();
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -157,13 +170,13 @@ const Pembeliregs = (props) => {
         <br />
         <LoginInput
           type="text"
-          value={(formData.phone_number)}
+          value={formData.phone_number}
           required
           name="phone_number"
           onChange={(e) => {
-            let regexp = /^[0-9\b]+$/
-            if (e.target.value === '' || regexp.test(e.target.value)) {
-              setFormData({ ...formData, phone_number: e.target.value })
+            let regexp = /^[0-9\b]+$/;
+            if (e.target.value === "" || regexp.test(e.target.value)) {
+              setFormData({ ...formData, phone_number: e.target.value });
             }
           }}
         />
@@ -209,38 +222,16 @@ const Pembeliregs = (props) => {
           <PopUpBg need>
             <ContentPopUp>
               <CondTermBg>
-                <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+                {/* <CondTermTitle>Syarat dan Ketentuan</CondTermTitle> */}
+
                 <CondTermContent>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
-                  <br />
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                  <br />
+                  <ReactMarkdown
+                    children={syarat.desc}
+                    plugins={[[gfm, { singleTilde: false }]]}
+                    allowDangerousHtml={true}
+                  />
                 </CondTermContent>
+
                 <Buttonslog
                   onClick={() => {
                     setCondTerm(false);

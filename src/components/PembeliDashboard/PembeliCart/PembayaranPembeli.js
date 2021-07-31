@@ -181,7 +181,7 @@ const PembayaranPembeliPage = (props) => {
                           setCondTerm(true);
                         }}
                       >
-                        Gunakan sistem DP{" "}
+                        Gunakan sistem pembayaran bertahap{" "}
                         <TermanConds>Syarat dan Ketentuan</TermanConds>
                       </div>
                     </CheckBoxInput>
