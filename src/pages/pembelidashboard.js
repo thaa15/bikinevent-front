@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import HeaderSmall from "../templates/HeaderSmall";
 import LoadingPage from "../templates/Loading";
 import PembeliProfilContent from "../components/PembeliDashboard/PembeliProfil";
-import { ProfilePembeli } from "../datas/vendordata";
 import { pembeliService } from "../services/Pembeli";
 import { authService } from "../services/Auth";
 import { loginContext } from "../context";
@@ -37,7 +36,6 @@ export const PembeliProfil = () => {
       ) : (
         <>
           <HeaderSmall text="Pengaturan Profile" />
-
           <PembeliProfilContent
             owner={userData.nama_lengkap}
             email={userData.email}

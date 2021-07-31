@@ -17,7 +17,7 @@ import {
   Buttonsgoogle,
   GooglePlus,
   ForgotPass,
-  BgForgot
+  BgForgot,
 } from "./LoginStyled";
 import LoadingPage from "../../../templates/Loading";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
@@ -29,18 +29,27 @@ import {
   PopUpBg,
   Succesicon,
   Failedicon,
-  ContentPopUp
+  ContentPopUp,
 } from "../../../templates/GlobalTemplate";
 import sucregcheck from "../../../images/sucregcheck.png";
-import { SucRegWrited, GoHome, SucRegBox, SucRegBg } from "../SuccessRegPage/SuccessRegStyled";
-import { 
+import {
+  SucRegWrited,
+  GoHome,
+  SucRegBox,
+  SucRegBg,
+} from "../SuccessRegPage/SuccessRegStyled";
+import {
   ChangePwBg,
   TitleApart,
   DivButton,
   DivisionTitle,
   TitleChangepw,
 } from "../../VendorDashboard/VendorProfil/VendorProfileStyled";
-import { InputModif,LabelVendorProduk } from "../../VendorDashboard/VendorProduk/VendorProdukStyled";
+import {
+  InputModif,
+  LabelVendorProduk,
+} from "../../VendorDashboard/VendorProduk/VendorProdukStyled";
+import axios from "axios";
 
 const LoginPage = (props) => {
   const [visible, setVisible] = useState(true);
@@ -150,6 +159,13 @@ const LoginPage = (props) => {
   useEffect(() => {
     toggle();
   }, []);
+
+  // const forgetPassword = async () => {
+  //   const response = await axios.post("http://:1337/auth/forgot-password", {
+  //     email: "jonathan.sendiko@gmail.com",
+  //   });
+  //   console.log(response);
+  // };
   return (
     <>
       {isLoading ? (
@@ -171,9 +187,22 @@ const LoginPage = (props) => {
               />
               <br />
 
-              <div style={{ width: "100%", display: "flex", flexDirection: "row", marginTop: "10px" }}>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: "10px",
+                }}
+              >
                 <LoginLabel for="password">Password</LoginLabel>
-                <ForgotPass onClick={() => { setVisibles({ dons: false, rate: true }); }}>Lupa Password</ForgotPass>
+                <ForgotPass
+                  onClick={() => {
+                    setVisibles({ dons: false, rate: true });
+                  }}
+                >
+                  Lupa Password
+                </ForgotPass>
               </div>
               <LogApart>
                 <LoginInput
@@ -211,13 +240,18 @@ const LoginPage = (props) => {
                           <DivisionTitle>
                             <TitleChangepw>Lupa Password</TitleChangepw>
                           </DivisionTitle>
-                          <DivisionTitle button onClick={() => { setVisibles({ dons: false, rate: false }); }}>
-                            <DivButton>
-                              X
-                            </DivButton>
+                          <DivisionTitle
+                            button
+                            onClick={() => {
+                              setVisibles({ dons: false, rate: false });
+                            }}
+                          >
+                            <DivButton>X</DivButton>
                           </DivisionTitle>
                         </TitleApart>
-                        <LabelVendorProduk awal>Email Pengguna</LabelVendorProduk>
+                        <LabelVendorProduk awal>
+                          Email Pengguna
+                        </LabelVendorProduk>
                         <InputModif
                           type="email"
                           required
@@ -227,16 +261,17 @@ const LoginPage = (props) => {
                         />
                         <LabelVendorProduk>Jenis Akun</LabelVendorProduk>
                         <p>{role}</p>
-                        
-                        <Buttonslog onClick={() => {
-                          setVisibles({ dons: true, rate: false });
-                        }}>
+
+                        <Buttonslog
+                          onClick={() => {
+                            setVisibles({ dons: true, rate: false });
+                          }}
+                        >
                           <Buttons>Selanjutnya</Buttons>
                         </Buttonslog>
                       </BgForgot>
                     </ContentPopUp>
                   </PopUpBg>
-
                 </>
               ) : visibles.dons ? (
                 <>
@@ -248,7 +283,9 @@ const LoginPage = (props) => {
                           alt="success"
                           style={{ margin: "12px auto" }}
                         />
-                        <SucRegWrited>Permintaan Ubah Password Berhasil</SucRegWrited>
+                        <SucRegWrited>
+                          Permintaan Ubah Password Berhasil
+                        </SucRegWrited>
                         <SucRegWrited message>
                           Klik link pada email anda untuk mengubah password
                         </SucRegWrited>
@@ -263,7 +300,9 @@ const LoginPage = (props) => {
                     </ContentPopUp>
                   </PopUpBg>
                 </>
-              ) : (<></>)}
+              ) : (
+                <></>
+              )}
 
               <div
                 style={{

@@ -76,7 +76,7 @@ const SearchContent = () => {
   const [searchedProduct, setSearchedProduct] = useState([]);
   const [filteredProduct, setFilteredProduct] = useState([]);
   const [searchedVendor, setSearchedVendor] = useState([]);
-  const [stableLocation,setStableLocation] = useState(false)
+  const [stableLocation, setStableLocation] = useState(false);
 
   const filterHandler = (e) => {
     e.preventDefault();
@@ -117,14 +117,7 @@ const SearchContent = () => {
       filterData(productData);
     } else {
       setGetFilter(searched.filter);
-      setCheckliststable([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-      ]);
+      setCheckliststable([false, false, false, false, false, false]);
 
       const filterFrom = (data) => {
         const filterKeys = Object.keys(data);
@@ -133,7 +126,6 @@ const SearchContent = () => {
         if (Object.values(data).some((arr) => arr.length > 0)) {
           tempProds = productData.filter((product) => {
             return filterKeys.some((key) => {
-
               if (Array.isArray(product[key])) {
                 return product[key].some((keyVal) => {
                   data[key].includes(keyVal);
@@ -145,7 +137,7 @@ const SearchContent = () => {
         }
         setFilteredProduct(tempProds);
         setSearchedProduct(tempProds);
-      }
+      };
       filterFrom(searched.filter);
     }
     //fetch and filter vendor
@@ -187,20 +179,20 @@ const SearchContent = () => {
           return filterKeys.some((key) => {
             if (Array.isArray(product["lokasi"])) {
               return product["lokasi"].some((keyVal) => {
-
                 getFilter["lokasi"].includes(keyVal);
               });
             }
 
-            return getFilter["lokasi"].some((item) => item.includes(product["lokasi"]));
+            return getFilter["lokasi"].some((item) =>
+              item.includes(product["lokasi"])
+            );
           });
         });
-      } else if(searched.fromFilter === false || stableLocation === true){
+      } else if (searched.fromFilter === false || stableLocation === true) {
         tempProds = searchedProduct.filter((product) => {
           return filterKeys.some((key) => {
             if (Array.isArray(product[key])) {
               return product[key].some((keyVal) => {
-
                 getFilter[key].includes(keyVal);
               });
             }
@@ -209,7 +201,7 @@ const SearchContent = () => {
           });
         });
       }
-      setStableLocation(false)
+      setStableLocation(false);
     }
     if (getRangeFilter.hargaMin !== "" && getRangeFilter.hargaMax !== "") {
       tempProds = tempProds.filter((product) => {
@@ -233,6 +225,29 @@ const SearchContent = () => {
     newArrs[row][idx] = state;
     setCheckSubcath(newArrs);
   };
+
+  // sort products
+  const sortProducts = (category) => {
+    let filtered = [];
+    if (category === "Paling Sesuai") {
+      filtered = searchedProduct;
+    } else if (category === "Terbaru") {
+      filtered = searchedProduct.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    } else if (category === "Harga Tertinggi") {
+      filtered = searchedProduct.sort((a, b) => {
+        return parseInt(b.harga) - parseInt(a.harga);
+      });
+    } else {
+      filtered = searchedProduct.sort((a, b) => {
+        return parseInt(a.harga) - parseInt(b.harga);
+      });
+    }
+    console.log(filtered);
+    setFilteredProduct(filtered);
+  };
+  console.log("prod", filteredProduct);
 
   return (
     <>
@@ -310,10 +325,13 @@ const SearchContent = () => {
                           placeholder="Harga Minimum"
                           name="priceMin"
                           lang="id"
-                          value={(getRangeFilter.hargaMin)}
+                          value={getRangeFilter.hargaMin}
                           onChange={(e) => {
-                            let regexp = /^[0-9\b]+$/
-                            if (e.target.value === '' || regexp.test(e.target.value)) {
+                            let regexp = /^[0-9\b]+$/;
+                            if (
+                              e.target.value === "" ||
+                              regexp.test(e.target.value)
+                            ) {
                               setGetRangeFilter({
                                 ...getRangeFilter,
                                 hargaMin: e.target.value,
@@ -332,10 +350,13 @@ const SearchContent = () => {
                           autocomplete="off"
                           placeholder="Harga Maksimum"
                           name="priceMaks"
-                          value={(getRangeFilter.hargaMax)}
+                          value={getRangeFilter.hargaMax}
                           onChange={(e) => {
-                            let regexp = /^[0-9\b]+$/
-                            if (e.target.value === '' || regexp.test(e.target.value)) {
+                            let regexp = /^[0-9\b]+$/;
+                            if (
+                              e.target.value === "" ||
+                              regexp.test(e.target.value)
+                            ) {
                               setGetRangeFilter({
                                 ...getRangeFilter,
                                 hargaMax: e.target.value,
@@ -370,7 +391,9 @@ const SearchContent = () => {
                       </CheckFlex>
                       <div style={{ marginBottom: "15px" }} />
 
-                      {searched.fromFilter ? (<></>) : (
+                      {searched.fromFilter ? (
+                        <></>
+                      ) : (
                         <>
                           <LabelSearch>Kategori</LabelSearch>
                           {Kategories.map((data, ids) => {
@@ -384,7 +407,9 @@ const SearchContent = () => {
                                     value={data.cath}
                                     onClick={(e) => {
                                       let arrWithObject = data.subcath;
-                                      let arrWithArr = [...getFilter.subcategory];
+                                      let arrWithArr = [
+                                        ...getFilter.subcategory,
+                                      ];
                                       if (e.target.checked) {
                                         arrWithArr.push(arrWithObject);
                                         setCheckliststable((old) => [
@@ -445,7 +470,8 @@ const SearchContent = () => {
                                             checkHandler(ids, false, idx);
                                             arrWithArr.splice(
                                               arrWithArr.findIndex(
-                                                (elemen) => elemen == e.target.value
+                                                (elemen) =>
+                                                  elemen == e.target.value
                                               ),
                                               1
                                             );
@@ -489,7 +515,7 @@ const SearchContent = () => {
                               lokasi: [],
                             });
                           }
-                          setStableLocation(true)
+                          setStableLocation(true);
 
                           setGetRangeFilter({
                             hargaMin: "",
@@ -590,7 +616,12 @@ const SearchContent = () => {
                     </DivApart>
                     <DivApart urutan>
                       <UrutanTemp>
-                        <InputMCQKat name="kategori">
+                        <InputMCQKat
+                          name="kategori"
+                          onChange={(e) => {
+                            sortProducts(e.target.value);
+                          }}
+                        >
                           {Pilihan.map((data, idx) => (
                             <Options value={data} key={idx}>
                               {data}
@@ -613,7 +644,8 @@ const SearchContent = () => {
                   </TopHeader>
                   {filteredProduct.length === 0 ? (
                     <BoxNotEntry>
-                      "{searched.searchFill}" Tidak Ditemukan Pada Pencarian Produk!
+                      "{searched.searchFill}" Tidak Ditemukan Pada Pencarian
+                      Produk!
                     </BoxNotEntry>
                   ) : (
                     <GridTempProduk>

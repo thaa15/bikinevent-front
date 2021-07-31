@@ -16,9 +16,9 @@ import {
   AiFillInstagram,
   AiFillLinkedin,
   AiFillYoutube,
-  AiFillTwitterSquare
+  AiFillTwitterSquare,
 } from "react-icons/ai";
-import {SiTiktok} from "react-icons/si"
+import { SiTiktok } from "react-icons/si";
 import { footerService } from "../../services/Footer";
 
 const Footer = () => {
@@ -120,7 +120,7 @@ const Footer = () => {
                   target="_blank"
                   aria-label="Tiktok"
                 >
-                  <SiTiktok/>
+                  <SiTiktok />
                 </SocialIconLink>
               </SocialIcons>
             </FooterBox>

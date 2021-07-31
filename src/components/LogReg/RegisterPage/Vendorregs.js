@@ -28,9 +28,6 @@ import { layananService } from "../../../services/Layanan";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
-import { layananService } from "../../../services/Layanan";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -62,6 +59,7 @@ const Vendorregs = (props) => {
     alamat_lengkap: "",
     nama_bank: "",
     kota_kabupaten: "",
+    location: "",
     nomor_hp: "",
     nama_rekening: "",
     no_rekening: 0,
@@ -152,6 +150,7 @@ const Vendorregs = (props) => {
       phone_number,
       role,
       NIK,
+      location,
       tempat_tanggal_lahir,
       jenis_kelamin,
       nama_vendor,
@@ -192,6 +191,7 @@ const Vendorregs = (props) => {
           alamat_lengkap,
           nama_bank,
           kota_kabupaten,
+          location,
           nama_rekening,
           no_rekening,
           kode_pos,
@@ -427,6 +427,7 @@ const Vendorregs = (props) => {
                 setFormData({
                   ...formData,
                   kota_kabupaten: e.target.value,
+                  location: e.target.value,
                 });
               }}
             />

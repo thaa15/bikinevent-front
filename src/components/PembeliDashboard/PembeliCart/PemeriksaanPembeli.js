@@ -23,16 +23,19 @@ import {
   Shopping,
   InformationContents,
   BankImage,
+  EmailConfirm,
 } from "./Styled";
 import { clientCartContext, loginContext } from "../../../context";
 import { pembeliService } from "../../../services/Pembeli";
 import { orderService } from "../../../services/OrderHistory";
+import { authService } from "../../../services/Auth";
 
 const PemeriksaanBelanjaPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { loginInfo } = useContext(loginContext);
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const [cartData, setCartData] = useState([]);
+  const [userEmail, setUserEmail] = useState();
   useEffect(() => {
     const fetchData = async () => {
       const response = await pembeliService.getPembeliById(
@@ -40,11 +43,13 @@ const PemeriksaanBelanjaPage = (props) => {
         loginInfo.token
       );
       const data = response.data;
-      const filteredCart = data.cart
-        .filter(
-          (item) => (clientCart.product.includes(item.id))
-        );
+      const filteredCart = data.cart.filter((item) =>
+        clientCart.product.includes(item.id)
+      );
       setCartData(filteredCart);
+      const user = await authService.getDetails(loginInfo.token);
+      const userData = user.data;
+      setUserEmail(userData.email);
       setIsLoading(false);
     };
     fetchData();
@@ -93,7 +98,6 @@ const PemeriksaanBelanjaPage = (props) => {
       props.history.push("/client-purchase/success-cart");
     });
   };
-
   return (
     <>
       {!AuthCliCheck.isAutclicheck() ? (
@@ -201,11 +205,17 @@ const PemeriksaanBelanjaPage = (props) => {
                                 {clientCart.payment_method.account_number} an{" "}
                                 {clientCart.payment_method.account_name}
                               </InformationContents>
-                              {/* <EmailConfirm>
-                                Down Payment (DP) nominal terdapat di tagihan.
-                                Tagihan pembayaran akan dikirim melalui email
-                                <span>{item.email}</span>
-                              </EmailConfirm> */}
+                              {clientCart.statusDp ? (
+                                <EmailConfirm>
+                                  Email ke <span>{userEmail}</span>
+                                  Menggunakkan sistem pembayaran bertahap
+                                </EmailConfirm>
+                              ) : (
+                                <EmailConfirm>
+                                  Email ke <span>{userEmail}</span>
+                                  Menggunakkan sistem pembayaran lunas
+                                </EmailConfirm>
+                              )}
                             </div>
                           </DivRowContent>
                         </DivRow>

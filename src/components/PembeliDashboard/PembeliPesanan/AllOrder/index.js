@@ -29,7 +29,7 @@ const getButtonStatus = (stats) => {
   else if (stats === "Confirmed") return defaultStatus[1];
   else if (stats === "Implemented") return defaultStatus[2];
   else if (stats === "Completed") return defaultStatus[3];
-  else return "Inappropiate Status"
+  else return "Inappropiate Status";
 };
 
 const PembeliPesananPage = (props) => {
@@ -108,8 +108,9 @@ const PembeliPesananPage = (props) => {
                                   <DivRowContent top>
                                     <DivRowContent titlee need>
                                       <Shopping />
-                                      {typeof prod.vendor.nama_vendor === "undefined" ||
-                                        prod.vendor.nama_vendor == null ? (
+                                      {typeof prod.vendor.nama_vendor ===
+                                        "undefined" ||
+                                      prod.vendor.nama_vendor == null ? (
                                         <p
                                           style={{
                                             fontSize: "14px",
@@ -119,8 +120,8 @@ const PembeliPesananPage = (props) => {
                                         >
                                           Unknown
                                         </p>
-                                        ) : (
-                                          <p
+                                      ) : (
+                                        <p
                                           style={{
                                             fontSize: "14px",
                                             lineHeight: "21px",
@@ -129,7 +130,7 @@ const PembeliPesananPage = (props) => {
                                         >
                                           {prod.vendor.nama_vendor}
                                         </p>
-                                        )}
+                                      )}
                                     </DivRowContent>
                                   </DivRowContent>
                                   <p>{prod.nama}</p>
@@ -144,7 +145,6 @@ const PembeliPesananPage = (props) => {
                             );
                           })}
                         </BoxTrackContent>
-
                         <ButtonStatus>
                           {getButtonStatus(item.status)}
                         </ButtonStatus>

@@ -29,10 +29,6 @@ import { layananService } from "../../../services/Layanan";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { loginContext } from "../../../context";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
-import { layananService } from "../../../services/Layanan";
-
 const Pembeliregs = (props) => {
   const [visible, setVisible] = useState(true);
   const [typepw, setTypepw] = useState("");
