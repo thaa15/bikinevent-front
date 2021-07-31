@@ -24,7 +24,7 @@ export const ApartView = styled.div`
     width:100%;
 `;
 
-export const LinkTitle = styled.div`
+export const LinkTitle = styled(Link)`
     text-decoration: none;
     display: flex;
     flex-direction: row-reverse;

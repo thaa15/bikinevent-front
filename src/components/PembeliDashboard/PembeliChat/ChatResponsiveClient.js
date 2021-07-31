@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import { GlobalTemplate } from "../../../templates/GlobalTemplate";
+import React, { useState, useContext } from "react";
 import {
-    TemplateChat,
-    ChatList,
-    ChatContent,
     ProfilePhoto,
     ProfileName,
     ChatPerson,
@@ -18,109 +14,178 @@ import {
     ChatBox,
     BackButton,
     ChatListResp,
-    ChatContentResp
+    ChatContentResp,
+    TimeDisplay
 } from "../../VendorDashboard/VendorChat/VendorChatStyled";
 import EllipsisText from "react-ellipsis-text";
 import { AnimationPortofolio } from "../../VendorDashboard/VendorProfil/VendorProfileStyled";
+import { messageService } from "../../../services/Message";
+import { format } from "timeago.js";
+import { socket } from "../../../config/web-sockets";
+import { loginContext } from "../../../context";
 
-const ChatResponsiveClient = () => {
+const ChatResponsiveClient = ({
+    conversations,
+}) => {
     const [openchat, setOpenchat] = useState(true);
+    const [currentChat, setCurrentChat] = useState();
+    const [newMessage, setNewMessage] = useState("");
+    const { loginInfo } = useContext(loginContext);
+    const [messages, setMessages] = useState([]);
+
+    const submitChat = async (e, roomId) => {
+        e.preventDefault();
+        const message = {
+            sender: loginInfo.userId,
+            text: newMessage,
+            room: roomId,
+        };
+        socket.emit("sendMessage", {
+            sender: loginInfo.userId,
+            receiver: currentChat.vendorId.id,
+            text: newMessage,
+        });
+
+        try {
+            const response = await messageService.postNewChat(
+                loginInfo.token,
+                message
+            );
+            setMessages([...messages, response.data]);
+            setNewMessage("");
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <AnimationPortofolio>
             {openchat ? (<>
                 <ChatListResp>
+                    {conversations
+                        .sort((a, b) => {
+                            if (a.messages.length !== 0 && b.messages.length !== 0) {
+                                return new Date(b.messages[b.messages.length - 1].createdAt)
+                                    - new Date(a.messages[a.messages.length - 1].createdAt)
+                            }
+                        })
+                        .map((room, idx) => {
+                            return (
+                                <>
 
-                    <ChatPerson active onClick={() => { setOpenchat(false) }}>
-                        <ListChatPart resp>
-                            <ProfilePhoto content />
-                        </ListChatPart>
-                        <ListChatPart resp2>
-                            <ProfileName>Emma</ProfileName>
-                            <LastChatDisplay>
-                                <EllipsisText text="Iyaaaa..... Terima kasih banyak ya kaaaaaaa" length={"40"} />
-                            </LastChatDisplay>
-                        </ListChatPart>
-                    </ChatPerson>
-                    <div style={{ borderBottom: "1px solid #E0E0E0", width: "100%" }} />
-
-                    <ChatPerson>
-                        <ListChatPart resp>
-                            <ProfilePhoto content />
-                        </ListChatPart>
-                        <ListChatPart resp2>
-                            <ProfileName>Saffan</ProfileName>
-                            <LastChatDisplay>
-                                <EllipsisText text="Makasih mangkok" length={"25"} />
-                            </LastChatDisplay>
-                        </ListChatPart>
-                    </ChatPerson>
-                    <div style={{ borderBottom: "1px solid #E0E0E0", width: "100%" }} />
-
+                                    <ChatPerson
+                                        key={idx}
+                                        onClick={(e) => {
+                                            if (currentChat === room) {
+                                                return null;
+                                            }
+                                            setCurrentChat(room);
+                                            setMessages(room.messages);
+                                            setOpenchat(false)
+                                        }}
+                                        active={currentChat == room}>
+                                        {typeof room.vendorId.foto_profil ===
+                                            "undefined" ||
+                                            room.vendorId.foto_profil == null ? (
+                                            <ListChatPart photo>
+                                                <ProfilePhoto content />
+                                            </ListChatPart>
+                                        ) : (
+                                            <ListChatPart photo>
+                                                <ProfilePhoto
+                                                    content
+                                                    src={room.vendorId.foto_profil.url}
+                                                />
+                                            </ListChatPart>
+                                        )}
+                                        <ListChatPart resp2>
+                                            <ProfileName>{room.vendorId.nama_lengkap}</ProfileName>
+                                            <LastChatDisplay>
+                                                {room.messages.length === 0 ? (
+                                                    <EllipsisText
+                                                        text={"Start Chatting"}
+                                                        length={"20"}
+                                                    />
+                                                ) : (
+                                                    <EllipsisText
+                                                        text={
+                                                            room.messages[room.messages.length - 1]
+                                                                .text
+                                                        }
+                                                        length={"20"}
+                                                    />
+                                                )}
+                                            </LastChatDisplay>
+                                        </ListChatPart>
+                                    </ChatPerson>
+                                    <div style={{ borderBottom: "1px solid #E0E0E0", width: "100%" }} />
+                                </>)
+                        })}
                 </ChatListResp>
             </>) : (<>
                 <ChatContentResp>
                     <DisplayChatProfileContent>
-                        <BackButton onClick={() => { setOpenchat(true) }} />
-                        <ProfilePhoto content />
-                        <ProfileName>Emma</ProfileName>
+                        <BackButton onClick={() => {
+                            setOpenchat(true)
+                            setMessages([]);
+                            setCurrentChat();
+                        }} />
+                        {typeof currentChat.vendorId.foto_profil ===
+                            "undefined" ||
+                            currentChat.vendorId.foto_profil == null ? (
+                            <ProfilePhoto content />
+                        ) : (
+                            <ProfilePhoto
+                                content
+                                src={currentChat.vendorId.foto_profil.url}
+                            />
+                        )}
+                        <ProfileName>
+                            {currentChat.vendorId.nama_lengkap}
+                        </ProfileName>
                     </DisplayChatProfileContent>
 
                     <ChatContetnDisplay>
-                        <PlacedChatBox>
-                            <ChatBox>
-                                Ka boleh nego?
-                            </ChatBox>
-                        </PlacedChatBox>
-
-                        <PlacedChatBox user>
-                            <ChatBox user>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                \n
-                                Spesifikasi :
-                                App Name : Fitpro/HryFine
-                                Versi Bluetooth :  5.0
-                                Layar  : Warna 0,96 Inch
-                                Sensor Optik : Mikro Epco
-                                Bahan Host : Plastik
-                                Bahan Gelang : TPU
-                                Diameter Jam : 2 cm
-                                Metode Operasi ： Operasi Tombol Sentuh Tunggal
-                                Standby selama lebih dari 5 hari
-                                Sistem Operasi :
-                                -Android 5.0 or higher
-                                -iOS 9.0 or higher
-
-                                Paket sudah termasuk :
-                                1 x M4
-                                1x Charging Dock Cable
-                                1 x Instruksi
-                            </ChatBox>
-                        </PlacedChatBox>
-
-                        <PlacedChatBox>
-                            <ChatBox>
-                                Apa itu ka?
-                            </ChatBox>
-                        </PlacedChatBox>
-
-                        <PlacedChatBox>
-                            <ChatBox>
-                                Iyaaaa..... Terima kasih banyak ya kaaaaaaa
-                            </ChatBox>
-                        </PlacedChatBox>
-
+                        {messages.map((chat, idx) => {
+                            return (
+                                <>
+                                    {chat.sender == loginInfo.userId ? (
+                                        <PlacedChatBox user key={idx}>
+                                            <ChatBox>{chat.text}</ChatBox>
+                                            <TimeDisplay>
+                                                {format(chat.createdAt)}
+                                            </TimeDisplay>
+                                        </PlacedChatBox>
+                                    ) : (
+                                        <PlacedChatBox key={idx}>
+                                            <ChatBox>{chat.text}</ChatBox>
+                                            <TimeDisplay>
+                                                {format(chat.createdAt)}
+                                            </TimeDisplay>
+                                        </PlacedChatBox>
+                                    )}
+                                </>
+                            );
+                        })}
                     </ChatContetnDisplay>
 
                     <TypingPart>
                         <TextType
                             type="text"
                             name="type"
-                            placeholder="tulis pesan.." />
-                        <ButtonSend type="submit">Kirim</ButtonSend>
+                            placeholder="tulis pesan.."
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            value={newMessage}
+                        />
+                        <ButtonSend
+                            type="submit"
+                            onClick={(e) => {
+                                submitChat(e, currentChat.id);
+                            }}
+                        >
+                            Kirim
+                        </ButtonSend>
                     </TypingPart>
-
                 </ChatContentResp>
             </>)}
         </AnimationPortofolio>

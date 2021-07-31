@@ -188,4 +188,16 @@ export const CondTermContent = styled.div`
     font-size: 14px;
     line-height: 21px;
     color: #212B36;
+    ul,ol {
+        padding-left: 20px;
+    }
+    h1,h2,h3,h4,h5,h6{
+        line-height: 20px;
+        margin: 10px 0 6px;
+        color: #212B36;
+    }
+    img{
+        width: 90%;
+        margin: 0 auto;
+    }
 `;

@@ -24,6 +24,9 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import upfil from "../../../images/uploadfile.png";
 import axios from "axios";
 import { AuthSucRegs } from "../../../AllAuth";
+import { layananService } from "../../../services/Layanan";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
 import { layananService } from "../../../services/Layanan";
 import ReactMarkdown from "react-markdown";
@@ -229,6 +232,12 @@ const Vendorregs = (props) => {
 
   useEffect(() => {
     toggle();
+    const fetchData = async () => {
+      const response = await layananService.getLayanan();
+      const data = response.data;
+      setSyarat(data.syarat_ketentuan);
+    };
+    fetchData();
   }, []);
 
   return (
@@ -240,6 +249,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="username"
           onChange={(e) => {
             setFormData({ ...formData, username: e.target.value });
@@ -252,6 +262,7 @@ const Vendorregs = (props) => {
           type="email"
           required
           name="email"
+          autocomplete="off"
           onChange={(e) => {
             setFormData({ ...formData, email: e.target.value });
           }}
@@ -268,6 +279,7 @@ const Vendorregs = (props) => {
             title="Enam atau lebih karakter"
             name="password"
             pw
+            autocomplete="off"
             onChange={(e) => {
               setFormData({ ...formData, password: e.target.value });
             }}
@@ -291,6 +303,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="nama_lengkap"
           onChange={(e) => {
             setFormData({ ...formData, nama_lengkap: e.target.value });
@@ -304,6 +317,7 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="nik"
+          autocomplete="off"
           value={formData.NIK}
           onChange={(e) => {
             let regexp = /^[0-9\b]+$/;
@@ -323,6 +337,7 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="birth"
+          autocomplete="off"
           onChange={(e) => {
             setFormData({
               ...formData,
@@ -373,6 +388,7 @@ const Vendorregs = (props) => {
           type="text"
           required
           name="nameven"
+          autocomplete="off"
           onChange={(e) => {
             setFormData({
               ...formData,
@@ -386,6 +402,7 @@ const Vendorregs = (props) => {
         <br />
         <LoginInput
           type="text"
+          autocomplete="off"
           required
           name="address"
           onChange={(e) => {
@@ -404,6 +421,7 @@ const Vendorregs = (props) => {
             <LoginInput
               type="text"
               required
+              autocomplete="off"
               name="city"
               onChange={(e) => {
                 setFormData({
@@ -419,6 +437,7 @@ const Vendorregs = (props) => {
             <br />
             <LoginInput
               type="text"
+              autocomplete="off"
               required
               name="pos"
               value={formData.kode_pos}
@@ -440,6 +459,7 @@ const Vendorregs = (props) => {
         <br />
         <LoginInput
           type="text"
+          autocomplete="off"
           required
           value={formData.phone_number}
           name="num"
@@ -459,6 +479,7 @@ const Vendorregs = (props) => {
         <br />
         <LoginInput
           type="text"
+          autocomplete="off"
           required
           name="rek"
           value={formData.no_rekening}
@@ -479,6 +500,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="bank"
           onChange={(e) => {
             setFormData({
@@ -494,6 +516,7 @@ const Vendorregs = (props) => {
         <LoginInput
           type="text"
           required
+          autocomplete="off"
           name="rekan"
           onChange={(e) => {
             setFormData({

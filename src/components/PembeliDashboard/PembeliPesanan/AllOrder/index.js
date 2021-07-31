@@ -28,7 +28,7 @@ const getButtonStatus = (stats) => {
   if (stats === "Pending") return defaultStatus[0];
   else if (stats === "Confirmed") return defaultStatus[1];
   else if (stats === "Implemented") return defaultStatus[2];
-  else if(stats==="Completed")return defaultStatus[3];
+  else if (stats === "Completed") return defaultStatus[3];
   else return "Inappropiate Status"
 };
 
@@ -108,15 +108,28 @@ const PembeliPesananPage = (props) => {
                                   <DivRowContent top>
                                     <DivRowContent titlee need>
                                       <Shopping />
-                                      <p
-                                        style={{
-                                          fontSize: "14px",
-                                          lineHeight: "21px",
-                                          color: "#909DAA",
-                                        }}
-                                      >
-                                        {prod.vendor.nama_vendor}
-                                      </p>
+                                      {typeof prod.vendor.nama_vendor === "undefined" ||
+                                        prod.vendor.nama_vendor == null ? (
+                                        <p
+                                          style={{
+                                            fontSize: "14px",
+                                            lineHeight: "21px",
+                                            color: "#909DAA",
+                                          }}
+                                        >
+                                          Unknown
+                                        </p>
+                                        ) : (
+                                          <p
+                                          style={{
+                                            fontSize: "14px",
+                                            lineHeight: "21px",
+                                            color: "#909DAA",
+                                          }}
+                                        >
+                                          {prod.vendor.nama_vendor}
+                                        </p>
+                                        )}
                                     </DivRowContent>
                                   </DivRowContent>
                                   <p>{prod.nama}</p>

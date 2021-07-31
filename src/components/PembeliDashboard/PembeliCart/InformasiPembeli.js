@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import LoadingPage from "../../../templates/Loading";
 import { Redirect } from "react-router-dom";
 import { PembeliHeaderWithStep } from "../../../templates/HeaderSmall/PembeliHeader";
-import { 
+import {
   GlobalTemplate,
   PopBgSuccess,
   BgSuccess,
@@ -189,14 +189,19 @@ const InformasiPembeliPage = (props) => {
                                 <LoginLabel for="pos">Nomor HP</LoginLabel>
                                 <br />
                                 <LoginInput
-                                  type="number"
+                                  type="text"
                                   required
+                                  autocomplete="off"
                                   name="telephone"
+                                  value={(newData.no_hp_pembeli)}
                                   onChange={(e) => {
-                                    setNewData({
-                                      ...newData,
-                                      no_hp_pembeli: e.target.value,
-                                    });
+                                    let regexp = /^[0-9\b]+$/
+                                    if (e.target.value === '' || regexp.test(e.target.value)) {
+                                      setNewData({
+                                        ...newData,
+                                        no_hp_pembeli: e.target.value,
+                                      });
+                                    }
                                   }}
                                 />
                                 <br />
@@ -270,7 +275,7 @@ const InformasiPembeliPage = (props) => {
                           setTimeout(() => {
                             setFailed(false)
                           }, 1500);
-                        }else{
+                        } else {
                           setClientCart({
                             ...clientCart,
                             clientInfo: pembeliData[actButton],
