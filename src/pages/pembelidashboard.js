@@ -25,7 +25,7 @@ export const PembeliProfil = () => {
       setIsLoading(false);
     };
     fetchProfil();
-  }, []);
+  }, [loginInfo.token]);
 
   return (
     <>

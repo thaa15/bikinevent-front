@@ -170,6 +170,7 @@ const PesananSelesaiPage = ({ match }) => {
                 act="selesai"
               />
               {orderData.produks.map((prod, ids) => {
+                console.log(orderData.produks);
                 return (
                   <GlobalTemplate top>
                     <BoxRowDetailed>

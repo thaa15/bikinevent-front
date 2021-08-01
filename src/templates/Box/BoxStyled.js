@@ -20,7 +20,7 @@ export const BoxImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-color: #F2994A;
+    background-color: #808080;
     margin-bottom: 4px;
     @media screen and (max-width: 443px) {
         height: 150px;

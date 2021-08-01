@@ -1,71 +1,55 @@
 import React, { useEffect, useState } from "react";
 import {
   BannerContainer,
-  BannerContainers,
-  Slider,
+  Sliders,
 } from "./BannerStyled";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 import { homeService } from "../../../services/Home";
-const AutoplaySlider = withAutoplay(Slider);
+import logocomp from "../../../images/logocomp.png"
 
 const Banner = () => {
   const [banner, setBanner] = useState([]);
+  const AutoplaySlider = withAutoplay(Sliders);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await homeService.getHome();
       const data = response.data;
-      setBanner(data.banner_promo);
+      if (window.innerWidth > 660) setBanner(data.banner_promo);
+      else setBanner(data.banner_promo_alt);
     };
     fetchData();
   }, []);
-  return (
-    <AutoplaySlider
-      play={true}
-      cancelOnInteraction={false}
-      interval={6000}
-      className="aws-btn"
-    >
-      {banner.map((item, idx) => {
-        console.log(banner)
-        return (
-          <>
-            {window.innerWidth <= 1000 ? (
-              <div>
-                <BannerContainers href={item.link}>
-                  <BannerContainer src={item.promo_banner.formats.large.url} key={idx} />
-                </BannerContainers>
-              </div>
-            ) : window.innerWidth <= 750 ? (
-              <div>
-                <BannerContainers href={item.link}>
-                  <BannerContainer src={item.promo_banner.formats.medium.url} key={idx} />
-                </BannerContainers>
-              </div>
-            ) : window.innerWidth <= 500 ? (
-              <div>
-                <BannerContainers href={item.link}>
-                  <BannerContainer src={item.promo_banner.formats.small.url} key={idx} />
-                </BannerContainers>
-              </div>
-            ) : window.innerWidth <= 250 ? (
-              <div>
-                <BannerContainers href={item.link}>
-                  <BannerContainer src={item.promo_banner.formats.thumbnail.url} key={idx} />
-                </BannerContainers>
-              </div>
-            ) : (
-              <div>
-                <BannerContainers href={item.link}>
-                  <BannerContainer src={item.promo_banner.url} key={idx} />
-                </BannerContainers>
-              </div>
-            )}
-          </>
-        );
-      })}
-    </AutoplaySlider>
+
+  const startupScreen = (
+    <div>
+      <BannerContainer
+        href="bikinevent.id"
+       />
+    </div>
   );
+
+return (
+  <AutoplaySlider
+    play={true}
+    startupScreen={startupScreen}
+    cancelOnInteraction={false}
+    interval={4000}
+    className="aws-btn"
+  >
+    {banner.map((item, idx) => {
+      return (
+        <div>
+          <BannerContainer
+            href={item.link}
+            src={item.promo_banner.url}
+            key={idx} />
+        </div>
+      );
+    })}
+  </AutoplaySlider>
+);
 };
 
 export default Banner;

@@ -134,7 +134,12 @@ const MenungguPembayaranPage = ({ match }) => {
                       <span>{orderData.pembeli.user.email}</span>
                     </EmailWrited>
                     <BoxRowDetailed>
-                      <ButtonBottoms need>Sudah Dibayar</ButtonBottoms>
+                      <ButtonBottoms need
+                      onClick={()=>{
+                        AuthCliTrack.inclitrack(() => {
+                          history.push(`/detailed-order/confirm/${match.params.id}`);
+                        });
+                      }}>Sudah Dibayar</ButtonBottoms>
                       <ButtonBottoms call need>
                         Ajukan Pembatalan
                       </ButtonBottoms>
