@@ -44,16 +44,11 @@ const PembeliPesananPage = (props) => {
     };
     fetchData();
     setIsLoading(false);
-<<<<<<< HEAD
   }, []);
   console.log(pesananData);
   const progress = pesananData.filter(
     (order) => order.status !== "LayananSelesai"
   );
-=======
-  }, [loginInfo.pembeliId, loginInfo.token]);
-  const progress = pesananData.filter((order) => order.status !== "Completed");
->>>>>>> 4133a6d4928ce4a1950605f519acfb6c13fd680b
 
   const done = pesananData.filter((order) => order.status === "LayananSelesai");
 
@@ -108,7 +103,7 @@ const PembeliPesananPage = (props) => {
                       <BoxManage>
                         <BoxTrackContent>
                           {item.produks
-                            .filter(a => a.vendor != null)
+                            .filter((a) => a.vendor != null)
                             .map((prod) => {
                               return (
                                 <BoxManageContent>
@@ -119,7 +114,7 @@ const PembeliPesananPage = (props) => {
                                         <Shopping />
                                         {typeof prod.vendor.nama_vendor ===
                                           "undefined" ||
-                                          prod.vendor.nama_vendor == null ? (
+                                        prod.vendor.nama_vendor == null ? (
                                           <p
                                             style={{
                                               fontSize: "14px",
@@ -168,65 +163,71 @@ const PembeliPesananPage = (props) => {
               <BoxNotEntry>Tidak ada pesanan yang selesai!</BoxNotEntry>
             ) : (
               <>
-                {done
-                  .map((item, idx) => {
-                    return (
-                      <>
-                        {item.produks.filter(a => {return a.vendor != null}).length > 0 ? (
-                          <>
-                            <BoxContentTrack
-                              key={idx}
-                              onClick={() => {
-                                AuthCliTrack.inclitrack(() => {
-                                  props.history.push(`/detailed-order/done/${item.id}`);
-                                });
-                              }}
-                            >
-                              <BoxManage>
-                                <BoxTrackContent>
-                                  {item.produks
-                                    .map((prod) => {
-                                      return (
-                                        <BoxManageContent>
-                                          <ImageOrder src={prod.foto_produk[0].url} />
-                                          <div>
-                                            <DivRowContent top>
-                                              <DivRowContent titlee need>
-                                                <Shopping />
-                                                <p
-                                                  style={{
-                                                    fontSize: "14px",
-                                                    lineHeight: "21px",
-                                                    color: "#909DAA",
-                                                  }}
-                                                >
-                                                  {prod.vendor.nama_vendor}
-                                                </p>
-                                              </DivRowContent>
-                                            </DivRowContent>
-                                            <p>{prod.nama}</p>
-                                            <h6>
-                                              Rp
-                                              {parseInt(prod.harga).toLocaleString(
-                                                "id-ID"
-                                              )}
-                                            </h6>
-                                          </div>
-                                        </BoxManageContent>
-                                      );
-                                    })}
-                                </BoxTrackContent>
+                {done.map((item, idx) => {
+                  return (
+                    <>
+                      {item.produks.filter((a) => {
+                        return a.vendor != null;
+                      }).length > 0 ? (
+                        <>
+                          <BoxContentTrack
+                            key={idx}
+                            onClick={() => {
+                              AuthCliTrack.inclitrack(() => {
+                                props.history.push(
+                                  `/detailed-order/done/${item.id}`
+                                );
+                              });
+                            }}
+                          >
+                            <BoxManage>
+                              <BoxTrackContent>
+                                {item.produks.map((prod) => {
+                                  return (
+                                    <BoxManageContent>
+                                      <ImageOrder
+                                        src={prod.foto_produk[0].url}
+                                      />
+                                      <div>
+                                        <DivRowContent top>
+                                          <DivRowContent titlee need>
+                                            <Shopping />
+                                            <p
+                                              style={{
+                                                fontSize: "14px",
+                                                lineHeight: "21px",
+                                                color: "#909DAA",
+                                              }}
+                                            >
+                                              {prod.vendor.nama_vendor}
+                                            </p>
+                                          </DivRowContent>
+                                        </DivRowContent>
+                                        <p>{prod.nama}</p>
+                                        <h6>
+                                          Rp
+                                          {parseInt(prod.harga).toLocaleString(
+                                            "id-ID"
+                                          )}
+                                        </h6>
+                                      </div>
+                                    </BoxManageContent>
+                                  );
+                                })}
+                              </BoxTrackContent>
 
-                                <ButtonStatus>
-                                  {getButtonStatus(item.status)}
-                                </ButtonStatus>
-                              </BoxManage>
-                            </BoxContentTrack>
-                          </>
-                        ) : (<></>)}
-                      </>
-                    );
-                  })}
+                              <ButtonStatus>
+                                {getButtonStatus(item.status)}
+                              </ButtonStatus>
+                            </BoxManage>
+                          </BoxContentTrack>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  );
+                })}
               </>
             )}
           </GlobalTemplate>
