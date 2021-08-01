@@ -54,7 +54,6 @@ const PemeriksaanBelanjaPage = (props) => {
     };
     fetchData();
   }, []);
-
   const submitOrder = async () => {
     let noteTemp = [];
     for (let i = 0; i < clientCart.notes.length; i++) {
@@ -62,6 +61,10 @@ const PemeriksaanBelanjaPage = (props) => {
         note_content: clientCart.notes[i],
       };
       noteTemp.push(tempContent);
+    }
+    let rateStatus = [];
+    for (let idx = 0; idx < clientCart.product.length; idx++) {
+      rateStatus.push({ rated: false });
     }
     let body = {
       produks: clientCart.product,
@@ -74,11 +77,13 @@ const PemeriksaanBelanjaPage = (props) => {
       },
       metode_pembayaran: clientCart.payment_method.nama,
       sistem_dp: clientCart.statusDp,
-      status: "Pending",
+      status: "MenungguKonfirmasi",
       total_price: clientCart.price,
+      rate_status: rateStatus,
       notes: noteTemp,
     };
     const response = await orderService.postOrder(loginInfo.token, body);
+    console.log(response);
     const getPembeli = await pembeliService.getPembeliById(
       loginInfo.pembeliId,
       loginInfo.token
@@ -94,6 +99,7 @@ const PemeriksaanBelanjaPage = (props) => {
       loginInfo.token,
       pembeliBody
     );
+
     AuthCliSuccess.incliSuccess(() => {
       props.history.push("/client-purchase/success-cart");
     });

@@ -65,7 +65,6 @@ const PembayaranPembeliPage = (props) => {
       payment_method: actButton,
     });
   };
-  console.log(actButton);
 
   return (
     <>

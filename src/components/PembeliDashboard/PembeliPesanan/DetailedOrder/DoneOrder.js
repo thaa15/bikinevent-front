@@ -10,7 +10,6 @@ import {
   PopUpBg,
   ContentPopUp,
 } from "../../../../templates/GlobalTemplate";
-import { ProfilePembeli } from "../../../../datas/vendordata";
 import { ChatShop } from "../../../../templates/Tampilan/TampilanStyled";
 import sucregcheck from "../../../../images/sucregcheck.png";
 import ReactStars from "react-rating-stars-component";
@@ -35,9 +34,9 @@ import { AuthCliTrack } from "../../../../AllAuth";
 import { InputModifArea } from "../../../VendorDashboard/VendorProduk/VendorProdukStyled";
 import { orderService } from "../../../../services/OrderHistory";
 import { loginContext } from "../../../../context";
-import { productService } from "../../../../services/Product";
 import { vendorService } from "../../../../services/Vendor";
 import { roomService } from "../../../../services/Room";
+import { productService } from "../../../../services/Product";
 const PesananSelesaiPage = ({ match }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
@@ -72,6 +71,17 @@ const PesananSelesaiPage = ({ match }) => {
     };
     fetchData();
   }, []);
+
+  const determineRate = (index) => {
+    if (typeof orderData.rate_status[index] === "undefined") {
+      return false;
+    } else if (typeof orderData.rate_status[index] !== "undefined") {
+      if (orderData.rate_status[index].rated) {
+        return true;
+      }
+      return false;
+    }
+  };
   const submitReview = async (
     e,
     prodId,
@@ -80,7 +90,16 @@ const PesananSelesaiPage = ({ match }) => {
     totalRating
   ) => {
     e.preventDefault();
+    const indexProduct = orderData.produks.findIndex(
+      (prod) => prod.id === prodId
+    );
     let tempPenilaian = prodPenilaian;
+    let rateStatus = orderData.rate_status;
+    let rated = {
+      rated: true,
+    };
+    rateStatus[indexProduct] = rated;
+    console.log(rateStatus);
     tempPenilaian.push({
       user: loginInfo.userId,
       rating: rating,
@@ -90,12 +109,20 @@ const PesananSelesaiPage = ({ match }) => {
       penilaian: tempPenilaian,
       rating: (prevRating * totalRating + rating) / (totalRating + 1),
     };
-    console.log(body);
+    let bodyOrder = {
+      rate_status: rateStatus,
+    };
     const response = await productService.editProductById(
       prodId,
       loginInfo.token,
       body
     );
+    const responseOrder = await orderService.editOrderById(
+      match.params.id,
+      loginInfo.token,
+      bodyOrder
+    );
+    console.log(responseOrder);
     return response;
   };
 
@@ -175,155 +202,163 @@ const PesananSelesaiPage = ({ match }) => {
                     <ContentDetailTrack status>
                       Pesanan Selesai
                     </ContentDetailTrack>
-                    <BoxRowDetailed>
-                      <ButtonBottoms
-                        need
-                        onClick={() => {
-                          setVisible({ ...visible, rate: true });
-                          setOpenRate(ids);
-                        }}
-                      >
-                        Berikan Penilaian
-                      </ButtonBottoms>
-                      {visible.rate ? (
-                        <>
-                          {orderData.produks.map((prod, idx) => {
-                            return (
-                              <>
-                                {idx === openRate && (
-                                  <>
-                                    <PopUpBg review key={idx}>
-                                      <ContentPopUp>
-                                        <ReviewBg should={openRate === idx}>
-                                          <BoxRowReview>
-                                            <ImageReview
-                                              src={prod.foto_produk[0].url}
-                                            />
-                                            <div
-                                              style={{
-                                                rowGap: "15px",
-                                                flex: "1",
-                                                display: "flex",
-                                                flexDirection: "column",
-                                              }}
-                                            >
+                    {determineRate(ids) ? (
+                      <h1>Udah Di Rate</h1>
+                    ) : (
+                      <BoxRowDetailed>
+                        <ButtonBottoms
+                          need
+                          onClick={() => {
+                            setVisible({ ...visible, rate: true });
+                            setOpenRate(ids);
+                          }}
+                        >
+                          Berikan Penilaian
+                        </ButtonBottoms>
+                        {visible.rate ? (
+                          <>
+                            {orderData.produks.map((prod, idx) => {
+                              return (
+                                <>
+                                  {idx === openRate && (
+                                    <>
+                                      <PopUpBg review key={idx}>
+                                        <ContentPopUp>
+                                          <ReviewBg should={openRate === idx}>
+                                            <BoxRowReview>
+                                              <ImageReview
+                                                src={prod.foto_produk[0].url}
+                                              />
                                               <div
                                                 style={{
-                                                  columnGap: "3px",
+                                                  rowGap: "15px",
+                                                  flex: "1",
                                                   display: "flex",
-                                                  flexDirection: "row",
-                                                  alignItems: "center",
+                                                  flexDirection: "column",
                                                 }}
                                               >
-                                                <Shopping />
-                                                <SubtitleReview>
-                                                  {prod.vendor.nama_vendor}
-                                                </SubtitleReview>
-                                              </div>
-                                              <p>{prod.nama}</p>
-                                              <div>
-                                                <SubtitleReview>
-                                                  Penilaian
-                                                </SubtitleReview>
                                                 <div
-                                                  style={{ marginTop: "-15px" }}
-                                                />
-                                                <ReactStars
-                                                  count={5}
-                                                  size={40}
-                                                  isHalf={true}
-                                                  activeColor="#ffd700"
-                                                  onChange={(e) => {
-                                                    setRating(e);
+                                                  style={{
+                                                    columnGap: "3px",
+                                                    display: "flex",
+                                                    flexDirection: "row",
+                                                    alignItems: "center",
                                                   }}
-                                                />
-                                              </div>
-                                              <div>
-                                                <SubtitleReview>
-                                                  Ulasan
-                                                </SubtitleReview>
-                                                <InputModifArea
-                                                  rows="5"
-                                                  required
-                                                  name="description"
-                                                  onChange={(e) => {
-                                                    setUlasan(e.target.value);
+                                                >
+                                                  <Shopping />
+                                                  <SubtitleReview>
+                                                    {prod.vendor.nama_vendor}
+                                                  </SubtitleReview>
+                                                </div>
+                                                <p>{prod.nama}</p>
+                                                <div>
+                                                  <SubtitleReview>
+                                                    Penilaian
+                                                  </SubtitleReview>
+                                                  <div
+                                                    style={{
+                                                      marginTop: "-15px",
+                                                    }}
+                                                  />
+                                                  <ReactStars
+                                                    count={5}
+                                                    size={40}
+                                                    isHalf={true}
+                                                    activeColor="#ffd700"
+                                                    onChange={(e) => {
+                                                      setRating(e);
+                                                    }}
+                                                  />
+                                                </div>
+                                                <div>
+                                                  <SubtitleReview>
+                                                    Ulasan
+                                                  </SubtitleReview>
+                                                  <InputModifArea
+                                                    rows="5"
+                                                    required
+                                                    name="description"
+                                                    onChange={(e) => {
+                                                      setUlasan(e.target.value);
+                                                    }}
+                                                  />
+                                                </div>
+                                                <ButtonBottomss
+                                                  need
+                                                  onClick={(e) => {
+                                                    setVisible({
+                                                      dons: true,
+                                                      rate: false,
+                                                    });
+                                                    submitReview(
+                                                      e,
+                                                      prod._id,
+                                                      prod.rating,
+                                                      prod.penilaian,
+                                                      prod.penilaian.length
+                                                    );
                                                   }}
-                                                />
+                                                >
+                                                  Kirim
+                                                </ButtonBottomss>
                                               </div>
-                                              <ButtonBottomss
-                                                need
-                                                onClick={(e) => {
-                                                  setVisible({
-                                                    dons: true,
-                                                    rate: false,
-                                                  });
-                                                  submitReview(
-                                                    e,
-                                                    prod._id,
-                                                    prod.rating,
-                                                    prod.penilaian,
-                                                    prod.penilaian.length
-                                                  );
-                                                }}
-                                              >
-                                                Kirim
-                                              </ButtonBottomss>
+                                            </BoxRowReview>
+                                            <div
+                                              style={{ marginLeft: "auto" }}
+                                              onClick={() => {
+                                                setVisible({
+                                                  ...visible,
+                                                  rate: false,
+                                                });
+                                              }}
+                                            >
+                                              <DivButton review>X</DivButton>
                                             </div>
-                                          </BoxRowReview>
-                                          <div
-                                            style={{ marginLeft: "auto" }}
-                                            onClick={() => {
-                                              setVisible({
-                                                ...visible,
-                                                rate: false,
-                                              });
-                                            }}
-                                          >
-                                            <DivButton review>X</DivButton>
-                                          </div>
-                                        </ReviewBg>
-                                      </ContentPopUp>
-                                    </PopUpBg>
-                                  </>
-                                )}
-                              </>
-                            );
-                          })}
-                        </>
-                      ) : visible.dons ? (
-                        <>
-                          <PopUpBg review>
-                            <ContentPopUp>
-                              <SucRegBox>
-                                <img
-                                  src={sucregcheck}
-                                  alt="success"
-                                  style={{ margin: "12px auto" }}
-                                />
-                                <SucRegWrited>Penilaian Terkirim!</SucRegWrited>
-                                <SucRegWrited message>
-                                  Terima kasih sudah membantu kami berkembang
-                                  dengan mengirimkan penilaian pelayanan kami
-                                </SucRegWrited>
-                                <GoHome
-                                  onClick={() => {
-                                    history.push("/");
-                                  }}
-                                >
-                                  Kembali ke Beranda
-                                </GoHome>
-                              </SucRegBox>
-                            </ContentPopUp>
-                          </PopUpBg>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                      <ButtonBottoms call need>
-                        Ajukan Pengaduan
-                      </ButtonBottoms>
-                    </BoxRowDetailed>
+                                          </ReviewBg>
+                                        </ContentPopUp>
+                                      </PopUpBg>
+                                    </>
+                                  )}
+                                </>
+                              );
+                            })}
+                          </>
+                        ) : visible.dons ? (
+                          <>
+                            <PopUpBg review>
+                              <ContentPopUp>
+                                <SucRegBox>
+                                  <img
+                                    src={sucregcheck}
+                                    alt="success"
+                                    style={{ margin: "12px auto" }}
+                                  />
+                                  <SucRegWrited>
+                                    Penilaian Terkirim!
+                                  </SucRegWrited>
+                                  <SucRegWrited message>
+                                    Terima kasih sudah membantu kami berkembang
+                                    dengan mengirimkan penilaian pelayanan kami
+                                  </SucRegWrited>
+                                  <GoHome
+                                    onClick={() => {
+                                      history.push("/");
+                                    }}
+                                  >
+                                    Kembali ke Beranda
+                                  </GoHome>
+                                </SucRegBox>
+                              </ContentPopUp>
+                            </PopUpBg>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                        <ButtonBottoms call need>
+                          Ajukan Pengaduan
+                        </ButtonBottoms>
+                      </BoxRowDetailed>
+                    )}
                   </GlobalTemplate>
                 );
               })}

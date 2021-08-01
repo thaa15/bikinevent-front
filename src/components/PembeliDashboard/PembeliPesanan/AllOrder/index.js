@@ -18,18 +18,14 @@ import { pembeliService } from "../../../../services/Pembeli";
 import { loginContext } from "../../../../context";
 
 const getButtonStatus = (stats) => {
-  const defaultStatus = [
-    "Menunggu\nPembayaran",
-    "Mengkonfirmasi\nPembayaran",
-    "Pelaksanaan\nPesanan",
-    "Pesanan\nSelesai",
-  ];
-
-  if (stats === "Pending") return defaultStatus[0];
-  else if (stats === "Confirmed") return defaultStatus[1];
-  else if (stats === "Implemented") return defaultStatus[2];
-  else if (stats === "Completed") return defaultStatus[3];
-  else return "Inappropiate Status";
+  if (stats === "MenungguKonfirmasi") return "Menunggu Konfirmasi";
+  else if (stats === "PesananTerkonfirmasi") return "Pesanan Terkonfirmasi";
+  else if (stats === "MenungguPembayaranBertahap")
+    return "Menunggu Pembayaran Bertahap";
+  else if (stats === "PembayaranLunas") return "Pembayaran Lunas";
+  else if (stats === "MempersiapkanLayanan") return "Mempersiapkan Layanan";
+  else if (stats === "LayananSelesai") return "Layana nSelesai";
+  else return "Invalid Status";
 };
 
 const PembeliPesananPage = (props) => {
@@ -50,9 +46,11 @@ const PembeliPesananPage = (props) => {
     setIsLoading(false);
   }, []);
   console.log(pesananData);
-  const progress = pesananData.filter((order) => order.status !== "Completed");
+  const progress = pesananData.filter(
+    (order) => order.status !== "LayananSelesai"
+  );
 
-  const done = pesananData.filter((order) => order.status === "Completed");
+  const done = pesananData.filter((order) => order.status === "LayananSelesai");
 
   return (
     <>
@@ -77,19 +75,23 @@ const PembeliPesananPage = (props) => {
                     <BoxContentTrack
                       key={idx}
                       onClick={() => {
-                        if (item.status === "Pending") {
+                        if (item.status === "MenungguKonfirmasi") {
                           AuthCliTrack.inclitrack(() => {
                             props.history.push(
                               `/detailed-order/waiting/${item.id}`
                             );
                           });
-                        } else if (item.status === "Confirmed") {
+                        } else if (item.status === "PesananTerkonfirmasi") {
                           AuthCliTrack.inclitrack(() => {
                             props.history.push(
                               `/detailed-order/confirm/${item.id}`
                             );
                           });
-                        } else if (item.status === "Implemented") {
+                        } else if (
+                          item.status === "MempersiapkanLayanan" ||
+                          item.status === "PembayaranLunas" ||
+                          item.status === "MenungguPembayaranBertahap"
+                        ) {
                           AuthCliTrack.inclitrack(() => {
                             props.history.push(
                               `/detailed-order/implement/${item.id}`
