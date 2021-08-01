@@ -10,6 +10,11 @@ import { productService } from "../services/Product";
 import TampilanVendor from "../components/TampilanProdukVendor/TampilanVendor";
 import { vendorService } from "../services/Vendor";
 import grey from "../images/grey.png";
+import { GlobalTemplate } from "../templates/GlobalTemplate";
+import { ChatNotOpen } from "../components/VendorDashboard/VendorChat/VendorChatStyled";
+import { NoEntryContent,ImageNoEntry } from "../components/PembeliDashboard/PembeliCart/Styled";
+import nochat from "../images/nochat.png";
+
 
 const TampilanProdukPage = ({ match }) => {
   const [productData, setProductData] = useState([]);
@@ -34,39 +39,63 @@ const TampilanProdukPage = ({ match }) => {
         </>
       ) : (
         <>
-          <ShowAtTopProduk
-            id={productData.id}
-            vendorId={productData.vendor.id}
-            image={productData.foto_produk[0].url}
-            kota={productData.lokasi}
-            judul={productData.nama}
-            vendor={productData.vendor.nama_vendor}
-            rating={productData.rating}
-            ulasan={productData.penilaian.length}
-            harga={productData.harga}
-          />
-          <TampilanProduk
-            descprod={productData.deskripsi_produk}
-            fotoproduk={productData.foto_produk}
-            lengths={productData.foto_produk.length}
-          />
-          {typeof productData.vendor.foto_profil === "undefined" ||
-          productData.vendor.foto_profil == null ? (
-            <PenilaianVendor
-              fotovendor={grey}
-              vendor={productData.vendor}
-              rating={productData.rating}
-              ulasan={productData.penilaian.length}
-              comments={productData.penilaian}
-            />
+          {productData.id == null ||
+            productData.vendor == null ? (
+            <GlobalTemplate>
+              <ChatNotOpen>
+                <NoEntryContent>
+                  <ImageNoEntry src={nochat} alt="No Entry" />
+                  <h4
+                    style={{ fontSize: "18px", color: "#212B36" }}
+                  >
+                    Produk Tidak Ditemukan
+                  </h4>
+                  <p style={{ fontSize: "14px", color: "#909DAA" }}>
+                    Vendor tidak menjual produk ini / Pihak kami
+                    melakukan tindakan pada vendor pada produk ini
+                  </p>
+                </NoEntryContent>
+              </ChatNotOpen>
+            </GlobalTemplate>
           ) : (
-            <PenilaianVendor
-              fotovendor={productData.vendor.foto_profil.url}
-              vendor={productData.vendor}
-              rating={productData.rating}
-              ulasan={productData.penilaian.length}
-              comments={productData.penilaian}
-            />
+            <>
+              <ShowAtTopProduk
+                id={productData.id}
+                vendorId={productData.vendor.id}
+                image={productData.foto_produk[0].url}
+                kota={productData.lokasi}
+                judul={productData.nama}
+                vendor={productData.vendor.nama_vendor}
+                rating={productData.rating}
+                ulasan={productData.penilaian.length}
+                harga={productData.harga}
+              />
+              <TampilanProduk
+                descprod={productData.deskripsi_produk}
+                fotoproduk={productData.foto_produk}
+                lengths={productData.foto_produk.length}
+              />
+              <>
+                {typeof productData.vendor.foto_profil === "undefined" ||
+                  productData.vendor.foto_profil == null ? (
+                  <PenilaianVendor
+                    fotovendor={grey}
+                    vendor={productData.vendor}
+                    rating={productData.rating}
+                    ulasan={productData.penilaian.length}
+                    comments={productData.penilaian}
+                  />
+                ) : (
+                  <PenilaianVendor
+                    fotovendor={productData.vendor.foto_profil.url}
+                    vendor={productData.vendor}
+                    rating={productData.rating}
+                    ulasan={productData.penilaian.length}
+                    comments={productData.penilaian}
+                  />
+                )}
+              </>
+            </>
           )}
         </>
       )}
@@ -108,7 +137,7 @@ const TampilanVendorPage = ({ match }) => {
       ) : (
         <>
           {typeof vendorData.foto_profil === "undefined" ||
-          vendorData.foto_profil.url == null ? (
+            vendorData.foto_profil.url == null ? (
             <ShowAtTopVendor
               fotovendor={grey}
               vendor={vendorData.nama_vendor}

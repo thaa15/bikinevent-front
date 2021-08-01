@@ -143,6 +143,7 @@ const PesananSelesaiPage = ({ match }) => {
                 act="selesai"
               />
               {orderData.produks.map((prod, ids) => {
+                console.log(orderData.produks)
                 return (
                   <GlobalTemplate top>
                     <BoxRowDetailed>
@@ -293,7 +294,7 @@ const PesananSelesaiPage = ({ match }) => {
                         </>
                       ) : visible.dons ? (
                         <>
-                          <PopUpBg review>
+                          <PopUpBg need>
                             <ContentPopUp>
                               <SucRegBox>
                                 <img

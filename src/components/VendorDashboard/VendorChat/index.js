@@ -102,7 +102,7 @@ const VendorChatContent = () => {
   useEffect(() => {
     if (window.innerWidth < 861) setResponsive(false);
     else setResponsive(true);
-  }, [window.innerWidth]);
+  }, []);
 
   return (
     <>

@@ -18,7 +18,8 @@ export const CarouselContainer = styled.div`
   position: relative
 `;
 
-export const BannerContainer = styled.div`
+export const BannerContainer = styled.a`
+display:block;
   height: 361px;
   width: 100%;
   background-image: url(${(props) => props.src});
@@ -27,7 +28,7 @@ export const BannerContainer = styled.div`
   background-size: cover;
 `;
 
-export const Slider = styled(AwesomeSlider)`
+export const Sliders = styled(AwesomeSlider)`
 .awssld__wrapper{
   margin: 0 auto !important;
   display: block;
@@ -51,7 +52,10 @@ export const Slider = styled(AwesomeSlider)`
 .awssld__container{
   height: fit-content;
 }
-
+.my-slider-class-name .awssld__timer {
+  opacity: 0;
+  pointer-events: none; /* prevent events (mouse clicking etc.) */
+}
 .awssld__bullets button{
   width: 5px !important;
   height: 5px !important;
