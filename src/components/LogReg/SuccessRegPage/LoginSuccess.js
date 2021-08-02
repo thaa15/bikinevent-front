@@ -32,6 +32,10 @@ const LoginSuccess = (props) => {
               localStorage.setItem("pembeliId", res.data._id);
               localStorage.setItem("role", "pembeli");
             });
+          setTimeout(() => {
+            window.location.reload();
+            window.location.href = "/google-register";
+          }, 100);
         }
       } else {
         localStorage.setItem("token", jwt);
@@ -39,14 +43,13 @@ const LoginSuccess = (props) => {
         localStorage.setItem("userId", user.id);
         localStorage.setItem("pembeliId", user.pembeli._id);
         localStorage.setItem("role", "pembeli");
+        setIsLoading(false);
+        setTimeout(() => {
+          window.location.reload();
+          window.location.href = "/";
+        }, 100);
+        return response;
       }
-
-      setIsLoading(false);
-      setTimeout(() => {
-        window.location.reload();
-        window.location.href = "/";
-      }, 100);
-      return response;
     };
     postNewUser();
   }, []);

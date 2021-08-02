@@ -55,13 +55,13 @@ const PembeliProfilContent = ({
   info,
 }) => {
   const dropRefProfile = useRef();
-  const { loginInfo } = useContext(loginContext);
+
   const [previewProfile, setPreviewProfile] = useState("");
   const [isPreviewProfile, setIsPreviewProfile] = useState(false);
   const [changePw, setChangePw] = useState(false);
   const [pwChanged, setPwChanged] = useState(false);
   const [fotoProfil, setFotoProfil] = useState();
-  const [clientInf, setClientInf] = useState(client_information)
+  const [clientInf, setClientInf] = useState(client_information);
   const [successave, setsuccessave] = useState({
     wrong: false,
     right: false,
@@ -121,24 +121,20 @@ const PembeliProfilContent = ({
     }
   };
 
-  /*const deleteInfo = async (id) => {
-    let tempProfile = clientInf.map((cart) => cart.id);
-    let index = tempProfile.indexOf(id);
-    if (index !== -1) {
-      tempProfile.splice(index, 1);
-    }
-    let profileInfoNew = clientInf.filter(a=>tempProfile.includes(a.id))
+  const deleteInfo = async (idx) => {
+    let tempInfos = clientInf;
+    tempInfos.splice(idx, 1);
     let body = {
-      informasi_pembeli: profileInfoNew,
+      informasi_pembeli: tempInfos,
     };
     const response = await pembeliService.editPembeliById(
-      loginInfo.pembeliId,
-      loginInfo.token,
+      info.pembeliId,
+      info.token,
       body
     );
-    setClientInf(tempProfile)
+    setClientInf(tempInfos);
     return response;
-  };*/
+  };
 
   return (
     <GlobalTemplate>
@@ -275,9 +271,12 @@ const PembeliProfilContent = ({
                       {item.alamat_pembeli}
                     </InformationContent>
                   </ContentInformation>
-
                   <PartTrashButton>
-                    <TrashButton>
+                    <TrashButton
+                      onClick={() => {
+                        deleteInfo(idx);
+                      }}
+                    >
                       <TrashsIcon />
                     </TrashButton>
                   </PartTrashButton>
