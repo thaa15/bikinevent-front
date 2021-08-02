@@ -74,6 +74,7 @@ const PemeriksaanBelanjaPage = (props) => {
         nama_pembeli: clientCart.clientInfo.nama_pembeli,
         no_hp_pembeli: clientCart.clientInfo.no_hp_pembeli,
         alamat_pembeli: clientCart.clientInfo.alamat_pembeli,
+        email: clientCart.clientInfo.email,
       },
       metode_pembayaran: clientCart.payment_method.nama,
       sistem_dp: clientCart.statusDp,

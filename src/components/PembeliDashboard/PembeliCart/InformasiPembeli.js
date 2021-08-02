@@ -32,7 +32,7 @@ const InformasiPembeliPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [actButton, setActButton] = useState(0);
   const [addNewInfo, setAddNewInfo] = useState(false);
-  const [failed, setFailed] = useState(false)
+  const [failed, setFailed] = useState(false);
   const { clientCart, setClientCart } = useContext(clientCartContext);
   const { loginInfo } = useContext(loginContext);
   const [pembeliData, setPembeliData] = useState([]);
@@ -40,6 +40,7 @@ const InformasiPembeliPage = (props) => {
   const [error, setError] = useState();
   const [newData, setNewData] = useState({
     nama_pembeli: null,
+    email: null,
     no_hp_pembeli: null,
     alamat_pembeli: null,
   });
@@ -182,6 +183,12 @@ const InformasiPembeliPage = (props) => {
                                   type="email"
                                   required
                                   name="email"
+                                  onChange={(e) => {
+                                    setNewData({
+                                      ...newData,
+                                      email: e.target.value,
+                                    });
+                                  }}
                                 />
                                 <br />
                               </div>
@@ -193,10 +200,13 @@ const InformasiPembeliPage = (props) => {
                                   required
                                   autocomplete="off"
                                   name="telephone"
-                                  value={(newData.no_hp_pembeli)}
+                                  value={newData.no_hp_pembeli}
                                   onChange={(e) => {
-                                    let regexp = /^[0-9\b]+$/
-                                    if (e.target.value === '' || regexp.test(e.target.value)) {
+                                    let regexp = /^[0-9\b]+$/;
+                                    if (
+                                      e.target.value === "" ||
+                                      regexp.test(e.target.value)
+                                    ) {
                                       setNewData({
                                         ...newData,
                                         no_hp_pembeli: e.target.value,
@@ -273,7 +283,7 @@ const InformasiPembeliPage = (props) => {
                         if (pembeliData[actButton] === undefined) {
                           setFailed(true);
                           setTimeout(() => {
-                            setFailed(false)
+                            setFailed(false);
                           }, 1500);
                         } else {
                           setClientCart({

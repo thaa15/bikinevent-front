@@ -30,7 +30,7 @@ import {
   SubtitleReview,
   ImageReview,
   BeenRated,
-  InvoiceTrack
+  InvoiceTrack,
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
 import { InputModifArea } from "../../../VendorDashboard/VendorProduk/VendorProdukStyled";
@@ -100,6 +100,7 @@ const PesananSelesaiPage = ({ match }) => {
     let rateStatus = orderData.rate_status;
     let rated = {
       rated: true,
+      rating: rating,
     };
     rateStatus[indexProduct] = rated;
     tempPenilaian.push({
@@ -216,7 +217,9 @@ const PesananSelesaiPage = ({ match }) => {
                       Pesanan Selesai
                     </ContentDetailTrack>
                     {determineRate(ids) ? (
-                      <BeenRated>Anda sudah memberi penilaian pada produk ini</BeenRated>
+                      <BeenRated>
+                        Anda sudah memberi penilaian pada produk ini
+                      </BeenRated>
                     ) : (
                       <BoxRowDetailed>
                         <ButtonBottoms

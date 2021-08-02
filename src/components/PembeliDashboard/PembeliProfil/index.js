@@ -6,7 +6,7 @@ import {
   BgSuccess,
   Succesicon,
   PopUpBg,
-  Failedicon
+  Failedicon,
 } from "../../../templates/GlobalTemplate";
 import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { Buttons, Buttonslog } from "../../LogReg/LoginPage/LoginStyled";
@@ -60,12 +60,13 @@ const PembeliProfilContent = ({
   const [fotoProfil, setFotoProfil] = useState();
   const [successave, setsuccessave] = useState({
     wrong: false,
-    right: false
+    right: false,
   });
   const [newData, setNewData] = useState({
     nama_pembeli: null,
     no_hp_pembeli: null,
     alamat_pembeli: null,
+    email: null,
   });
   const [addNewInfo, setAddNewInfo] = useState(false);
 
@@ -95,7 +96,7 @@ const PembeliProfilContent = ({
             "Content-Type": "multipart/form-data",
           },
         }
-      )
+      );
       setsuccessave({ ...successave, right: true });
       setTimeout(() => {
         setsuccessave({ ...successave, right: false });
@@ -239,14 +240,18 @@ const PembeliProfilContent = ({
         ) : (
           <GridInformasi>
             {client_information.map((item, idx) => {
-              console.log(client_information)
+              console.log(client_information);
               return (
                 <BoxClientInformation key={idx}>
                   <ContentInformation>
                     <TitleName>{item.nama_pembeli}</TitleName>
-                    <InformationContent>{item.no_hp_pembeli}</InformationContent>
-                    <InformationContent>{`Email`}</InformationContent>
-                    <InformationContent>{item.alamat_pembeli}</InformationContent>
+                    <InformationContent>
+                      {item.no_hp_pembeli}
+                    </InformationContent>
+                    <InformationContent>{item.email}</InformationContent>
+                    <InformationContent>
+                      {item.alamat_pembeli}
+                    </InformationContent>
                   </ContentInformation>
 
                   <PartTrashButton>
@@ -262,9 +267,7 @@ const PembeliProfilContent = ({
         <>
           {addNewInfo ? (
             <>
-              <ButtonAddInformation
-                onClick={() => setAddNewInfo(false)}
-              >
+              <ButtonAddInformation onClick={() => setAddNewInfo(false)}>
                 - Batal Tambah
               </ButtonAddInformation>
 
@@ -296,11 +299,7 @@ const PembeliProfilContent = ({
                   <div style={{ flexBasis: "50%" }}>
                     <LoginLabel for="city">E-mail</LoginLabel>
                     <br />
-                    <LoginInput
-                      type="email"
-                      required
-                      name="email"
-                    />
+                    <LoginInput type="email" required name="email" />
                     <br />
                   </div>
                   <div style={{ flexBasis: "48%" }}>
@@ -311,10 +310,13 @@ const PembeliProfilContent = ({
                       autocomplete="off"
                       required
                       name="telephone"
-                      value={(newData.no_hp_pembeli)}
+                      value={newData.no_hp_pembeli}
                       onChange={(e) => {
-                        let regexp = /^[0-9\b]+$/
-                        if (e.target.value === '' || regexp.test(e.target.value)) {
+                        let regexp = /^[0-9\b]+$/;
+                        if (
+                          e.target.value === "" ||
+                          regexp.test(e.target.value)
+                        ) {
                           setNewData({
                             ...newData,
                             no_hp_pembeli: e.target.value,
@@ -326,9 +328,7 @@ const PembeliProfilContent = ({
                   </div>
                 </InputCityApart>
 
-                <LoginLabel for="address">
-                  Alamat Tempat Tinggal
-                </LoginLabel>
+                <LoginLabel for="address">Alamat Tempat Tinggal</LoginLabel>
                 <LoginInput
                   type="text"
                   required
@@ -343,9 +343,7 @@ const PembeliProfilContent = ({
               </form>
             </>
           ) : (
-            <ButtonAddInformation
-              onClick={() => setAddNewInfo(true)}
-            >
+            <ButtonAddInformation onClick={() => setAddNewInfo(true)}>
               + Tambah Pembeli Baru
             </ButtonAddInformation>
           )}
