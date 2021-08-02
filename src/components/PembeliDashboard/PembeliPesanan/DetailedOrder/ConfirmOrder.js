@@ -16,6 +16,7 @@ import {
   LabelDetailTrack,
   ContentDetailTrack,
   EmailWrited,
+  InvoiceTrack
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
 import { orderService } from "../../../../services/OrderHistory";
@@ -116,14 +117,15 @@ const KonfirmasiPembayaranPage = ({ match }) => {
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    {orderData.kode_invoice.length == 0 ? (
+                    {orderData.kode_invoice.length == 0 ||
+                      orderData.kode_invoice == undefined ? (
                       <ContentDetailTrack invoice>
                         Wait for Confirmation
                       </ContentDetailTrack>
                     ) : (
-                      <ContentDetailTrack invoice>
+                      <InvoiceTrack href={orderData.link_invoice}>
                         {orderData.kode_invoice}
-                      </ContentDetailTrack>
+                      </InvoiceTrack>
                     )}
                     <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
                     <ContentDetailTrack invoice>

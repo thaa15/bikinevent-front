@@ -18,13 +18,13 @@ import { pembeliService } from "../../../../services/Pembeli";
 import { loginContext } from "../../../../context";
 
 const getButtonStatus = (stats) => {
-  if (stats === "MenungguKonfirmasi") return "Menunggu Konfirmasi";
-  else if (stats === "PesananTerkonfirmasi") return "Pesanan Terkonfirmasi";
+  if (stats === "MenungguKonfirmasi") return "Menunggu\nKonfirmasi";
+  else if (stats === "PesananTerkonfirmasi") return "Pesanan\nTerkonfirmasi";
   else if (stats === "MenungguPembayaranBertahap")
-    return "Menunggu Pembayaran Bertahap";
-  else if (stats === "PembayaranLunas") return "Pembayaran Lunas";
-  else if (stats === "MempersiapkanLayanan") return "Mempersiapkan Layanan";
-  else if (stats === "LayananSelesai") return "Layana nSelesai";
+    return "Menunggu\nPembayaran Bertahap";
+  else if (stats === "PembayaranLunas") return "Pembayaran\nLunas";
+  else if (stats === "MempersiapkanLayanan") return "Mempersiapkan\nLayanan";
+  else if (stats === "LayananSelesai") return "Layanan\nSelesai";
   else return "Invalid Status";
 };
 
@@ -44,8 +44,8 @@ const PembeliPesananPage = (props) => {
     };
     fetchData();
     setIsLoading(false);
-  }, []);
-  console.log(pesananData);
+  }, [loginInfo.pembeliId,loginInfo.token]);
+
   const progress = pesananData.filter(
     (order) => order.status !== "LayananSelesai"
   );

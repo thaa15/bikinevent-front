@@ -16,6 +16,7 @@ import {
   LabelDetailTrack,
   ContentDetailTrack,
   EmailWrited,
+  InvoiceTrack
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
 import { orderService } from "../../../../services/OrderHistory";
@@ -114,9 +115,9 @@ const PelaksanaanPesananPage = ({ match }) => {
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    <ContentDetailTrack invoice>
+                    <InvoiceTrack href={orderData.link_invoice}>
                       {orderData.kode_invoice}
-                    </ContentDetailTrack>
+                    </InvoiceTrack>
                     <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
                     <ContentDetailTrack invoice>
                       {prod.vendor.nama_vendor}

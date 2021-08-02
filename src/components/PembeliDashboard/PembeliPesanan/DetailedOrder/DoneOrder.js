@@ -29,6 +29,8 @@ import {
   BoxRowReview,
   SubtitleReview,
   ImageReview,
+  BeenRated,
+  InvoiceTrack
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
 import { InputModifArea } from "../../../VendorDashboard/VendorProduk/VendorProdukStyled";
@@ -37,6 +39,7 @@ import { loginContext } from "../../../../context";
 import { vendorService } from "../../../../services/Vendor";
 import { roomService } from "../../../../services/Room";
 import { productService } from "../../../../services/Product";
+
 const PesananSelesaiPage = ({ match }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
@@ -99,7 +102,6 @@ const PesananSelesaiPage = ({ match }) => {
       rated: true,
     };
     rateStatus[indexProduct] = rated;
-    console.log(rateStatus);
     tempPenilaian.push({
       user: loginInfo.userId,
       rating: rating,
@@ -122,7 +124,6 @@ const PesananSelesaiPage = ({ match }) => {
       loginInfo.token,
       bodyOrder
     );
-    console.log(responseOrder);
     return response;
   };
 
@@ -154,6 +155,7 @@ const PesananSelesaiPage = ({ match }) => {
       return history.push("/client-chat");
     }
   };
+
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (
@@ -170,7 +172,6 @@ const PesananSelesaiPage = ({ match }) => {
                 act="selesai"
               />
               {orderData.produks.map((prod, ids) => {
-                console.log(orderData.produks);
                 return (
                   <GlobalTemplate top>
                     <BoxRowDetailed>
@@ -180,19 +181,30 @@ const PesananSelesaiPage = ({ match }) => {
                         <h6>
                           Rp{parseInt(prod.harga).toLocaleString("id-ID")}
                         </h6>
-                        <ButtonBottoms
-                          call
-                          onClick={() => contactVendor(prod.vendor.id)}
-                        >
-                          <ChatShop />
-                          Hubungi Vendor
-                        </ButtonBottoms>
+                        {determineRate(ids) ? (
+                          <ReactStars
+                            count={5}
+                            size={30}
+                            isHalf={true}
+                            edit={false}
+                            value={4.5}
+                            activeColor="#ffd700"
+                          />
+                        ) : (
+                          <ButtonBottoms
+                            call
+                            onClick={() => contactVendor(prod.vendor.id)}
+                          >
+                            <ChatShop />
+                            Hubungi Vendor
+                          </ButtonBottoms>
+                        )}
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    <ContentDetailTrack invoice>
+                    <InvoiceTrack href={orderData.link_invoice}>
                       {orderData.kode_invoice}
-                    </ContentDetailTrack>
+                    </InvoiceTrack>
                     <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
                     <ContentDetailTrack invoice>
                       {prod.vendor.nama_vendor}
@@ -204,7 +216,7 @@ const PesananSelesaiPage = ({ match }) => {
                       Pesanan Selesai
                     </ContentDetailTrack>
                     {determineRate(ids) ? (
-                      <h1>Udah Di Rate</h1>
+                      <BeenRated>Anda sudah memberi penilaian pada produk ini</BeenRated>
                     ) : (
                       <BoxRowDetailed>
                         <ButtonBottoms
@@ -326,7 +338,7 @@ const PesananSelesaiPage = ({ match }) => {
                           </>
                         ) : visible.dons ? (
                           <>
-                            <PopUpBg review>
+                            <PopUpBg need>
                               <ContentPopUp>
                                 <SucRegBox>
                                   <img

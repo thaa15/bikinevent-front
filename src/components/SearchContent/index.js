@@ -140,6 +140,9 @@ const SearchContent = () => {
       };
       filterFrom(searched.filter);
     }
+  }, [searched.loading]);
+
+  useEffect(()=>{
     //fetch and filter vendor
     const fetchVendors = async () => {
       const response = await vendorService.getAllVendor();
@@ -160,7 +163,7 @@ const SearchContent = () => {
       setSearchedVendor(filterTemp);
     };
     filterVendor(vendorData);
-  }, [searched.loading]);
+  }, [searched.loading])
 
   const Pilihan = [
     "Paling Sesuai",

@@ -15,6 +15,7 @@ import {
   LabelDetailTrack,
   ContentDetailTrack,
   EmailWrited,
+  InvoiceTrack
 } from "./styled";
 import { AuthCliTrack } from "../../../../AllAuth";
 import { loginContext } from "../../../../context";
@@ -38,6 +39,7 @@ const MenungguPembayaranPage = ({ match }) => {
       );
       const data = response.data;
       setOrderData(data);
+
       const format = new Intl.DateTimeFormat("id", {
         year: "numeric",
         month: "long",
@@ -50,6 +52,7 @@ const MenungguPembayaranPage = ({ match }) => {
     };
     fetchData();
   }, []);
+
   const contactVendor = async (vendorId) => {
     const response = await roomService.getUserRoom(
       loginInfo.userId,
@@ -77,6 +80,18 @@ const MenungguPembayaranPage = ({ match }) => {
       const makeRoom = await roomService.postRoom(loginInfo.token, body);
       return history.push("/client-chat");
     }
+  };
+
+  const statusConfirm = async () => {
+      let body = {
+        status:"PesananTerkonfirmasi"
+      };
+      const response = await orderService.editOrderById(
+        match.params.id,
+        loginInfo.token,
+        body
+      );
+      return response;
   };
 
   return (
@@ -116,9 +131,9 @@ const MenungguPembayaranPage = ({ match }) => {
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    <ContentDetailTrack invoice>
+                    <InvoiceTrack href={orderData.link_invoice}>
                       {orderData.kode_invoice}
-                    </ContentDetailTrack>
+                    </InvoiceTrack>
                     <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
                     <ContentDetailTrack invoice>
                       {prod.vendor.nama_vendor}
@@ -135,11 +150,12 @@ const MenungguPembayaranPage = ({ match }) => {
                     </EmailWrited>
                     <BoxRowDetailed>
                       <ButtonBottoms need
-                      onClick={()=>{
-                        AuthCliTrack.inclitrack(() => {
-                          history.push(`/detailed-order/confirm/${match.params.id}`);
-                        });
-                      }}>Sudah Dibayar</ButtonBottoms>
+                        onClick={() => {
+                          AuthCliTrack.inclitrack(() => {
+                            history.push(`/detailed-order/confirm/${match.params.id}`);
+                          });
+                          statusConfirm()
+                        }}>Sudah Dibayar</ButtonBottoms>
                       <ButtonBottoms call need>
                         Ajukan Pembatalan
                       </ButtonBottoms>

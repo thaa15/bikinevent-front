@@ -30,6 +30,13 @@ export const TypeChoose = styled.div`
     margin: 15px auto 0;
 `;
 
+export const TypeChooseGoogle = styled.div`
+    display: flex;
+    align-items: center;
+    width: 65%;
+    margin: 15px auto 0;
+`;
+
 export const TypeImage = styled.div`
     width: 100%;
     color: white;
@@ -42,7 +49,7 @@ export const TypeImage = styled.div`
 export const TypeApart = styled.div`
     display:flex;
     width: 80%;
-    margin: 0 5px;
+    margin: ${(props)=>props.need ? "0 auto" : "0 5px"};
     cursor: pointer;
     align-items:center;
     border: ${(props) => props.aktif ? "1px solid #219653" : "1px solid #E4E4E4"};

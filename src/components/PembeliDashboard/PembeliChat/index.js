@@ -36,6 +36,8 @@ import { roomService } from "../../../services/Room";
 import { socket } from "../../../config/web-sockets";
 import { messageService } from "../../../services/Message";
 import { format } from "timeago.js";
+import { vendorService } from "../../../services/Vendor";
+
 const PembeliChatPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const { loginInfo } = useContext(loginContext);
@@ -44,6 +46,7 @@ const PembeliChatPage = (props) => {
   const [currentChat, setCurrentChat] = useState();
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [vendorImage, setVendorImage] = useState([]);
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -74,6 +77,18 @@ const PembeliChatPage = (props) => {
       currentChat.vendorId.id.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [currentChat, arrivalMessage]);
+
+  useEffect(() => {
+    const fetchVendors = async () => {
+      const response = await vendorService.getAllVendor();
+      const data = response.data;
+      const dataVendorFiltered = data
+        .filter(elmen => conversations
+          .map(el => el.vendorId.vendor).includes(elmen.id))
+      setVendorImage(dataVendorFiltered);
+    };
+    fetchVendors();
+  })
 
   const submitChat = async (e, roomId) => {
     e.preventDefault();
@@ -107,8 +122,8 @@ const PembeliChatPage = (props) => {
     if (window.innerWidth < 861) setResponsive(false);
     else setResponsive(true);
   }, []);
+  console.log(currentChat)
 
-  console.log(conversations);
   return (
     <>
       {isLoading ? (
@@ -144,9 +159,10 @@ const PembeliChatPage = (props) => {
                       <ChatList>
                         {conversations
                           .sort((a, b) => {
-                            if(a.messages.length !== 0 && b.messages.length !== 0){
-                            return new Date(b.messages[b.messages.length - 1].createdAt)
-                              - new Date(a.messages[a.messages.length - 1].createdAt)}
+                            if (a.messages.length !== 0 && b.messages.length !== 0) {
+                              return new Date(b.messages[b.messages.length - 1].createdAt)
+                                - new Date(a.messages[a.messages.length - 1].createdAt)
+                            }
                           })
                           .map((room, idx) => {
                             return (
@@ -162,20 +178,28 @@ const PembeliChatPage = (props) => {
                                   }}
                                   active={currentChat == room}
                                 >
-                                  {typeof room.vendorId.foto_profil ===
-                                    "undefined" ||
-                                    room.vendorId.foto_profil == null ? (
-                                    <ListChatPart photo>
-                                      <ProfilePhoto content />
-                                    </ListChatPart>
-                                  ) : (
-                                    <ListChatPart photo>
-                                      <ProfilePhoto
-                                        content
-                                        src={room.vendorId.foto_profil.url}
-                                      />
-                                    </ListChatPart>
-                                  )}
+                                  {vendorImage
+                                    .filter(elmen => room.vendorId.vendor === elmen.id)
+                                    .map((items, idsx) => {
+                                      return (
+                                        <>
+                                          {typeof items.foto_profil ===
+                                            "undefined" ||
+                                            items.foto_profil == null ? (
+                                            <ListChatPart photo>
+                                              <ProfilePhoto content />
+                                            </ListChatPart>
+                                          ) : (
+                                            <ListChatPart photo key={idsx}>
+                                              <ProfilePhoto
+                                                content
+                                                src={items.foto_profil.url}
+                                              />
+                                            </ListChatPart>
+                                          )}
+                                        </>
+                                      )
+                                    })}
                                   <ListChatPart>
                                     <ProfileName>
                                       {room.vendorId.nama_lengkap}
@@ -229,16 +253,24 @@ const PembeliChatPage = (props) => {
                         ) : (
                           <>
                             <DisplayChatProfileContent>
-                              {typeof currentChat.vendorId.foto_profil ===
-                                "undefined" ||
-                                currentChat.vendorId.foto_profil == null ? (
-                                <ProfilePhoto content />
-                              ) : (
-                                <ProfilePhoto
-                                  content
-                                  src={currentChat.vendorId.foto_profil.url}
-                                />
-                              )}
+                              {vendorImage
+                                .filter(elmen => elmen.id === currentChat.vendorId.vendor)
+                                .map((items, idsx) => {
+                                  return (
+                                    <>
+                                      {typeof items.foto_profil ===
+                                        "undefined" ||
+                                        items.foto_profil == null ? (
+                                        <ProfilePhoto content />
+                                      ) : (
+                                        <ProfilePhoto
+                                          content
+                                          src={items.foto_profil.url}
+                                        />
+                                      )}
+                                    </>
+                                  )
+                                })}
                               <ProfileName>
                                 {currentChat.vendorId.nama_lengkap}
                               </ProfileName>
@@ -290,8 +322,8 @@ const PembeliChatPage = (props) => {
                   </>
                 ) : (
                   <>
-                    <ChatResponsiveClient 
-                    conversations={conversations}/>
+                    <ChatResponsiveClient
+                      conversations={conversations} />
                   </>
                 )}
               </BgChat>

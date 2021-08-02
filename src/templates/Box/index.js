@@ -90,7 +90,6 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
         loginInfo.token,
         body
       );
-      console.log(response.data);
     } else {
       const body = {
         isArchived: false,

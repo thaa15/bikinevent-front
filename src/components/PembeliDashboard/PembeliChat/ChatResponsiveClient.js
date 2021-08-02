@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
     ProfilePhoto,
     ProfileName,
@@ -23,6 +23,7 @@ import { messageService } from "../../../services/Message";
 import { format } from "timeago.js";
 import { socket } from "../../../config/web-sockets";
 import { loginContext } from "../../../context";
+import { vendorService } from "../../../services/Vendor";
 
 const ChatResponsiveClient = ({
     conversations,
@@ -32,6 +33,7 @@ const ChatResponsiveClient = ({
     const [newMessage, setNewMessage] = useState("");
     const { loginInfo } = useContext(loginContext);
     const [messages, setMessages] = useState([]);
+    const [vendorImage, setVendorImage] = useState([]);
 
     const submitChat = async (e, roomId) => {
         e.preventDefault();
@@ -58,6 +60,18 @@ const ChatResponsiveClient = ({
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        const fetchVendors = async () => {
+            const response = await vendorService.getAllVendor();
+            const data = response.data;
+            const dataVendorFiltered = data
+                .filter(elmen => conversations
+                    .map(el => el.vendorId.vendor).includes(elmen.id))
+            setVendorImage(dataVendorFiltered);
+        };
+        fetchVendors();
+    })
     return (
         <AnimationPortofolio>
             {openchat ? (<>
@@ -84,20 +98,28 @@ const ChatResponsiveClient = ({
                                             setOpenchat(false)
                                         }}
                                         active={currentChat == room}>
-                                        {typeof room.vendorId.foto_profil ===
-                                            "undefined" ||
-                                            room.vendorId.foto_profil == null ? (
-                                            <ListChatPart photo>
-                                                <ProfilePhoto content />
-                                            </ListChatPart>
-                                        ) : (
-                                            <ListChatPart photo>
-                                                <ProfilePhoto
-                                                    content
-                                                    src={room.vendorId.foto_profil.url}
-                                                />
-                                            </ListChatPart>
-                                        )}
+                                        {vendorImage
+                                            .filter(elmen => room.vendorId.vendor === elmen.id)
+                                            .map((items, idsx) => {
+                                                return (
+                                                    <>
+                                                        {typeof items.foto_profil ===
+                                                            "undefined" ||
+                                                            items.foto_profil == null ? (
+                                                            <ListChatPart photo>
+                                                                <ProfilePhoto content />
+                                                            </ListChatPart>
+                                                        ) : (
+                                                            <ListChatPart photo key={idsx}>
+                                                                <ProfilePhoto
+                                                                    content
+                                                                    src={items.foto_profil.url}
+                                                                />
+                                                            </ListChatPart>
+                                                        )}
+                                                    </>
+                                                )
+                                            })}
                                         <ListChatPart resp2>
                                             <ProfileName>{room.vendorId.nama_lengkap}</ProfileName>
                                             <LastChatDisplay>
@@ -130,16 +152,24 @@ const ChatResponsiveClient = ({
                             setMessages([]);
                             setCurrentChat();
                         }} />
-                        {typeof currentChat.vendorId.foto_profil ===
-                            "undefined" ||
-                            currentChat.vendorId.foto_profil == null ? (
-                            <ProfilePhoto content />
-                        ) : (
-                            <ProfilePhoto
-                                content
-                                src={currentChat.vendorId.foto_profil.url}
-                            />
-                        )}
+                        {vendorImage
+                            .filter(elmen => elmen.id === currentChat.vendorId.vendor)
+                            .map((items) => {
+                                return (
+                                    <>
+                                        {typeof items.foto_profil ===
+                                            "undefined" ||
+                                            items.foto_profil == null ? (
+                                            <ProfilePhoto content />
+                                        ) : (
+                                            <ProfilePhoto
+                                                content
+                                                src={items.foto_profil.url}
+                                            />
+                                        )}
+                                    </>
+                                )
+                            })}
                         <ProfileName>
                             {currentChat.vendorId.nama_lengkap}
                         </ProfileName>

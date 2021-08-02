@@ -18,10 +18,22 @@ import {
   GridButton,
   ButtonPengaduan,
 } from "./VendorPesananStyle";
+import { InvoiceTrack } from "../../PembeliDashboard/PembeliPesanan/DetailedOrder/styled";
+
+const getStatus = (stats) => {
+  if (stats === "MenungguKonfirmasi") return "Menunggu Konfirmasi";
+  else if (stats === "PesananTerkonfirmasi") return "Pesanan Terkonfirmasi";
+  else if (stats === "MenungguPembayaranBertahap")
+    return "Menunggu Pembayaran Bertahap";
+  else if (stats === "PembayaranLunas") return "Pembayaran Lunas";
+  else if (stats === "MempersiapkanLayanan") return "Mempersiapkan Layanan";
+  else if (stats === "LayananSelesai") return "Layanan Selesai";
+  else return "Invalid Status";
+};
 
 const VendorPesananContent = ({ data }) => {
-  const pesanan = data.filter((stat) => stat.status !== "Completed");
-  const ended = data.filter((stat) => stat.status === "Completed");
+  const pesanan = data.filter((stat) => stat.status !== "LayananSelesai");
+  const ended = data.filter((stat) => stat.status === "LayananSelesai");
   const { loginInfo } = useContext(loginContext);
   const history = useHistory();
   const convertDate = (string) => {
@@ -66,6 +78,7 @@ const VendorPesananContent = ({ data }) => {
           ) : (
             <>
               {pesanan.map((item) => {
+                console.log(pesanan)
                 return (
                   <>
                     {item.produks.map((prod, idx) => {
@@ -85,9 +98,9 @@ const VendorPesananContent = ({ data }) => {
                                 Wait for Confirmation
                               </SubJudulContent>
                             ) : (
-                              <SubJudulContent invoice>
+                              <InvoiceTrack href={item.link_invoice}>
                                 {item.kode_invoice}
-                              </SubJudulContent>
+                              </InvoiceTrack>
                             )}
                             <SubJudul>Nama Pembeli</SubJudul>
                             <SubJudulContent>
@@ -99,7 +112,7 @@ const VendorPesananContent = ({ data }) => {
                             </SubJudulContent>
                             <SubJudul>Status</SubJudul>
                             <SubJudulContent tanggal status>
-                              Menunggu Pembayaran
+                              {getStatus(item.status)}
                             </SubJudulContent>
                             <GridButton>
                               <ButtonChat
@@ -143,14 +156,14 @@ const VendorPesananContent = ({ data }) => {
                             </JudulHarga>
                             <SubJudul>Nomor Invoice</SubJudul>
 
-                            {item.invoice == null ? (
+                            {item.kode_invoice == null ? (
                               <SubJudulContent invoice>
                                 Wait for Confirmation
                               </SubJudulContent>
                             ) : (
-                              <SubJudulContent invoice>
-                                {item.invoice}
-                              </SubJudulContent>
+                              <InvoiceTrack href={item.link_invoice}>
+                                {item.kode_invoice}
+                              </InvoiceTrack>
                             )}
 
                             <SubJudul>Nama Pembeli</SubJudul>
@@ -163,7 +176,7 @@ const VendorPesananContent = ({ data }) => {
                             </SubJudulContent>
                             <SubJudul>Status</SubJudul>
                             <SubJudulContent tanggal status>
-                              Menunggu Pembayaran
+                              {getStatus(item.status)}
                             </SubJudulContent>
                             <GridButton>
                               <ButtonChat to="/vendor-chat">

@@ -172,6 +172,19 @@ export const ContentDetailTrack = styled.div`
     color: ${(props) => props.invoice ? "#E30045" : "#212B36"};
 `;
 
+export const InvoiceTrack = styled.a`
+    display: block;
+    font-size: 15px;
+    line-height: 21px;
+    color: #E30045;
+    text-decoration: none;
+    width: fit-content;
+    cursor:pointer;
+    &:hover{
+        text-decoration: underline;
+    }
+`;
+
 export const EmailWrited = styled.div`
 font-size: 15px;
 line-height: 21px;
@@ -211,4 +224,18 @@ export const ReviewBg = styled.div`
     @media screen and (max-width: 1031px) {
         width: 90%;
     }
+`;
+
+export const BeenRated = styled.div`
+    width: 100%;
+    padding: 8px;
+    background: #15cf64;
+    border: 2px solid #0f5e31;
+    color: #0f5e31;
+    margin: 15px 0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 22px;
+    text-align: center
 `;

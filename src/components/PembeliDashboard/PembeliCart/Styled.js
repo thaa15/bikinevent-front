@@ -28,7 +28,7 @@ export const NoEntryContent = styled.div`
 `;
 
 export const ImageNoEntry = styled.img`
-    width: ${(props)=>props.need ? "85%" : "60%"};
+    width: ${(props) => props.need ? "85%" : "60%"};
     margin-bottom: 30px;
     @media screen and (max-width: 611px) {
         width: 80%;
@@ -148,7 +148,7 @@ export const BankRow = styled.div`
     padding: 10px;
     cursor: pointer;
     border-radius: 5px;
-    background: ${(props)=>props.aktif ? "#DAF3E5" : "white"};
+    background: ${(props) => props.aktif ? "#DAF3E5" : "white"};
 `;
 
 export const InformationContents = styled.div`
@@ -159,13 +159,13 @@ export const InformationContents = styled.div`
 
 export const DivRowContent = styled.div`
     display: flex;
-    flex-direction: ${(props)=>props.top ? "row" : props.content ? "row" : "row"};
-    column-gap: ${(props)=>props.need ? "6px" : "20px"};
+    flex-direction: ${(props) => props.top ? "row" : props.content ? "row" : "row"};
+    column-gap: ${(props) => props.need ? "6px" : "20px"};
     flex:1;
     align-self: center;
-    align-items: ${(props)=>props.top ? "center" : props.content ? "center" : "center"};
+    align-items: ${(props) => props.top ? "center" : props.content ? "center" : "center"};
     width: 100%;
-    margin-bottom: ${(props)=>props.top ? "0" : props.titlee ? "3px" : "10px"};
+    margin-bottom: ${(props) => props.top ? "0" : props.titlee ? "3px" : "10px"};
     p {
         font-size: 14px;
         line-height: 21px;
@@ -179,13 +179,13 @@ export const DivRowContent = styled.div`
         margin: 3px 0;
     }
     @media screen and (max-width: 676px) {
-        flex-direction: ${(props)=>props.top ? "column" : props.content ? "row" : "row"};
-        align-items: ${(props)=>props.top ? "flex-start" : props.content ? "center" : "center"};
+        flex-direction: ${(props) => props.top ? "column" : props.content ? "row" : "row"};
+        align-items: ${(props) => props.top ? "flex-start" : props.content ? "center" : "center"};
         text-align: left;
     }
     @media screen and (max-width: 505px) {
-        flex-direction: ${(props)=>props.top ? "column" : props.content ? "column" : "row"};
-        align-items: ${(props)=>props.top ? "flex-start" : props.content ? "flex-start" : "center"};
+        flex-direction: ${(props) => props.top ? "column" : props.content ? "column" : "row"};
+        align-items: ${(props) => props.top ? "flex-start" : props.content ? "flex-start" : "center"};
     }
     @media screen and (max-width: 489px) {
         h6 {
@@ -300,13 +300,18 @@ export const ButtonAddInformation = styled.div`
     text-align:center;
     cursor:pointer;
     margin: 10px auto;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 `;
 
 export const Title = styled.h6`
     font-size: 18px;
     line-height: 27px;
     color: #212B36;
-    margin: ${(props)=>props.top ? "0 0 20px" : "20px 0"};
+    margin: ${(props) => props.top ? "0 0 20px" : "20px 0"};
 `;
 
 export const PaymentContentGrid = styled.div`
@@ -325,7 +330,7 @@ export const BankImage = styled.img`
     margin: 8px 0;
     max-width: 170px;
     max-height: 50px;
-    filter: ${(props)=>props.nonact ? "grayscale(100%)" : "grayscale(0%)"};
+    filter: ${(props) => props.nonact ? "grayscale(100%)" : "grayscale(0%)"};
 `;
 
 export const EmailConfirm = styled.div`
@@ -338,7 +343,7 @@ export const EmailConfirm = styled.div`
         font-weight: bold;
         margin: 0 5px;
     }
-    text-align:${(props)=>props.need ? "center" : "left"};
+    text-align:${(props) => props.need ? "center" : "left"};
 `;
 
 export const ButtonLacak = styled.button`
@@ -375,7 +380,7 @@ export const ButtonApartas = styled.div`
     }
 `;
 
-export const Notes =styled.p`
+export const Notes = styled.p`
     font-style: italic;
     font-weight: 300;
     font-size: 12px;

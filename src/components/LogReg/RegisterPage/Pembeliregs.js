@@ -12,7 +12,6 @@ import {
   CheckBoxInput,
   TermanConds,
   CondTermBg,
-  CondTermTitle,
   CondTermContent,
 } from "./RegisterStyled";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";

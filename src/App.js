@@ -49,8 +49,8 @@ import KonfirmasiPembayaranPage from "./components/PembeliDashboard/PembeliPesan
 import PelaksanaanPesananPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/ImplementOrder";
 import PesananSelesaiPage from "./components/PembeliDashboard/PembeliPesanan/DetailedOrder/DoneOrder";
 import PembeliChatPage from "./components/PembeliDashboard/PembeliChat";
-import { useHistory } from "react-router-dom";
 import ForgotPasswordPage from "./components/LogReg/LoginPage/ForgotPassPage";
+import GoogleRegisterPage from "./components/LogReg/RegisterPage/Googleregs";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -194,6 +194,11 @@ function App() {
                     <Route
                       path="/login-success"
                       component={LoginSuccess}
+                      exact
+                    />
+                    <Route
+                      path="/google-register"
+                      component={GoogleRegisterPage}
                       exact
                     />
                     <Route path="/blog/:id" component={RoutedBlog} exact />

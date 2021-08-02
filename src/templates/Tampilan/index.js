@@ -224,7 +224,7 @@ const ShowAtTopVendor = ({
   ulasanvendor,
 }) => {
   const [rates, setRates] = useState(ratingvendor);
-  console.log(fotovendor);
+
   useEffect(() => {
     if (rates === undefined) setRates(0);
     else setRates(ratingvendor);

@@ -40,6 +40,7 @@ export const Price = styled.h3`
     font-size: 18px;
     line-height: ${(props)=>props.handle ? "24px" : "27px"};
     color: #212B36;
+    word-wrap:break-word;
     @media screen and (max-width: 1130px) {
         font-size: ${(props)=>props.handle ? "12px" : "15px"};
     }
