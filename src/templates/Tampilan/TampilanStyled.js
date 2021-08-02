@@ -259,6 +259,7 @@ export const UserPhoto = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-color: #F2994A;
 `;
 
 export const UserName = styled.div`

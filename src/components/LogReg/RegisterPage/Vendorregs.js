@@ -674,22 +674,6 @@ const Vendorregs = (props) => {
 
         <Buttonslog
           type="submit"
-          disabled={
-            !(
-              previewWajah.length == 0 &&
-              previewKTP.length == 0 &&
-              previewTab.length == 0 &&
-              previewSrc.length == 0
-            )
-          }
-          allowed={
-            !(
-              previewWajah.length == 0 &&
-              previewKTP.length == 0 &&
-              previewTab.length == 0 &&
-              previewSrc.length == 0
-            )
-          }
         >
           <Buttons>Daftar</Buttons>
         </Buttonslog>

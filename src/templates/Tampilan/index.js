@@ -299,13 +299,19 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
               return (
                 <CommentsPart key={idx}>
                   <CommentProfile profile>
-                    {typeof data.user.foto_profil.url === "undefined" ||
-                    data.user.foto_profil.url == null ? (
+                    <>
+                    {typeof data.user.foto_profil === "undefined" ||
+                    data.user.foto_profil == null ? (
                       <UserPhoto />
                     ) : (
                       <UserPhoto img={data.user.foto_profil.url} />
                     )}
-                    <UserName>{data.user.nama_lengkap}</UserName>
+                    </>
+                    {data.user.nama_lengkap == null ? (
+                      <UserName>Unknown</UserName>
+                    ) : (
+                      <UserName>{data.user.nama_lengkap}</UserName>
+                    )}
                   </CommentProfile>
                   <CommentProfile>
                     <UserComment>{data.komentar}</UserComment>
