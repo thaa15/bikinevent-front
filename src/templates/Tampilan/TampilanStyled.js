@@ -268,6 +268,9 @@ export const UserName = styled.div`
     text-align: center;
     color: #909DAA;
     word-wrap:break-word;
+    @media screen and (max-width: 789px) {
+        line-height: 16px;
+    }
 `;
 
 export const UserComment = styled.div`
@@ -275,6 +278,9 @@ export const UserComment = styled.div`
     line-height: 20px;
     color: #212B36;
     word-wrap:break-word;
+    @media screen and (max-width: 789px) {
+        line-height: 16px;
+    }
 `;
 
 export const UserRate = styled.div`

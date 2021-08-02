@@ -50,6 +50,7 @@ import {
   LabelVendorProduk,
 } from "../../VendorDashboard/VendorProduk/VendorProdukStyled";
 import axios from "axios";
+import { encryptData } from "../../../Crypted";
 
 const LoginPage = (props) => {
   const [visible, setVisible] = useState(true);
@@ -94,13 +95,18 @@ const LoginPage = (props) => {
       if (userData) {
         if (userData.user.role._id == pembeliId && role == "pembeli") {
           //Nanti push ke halaman lainnya disini ya (Pembeli)
-          localStorage.setItem("userId", userData.user.id);
-          localStorage.setItem("token", userData.jwt);
-          localStorage.setItem("nama", userData.user.nama_lengkap);
           if (userData.user.pembeli) {
-            localStorage.setItem("pembeliId", userData.user.pembeli.id);
+            const originalData = {
+              userId: userData.user.id,
+              token: userData.jwt,
+              nama: userData.user.nama_lengkap,
+              pembeliId: userData.user.pembeli.id,
+              role: 'pembeli'
+            }
+            const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+            const encryptedData = encryptData(originalData, salt);
+            localStorage.setItem('mk', encryptedData);
           }
-          localStorage.setItem("role", "pembeli");
           setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
             setLoginUser({ ...loginUser, right: false });
@@ -126,11 +132,16 @@ const LoginPage = (props) => {
             }, 2000);
             return setError("Vendor is not Verified");
           }
-          localStorage.setItem("token", userData.jwt);
-          localStorage.setItem("nama", userData.user.nama_lengkap);
-          localStorage.setItem("vendor_id", userData.user.vendor._id);
-          localStorage.setItem("userId", userData.user.id);
-          localStorage.setItem("role", "vendor");
+          const originalData = {
+            userId: userData.user.id,
+            token: userData.jwt,
+            nama: userData.user.nama_lengkap,
+            vendorId: userData.user.vendor._id,
+            role: 'vendor'
+          }
+          const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+          const encryptedData = encryptData(originalData, salt);
+          localStorage.setItem('mk', encryptedData);
           setLoginUser({ ...loginUser, right: true });
           setTimeout(() => {
             setLoginUser({ ...loginUser, right: false });

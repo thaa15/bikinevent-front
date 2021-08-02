@@ -80,7 +80,7 @@ const KonfirmasiPembayaranPage = ({ match }) => {
       return history.push("/client-chat");
     }
   };
-  console.log(orderData)
+
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (

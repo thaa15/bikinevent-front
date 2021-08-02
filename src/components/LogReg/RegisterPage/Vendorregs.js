@@ -27,7 +27,11 @@ import { AuthSucRegs } from "../../../AllAuth";
 import { layananService } from "../../../services/Layanan";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
-import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
+import { 
+  PopUpBg, 
+  ContentPopUp,
+  ButtonCloser,
+  ButtonClosePopUp, } from "../../../templates/GlobalTemplate";
 
 const Vendorregs = (props) => {
   const [visible, setVisible] = useState(true);
@@ -129,7 +133,6 @@ const Vendorregs = (props) => {
   const onDrop = (files) => {
     const [uploadedFile] = files;
     setFormData({ ...formData, foto_toko: files[0] });
-    console.log(formData);
 
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -678,9 +681,9 @@ const Vendorregs = (props) => {
           <Buttons>Daftar</Buttons>
         </Buttonslog>
         {previewWajah.length !== 0 &&
-        previewKTP.length !== 0 &&
-        previewTab.length !== 0 &&
-        previewSrc.length !== 0 ? (
+          previewKTP.length !== 0 &&
+          previewTab.length !== 0 &&
+          previewSrc.length !== 0 ? (
           <></>
         ) : (
           <span style={{ color: "#ff0000", fontSize: "12px" }}>
@@ -691,6 +694,13 @@ const Vendorregs = (props) => {
       <>
         {condTerm ? (
           <PopUpBg need>
+            <ButtonClosePopUp
+              onClick={() => {
+                setCondTerm(false);
+              }}
+            >
+              <ButtonCloser />
+            </ButtonClosePopUp>
             <ContentPopUp>
               <CondTermBg>
                 {/* <CondTermTitle>Syarat dan Ketentuan</CondTermTitle> */}

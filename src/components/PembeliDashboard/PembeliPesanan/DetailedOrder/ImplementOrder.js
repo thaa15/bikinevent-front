@@ -83,6 +83,18 @@ const PelaksanaanPesananPage = ({ match }) => {
     }
   };
 
+  const statusConfirm = async () => {
+    let body = {
+      status:"LayananSelesai",
+    };
+    const response = await orderService.editOrderById(
+      match.params.id,
+      loginInfo.token,
+      body
+    );
+    return response;
+};
+
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (
@@ -138,7 +150,13 @@ const PelaksanaanPesananPage = ({ match }) => {
                       >
                         Hubungi Vendor
                       </ButtonBottoms>
-                      <ButtonBottoms call need>
+                      <ButtonBottoms call need 
+                      onClick={() => {
+                        AuthCliTrack.inclitrack(() => {
+                          history.push(`/detailed-order/done/${match.params.id}`);
+                        });
+                        statusConfirm()
+                      }}>
                         Pesanan Selesai
                       </ButtonBottoms>
                     </BoxRowDetailed>

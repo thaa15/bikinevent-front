@@ -247,10 +247,8 @@ const SearchContent = () => {
         return parseInt(a.harga) - parseInt(b.harga);
       });
     }
-    console.log(filtered);
-    setFilteredProduct(filtered);
+    setFilteredProduct(filtered.filter((item) => filteredProduct.map(a=>a.id).includes(item.id)));
   };
-  console.log("prod", filteredProduct);
 
   return (
     <>

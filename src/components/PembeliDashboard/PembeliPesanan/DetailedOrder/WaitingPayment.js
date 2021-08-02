@@ -94,8 +94,6 @@ const MenungguPembayaranPage = ({ match }) => {
       return response;
   };
 
-  console.log(orderData)
-
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (

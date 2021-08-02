@@ -31,6 +31,7 @@ import gambartest from "../../images/bikineventLogo.png";
 import NavbarVendor from "./NavbarVendor";
 import { clientCartContext, searchContext } from "../../context";
 import { Kategories } from "../../datas/vendordata";
+import { encryptData } from "../../Crypted";
 
 const Navbar = ({ toggling, isAuth, nama, role }) => {
   const { searched, setSearched } = useContext(searchContext);
@@ -41,12 +42,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
   const { clientCart, setClientCart } = useContext(clientCartContext);
 
   const removed = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("nama");
-    localStorage.removeItem("vendor_id");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("pembeliId");
-    localStorage.removeItem("role");
+    localStorage.removeItem('mk');
 
     window.location.reload();
     window.location.href = "/login";
@@ -62,10 +58,10 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
     setPlacehldr("");
     setSearchContent(false);
   };
-  
+
   return (
     <>
-      {isAuth.length > 4 && role === "vendor" ? (
+      {isAuth.length != 0 && role === "vendor" ? (
         <NavbarVendor toggling={toggling} nama={nama} />
       ) : (
         <Nav>
@@ -117,20 +113,20 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                       <ElementLinks
                         key={idx}
                         onClick={() => {
-                            setSearched({
-                              ...searched,
-                              filter: {
-                                lokasi: [],
-                                subcategory: [data.subcath],
-                              },
-                              fromFilter: true,
-                              searchFill: `Produk Kategori ${data.cath}`,
-                              loading: true
-                            });
+                          setSearched({
+                            ...searched,
+                            filter: {
+                              lokasi: [],
+                              subcategory: [data.subcath],
+                            },
+                            fromFilter: true,
+                            searchFill: `Produk Kategori ${data.cath}`,
+                            loading: true
+                          });
 
-                            history.push({
-                              pathname: "/searched",
-                            });
+                          history.push({
+                            pathname: "/searched",
+                          });
                         }}>
                         <Dropdownlist>{data.cath}</Dropdownlist>
                       </ElementLinks>
@@ -160,7 +156,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
 
             <NavItem part="18%" removedl>
               <ProfButton>
-                {nama !== "null" ? (
+                {nama.length != 0 ? (
                   <>
                     <ElementLink to="/client-purchase/cart"
                       onClick={() => {
@@ -214,7 +210,7 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                 )}
 
                 <LogOutContent>
-                  {nama !== "null" || nama.length > 4 ? (
+                  {nama.length != 0 ? (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <DisplayProf need>Hello</DisplayProf>
                       <DisplayProf name need>

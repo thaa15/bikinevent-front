@@ -14,14 +14,11 @@ import {
     ProdukIcon,
     KeuanganIcon
 } from "./SidebarStyled";
+import { encryptData } from "../../Crypted";
 
 const SidebarVendor = ({ isOpen, toggling }) => {
     const removed = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("nama");
-        localStorage.removeItem("vendor_id");
-        localStorage.removeItem("role");
-
+        localStorage.removeItem('mk');
         window.location.reload();
         window.location.href = "/login";
         toggling = false;

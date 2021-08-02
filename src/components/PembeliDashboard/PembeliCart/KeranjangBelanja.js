@@ -35,6 +35,7 @@ import { pembeliService } from "../../../services/Pembeli";
 import CheckBox from "./CheckBox";
 import { roomService } from "../../../services/Room";
 import { vendorService } from "../../../services/Vendor";
+import { decryptData } from "../../../Crypted";
 
 const KeranjangBelanjaPage = memo((props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,16 +47,17 @@ const KeranjangBelanjaPage = memo((props) => {
   const [cartData, setCartData] = useState([]);
   const [checks, setChecks] = useState([]);
   const history = useHistory();
-  /*
-loginInfo.pembeliId,
-          loginInfo.token
-*/
+
+  let mkLocalData = localStorage.getItem('mk');
+  const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+  const originalData = decryptData(mkLocalData, salt);
+  
   useEffect(() => {
     if (loginInfo.pembeliId != "null" && loginInfo.token != "null") {
       const fetchData = async () => {
         const response = await pembeliService.getPembeliById(
-          localStorage.getItem("pembeliId"),
-          localStorage.getItem("token")
+          originalData.pembeliId,
+          originalData.token
         );
         const data = response.data;
         setCartData(data.cart);
@@ -161,7 +163,6 @@ loginInfo.pembeliId,
     return response;
   };
 
-  console.log(tempVendorName);
   return (
     <>
       {isLoading ? (

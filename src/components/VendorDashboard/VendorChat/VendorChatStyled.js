@@ -95,7 +95,7 @@ export const ChatPerson = styled.div`
     flex-direction: row;
     background: ${(props)=>props.active ? "#DAF3E5" : "white"};
     border-radius: 5px;
-    height: 80px;
+    min-height: 80px;
     margin-bottom: 4px;
     justify-content: space-between;
     align-self: center;

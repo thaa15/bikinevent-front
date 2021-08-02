@@ -41,9 +41,8 @@ export const ContentPopUp = styled.div`
 export const ButtonCloser = styled(AiOutlineClose)`
     font-size: 26px;
     color: white;
-    &:hover{
-        font-weight: 800;
-    }
+    font-weight: bold;
+    background-color:#cc0000;
 `;
 
 export const ContentDrop = styled.div`

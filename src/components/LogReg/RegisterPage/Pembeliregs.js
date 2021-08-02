@@ -22,6 +22,8 @@ import {
   BgSuccess,
   Succesicon,
   ContentPopUp,
+  ButtonCloser,
+  ButtonClosePopUp,
 } from "../../../templates/GlobalTemplate";
 import { pembeliService } from "../../../services/Pembeli";
 import { layananService } from "../../../services/Layanan";
@@ -230,6 +232,13 @@ const Pembeliregs = (props) => {
       <>
         {condTerm ? (
           <PopUpBg need>
+            <ButtonClosePopUp
+              onClick={() => {
+                setCondTerm(false);
+              }}
+            >
+              <ButtonCloser />
+            </ButtonClosePopUp>
             <ContentPopUp>
               <CondTermBg>
                 {/* <CondTermTitle>Syarat dan Ketentuan</CondTermTitle> */}

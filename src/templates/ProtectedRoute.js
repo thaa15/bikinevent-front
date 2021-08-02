@@ -2,6 +2,7 @@ import React,{useContext} from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthSucRegs } from "../AllAuth";
 import { searchContext } from "../context";
+import { decryptData } from "../Crypted";
 
 export const ProtectedRouteSucReg = ({ component: Component, ...rest }) => {
   return (
@@ -33,11 +34,15 @@ export const ProtectedVendorLogin = ({
   component: Component,
   ...rest
 }) => {
+  let mkLocalData = localStorage.getItem('mk');
+  const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+  const originalData = decryptData(mkLocalData, salt);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if ((isAuth.length > 4 || isAuth !== "null") && role !== "pembeli" ) {
+        if (originalData != null
+        && originalData.role !== "pembeli" ) {
           return <Component {...props} />;
         } else {
           return (
@@ -62,11 +67,14 @@ export const ProtectedPembeliLogin = ({
   component: Component,
   ...rest
 }) => {
+  let mkLocalData = localStorage.getItem('mk');
+  const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+  const originalData = decryptData(mkLocalData, salt);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if ((isAuth.length > 4 || isAuth !== "null") && role !== "vendor" ) {
+        if (originalData != null && originalData.role !== "vendor" ) {
           return <Component {...props} />;
         } else {
           return (
@@ -86,11 +94,14 @@ export const ProtectedPembeliLogin = ({
 };
 
 export const ProtectedVendor = ({ isAuth,role, component: Component, ...rest }) => {
+  let mkLocalData = localStorage.getItem('mk');
+  const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+  const originalData = decryptData(mkLocalData, salt);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isAuth.length <= 4 || role !== "vendor") {
+        if (originalData == null || originalData.role !== "vendor") {
           return <Component {...props} />;
         } else {
           return (
@@ -110,11 +121,14 @@ export const ProtectedVendor = ({ isAuth,role, component: Component, ...rest }) 
 };
 
 export const ProtectedUser = ({ isAuth, component: Component, ...rest }) => {
+  let mkLocalData = localStorage.getItem('mk');
+  const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+  const originalData = decryptData(mkLocalData, salt);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isAuth.length <= 4) {
+        if (originalData == null) {
           return <Component {...props} />;
         } else {
           return (

@@ -16,16 +16,12 @@ import {
 } from "./SidebarStyled";
 import SidebarVendor from "./SidebarVendor";
 import { clientCartContext, searchContext } from "../../context";
+import { encryptData } from "../../Crypted";
 
 const Sidebar = ({ isOpen, toggling, isAuth, role }) => {
     const { clientCart, setClientCart } = useContext(clientCartContext);
     const removed = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("nama");
-        localStorage.removeItem("vendor_id");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("pembeliId");
-        localStorage.removeItem("role");
+        localStorage.removeItem('mk');
 
         window.location.reload();
         window.location.href = "/login";

@@ -132,7 +132,7 @@ const PembeliProfilContent = ({
       info.token,
       body
     );
-    setClientInf(tempInfos);
+    setClientInf(clientInf.filter((item) => item.id !== idx));
     return response;
   };
 

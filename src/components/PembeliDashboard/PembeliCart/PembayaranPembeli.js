@@ -29,9 +29,17 @@ import {
   CondTermContent,
 } from "../../LogReg/RegisterPage/RegisterStyled";
 import { Buttons, Buttonslog } from "../../LogReg/LoginPage/LoginStyled";
-import { PopUpBg, ContentPopUp } from "../../../templates/GlobalTemplate";
+import { 
+  PopUpBg, 
+  ContentPopUp,
+  ButtonCloser,
+  ButtonClosePopUp,
+} from "../../../templates/GlobalTemplate";
 import { BoxNotEntry } from "../../VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { paymentService } from "../../../services/Payment";
+import { layananService } from "../../../services/Layanan";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const PembayaranPembeliPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +50,16 @@ const PembayaranPembeliPage = (props) => {
   const [paymentData, setPaymentData] = useState();
   const [dpStatus, setDpStatus] = useState(false);
   const [actButton, setActButton] = useState();
-  //Cuma mainin data sabi ganti
+
+  const [syarat, setSyarat] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await layananService.getLayanan();
+      const data = response.data;
+      setSyarat(data.syarat_ketentuan);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -214,43 +231,25 @@ const PembayaranPembeliPage = (props) => {
               <>
                 {condTerm ? (
                   <PopUpBg need>
+                    <ButtonClosePopUp
+                        onClick={() => {
+                          setCondTerm(false);
+                        }}
+                      >
+                        <ButtonCloser />
+                      </ButtonClosePopUp>
                     <ContentPopUp>
                       <CondTermBg>
-                        <CondTermTitle>Syarat dan Ketentuan</CondTermTitle>
+                        {/* <CondTermTitle>Syarat dan Ketentuan</CondTermTitle> */}
+
                         <CondTermContent>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
-                          <br />
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
-                          <br />
-                          <br />
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum.
-                          <br />
+                          <ReactMarkdown
+                            children={syarat.desc}
+                            plugins={[[gfm, { singleTilde: false }]]}
+                            allowDangerousHtml={true}
+                          />
                         </CondTermContent>
+
                         <Buttonslog
                           onClick={() => {
                             setCondTerm(false);

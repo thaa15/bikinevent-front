@@ -13,13 +13,11 @@ import {
 } from "./NavbarStyled";
 import { FaBars } from "react-icons/fa";
 import gambartest from "../../images/bikineventLogo.png";
+import { encryptData } from "../../Crypted";
 
 const NavbarVendor = ({ toggling, nama }) => {
     const removed = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("nama");
-        localStorage.removeItem("vendor_id");
-        localStorage.removeItem("role");
+        localStorage.removeItem('mk');
         
         window.location.reload();
         window.location.href = "/login";
