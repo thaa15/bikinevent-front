@@ -80,6 +80,7 @@ const KonfirmasiPembayaranPage = ({ match }) => {
       return history.push("/client-chat");
     }
   };
+  console.log(orderData)
   return (
     <>
       {!AuthCliTrack.isAutclitrack() ? (
@@ -117,8 +118,7 @@ const KonfirmasiPembayaranPage = ({ match }) => {
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    {orderData.kode_invoice.length == 0 ||
-                      orderData.kode_invoice == undefined ? (
+                    {orderData.kode_invoice.length == 0 ? (
                       <ContentDetailTrack invoice>
                         Wait for Confirmation
                       </ContentDetailTrack>

@@ -84,7 +84,7 @@ const MenungguPembayaranPage = ({ match }) => {
 
   const statusConfirm = async () => {
       let body = {
-        status:"PesananTerkonfirmasi"
+        status:"PesananTerkonfirmasi",
       };
       const response = await orderService.editOrderById(
         match.params.id,
@@ -93,6 +93,8 @@ const MenungguPembayaranPage = ({ match }) => {
       );
       return response;
   };
+
+  console.log(orderData)
 
   return (
     <>
@@ -131,9 +133,15 @@ const MenungguPembayaranPage = ({ match }) => {
                       </div>
                     </BoxRowDetailed>
                     <LabelDetailTrack>Nomor Invoice</LabelDetailTrack>
-                    <InvoiceTrack href={orderData.link_invoice}>
-                      {orderData.kode_invoice}
-                    </InvoiceTrack>
+                    {orderData.kode_invoice.length == 0 ? (
+                      <ContentDetailTrack invoice>
+                        Wait for Confirmation
+                      </ContentDetailTrack>
+                    ) : (
+                      <InvoiceTrack href={orderData.link_invoice}>
+                        {orderData.kode_invoice}
+                      </InvoiceTrack>
+                    )}
                     <LabelDetailTrack>Nama Vendor</LabelDetailTrack>
                     <ContentDetailTrack invoice>
                       {prod.vendor.nama_vendor}

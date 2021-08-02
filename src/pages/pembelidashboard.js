@@ -21,6 +21,7 @@ export const PembeliProfil = () => {
         loginInfo.token
       );
       const dataPembeli = responsePembeli.data;
+      console.log(responsePembeli)
       setInfoData(dataPembeli.informasi_pembeli);
       setIsLoading(false);
     };

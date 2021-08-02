@@ -255,7 +255,7 @@ const PembeliChatPage = (props) => {
                             <DisplayChatProfileContent>
                               {vendorImage
                                 .filter(elmen => elmen.id === currentChat.vendorId.vendor)
-                                .map((items, idsx) => {
+                                .map((items) => {
                                   return (
                                     <>
                                       {typeof items.foto_profil ===

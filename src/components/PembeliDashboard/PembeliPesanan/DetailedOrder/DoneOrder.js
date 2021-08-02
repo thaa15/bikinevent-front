@@ -85,6 +85,17 @@ const PesananSelesaiPage = ({ match }) => {
       return false;
     }
   };
+
+  const rateStar = (index) => {
+    if (typeof orderData.rate_status[index] === "undefined") {
+      return 0;
+    } else if (typeof orderData.rate_status[index] !== "undefined") {
+      if (orderData.rate_status[index].rated) {
+        return orderData.rate_status[index].rating;
+      }
+      return 0;
+    }
+  };
   const submitReview = async (
     e,
     prodId,
@@ -188,7 +199,7 @@ const PesananSelesaiPage = ({ match }) => {
                             size={30}
                             isHalf={true}
                             edit={false}
-                            value={4.5}
+                            value={rateStar(ids)}
                             activeColor="#ffd700"
                           />
                         ) : (

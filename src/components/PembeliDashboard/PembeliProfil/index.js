@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useContext } from "react";
 import Dropzone from "react-dropzone";
 import {
   GlobalTemplate,
@@ -44,6 +44,8 @@ import axios from "axios";
 import { ButtonAddInformation } from "../PembeliCart/Styled";
 import { LoginLabel, LoginInput } from "../../LogReg/LoginPage/LoginStyled";
 import { InputCityApart } from "../../LogReg/RegisterPage/RegisterStyled";
+import { pembeliService } from "../../../services/Pembeli";
+import { loginContext } from "../../../context";
 
 const PembeliProfilContent = ({
   owner,
@@ -53,11 +55,13 @@ const PembeliProfilContent = ({
   info,
 }) => {
   const dropRefProfile = useRef();
+  const { loginInfo } = useContext(loginContext);
   const [previewProfile, setPreviewProfile] = useState("");
   const [isPreviewProfile, setIsPreviewProfile] = useState(false);
   const [changePw, setChangePw] = useState(false);
   const [pwChanged, setPwChanged] = useState(false);
   const [fotoProfil, setFotoProfil] = useState();
+  const [clientInf, setClientInf] = useState(client_information)
   const [successave, setsuccessave] = useState({
     wrong: false,
     right: false,
@@ -116,6 +120,25 @@ const PembeliProfilContent = ({
       }, 2000);
     }
   };
+
+  /*const deleteInfo = async (id) => {
+    let tempProfile = clientInf.map((cart) => cart.id);
+    let index = tempProfile.indexOf(id);
+    if (index !== -1) {
+      tempProfile.splice(index, 1);
+    }
+    let profileInfoNew = clientInf.filter(a=>tempProfile.includes(a.id))
+    let body = {
+      informasi_pembeli: profileInfoNew,
+    };
+    const response = await pembeliService.editPembeliById(
+      loginInfo.pembeliId,
+      loginInfo.token,
+      body
+    );
+    setClientInf(tempProfile)
+    return response;
+  };*/
 
   return (
     <GlobalTemplate>
@@ -235,12 +258,11 @@ const PembeliProfilContent = ({
         </>
 
         <TitleProfileVendor>Informasi Pembeli</TitleProfileVendor>
-        {client_information.length === 0 ? (
+        {clientInf.length === 0 ? (
           <BoxNotEntry>Tidak Terdapat Informasi Pembeli!</BoxNotEntry>
         ) : (
           <GridInformasi>
-            {client_information.map((item, idx) => {
-              console.log(client_information);
+            {clientInf.map((item, idx) => {
               return (
                 <BoxClientInformation key={idx}>
                   <ContentInformation>

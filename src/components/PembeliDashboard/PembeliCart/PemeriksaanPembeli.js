@@ -82,9 +82,10 @@ const PemeriksaanBelanjaPage = (props) => {
       total_price: clientCart.price,
       rate_status: rateStatus,
       notes: noteTemp,
+      kode_invoice:""
     };
     const response = await orderService.postOrder(loginInfo.token, body);
-    console.log(response);
+
     const getPembeli = await pembeliService.getPembeliById(
       loginInfo.pembeliId,
       loginInfo.token

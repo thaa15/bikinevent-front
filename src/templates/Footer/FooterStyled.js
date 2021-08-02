@@ -85,6 +85,9 @@ export const SocialIcons = styled.div`
 `;
 
 export const SocialIconLink = styled.a`
+display:flex;
+align-items:center;
+margin: 5px 0;
   color: #111;
   font-size: 30px;
   margin-right: 3px;
