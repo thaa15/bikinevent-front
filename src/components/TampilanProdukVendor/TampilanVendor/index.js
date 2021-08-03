@@ -23,9 +23,7 @@ const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
       <div style={{ width: "100%" }}>
         <TitleTampilan>Deskripsi Vendor</TitleTampilan>
         {descvendor == undefined ? (
-          <BoxNotEntry>
-            Belum Terdapat Deskripsi Vendor!
-          </BoxNotEntry>
+          <BoxNotEntry>Belum Terdapat Deskripsi Vendor!</BoxNotEntry>
         ) : (
           <TampilanWritedWidth>
             <TampilanWritedContent>{descvendor}</TampilanWritedContent>
@@ -34,9 +32,7 @@ const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
 
         <TitleTampilan>Produk</TitleTampilan>
         {produkvendor.length === 0 ? (
-          <BoxNotEntry>
-            Vendor Belum Memiliki Produk!
-          </BoxNotEntry>
+          <BoxNotEntry>Vendor Belum Memiliki Produk!</BoxNotEntry>
         ) : (
           <GridVendorTampilan>
             {produkvendor.map((data, idx) => {
@@ -64,13 +60,13 @@ const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
           </GridVendorTampilan>
         )}
         <TitleTampilan>Penilaian Vendor</TitleTampilan>
-        <PenilaianVendorVendor comments={comments} />
+        <PenilaianVendorVendor comments={comments} produks={produkvendor} />
         <TitleTampilan>Portofolio Vendor</TitleTampilan>
-        {portofolio.length === 0 ? (<>
-          <BoxNotEntry>
-            Belum Terdapat Portofolio!
-          </BoxNotEntry>
-        </>) : (
+        {portofolio.length === 0 ? (
+          <>
+            <BoxNotEntry>Belum Terdapat Portofolio!</BoxNotEntry>
+          </>
+        ) : (
           <GridVendorPortofolio>
             {portofolio.map((data, idx) => (
               <PortofolioVendor
@@ -83,7 +79,7 @@ const TampilanVendor = ({ descvendor, produkvendor, comments, portofolio }) => {
           </GridVendorPortofolio>
         )}
       </div>
-    </GlobalTemplate >
+    </GlobalTemplate>
   );
 };
 

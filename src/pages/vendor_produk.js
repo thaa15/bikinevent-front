@@ -111,22 +111,24 @@ const TampilanVendorPage = ({ match }) => {
     const fetchData = async () => {
       const response = await vendorService.getVendorById(match.params.vendor);
       const data = response.data;
+      let totalUlasan = 0;
       await setVendorData(data);
       const calculateTotalRating = () => {
         let tempTotal = 0;
-        data.comments.forEach((comment) => {
-          tempTotal += comment.rating;
+        data.produks.forEach((prod) => {
+          prod.penilaian.forEach((ulasan) => {
+            tempTotal += ulasan.rating;
+            totalUlasan += 1;
+          });
         });
-        setTotalRating(tempTotal / data.comments.length);
+        setTotalRating((tempTotal / totalUlasan).toFixed(2));
       };
-
-      if (data.comments.length !== 0) {
-        calculateTotalRating();
-      }
+      calculateTotalRating();
       setIsLoading(false);
     };
     fetchData();
   }, [match.params.vendor]);
+  console.log(totalRating);
   return (
     <>
       {isLoading ? (
