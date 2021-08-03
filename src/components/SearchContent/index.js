@@ -102,7 +102,8 @@ const SearchContent = () => {
       const filterData = (data) => {
         let filterTemp = data.filter((item) => {
           if (
-            item.nama.toLowerCase().includes(searched.searchFill.toLowerCase())
+            item.nama.toLowerCase().includes(searched.searchFill.toLowerCase()) &&
+            item.vendor != null
           ) {
             return item;
           }
@@ -125,14 +126,16 @@ const SearchContent = () => {
 
         if (Object.values(data).some((arr) => arr.length > 0)) {
           tempProds = productData.filter((product) => {
-            return filterKeys.some((key) => {
-              if (Array.isArray(product[key])) {
-                return product[key].some((keyVal) => {
-                  data[key].includes(keyVal);
-                });
-              }
-              return data[key].some((item) => item.includes(product[key]));
-            });
+            if (product.vendor != null) {
+              return filterKeys.some(() => {
+                if (Array.isArray(product["subcategory"])) {
+                  return product["subcategory"].some((keyVal) => {
+                    data["subcategory"].includes(keyVal);
+                  });
+                }
+                return data["subcategory"].some((item) => item.includes(product["subcategory"]));
+              });
+            }
           });
         }
         setFilteredProduct(tempProds);
@@ -142,7 +145,7 @@ const SearchContent = () => {
     }
   }, [searched.loading]);
 
-  useEffect(()=>{
+  useEffect(() => {
     //fetch and filter vendor
     const fetchVendors = async () => {
       const response = await vendorService.getAllVendor();
@@ -150,19 +153,19 @@ const SearchContent = () => {
       setVendorData(data);
     };
     fetchVendors();
-    const filterVendor = (data) => {
-      let filterTemp = data.filter((item) => {
-        if (
-          item.nama_vendor
-            .toLowerCase()
-            .includes(searched.searchFill.toLowerCase())
-        ) {
-          return item;
-        }
-      });
+
+    let filterTemp = vendorData.filter((item) => {
+      if (
+        item.nama_vendor
+          .toLowerCase()
+          .includes(searched.searchFill.toLowerCase())
+      ) {
+        return item;
+      }
+    });
+    setTimeout(() => {
       setSearchedVendor(filterTemp);
-    };
-    filterVendor(vendorData);
+    }, 200);
   }, [searched.loading])
 
   const Pilihan = [
@@ -176,52 +179,70 @@ const SearchContent = () => {
   const useFilterHandler = () => {
     const filterKeys = Object.keys(getFilter);
     let tempProds = searchedProduct;
-    if (Object.values(getFilter).some((arr) => arr.length > 0)) {
-      if (searched.fromFilter === true && stableLocation === false) {
-        tempProds = searchedProduct.filter((product) => {
-          return filterKeys.some((key) => {
-            if (Array.isArray(product["lokasi"])) {
-              return product["lokasi"].some((keyVal) => {
-                getFilter["lokasi"].includes(keyVal);
-              });
-            }
+    if ((searched.fromFilter === false || stableLocation === true)
+      && Object.values(getFilter).some((arr) => arr.length > 0)) {
+      tempProds = searchedProduct.filter((product) => {
+        return filterKeys.some((key) => {
+          if (Array.isArray(product[key])) {
+            return product[key].some((keyVal) => {
+              getFilter[key].includes(keyVal);
+            });
+          }
 
-            return getFilter["lokasi"].some((item) =>
-              item.includes(product["lokasi"])
-            );
-          });
+          return getFilter[key].some((item) => item.includes(product[key]));
         });
-      } else if (searched.fromFilter === false || stableLocation === true) {
-        tempProds = searchedProduct.filter((product) => {
-          return filterKeys.some((key) => {
-            if (Array.isArray(product[key])) {
-              return product[key].some((keyVal) => {
-                getFilter[key].includes(keyVal);
-              });
-            }
+      });
+    }
+    if (searched.fromFilter === true && stableLocation === false) {
+      tempProds = searchedProduct.filter((product) => {
+        return filterKeys.some(() => {
+          if (Array.isArray(product["lokasi"])) {
+            return product["lokasi"].some((keyVal) => {
+              getFilter["lokasi"].includes(keyVal);
+            });
+          }
 
-            return getFilter[key].some((item) => item.includes(product[key]));
-          });
+          return getFilter["lokasi"].some((item) =>
+            item.includes(product["lokasi"])
+          );
+        });
+      });
+    }
+    setStableLocation(true);
+    if ((searched.fromFilter === false || stableLocation === true)) {
+      if (getRangeFilter.hargaMin !== ""
+        && getRangeFilter.hargaMax !== "") {
+        tempProds = tempProds.filter((product) => {
+          return (
+            product.harga >= getRangeFilter.hargaMin &&
+            product.harga <= getRangeFilter.hargaMax
+          );
         });
       }
-      setStableLocation(false);
+      if (getRangeFilter.rating !== "") {
+        tempProds = tempProds.filter((product) => {
+          return parseFloat(product.rating) > parseFloat(3);
+        });
+      }
+    } else {
+      if (getRangeFilter.hargaMin !== ""
+        && getRangeFilter.hargaMax !== "") {
+        tempProds = searchedProduct.filter((product) => {
+          return (
+            product.harga >= getRangeFilter.hargaMin &&
+            product.harga <= getRangeFilter.hargaMax
+          );
+        });
+      }
+      if (getRangeFilter.rating !== "") {
+        tempProds = searchedProduct.filter((product) => {
+          return parseFloat(product.rating) > parseFloat(3);
+        });
+      }
     }
-    if (getRangeFilter.hargaMin !== "" && getRangeFilter.hargaMax !== "") {
-      tempProds = tempProds.filter((product) => {
-        return (
-          parseInt(product.harga) > parseInt(getRangeFilter.hargaMin) &&
-          parseInt(product.harga) < parseInt(getRangeFilter.hargaMax)
-        );
-      });
-    }
-    if (getRangeFilter.rating !== "") {
-      tempProds = tempProds.filter((product) => {
-        return product.rating > 3;
-      });
-    }
+    setStableLocation(false);
     setFilteredProduct(tempProds);
   };
-
   const checkHandler = (row, state, idx) => {
     const arrRow = [8, 4, 6, 9, 5, 3];
     let newArrs = [...checkSubcath];
@@ -247,7 +268,7 @@ const SearchContent = () => {
         return parseInt(a.harga) - parseInt(b.harga);
       });
     }
-    setFilteredProduct(filtered.filter((item) => filteredProduct.map(a=>a.id).includes(item.id)));
+    setFilteredProduct(filtered.filter((item) => filteredProduct.map(a => a.id).includes(item.id)));
   };
 
   return (
@@ -375,7 +396,7 @@ const SearchContent = () => {
                           id="Three Up"
                           name="rating"
                           value="3 ke atas"
-                          onChange={(e) => {
+                          onClick={(e) => {
                             if (e.target.checked)
                               setGetRangeFilter({
                                 ...getRangeFilter,

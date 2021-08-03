@@ -114,7 +114,11 @@ const Navbar = ({ toggling, isAuth, nama, role }) => {
                         key={idx}
                         onClick={() => {
                           setSearched({
-                            ...searched,
+                            rangeFilter: {
+                              hargaMin: "",
+                              hargaMax: "",
+                              rating: "",
+                            },
                             filter: {
                               lokasi: [],
                               subcategory: [data.subcath],

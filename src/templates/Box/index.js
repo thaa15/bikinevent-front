@@ -32,7 +32,6 @@ import { Kategories } from "../../datas/vendordata";
 import { searchContext } from "../../context";
 
 const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
-  const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
   const [rates, setRates] = useState(rate);
   const [handles, setHandles] = useState(false);
 
@@ -40,8 +39,8 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
     if (rates === undefined) setRates(0);
     else setRates(rate);
 
-    if (prices.length > 11) setHandles(true);
-  }, []);
+    if (harga.length > 11) setHandles(true);
+  }, [rate]);
   return (
     <>
       <BoxedPrice>
@@ -54,7 +53,7 @@ const BoxHarga = ({ image, city, judul, harga, rate, review }) => {
             </BoxExp>
           </div>
           <div style={{ flexBasis: "40%" }}>
-            <Price handle={handles}>Rp{prices}</Price>
+            <Price handle={handles}>Rp{parseInt(harga).toLocaleString("id-ID")}</Price>
             <BoxExp>
               <Star />
               {rates} / 5.0 ({review} Ulasan)
@@ -201,7 +200,11 @@ const KategoriBox = ({ imagee, desc }) => {
     <BoxKat src={imagee}
       onClick={() => {
         setSearched({
-          ...searched,
+          rangeFilter: {
+            hargaMin: "",
+            hargaMax: "",
+            rating: "",
+          },
           filter: {
             lokasi: [],
             subcategory: [Kategories.find(item => item.cath === desc).subcath],

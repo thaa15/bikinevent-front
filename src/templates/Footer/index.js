@@ -126,7 +126,7 @@ const Footer = () => {
                   style={{fontSize:"25px"}}/>
                 </SocialIconLink>
                 <SocialIconLink
-                  href={footerData.link_tiktok}
+                  href={footerData.link_medium}
                   target="_blank"
                   aria-label="Medium"
                 >

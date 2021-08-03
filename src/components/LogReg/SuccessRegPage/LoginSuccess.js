@@ -5,6 +5,7 @@ import sucregcheck from "../../../images/sucregcheck.png";
 import LoadingPage from "../../../templates/Loading";
 import axios from "axios";
 import { pembeliService } from "../../../services/Pembeli";
+import { encryptData } from "../../../Crypted";
 
 const LoginSuccess = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,11 +27,16 @@ const LoginSuccess = (props) => {
           const pembeliRes = await pembeliService
             .postPembeli(data.jwt, bodyPembeli)
             .then((res) => {
-              localStorage.setItem("token", jwt);
-              localStorage.setItem("nama", user.username);
-              localStorage.setItem("userId", user.id);
-              localStorage.setItem("pembeliId", res.data._id);
-              localStorage.setItem("role", "pembeli");
+              const originalData = {
+                userId: user.id,
+                token: jwt,
+                nama: user.username,
+                pembeliId: res.data._id,
+                role: 'pembeli'
+              }
+              const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+              const encryptedData = encryptData(originalData, salt);
+              localStorage.setItem('mk', encryptedData);
             });
           setTimeout(() => {
             window.location.reload();
@@ -38,11 +44,17 @@ const LoginSuccess = (props) => {
           }, 100);
         }
       } else {
-        localStorage.setItem("token", jwt);
-        localStorage.setItem("nama", user.username);
-        localStorage.setItem("userId", user.id);
-        localStorage.setItem("pembeliId", user.pembeli._id);
-        localStorage.setItem("role", "pembeli");
+        const originalData = {
+          userId: user.id,
+          token: jwt,
+          nama: user.username,
+          pembeliId: user.pembeli._id,
+          role: 'pembeli'
+        }
+        const salt = '6d090796-ecdf-11ea-adc1-0242ac120003';
+        const encryptedData = encryptData(originalData, salt);
+        localStorage.setItem('mk', encryptedData);
+
         setIsLoading(false);
         setTimeout(() => {
           window.location.reload();
