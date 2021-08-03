@@ -36,11 +36,10 @@ import { roomService } from "../../../services/Room";
 import { socket } from "../../../config/web-sockets";
 import { messageService } from "../../../services/Message";
 import { format } from "timeago.js";
-import { vendorService } from "../../../services/Vendor";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 
-const PembeliChatPage = (props) => {
+const PembeliChatPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { loginInfo } = useContext(loginContext);
   const [conversations, setConversations] = useState([]);
@@ -63,6 +62,18 @@ const PembeliChatPage = (props) => {
         console.log(error);
       }
     };
+    // const setCurrent = async () => {
+    //   if (chat.currentChat == null) {
+    //     return null;
+    //   } else {
+    //     let current = conversations.find(
+    //       (room) => room.vendorId.id === chat.currentChat
+    //     );
+    //     setCurrentChat(current);
+    //     setMessages(current.messages);
+    //   }
+    // };
+    // setCurrent();
     fetchConversations();
   }, [loginInfo.userId, loginInfo.token, messages]);
 
@@ -97,12 +108,12 @@ const PembeliChatPage = (props) => {
     });
 
     try {
-      let newMsg = [...messages]
+      let newMsg = [...messages];
       const response = await messageService.postNewChat(
         loginInfo.token,
         message
       );
-      newMsg.push(response.data)
+      newMsg.push(response.data);
       setMessages(newMsg);
       setNewMessage("");
       return response;
@@ -181,7 +192,7 @@ const PembeliChatPage = (props) => {
                                   active={currentChat == room}
                                 >
                                   {typeof room.vendorId.vendor.foto_profil ===
-                                    "undefined" ? (
+                                  "undefined" ? (
                                     <ListChatPart photo>
                                       <ProfilePhoto content />
                                     </ListChatPart>
@@ -232,7 +243,7 @@ const PembeliChatPage = (props) => {
 
                       <ChatContent>
                         {typeof currentChat === "undefined" ||
-                          currentChat == null ? (
+                        currentChat == null ? (
                           <ChatNotOpen>
                             <NoEntryContent>
                               <ImageNoEntry src={nochat} alt="No Entry" />
@@ -252,7 +263,7 @@ const PembeliChatPage = (props) => {
                             <DisplayChatProfileContent>
                               {typeof currentChat.vendorId.vendor
                                 .foto_profil === "undefined" ||
-                                currentChat.vendorId.vendor.foto_profil ==
+                              currentChat.vendorId.vendor.foto_profil ==
                                 null ? (
                                 <ProfilePhoto content />
                               ) : (
@@ -277,7 +288,9 @@ const PembeliChatPage = (props) => {
                                         <ChatBox>
                                           <ReactMarkdown
                                             children={chat.text}
-                                            plugins={[[gfm, { singleTilde: false }]]}
+                                            plugins={[
+                                              [gfm, { singleTilde: false }],
+                                            ]}
                                             allowDangerousHtml={true}
                                           />
                                         </ChatBox>
@@ -290,7 +303,9 @@ const PembeliChatPage = (props) => {
                                         <ChatBox>
                                           <ReactMarkdown
                                             children={chat.text}
-                                            plugins={[[gfm, { singleTilde: false }]]}
+                                            plugins={[
+                                              [gfm, { singleTilde: false }],
+                                            ]}
                                             allowDangerousHtml={true}
                                           />
                                         </ChatBox>
