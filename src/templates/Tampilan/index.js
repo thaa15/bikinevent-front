@@ -355,18 +355,33 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
   );
 };
 
-const PenilaianVendorVendor = ({ comments }) => {
+const PenilaianVendorVendor = ({ comments, produks }) => {
+  const [penilaian, setPenilaian] = useState([]);
+  useEffect(() => {
+    let tempPenilaian = [];
+    produks.forEach((prod) => {
+      prod.penilaian.forEach((ulasan) => {
+        tempPenilaian.push(ulasan);
+      });
+    });
+    setPenilaian(tempPenilaian);
+  }, [produks]);
+  console.log(penilaian);
   return (
     <>
-      {comments.length === 0 ? (
+      {penilaian.length === 0 ? (
         <BoxNotEntry>Belum Terdapat Penilaian!</BoxNotEntry>
       ) : (
         <TampilanComments>
-          {comments.map((data, idx) => {
+          {penilaian.slice(0, 5).map((data, idx) => {
             return (
               <CommentsPart key={idx}>
                 <CommentProfile profile>
-                  <UserPhoto img={data.user.foto_profil.url} />
+                  {typeof data.user.foto_profil === "undefined" ? (
+                    <UserPhoto />
+                  ) : (
+                    <UserPhoto img={data.user.foto_profil.url} />
+                  )}
                   <UserName>{data.user.username}</UserName>
                 </CommentProfile>
                 <CommentProfile>
