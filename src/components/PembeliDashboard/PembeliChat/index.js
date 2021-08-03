@@ -36,9 +36,8 @@ import { roomService } from "../../../services/Room";
 import { socket } from "../../../config/web-sockets";
 import { messageService } from "../../../services/Message";
 import { format } from "timeago.js";
-import { vendorService } from "../../../services/Vendor";
 
-const PembeliChatPage = (props) => {
+const PembeliChatPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { loginInfo } = useContext(loginContext);
   const [conversations, setConversations] = useState([]);
@@ -61,6 +60,18 @@ const PembeliChatPage = (props) => {
         console.log(error);
       }
     };
+    const setCurrent = async () => {
+      if (chat.currentChat == null) {
+        return null;
+      } else {
+        let current = conversations.find((room) => {
+          room.vendorId.id === chat.currentChat;
+        });
+        setCurrentChat(current);
+        setMessages(current.messages);
+      }
+    };
+    setCurrent();
     fetchConversations();
   }, [loginInfo.userId, loginInfo.token]);
 
