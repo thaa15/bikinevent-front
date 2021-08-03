@@ -106,6 +106,8 @@ const VendorProfileContent = ({
       portfolioId,
       loginInfo.token
     );
+    console.log(response)
+    portofolio = portofolio.filter((item) => item._id !== portfolioId)
     return response;
   };
 
@@ -306,7 +308,11 @@ const VendorProfileContent = ({
                       })}
                     </PartOfImage>
                     <ButtonPart>
-                      <Button>Ubah</Button>
+                      <a href={`/changed-portofolio/${item._id}`}
+                        style={{ display: "block", width: "50%", textDecoration: "none" }}
+                      >
+                        <Button>Ubah</Button>
+                      </a>
                       <Button
                         delete
                         onClick={() => {
@@ -325,7 +331,7 @@ const VendorProfileContent = ({
                 window.scrollTo({
                   top: 0,
                 });
-                }}>
+              }}>
                 <PlusImage>+</PlusImage>
               </UploadFile>
 

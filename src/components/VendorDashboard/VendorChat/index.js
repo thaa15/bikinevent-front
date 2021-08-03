@@ -36,6 +36,7 @@ import {
 } from "../../PembeliDashboard/PembeliCart/Styled";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
+import { decryptData } from "../../../Crypted";
 
 const VendorChatContent = () => {
   const [responsive, setResponsive] = useState(true);
@@ -45,12 +46,15 @@ const VendorChatContent = () => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const { loginInfo } = useContext(loginContext);
+  let mkLocalData = localStorage.getItem("mk");
+  const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
+  const originalData = decryptData(mkLocalData, salt);
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         const response = await roomService.getVendorRoom(
-          loginInfo.userId,
-          loginInfo.token
+          originalData.userId,
+          originalData.token
         );
         const data = response.data;
         setConversations(data);
@@ -59,7 +63,7 @@ const VendorChatContent = () => {
       }
     };
     fetchConversations();
-  }, [loginInfo.userId, loginInfo.token,messages]);
+  }, [messages]);
 
   useEffect(() => {
     socket.emit("addUser", loginInfo.userId);

@@ -1,11 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { VendorHeader } from "../templates/HeaderSmall/VendorHeader";
 import LoadingPage from "../templates/Loading";
-import {
-  PesananVendor,
-  KeuanganVendor,
-  ProfileVendor,
-} from "../datas/vendordata";
 import VendorChatContent from "../components/VendorDashboard/VendorChat";
 import VendorPesananContent from "../components/VendorDashboard/VendorPesanan";
 import VendorProdukContent from "../components/VendorDashboard/VendorProduk";
@@ -14,6 +9,7 @@ import VendorProfilContent from "../components/VendorDashboard/VendorProfil";
 import { authService } from "../services/Auth";
 import { loginContext } from "../context";
 import { vendorService } from "../services/Vendor";
+import { decryptData } from "../Crypted";
 
 export const VendorChat = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,18 +36,20 @@ export const VendorChat = () => {
 export const VendorPesanan = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [pesanan, setPesanan] = useState();
-  const { loginInfo } = useContext(loginContext);
+  let mkLocalData = localStorage.getItem("mk");
+  const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
+  const originalData = decryptData(mkLocalData, salt);
   useEffect(() => {
     const fetchData = async () => {
       const vendorResponse = await vendorService.getVendorById(
-        loginInfo.vendorId
+        originalData.vendorId
       );
       const vendorData = vendorResponse.data;
       setPesanan(vendorData);
       setIsLoading(false);
     };
     fetchData();
-  }, [loginInfo.token]);
+  }, []);
 
   return (
     <>
@@ -104,20 +102,22 @@ export const VendorProduk = () => {
 export const VendorKeuangan = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [vendorData, setVendorData] = useState();
-  const { loginInfo } = useContext(loginContext);
+
+  let mkLocalData = localStorage.getItem("mk");
+  const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
+  const originalData = decryptData(mkLocalData, salt);
   useEffect(() => {
     const fetchData = async () => {
       const vendorResponse = await vendorService.getVendorById(
-        loginInfo.vendorId
+        originalData.vendorId
       );
       const vendorData = vendorResponse.data;
       setVendorData(vendorData);
       setIsLoading(false);
     };
     fetchData();
-  }, [loginInfo.vendorId]);
+  }, []);
 
-  console.log(vendorData);
 
   return (
     <>
@@ -148,17 +148,19 @@ export const VendorKeuangan = () => {
 export const VendorProfil = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [profilData, setProfilData] = useState();
-  const { loginInfo } = useContext(loginContext);
+
+  let mkLocalData = localStorage.getItem("mk");
+  const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
+  const originalData = decryptData(mkLocalData, salt);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await vendorService.getVendorById(loginInfo.vendorId);
+      const response = await vendorService.getVendorById(originalData.vendorId);
       const data = response.data;
       setProfilData(data);
       setIsLoading(false);
     };
     fetchData();
   }, []);
-  console.log(profilData);
   return (
     <>
       {isLoading ? (
@@ -177,7 +179,7 @@ export const VendorProfil = () => {
             portofolio={profilData.portfolios}
             description={profilData.deskripsi}
             location={profilData.location}
-            vendorId={loginInfo.vendorId}
+            vendorId={originalData.vendorId}
           />
         </>
       )}

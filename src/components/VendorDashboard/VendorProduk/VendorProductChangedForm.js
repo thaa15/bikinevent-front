@@ -115,7 +115,6 @@ const VendorProductChangedForm = ({ match }) => {
 
     };
 
-    console.log(productData)
     const renderPhotos = (np, id) => {
         let arr = previewFoto;
         return (
