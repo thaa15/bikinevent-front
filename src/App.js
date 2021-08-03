@@ -56,6 +56,7 @@ import PesananSelesaiPage from "./components/PembeliDashboard/PembeliPesanan/Det
 import PembeliChatPage from "./components/PembeliDashboard/PembeliChat";
 import ForgotPasswordPage from "./components/LogReg/LoginPage/ForgotPassPage";
 import GoogleRegisterPage from "./components/LogReg/RegisterPage/Googleregs";
+import VendorProductChangedForm from "./components/VendorDashboard/VendorProduk/VendorProductChangedForm";
 import { decryptData } from "./Crypted";
 
 function App() {
@@ -187,6 +188,13 @@ function App() {
                     <ProtectedVendorLogin
                       path="/vendor-produk"
                       component={VendorProduk}
+                      isAuth={loginInfo.token}
+                      role={loginInfo.role}
+                      exact
+                    />
+                    <ProtectedVendorLogin
+                      path="/changed-product/:id"
+                      component={VendorProductChangedForm}
                       isAuth={loginInfo.token}
                       role={loginInfo.role}
                       exact

@@ -139,7 +139,11 @@ const BoxVendorProduct = ({ id, image, judul, statss, harga }) => {
           </div>
           <Price handle={handles}>Rp{prices}</Price>
           <ApartButton>
-            <ButtonVendor ubah>Ubah</ButtonVendor>
+            <a href={`/changed-product/${id}`} 
+            style={{display:"block",width:"50%",textDecoration:"none"}}
+            >
+              <ButtonVendor ubah changed>Ubah</ButtonVendor>
+            </a>
             <ButtonVendor onClick={changeHandler}>{statss}</ButtonVendor>
           </ApartButton>
 

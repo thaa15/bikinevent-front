@@ -132,7 +132,7 @@ export const BlogExpHome = styled.div`
 
 export const ButtonVendor = styled.div`
     background: #FFFFFF;
-    width: 50%;
+    width: ${(props)=>props.changed ? "100%" : "50%"};
     border: ${(props)=>props.ubah? "1px solid #E30045" : "1px solid #909DAA"};
     box-sizing: border-box;
     border-radius: 3px;
@@ -166,6 +166,7 @@ export const ApartButton = styled.div`
     flex-direction: row;
     flex-basis: 40%;
     width: 100%;
+    column-gap: 5px;
 `;
 
 export const BoxedVendor = styled.div`
