@@ -62,18 +62,18 @@ const PembeliChatPage = () => {
         console.log(error);
       }
     };
-    const setCurrent = async () => {
-      if (chat.currentChat == null) {
-        return null;
-      } else {
-        let current = conversations.find(
-          (room) => room.vendorId.id === chat.currentChat
-        );
-        setCurrentChat(current);
-        setMessages(current.messages);
-      }
-    };
-    setCurrent();
+    // const setCurrent = async () => {
+    //   if (chat.currentChat == null) {
+    //     return null;
+    //   } else {
+    //     let current = conversations.find(
+    //       (room) => room.vendorId.id === chat.currentChat
+    //     );
+    //     setCurrentChat(current);
+    //     setMessages(current.messages);
+    //   }
+    // };
+    // setCurrent();
     fetchConversations();
   }, [loginInfo.userId, loginInfo.token, messages]);
 
