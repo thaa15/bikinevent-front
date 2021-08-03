@@ -36,6 +36,8 @@ import { roomService } from "../../../services/Room";
 import { socket } from "../../../config/web-sockets";
 import { messageService } from "../../../services/Message";
 import { format } from "timeago.js";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const PembeliChatPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,9 +66,9 @@ const PembeliChatPage = () => {
       if (chat.currentChat == null) {
         return null;
       } else {
-        let current = conversations.find((room) => {
-          room.vendorId.id === chat.currentChat;
-        });
+        let current = conversations.find(
+          (room) => room.vendorId.id === chat.currentChat
+        );
         setCurrentChat(current);
         setMessages(current.messages);
       }
