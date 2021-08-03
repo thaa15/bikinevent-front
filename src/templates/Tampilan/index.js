@@ -45,6 +45,7 @@ import {
   PortofolioTitle,
   PortofolioImage,
   PartOfImage,
+  CommentsPartHeight
 } from "./TampilanStyled";
 import { BoxNotEntry } from "../../components/VendorDashboard/VendorPesanan/VendorPesananStyle";
 import { chatContext, clientCartContext, loginContext } from "../../context";
@@ -52,6 +53,8 @@ import { pembeliService } from "../../services/Pembeli";
 import { roomService } from "../../services/Room";
 import { vendorService } from "../../services/Vendor";
 import { useHistory } from "react-router-dom";
+import { decryptData } from "../../Crypted";
+
 const ShowAtTopProduk = ({
   id,
   image,
@@ -68,6 +71,7 @@ const ShowAtTopProduk = ({
   const [rates, setRates] = useState(rating);
   const [handles, setHandles] = useState(false);
   const { loginInfo } = useContext(loginContext);
+  const [vendors, setVendors] = useState("")
   const [successAdd, setSuccessAdd] = useState({
     right: false,
     wrong: false,
@@ -144,10 +148,17 @@ const ShowAtTopProduk = ({
     }
   };
 
+  let mkLocalData = localStorage.getItem("mk");
+  const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
+  const originalData = decryptData(mkLocalData, salt);
+
   useEffect(() => {
     if (rating === undefined) setRates(0);
     else setRates(rating);
     if (prices.length > 11) setHandles(true);
+
+    if (originalData != null) setVendors(originalData.role);
+    else setVendors("");
   }, [clientCart.notif]);
   return (
     <BgTop prod>
@@ -167,16 +178,18 @@ const ShowAtTopProduk = ({
             </BoxExp>
             <Price handle={handles}>Rp{prices}</Price>
             <GetButBot>
-              <div>
-                <ButtonBottom onClick={addToCart}>
-                  <CartShop />
-                  Masukkan Keranjang
-                </ButtonBottom>
-                <ButtonBottom call onClick={contactVendor}>
-                  <ChatShop />
-                  Hubungi Vendor
-                </ButtonBottom>
-              </div>
+              {vendors != "vendor" ? (
+                <div>
+                  <ButtonBottom onClick={addToCart}>
+                    <CartShop />
+                    Masukkan Keranjang
+                  </ButtonBottom>
+                  <ButtonBottom call onClick={contactVendor}>
+                    <ChatShop />
+                    Hubungi Vendor
+                  </ButtonBottom>
+                </div>
+              ) : (<></>)}
             </GetButBot>
           </GetApart>
         </ShowedObj>
@@ -259,10 +272,17 @@ const ShowAtTopVendor = ({
 
 const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
   const [rates, setRates] = useState(rating);
+  const [vendors, setVendors] = useState("")
+  let mkLocalData = localStorage.getItem("mk");
+  const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
+  const originalData = decryptData(mkLocalData, salt);
 
   useEffect(() => {
     if (rates === undefined || rates === 0) setRates(0);
     else setRates(rating);
+
+    if (originalData != null) setVendors(originalData.role);
+    else setVendors("");
   }, []);
   return (
     <GlobalTemplate>
@@ -281,30 +301,32 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
               </BoxExp>
             </TampilanApart>
           </TampilanCommentsVendor>
-          <TampilanCommentsVendor button>
-            <TampilanApart>
-              <ButtonBottom need to={`/vendor/${vendor._id}`}>
-                <Shop />
-                Kunjungi Vendor
-              </ButtonBottom>
-              <ButtonBottom call>
-                <ChatShop />
-                Hubungi Vendor
-              </ButtonBottom>
-            </TampilanApart>
-          </TampilanCommentsVendor>
+          {vendors != "vendor" ? (
+            <TampilanCommentsVendor button>
+              <TampilanApart>
+                <ButtonBottom need to={`/vendor/${vendor._id}`}>
+                  <Shop />
+                  Kunjungi Vendor
+                </ButtonBottom>
+                <ButtonBottom call>
+                  <ChatShop />
+                  Hubungi Vendor
+                </ButtonBottom>
+              </TampilanApart>
+            </TampilanCommentsVendor>
+          ) : (<></>)}
         </VendorCommentsPhoto>
         {comments.length === 0 ? (
           <BoxNotEntry>Belum Terdapat Penilaian!</BoxNotEntry>
         ) : (
-          <>
+          <CommentsPartHeight>
             {comments.map((data, idx) => {
               return (
                 <CommentsPart key={idx}>
                   <CommentProfile profile>
                     <>
                       {typeof data.user.foto_profil === "undefined" ||
-                      data.user.foto_profil == null ? (
+                        data.user.foto_profil == null ? (
                         <UserPhoto />
                       ) : (
                         <UserPhoto img={data.user.foto_profil.url} />
@@ -326,7 +348,7 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
                 </CommentsPart>
               );
             })}
-          </>
+          </CommentsPartHeight>
         )}
       </TampilanComments>
     </GlobalTemplate>

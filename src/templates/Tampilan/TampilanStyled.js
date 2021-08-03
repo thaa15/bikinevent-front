@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import {AiFillStar,AiFillShopping} from "react-icons/ai";
-import {Link} from "react-router-dom";
-import {FaShoppingCart} from "react-icons/fa";
-import {BsChatFill} from "react-icons/bs";
-import {AiFillShop} from "react-icons/ai";
+import { AiFillStar, AiFillShopping } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
+import { BsChatFill } from "react-icons/bs";
+import { AiFillShop } from "react-icons/ai";
 
 export const BgTop = styled.div`
     background: #E5E5E5;
     width: 100%;
-    min-height:${(props)=>props.prod ? "406px" : "333px"};
+    min-height:${(props) => props.prod ? "406px" : "333px"};
 `;
 
 export const ShowedObj = styled.div`
@@ -22,25 +22,25 @@ export const ShowedObj = styled.div`
     background: #FFFFFF;
     border-radius: 10px;
     width: 100%;
-    align-items: ${(props)=>props.prod ? "none" : "center"};
-    height:${(props)=>props.prod ? "406px" : "228px"};
-    min-height:${(props)=>props.prod ? "406px" : "228px"};
+    align-items: ${(props) => props.prod ? "none" : "center"};
+    height:${(props) => props.prod ? "406px" : "228px"};
+    min-height:${(props) => props.prod ? "406px" : "228px"};
     @media screen and (max-width: 955px) {
-        flex-direction: ${(props)=>props.prod ? "column" : "row"};
-        -webkit-flex-direction:${(props)=>props.prod ? "column" : "row"};
-        -ms-flex-direction:${(props)=>props.prod ? "column" : "row"};
-        height:${(props)=>props.prod ? "606px" : "228px"};
+        flex-direction: ${(props) => props.prod ? "column" : "row"};
+        -webkit-flex-direction:${(props) => props.prod ? "column" : "row"};
+        -ms-flex-direction:${(props) => props.prod ? "column" : "row"};
+        height:${(props) => props.prod ? "606px" : "228px"};
     }
     @media screen and (max-width: 550px) {
         flex-direction: column;
         -webkit-flex-direction:column;
         -ms-flex-direction:column;
-        height:${(props)=>props.prod ? "606px" : "328px"};
+        height:${(props) => props.prod ? "606px" : "328px"};
     }
 `;
 
 export const ApartContent = styled.div`
-    flex-basis: ${(props)=>props.imagee ? "35%" : "65%"};
+    flex-basis: ${(props) => props.imagee ? "35%" : "65%"};
     height: 100%;
     width: 100%;
 `;
@@ -84,9 +84,9 @@ export const GetButBot = styled.div`
 `;
 
 export const BoxExp = styled.div`
-    font-size: ${(props)=> props.titlee ? "18px":"14px"};
-    line-height: ${(props)=> props.titlee ? "30px":"21px"};
-    color: ${(props)=> props.titlee ? "#212B36":"#909DAA"};
+    font-size: ${(props) => props.titlee ? "18px" : "14px"};
+    line-height: ${(props) => props.titlee ? "30px" : "21px"};
+    color: ${(props) => props.titlee ? "#212B36" : "#909DAA"};
     display: flex;
     align-items: center;
     margin: 6px 0;
@@ -164,8 +164,8 @@ export const CartShop = styled(FaShoppingCart)`
 
 export const VendorPhoto = styled.div`
     border-radius: 100%;
-    height: ${(props)=>props.inComment ? "102px" : "139px"};
-    width: ${(props)=>props.inComment ? "102px" : "139px"};
+    height: ${(props) => props.inComment ? "102px" : "139px"};
+    width: ${(props) => props.inComment ? "102px" : "139px"};
     margin-right: 23px;
     background-image: url(${(props) => props.img});
     background-repeat: no-repeat;
@@ -210,8 +210,8 @@ export const TampilanCommentsVendor = styled.div`
     display: flex;
     align-self: center;
     align-items:center;
-    flex-basis: ${(props)=>props.button ? "35%" : "65%"};
-    flex-direction: ${(props)=>props.button ? "row-reverse" : "row"};
+    flex-basis: ${(props) => props.button ? "35%" : "65%"};
+    flex-direction: ${(props) => props.button ? "row-reverse" : "row"};
     width: fit-content;
     @media screen and (max-width: 789px) {
         width: 100%;
@@ -234,19 +234,38 @@ width:100%;
 margin-bottom: 7px;
 `;
 
+export const CommentsPartHeight = styled.div`
+    width: 100%;
+    max-height: 500px;
+    overflow-y: scroll;
+    ::-webkit-scrollbar{
+        width: 0 !important;
+      }
+      
+      ::-webkit-scrollbar-thumb{
+        background: transparent !important;
+        border-radius: 8px !important;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover{
+        background: rgba(158, 158, 158,0.9) !important;
+        border-radius: 8px !important;
+      }
+`;
+
 export const CommentProfile = styled.div`
 display:flex;
 flex-direction:column;
 overflow:hidden;
-flex-basis:${(props)=>props.profile ? "10%" : "90%"};
-align-items: ${(props)=>props.profile ? "center" : "left"};
-text-align: ${(props)=>props.profile ? "center" : "left"};
+flex-basis:${(props) => props.profile ? "10%" : "90%"};
+align-items: ${(props) => props.profile ? "center" : "left"};
+text-align: ${(props) => props.profile ? "center" : "left"};
 align-self: center;
 @media screen and (max-width: 789px) {
-    flex-basis:${(props)=>props.profile ? "20%" : "75%"};
+    flex-basis:${(props) => props.profile ? "20%" : "75%"};
 }
 @media screen and (max-width: 495px) {
-    flex-basis:${(props)=>props.profile ? "30%" : "65%"};
+    flex-basis:${(props) => props.profile ? "30%" : "65%"};
 }
 `;
 
@@ -300,10 +319,10 @@ export const StarUserRate = styled(AiFillStar)`
 `;
 
 export const BoxExpVendor = styled.div`
-    font-weight: ${(props)=> props.titlee ? "bold":"normal"};
-    font-size: ${(props)=> props.titlee ? "20px":"14px"};
-    line-height: ${(props)=> props.titlee ? "30px":"21px"};
-    color: ${(props)=> props.titlee ? "#212B36":"#909DAA"};
+    font-weight: ${(props) => props.titlee ? "bold" : "normal"};
+    font-size: ${(props) => props.titlee ? "20px" : "14px"};
+    line-height: ${(props) => props.titlee ? "30px" : "21px"};
+    color: ${(props) => props.titlee ? "#212B36" : "#909DAA"};
     display: flex;
     align-items: center;
     margin: 6px 0;

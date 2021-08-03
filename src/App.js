@@ -324,12 +324,10 @@ function App() {
                       isAuth={loginInfo.token}
                       exact
                     />
-                    <ProtectedVendor
+                    <Route
                       path="/detailed-product/:id"
                       component={TampilanProdukPage}
-                      role={loginInfo.role}
                       exact
-                      isAuth={loginInfo.token}
                     />
                     <ProtectedVendor
                       path="/vendor/:vendor"

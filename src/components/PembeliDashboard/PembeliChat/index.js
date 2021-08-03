@@ -73,7 +73,7 @@ const PembeliChatPage = () => {
     };
     setCurrent();
     fetchConversations();
-  }, [loginInfo.userId, loginInfo.token]);
+  }, [loginInfo.userId, loginInfo.token, messages]);
 
   useEffect(() => {
     socket.emit("addUser", loginInfo.userId);
@@ -106,11 +106,13 @@ const PembeliChatPage = () => {
     });
 
     try {
+      let newMsg = [...messages];
       const response = await messageService.postNewChat(
         loginInfo.token,
         message
       );
-      setMessages([...messages, response.data]);
+      newMsg.push(response.data);
+      setMessages(newMsg);
       setNewMessage("");
       return response;
     } catch (error) {
@@ -187,7 +189,6 @@ const PembeliChatPage = () => {
                                   }}
                                   active={currentChat == room}
                                 >
-                                  {console.log(room)}
                                   {typeof room.vendorId.vendor.foto_profil ===
                                   "undefined" ? (
                                     <ListChatPart photo>
@@ -282,14 +283,30 @@ const PembeliChatPage = () => {
                                   <>
                                     {chat.sender == loginInfo.userId ? (
                                       <PlacedChatBox user key={idx}>
-                                        <ChatBox>{chat.text}</ChatBox>
+                                        <ChatBox>
+                                          <ReactMarkdown
+                                            children={chat.text}
+                                            plugins={[
+                                              [gfm, { singleTilde: false }],
+                                            ]}
+                                            allowDangerousHtml={true}
+                                          />
+                                        </ChatBox>
                                         <TimeDisplay>
                                           {format(chat.createdAt)}
                                         </TimeDisplay>
                                       </PlacedChatBox>
                                     ) : (
                                       <PlacedChatBox key={idx}>
-                                        <ChatBox>{chat.text}</ChatBox>
+                                        <ChatBox>
+                                          <ReactMarkdown
+                                            children={chat.text}
+                                            plugins={[
+                                              [gfm, { singleTilde: false }],
+                                            ]}
+                                            allowDangerousHtml={true}
+                                          />
+                                        </ChatBox>
                                         <TimeDisplay>
                                           {format(chat.createdAt)}
                                         </TimeDisplay>
@@ -303,6 +320,7 @@ const PembeliChatPage = () => {
                               <TextType
                                 type="text"
                                 name="type"
+                                rows="1"
                                 placeholder="tulis pesan.."
                                 onChange={(e) => setNewMessage(e.target.value)}
                                 value={newMessage}
