@@ -37,6 +37,8 @@ import { socket } from "../../../config/web-sockets";
 import { messageService } from "../../../services/Message";
 import { format } from "timeago.js";
 import { vendorService } from "../../../services/Vendor";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const PembeliChatPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +64,7 @@ const PembeliChatPage = (props) => {
       }
     };
     fetchConversations();
-  }, [loginInfo.userId, loginInfo.token]);
+  }, [loginInfo.userId, loginInfo.token, messages]);
 
   useEffect(() => {
     socket.emit("addUser", loginInfo.userId);
@@ -95,11 +97,13 @@ const PembeliChatPage = (props) => {
     });
 
     try {
+      let newMsg = [...messages]
       const response = await messageService.postNewChat(
         loginInfo.token,
         message
       );
-      setMessages([...messages, response.data]);
+      newMsg.push(response.data)
+      setMessages(newMsg);
       setNewMessage("");
       return response;
     } catch (error) {
@@ -176,9 +180,8 @@ const PembeliChatPage = (props) => {
                                   }}
                                   active={currentChat == room}
                                 >
-                                  {console.log(room)}
                                   {typeof room.vendorId.vendor.foto_profil ===
-                                  "undefined" ? (
+                                    "undefined" ? (
                                     <ListChatPart photo>
                                       <ProfilePhoto content />
                                     </ListChatPart>
@@ -229,7 +232,7 @@ const PembeliChatPage = (props) => {
 
                       <ChatContent>
                         {typeof currentChat === "undefined" ||
-                        currentChat == null ? (
+                          currentChat == null ? (
                           <ChatNotOpen>
                             <NoEntryContent>
                               <ImageNoEntry src={nochat} alt="No Entry" />
@@ -249,7 +252,7 @@ const PembeliChatPage = (props) => {
                             <DisplayChatProfileContent>
                               {typeof currentChat.vendorId.vendor
                                 .foto_profil === "undefined" ||
-                              currentChat.vendorId.vendor.foto_profil ==
+                                currentChat.vendorId.vendor.foto_profil ==
                                 null ? (
                                 <ProfilePhoto content />
                               ) : (
@@ -271,14 +274,26 @@ const PembeliChatPage = (props) => {
                                   <>
                                     {chat.sender == loginInfo.userId ? (
                                       <PlacedChatBox user key={idx}>
-                                        <ChatBox>{chat.text}</ChatBox>
+                                        <ChatBox>
+                                          <ReactMarkdown
+                                            children={chat.text}
+                                            plugins={[[gfm, { singleTilde: false }]]}
+                                            allowDangerousHtml={true}
+                                          />
+                                        </ChatBox>
                                         <TimeDisplay>
                                           {format(chat.createdAt)}
                                         </TimeDisplay>
                                       </PlacedChatBox>
                                     ) : (
                                       <PlacedChatBox key={idx}>
-                                        <ChatBox>{chat.text}</ChatBox>
+                                        <ChatBox>
+                                          <ReactMarkdown
+                                            children={chat.text}
+                                            plugins={[[gfm, { singleTilde: false }]]}
+                                            allowDangerousHtml={true}
+                                          />
+                                        </ChatBox>
                                         <TimeDisplay>
                                           {format(chat.createdAt)}
                                         </TimeDisplay>
@@ -292,6 +307,7 @@ const PembeliChatPage = (props) => {
                               <TextType
                                 type="text"
                                 name="type"
+                                rows="1"
                                 placeholder="tulis pesan.."
                                 onChange={(e) => setNewMessage(e.target.value)}
                                 value={newMessage}

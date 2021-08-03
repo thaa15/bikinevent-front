@@ -194,7 +194,7 @@ export const TypingPart = styled.div`
     align-items: center;
 `;
 
-export const TextType = styled.input`
+export const TextType = styled.textarea`
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     width: 100%;
@@ -204,6 +204,7 @@ export const TextType = styled.input`
     line-height: 18px;
     color: #212B36;
     outline: none;
+    resize: none;
 `;
 
 export const ButtonSend = styled.button`
@@ -230,7 +231,7 @@ export const ChatBox = styled.div`
     border-radius: 20px;
     border:${(props)=>props.user ? "none" : "1px solid #BDBDBD"};
     max-width: 70%;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 18px;
     padding: 6px 14px;
     color: #212B36;

@@ -24,6 +24,8 @@ import { format } from "timeago.js";
 import { socket } from "../../../config/web-sockets";
 import { loginContext } from "../../../context";
 import { vendorService } from "../../../services/Vendor";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const ChatResponsiveClient = ({
     conversations,
@@ -49,11 +51,13 @@ const ChatResponsiveClient = ({
         });
 
         try {
+            let newMsg = [...messages]
             const response = await messageService.postNewChat(
                 loginInfo.token,
                 message
             );
-            setMessages([...messages, response.data]);
+            newMsg.push(response.data)
+            setMessages(newMsg);
             setNewMessage("");
             return response;
         } catch (error) {
@@ -71,7 +75,7 @@ const ChatResponsiveClient = ({
             setVendorImage(dataVendorFiltered);
         };
         fetchVendors();
-    })
+    }, [messages])
     return (
         <AnimationPortofolio>
             {openchat ? (<>
@@ -181,14 +185,26 @@ const ChatResponsiveClient = ({
                                 <>
                                     {chat.sender == loginInfo.userId ? (
                                         <PlacedChatBox user key={idx}>
-                                            <ChatBox>{chat.text}</ChatBox>
+                                            <ChatBox>
+                                                <ReactMarkdown
+                                                    children={chat.text}
+                                                    plugins={[[gfm, { singleTilde: false }]]}
+                                                    allowDangerousHtml={true}
+                                                />
+                                            </ChatBox>
                                             <TimeDisplay>
                                                 {format(chat.createdAt)}
                                             </TimeDisplay>
                                         </PlacedChatBox>
                                     ) : (
                                         <PlacedChatBox key={idx}>
-                                            <ChatBox>{chat.text}</ChatBox>
+                                            <ChatBox>
+                                                <ReactMarkdown
+                                                    children={chat.text}
+                                                    plugins={[[gfm, { singleTilde: false }]]}
+                                                    allowDangerousHtml={true}
+                                                />
+                                            </ChatBox>
                                             <TimeDisplay>
                                                 {format(chat.createdAt)}
                                             </TimeDisplay>
@@ -203,6 +219,7 @@ const ChatResponsiveClient = ({
                         <TextType
                             type="text"
                             name="type"
+                            rows="1"
                             placeholder="tulis pesan.."
                             onChange={(e) => setNewMessage(e.target.value)}
                             value={newMessage}

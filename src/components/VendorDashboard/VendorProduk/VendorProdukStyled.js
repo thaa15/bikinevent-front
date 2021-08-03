@@ -66,6 +66,7 @@ export const InputModifArea = styled.textarea`
     border-radius: 6px;
     outline: none;
     padding: 8px;
+    resize: none;
 `;
 
 export const InputMCQ = styled.select`
