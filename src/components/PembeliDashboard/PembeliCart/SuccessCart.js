@@ -12,12 +12,13 @@ import { AuthCliSuccess } from "../../../AllAuth";
 import sucregcheck from "../../../images/sucregcheck.png";
 import LoadingPage from "../../../templates/Loading";
 import { authService } from "../../../services/Auth";
-import { loginContext } from "../../../context";
+import { clientCartContext, loginContext } from "../../../context";
 
 const SuccessCart = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userEmail, setUserEmail] = useState();
   const { loginInfo } = useContext(loginContext);
+  const { clientCart } = useContext(clientCartContext);
   useEffect(() => {
     const fetchData = async () => {
       const response = await authService.getDetails(loginInfo.token);
@@ -49,7 +50,7 @@ const SuccessCart = (props) => {
                 <SucRegWrited>Pemesanan Berhasil!</SucRegWrited>
                 <EmailConfirm need>
                   Harap melakukan pembayaran yang tertera pada email
-                  <span>{userEmail}</span>
+                  <span>{clientCart.clientInfo.email}</span>
                 </EmailConfirm>
                 <ButtonApartas>
                   <ButtonLacak

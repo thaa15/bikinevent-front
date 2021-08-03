@@ -1,5 +1,6 @@
-import { createContext } from 'react'
+import { createContext } from "react";
 
 export const loginContext = createContext({});
 export const searchContext = createContext({});
 export const clientCartContext = createContext({});
+export const chatContext = createContext({});

@@ -47,7 +47,7 @@ import {
   PartOfImage,
 } from "./TampilanStyled";
 import { BoxNotEntry } from "../../components/VendorDashboard/VendorPesanan/VendorPesananStyle";
-import { clientCartContext, loginContext } from "../../context";
+import { chatContext, clientCartContext, loginContext } from "../../context";
 import { pembeliService } from "../../services/Pembeli";
 import { roomService } from "../../services/Room";
 import { vendorService } from "../../services/Vendor";
@@ -62,16 +62,18 @@ const ShowAtTopProduk = ({
   ulasan,
   harga,
   vendorId,
+  chatId,
 }) => {
   const [prices, setPrices] = useState(harga.toLocaleString("id-ID"));
   const [rates, setRates] = useState(rating);
   const [handles, setHandles] = useState(false);
-  const { loginInfo, setLoginInfo } = useContext(loginContext);
+  const { loginInfo } = useContext(loginContext);
   const [successAdd, setSuccessAdd] = useState({
     right: false,
     wrong: false,
   });
   const { clientCart, setClientCart } = useContext(clientCartContext);
+  const { chat, setChat } = useContext(chatContext);
   const history = useHistory();
   const addToCart = async () => {
     if (loginInfo.role === "pembeli") {
@@ -120,16 +122,14 @@ const ShowAtTopProduk = ({
       loginInfo.token
     );
     const dataRoom = resRoomVendor.data;
-    console.log(
-      dataRoom.filter((room) =>
-        dataRoomUser.some((roomUser) => roomUser.id === room.id)
-      ).length
-    );
     if (
       dataRoom.filter((room) =>
         dataRoomUser.some((roomUser) => roomUser.id === room.id)
       ).length > 0
     ) {
+      setChat({
+        currentChat: chatId,
+      });
       return history.push("/client-chat");
     } else {
       let body = {
@@ -137,6 +137,9 @@ const ShowAtTopProduk = ({
         vendorId: dataVendor.user.id,
       };
       const makeRoom = await roomService.postRoom(loginInfo.token, body);
+      setChat({
+        currentChat: chatId,
+      });
       return history.push("/client-chat");
     }
   };
@@ -300,12 +303,12 @@ const PenilaianVendor = ({ fotovendor, vendor, rating, ulasan, comments }) => {
                 <CommentsPart key={idx}>
                   <CommentProfile profile>
                     <>
-                    {typeof data.user.foto_profil === "undefined" ||
-                    data.user.foto_profil == null ? (
-                      <UserPhoto />
-                    ) : (
-                      <UserPhoto img={data.user.foto_profil.url} />
-                    )}
+                      {typeof data.user.foto_profil === "undefined" ||
+                      data.user.foto_profil == null ? (
+                        <UserPhoto />
+                      ) : (
+                        <UserPhoto img={data.user.foto_profil.url} />
+                      )}
                     </>
                     {data.user.nama_lengkap == null ? (
                       <UserName>Unknown</UserName>

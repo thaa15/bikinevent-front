@@ -82,7 +82,7 @@ const PemeriksaanBelanjaPage = (props) => {
       total_price: clientCart.price,
       rate_status: rateStatus,
       notes: noteTemp,
-      kode_invoice:""
+      kode_invoice: "",
     };
     const response = await orderService.postOrder(loginInfo.token, body);
 
@@ -215,12 +215,16 @@ const PemeriksaanBelanjaPage = (props) => {
                               </InformationContents>
                               {clientCart.statusDp ? (
                                 <EmailConfirm>
-                                  Email ke <span>{userEmail}</span>
+                                  Email ke{" "}
+                                  <span>{clientCart.clientInfo.email}</span>{" "}
+                                  <br />
                                   Menggunakkan sistem pembayaran bertahap
                                 </EmailConfirm>
                               ) : (
                                 <EmailConfirm>
-                                  Email ke <span>{userEmail}</span>
+                                  Email ke{" "}
+                                  <span>{clientCart.clientInfo.email}</span>{" "}
+                                  <br />
                                   Menggunakkan sistem pembayaran lunas
                                 </EmailConfirm>
                               )}

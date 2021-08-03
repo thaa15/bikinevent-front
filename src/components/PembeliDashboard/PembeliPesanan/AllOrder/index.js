@@ -20,8 +20,26 @@ import { loginContext } from "../../../../context";
 const getButtonStatus = (stats) => {
   if (stats === "MenungguKonfirmasi") return "Menunggu\nKonfirmasi";
   else if (stats === "PesananTerkonfirmasi") return "Pesanan\nTerkonfirmasi";
-  else if (stats === "MenungguPembayaranBertahap")
-    return "Menunggu\nPembayaran Bertahap";
+  else if (stats === "MenungguPembayaranTahap1")
+    return "Menunggu\nPembayaran Tahap 1";
+  else if (stats === "MenungguPembayaranTahap2")
+    return "Menunggu\nPembayaran Tahap 2";
+  else if (stats === "MenungguPembayaranTahap3")
+    return "Menunggu\nPembayaran Tahap 3";
+  else if (stats === "MenungguPembayaranTahap4")
+    return "Menunggu\nPembayaran Tahap 4";
+  else if (stats === "MenungguPembayaranTahap5")
+    return "Menunggu\nPembayaran Tahap 5";
+  else if (stats === "MenungguPembayaranTahap6")
+    return "Menunggu\nPembayaran Tahap 6";
+  else if (stats === "MenungguPembayaranTahap7")
+    return "Menunggu\nPembayaran Tahap 7";
+  else if (stats === "MenungguPembayaranTaha8")
+    return "Menunggu\nPembayaran Tahap 8";
+  else if (stats === "MenungguPembayaranTahap9")
+    return "Menunggu\nPembayaran Tahap 9";
+  else if (stats === "MenungguPembayaranTahap10")
+    return "Menunggu\nPembayaran Tahap 10";
   else if (stats === "PembayaranLunas") return "Pembayaran\nLunas";
   else if (stats === "MempersiapkanLayanan") return "Mempersiapkan\nLayanan";
   else if (stats === "LayananSelesai") return "Layanan\nSelesai";
@@ -44,7 +62,7 @@ const PembeliPesananPage = (props) => {
     };
     fetchData();
     setIsLoading(false);
-  }, [loginInfo.pembeliId,loginInfo.token]);
+  }, [loginInfo.pembeliId, loginInfo.token]);
 
   const progress = pesananData.filter(
     (order) => order.status !== "LayananSelesai"
