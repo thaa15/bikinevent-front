@@ -97,13 +97,15 @@ const SearchContent = () => {
       setSearched({ ...searched, loading: false });
     };
     fetchData();
-
     if (searched.fromFilter == false) {
       const filterData = (data) => {
         let filterTemp = data.filter((item) => {
           if (
-            item.nama.toLowerCase().includes(searched.searchFill.toLowerCase()) &&
-            item.vendor != null
+            item.nama
+              .toLowerCase()
+              .includes(searched.searchFill.toLowerCase()) &&
+            item.vendor != null &&
+            item.isArchived == false
           ) {
             return item;
           }
@@ -133,7 +135,9 @@ const SearchContent = () => {
                     data["subcategory"].includes(keyVal);
                   });
                 }
-                return data["subcategory"].some((item) => item.includes(product["subcategory"]));
+                return data["subcategory"].some((item) =>
+                  item.includes(product["subcategory"])
+                );
               });
             }
           });
@@ -166,7 +170,7 @@ const SearchContent = () => {
     setTimeout(() => {
       setSearchedVendor(filterTemp);
     }, 200);
-  }, [searched.loading])
+  }, [searched.loading]);
 
   const Pilihan = [
     "Paling Sesuai",
@@ -179,8 +183,10 @@ const SearchContent = () => {
   const useFilterHandler = () => {
     const filterKeys = Object.keys(getFilter);
     let tempProds = searchedProduct;
-    if ((searched.fromFilter === false || stableLocation === true)
-      && Object.values(getFilter).some((arr) => arr.length > 0)) {
+    if (
+      (searched.fromFilter === false || stableLocation === true) &&
+      Object.values(getFilter).some((arr) => arr.length > 0)
+    ) {
       tempProds = searchedProduct.filter((product) => {
         return filterKeys.some((key) => {
           if (Array.isArray(product[key])) {
@@ -209,9 +215,8 @@ const SearchContent = () => {
       });
     }
     setStableLocation(true);
-    if ((searched.fromFilter === false || stableLocation === true)) {
-      if (getRangeFilter.hargaMin !== ""
-        && getRangeFilter.hargaMax !== "") {
+    if (searched.fromFilter === false || stableLocation === true) {
+      if (getRangeFilter.hargaMin !== "" && getRangeFilter.hargaMax !== "") {
         tempProds = tempProds.filter((product) => {
           return (
             product.harga >= getRangeFilter.hargaMin &&
@@ -225,8 +230,7 @@ const SearchContent = () => {
         });
       }
     } else {
-      if (getRangeFilter.hargaMin !== ""
-        && getRangeFilter.hargaMax !== "") {
+      if (getRangeFilter.hargaMin !== "" && getRangeFilter.hargaMax !== "") {
         tempProds = searchedProduct.filter((product) => {
           return (
             product.harga >= getRangeFilter.hargaMin &&
@@ -268,7 +272,11 @@ const SearchContent = () => {
         return parseInt(a.harga) - parseInt(b.harga);
       });
     }
-    setFilteredProduct(filtered.filter((item) => filteredProduct.map(a => a.id).includes(item.id)));
+    setFilteredProduct(
+      filtered.filter((item) =>
+        filteredProduct.map((a) => a.id).includes(item.id)
+      )
+    );
   };
 
   return (

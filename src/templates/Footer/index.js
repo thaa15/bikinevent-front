@@ -17,7 +17,7 @@ import {
   AiFillLinkedin,
   AiFillYoutube,
   AiFillTwitterSquare,
-  AiFillMediumSquare
+  AiFillMediumSquare,
 } from "react-icons/ai";
 import { SiTiktok } from "react-icons/si";
 import { footerService } from "../../services/Footer";
@@ -56,7 +56,9 @@ const Footer = () => {
               <FooterExpLink to="/faq">FAQ</FooterExpLink>
               <FooterExpLink to="/tentangkami">Tentang Kami</FooterExpLink>
               <FooterExpLink to="/panduan">Panduan Pemesanan</FooterExpLink>
-              <FooterExpLink>Pelaporan Kejahatan</FooterExpLink>
+              <FooterExpLink href={footerData.link_pelaporan}>
+                Pelaporan Kejahatan
+              </FooterExpLink>
             </FooterBox>
 
             <FooterBox>
@@ -100,8 +102,7 @@ const Footer = () => {
                   target="_blank"
                   aria-label="Youtube"
                 >
-                  <AiFillYoutube
-                  style={{fontSize:"37px"}} />
+                  <AiFillYoutube style={{ fontSize: "37px" }} />
                 </SocialIconLink>
                 <SocialIconLink
                   href={footerData.link_linkedIn}
@@ -122,15 +123,14 @@ const Footer = () => {
                   target="_blank"
                   aria-label="Tiktok"
                 >
-                  <SiTiktok
-                  style={{fontSize:"25px"}}/>
+                  <SiTiktok style={{ fontSize: "25px" }} />
                 </SocialIconLink>
                 <SocialIconLink
                   href={footerData.link_medium}
                   target="_blank"
                   aria-label="Medium"
                 >
-                  <AiFillMediumSquare/>
+                  <AiFillMediumSquare />
                 </SocialIconLink>
               </SocialIcons>
             </FooterBox>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { loginContext } from "../../../context";
 import { roomService } from "../../../services/Room";
@@ -19,6 +19,7 @@ import {
   ButtonPengaduan,
 } from "./VendorPesananStyle";
 import { InvoiceTrack } from "../../PembeliDashboard/PembeliPesanan/DetailedOrder/styled";
+import { footerService } from "../../../services/Footer";
 
 const getStatus = (stats) => {
   if (stats === "MenungguKonfirmasi") return "Menunggu Konfirmasi";
@@ -32,6 +33,7 @@ const getStatus = (stats) => {
 };
 
 const VendorPesananContent = ({ data }) => {
+  const [linkAdu, setLinkAdu] = useState();
   const pesanan = data.filter((stat) => stat.status !== "LayananSelesai");
   const ended = data.filter((stat) => stat.status === "LayananSelesai");
   const { loginInfo } = useContext(loginContext);
@@ -42,6 +44,19 @@ const VendorPesananContent = ({ data }) => {
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
     );
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await footerService.getFooter();
+        const data = response.data;
+        setLinkAdu(data.link_pelaporan);
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchData();
+  }, []);
 
   const contactUser = async (userId) => {
     const responseVendor = await roomService.getVendorRoom(
@@ -78,7 +93,7 @@ const VendorPesananContent = ({ data }) => {
           ) : (
             <>
               {pesanan.map((item) => {
-                console.log(pesanan)
+                console.log(pesanan);
                 return (
                   <>
                     {item.produks.map((prod, idx) => {
@@ -122,7 +137,7 @@ const VendorPesananContent = ({ data }) => {
                               >
                                 Hubungi Pembeli
                               </ButtonChat>
-                              <ButtonPengaduan>
+                              <ButtonPengaduan href={linkAdu}>
                                 Ajukan Pengaduan
                               </ButtonPengaduan>
                             </GridButton>
