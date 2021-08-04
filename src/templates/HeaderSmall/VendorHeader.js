@@ -8,7 +8,7 @@ export const VendorHeader = () => {
     return(
         <HeaderBg>
             <HeaderWrited>
-                Selamat datang di <span> BikinEvent </span> Vendor Center
+                Selamat datang di <span> Bikinevent </span> Vendor Center
             </HeaderWrited>
         </HeaderBg>
     )
