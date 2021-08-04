@@ -52,6 +52,7 @@ const PesananSelesaiPage = ({ match }) => {
   const [date, setDate] = useState();
   const [rating, setRating] = useState([]);
   const [ulasan, setUlasan] = useState([]);
+  const [fillAll,setFillAll] = useState(false)
   const [openRate, setOpenRate] = useState(-1);
 
   useEffect(() => {
@@ -313,21 +314,29 @@ const PesananSelesaiPage = ({ match }) => {
                                                 <ButtonBottomss
                                                   need
                                                   onClick={(e) => {
-                                                    setVisible({
-                                                      dons: true,
-                                                      rate: false,
-                                                    });
-                                                    submitReview(
-                                                      e,
-                                                      prod._id,
-                                                      prod.rating,
-                                                      prod.penilaian,
-                                                      prod.penilaian.length
-                                                    );
+                                                    if (ulasan.length != 0) {
+                                                      setVisible({
+                                                        dons: true,
+                                                        rate: false,
+                                                      });
+                                                      submitReview(
+                                                        e,
+                                                        prod._id,
+                                                        prod.rating,
+                                                        prod.penilaian,
+                                                        prod.penilaian.length
+                                                      );
+                                                      setFillAll(false)
+                                                    }else setFillAll(true)
                                                   }}
                                                 >
                                                   Kirim
                                                 </ButtonBottomss>
+                                                {fillAll ? (
+                                                  <span style={{color:"#cc0000", fontSize:"12px",marginTop:"-10px"}}>
+                                                  Mohon isi semua penilaian
+                                                </span>
+                                                ) : (<></>)}
                                               </div>
                                             </BoxRowReview>
                                             <div
