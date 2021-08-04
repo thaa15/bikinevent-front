@@ -41,7 +41,12 @@ import {
   Succesicon,
   PopUpBg,
 } from "../../../templates/GlobalTemplate";
-import { LabelVendorProduk, InputModif } from "../VendorProduk/VendorProdukStyled";
+import {
+  LabelVendorProduk,
+  InputModif,
+} from "../VendorProduk/VendorProdukStyled";
+
+import { authService } from "../../../services/Auth";
 
 const displayPw = (pw) => {
   let str1 = "";
@@ -106,8 +111,8 @@ const VendorProfileContent = ({
       portfolioId,
       loginInfo.token
     );
-    console.log(response)
-    portofolio = portofolio.filter((item) => item._id !== portfolioId)
+    console.log(response);
+    portofolio = portofolio.filter((item) => item._id !== portfolioId);
     return response;
   };
 
@@ -130,6 +135,21 @@ const VendorProfileContent = ({
     return response;
   };
 
+  const changePassword = async () => {
+    try {
+      let body = {
+        password: pw,
+      };
+      const response = await authService.editUser(
+        loginInfo.userId,
+        loginInfo.token,
+        body
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <GlobalTemplate>
       <TempVendash>
@@ -175,7 +195,13 @@ const VendorProfileContent = ({
                   <TitleProfileVendor>Password</TitleProfileVendor>
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <ContentProfile>******</ContentProfile>
-                    <UbahPwLink onClick={() => { setChangePw(true) }}>Ubah</UbahPwLink>
+                    <UbahPwLink
+                      onClick={() => {
+                        setChangePw(true);
+                      }}
+                    >
+                      Ubah
+                    </UbahPwLink>
                   </div>
                 </div>
               </GridContent>
@@ -189,10 +215,13 @@ const VendorProfileContent = ({
                         <DivisionTitle>
                           <TitleChangepw>Ubah Password</TitleChangepw>
                         </DivisionTitle>
-                        <DivisionTitle button onClick={() => { setChangePw(false) }}>
-                          <DivButton>
-                            X
-                          </DivButton>
+                        <DivisionTitle
+                          button
+                          onClick={() => {
+                            setChangePw(false);
+                          }}
+                        >
+                          <DivButton>X</DivButton>
                         </DivisionTitle>
                       </TitleApart>
                       <LabelVendorProduk awal>Password Lama</LabelVendorProduk>
@@ -210,8 +239,11 @@ const VendorProfileContent = ({
                         pattern=".{6,}"
                         title="Enam atau lebih karakter"
                         name="pwbaru"
+                        onChange={(e) => setPw(e.target.value)}
                       />
-                      <LabelVendorProduk>Ulangi Password Baru</LabelVendorProduk>
+                      <LabelVendorProduk>
+                        Ulangi Password Baru
+                      </LabelVendorProduk>
                       <InputModif
                         type="password"
                         required
@@ -219,18 +251,23 @@ const VendorProfileContent = ({
                         title="Enam atau lebih karakter"
                         name="pwbaruConfirm"
                       />
-                      <Buttonslog onClick={() => {
-                        setPwChanged(true);
-                        setTimeout(() => {
-                          setPwChanged(false);
-                          window.location.reload();
-                        }, 2000);
-                      }}>
+                      <Buttonslog
+                        onClick={() => {
+                          setPwChanged(true);
+                          changePassword();
+                          setTimeout(() => {
+                            setPwChanged(false);
+                            window.location.reload();
+                          }, 2000);
+                        }}
+                      >
                         <Buttons>Simpan</Buttons>
                       </Buttonslog>
                     </ChangePwBg>
                   </PopUpBg>
-                ) : (<></>)}
+                ) : (
+                  <></>
+                )}
               </>
 
               {/* POP UP BERHASIL GANTI PASSWORD */}
@@ -239,13 +276,21 @@ const VendorProfileContent = ({
                   <PopBgSuccess>
                     <BgSuccess aktif={pwChanged === true} right>
                       <Succesicon />
-                      <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          flexDirection: "column",
+                        }}
+                      >
                         <b>SUCCESS</b>
                         Password Berhasil Diubah!
                       </div>
                     </BgSuccess>
                   </PopBgSuccess>
-                ) : (<></>)}
+                ) : (
+                  <></>
+                )}
               </>
 
               <TitleProfileVendor>Lokasi</TitleProfileVendor>
@@ -308,8 +353,13 @@ const VendorProfileContent = ({
                       })}
                     </PartOfImage>
                     <ButtonPart>
-                      <a href={`/changed-portofolio/${item._id}`}
-                        style={{ display: "block", width: "50%", textDecoration: "none" }}
+                      <a
+                        href={`/changed-portofolio/${item._id}`}
+                        style={{
+                          display: "block",
+                          width: "50%",
+                          textDecoration: "none",
+                        }}
                       >
                         <Button>Ubah</Button>
                       </a>
@@ -326,12 +376,14 @@ const VendorProfileContent = ({
                 );
               })}
 
-              <UploadFile onClick={() => {
-                setPortofolios(true)
-                window.scrollTo({
-                  top: 0,
-                });
-              }}>
+              <UploadFile
+                onClick={() => {
+                  setPortofolios(true);
+                  window.scrollTo({
+                    top: 0,
+                  });
+                }}
+              >
                 <PlusImage>+</PlusImage>
               </UploadFile>
 
@@ -342,13 +394,21 @@ const VendorProfileContent = ({
                 <PopBgSuccess>
                   <BgSuccess aktif={loginUser === true} right>
                     <Succesicon />
-                    <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        width: "100%",
+                        flexDirection: "column",
+                      }}
+                    >
                       <b>SUCCESS</b>
                       Data Berhasil Disimpan!
                     </div>
                   </BgSuccess>
                 </PopBgSuccess>
-              ) : (<></>)}
+              ) : (
+                <></>
+              )}
             </>
           )}
         </MainVendash>
