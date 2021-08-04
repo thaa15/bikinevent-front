@@ -106,9 +106,16 @@ const PembeliPesananPage = (props) => {
                             );
                           });
                         } else if (
-                          item.status === "MempersiapkanLayanan" ||
-                          item.status === "PembayaranLunas" ||
-                          item.status === "MenungguPembayaranBertahap"
+                          item.status === "MenungguPembayaranTahap1" ||
+                          item.status === "MenungguPembayaranTahap2" ||
+                          item.status === "MenungguPembayaranTahap3" ||
+                          item.status === "MenungguPembayaranTahap4" ||
+                          item.status === "MenungguPembayaranTahap5" ||
+                          item.status === "MenungguPembayaranTahap6" ||
+                          item.status === "MenungguPembayaranTahap7" ||
+                          item.status === "MenungguPembayaranTahap8" ||
+                          item.status === "MenungguPembayaranTahap9" ||
+                          item.status === "MenungguPembayaranTahap10"
                         ) {
                           AuthCliTrack.inclitrack(() => {
                             props.history.push(

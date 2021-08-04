@@ -25,6 +25,29 @@ import { roomService } from "../../../../services/Room";
 import { vendorService } from "../../../../services/Vendor";
 import { useHistory } from "react-router-dom";
 
+const getStatus = (stats) => {
+  if (stats === "MenungguPembayaranTahap1")
+    return "Menunggu\nPembayaran Tahap 1";
+  else if (stats === "MenungguPembayaranTahap2")
+    return "Menunggu\nPembayaran Tahap 2";
+  else if (stats === "MenungguPembayaranTahap3")
+    return "Menunggu\nPembayaran Tahap 3";
+  else if (stats === "MenungguPembayaranTahap4")
+    return "Menunggu\nPembayaran Tahap 4";
+  else if (stats === "MenungguPembayaranTahap5")
+    return "Menunggu\nPembayaran Tahap 5";
+  else if (stats === "MenungguPembayaranTahap6")
+    return "Menunggu\nPembayaran Tahap 6";
+  else if (stats === "MenungguPembayaranTahap7")
+    return "Menunggu\nPembayaran Tahap 7";
+  else if (stats === "MenungguPembayaranTaha8")
+    return "Menunggu\nPembayaran Tahap 8";
+  else if (stats === "MenungguPembayaranTahap9")
+    return "Menunggu\nPembayaran Tahap 9";
+  else if (stats === "MenungguPembayaranTahap10")
+    return "Menunggu\nPembayaran Tahap 10";
+};
+
 const PelaksanaanPesananPage = ({ match }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderData, setOrderData] = useState();
@@ -111,6 +134,7 @@ const PelaksanaanPesananPage = ({ match }) => {
                 act="pelaksanaan"
               />
               {orderData.produks.map((prod, idx) => {
+                console.log(orderData)
                 return (
                   <GlobalTemplate top key={idx}>
                     <BoxRowDetailed>
@@ -138,7 +162,7 @@ const PelaksanaanPesananPage = ({ match }) => {
                     <ContentDetailTrack>{date}</ContentDetailTrack>
                     <LabelDetailTrack>Status</LabelDetailTrack>
                     <ContentDetailTrack status>
-                      Pelaksanaan Pesanan (Baru DP 1)
+                      {getStatus(orderData.status)}
                     </ContentDetailTrack>
 
                     <BoxRowDetailed>
