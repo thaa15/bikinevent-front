@@ -74,7 +74,7 @@ const VendorChatContent = () => {
         createdAt: Date.now(),
       });
     });
-  }, [socket, messages]);
+  }, [socket]);
 
   useEffect(() => {
     arrivalMessage &&
@@ -96,12 +96,12 @@ const VendorChatContent = () => {
     });
 
     try {
-      let newMsg = [...messages]
+      let newMsg = [...messages];
       const response = await messageService.postNewChat(
         loginInfo.token,
         message
       );
-      newMsg.push(response.data)
+      newMsg.push(response.data);
       setMessages(newMsg);
       setNewMessage("");
       return response;
@@ -139,9 +139,18 @@ const VendorChatContent = () => {
                       <ChatList>
                         {conversations
                           .sort((a, b) => {
-                            if (a.messages.length !== 0 && b.messages.length !== 0) {
-                              return new Date(b.messages[b.messages.length - 1].createdAt)
-                                - new Date(a.messages[a.messages.length - 1].createdAt)
+                            if (
+                              a.messages.length !== 0 &&
+                              b.messages.length !== 0
+                            ) {
+                              return (
+                                new Date(
+                                  b.messages[b.messages.length - 1].createdAt
+                                ) -
+                                new Date(
+                                  a.messages[a.messages.length - 1].createdAt
+                                )
+                              );
                             }
                           })
                           .map((room, idx) => {
@@ -161,7 +170,7 @@ const VendorChatContent = () => {
                                 >
                                   {typeof room.userId.foto_profil ===
                                     "undefined" ||
-                                    room.userId.foto_profil == null ? (
+                                  room.userId.foto_profil == null ? (
                                     <ListChatPart photo>
                                       <ProfilePhoto content />
                                     </ListChatPart>
@@ -209,7 +218,7 @@ const VendorChatContent = () => {
 
                       <ChatContent>
                         {typeof currentChat === "undefined" ||
-                          currentChat == null ? (
+                        currentChat == null ? (
                           <ChatNotOpen>
                             <NoEntryContent>
                               <ImageNoEntry src={nochat} alt="No Entry" />
@@ -229,7 +238,7 @@ const VendorChatContent = () => {
                             <DisplayChatProfileContent>
                               {typeof currentChat.userId.foto_profil ===
                                 "undefined" ||
-                                currentChat.userId.foto_profil == null ? (
+                              currentChat.userId.foto_profil == null ? (
                                 <ProfilePhoto content />
                               ) : (
                                 <ProfilePhoto
@@ -250,7 +259,9 @@ const VendorChatContent = () => {
                                         <ChatBox>
                                           <ReactMarkdown
                                             children={chat.text}
-                                            plugins={[[gfm, { singleTilde: false }]]}
+                                            plugins={[
+                                              [gfm, { singleTilde: false }],
+                                            ]}
                                             allowDangerousHtml={true}
                                           />
                                         </ChatBox>
@@ -263,7 +274,9 @@ const VendorChatContent = () => {
                                         <ChatBox>
                                           <ReactMarkdown
                                             children={chat.text}
-                                            plugins={[[gfm, { singleTilde: false }]]}
+                                            plugins={[
+                                              [gfm, { singleTilde: false }],
+                                            ]}
                                             allowDangerousHtml={true}
                                           />
                                         </ChatBox>
@@ -306,8 +319,7 @@ const VendorChatContent = () => {
         </>
       ) : (
         <>
-          <ChatResponsive
-            conversations={conversations} />
+          <ChatResponsive conversations={conversations} />
         </>
       )}
     </>
