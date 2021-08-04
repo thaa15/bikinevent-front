@@ -366,34 +366,36 @@ const PenilaianVendorVendor = ({ comments, produks }) => {
     });
     setPenilaian(tempPenilaian);
   }, [produks]);
-  console.log(penilaian);
+
   return (
     <>
       {penilaian.length === 0 ? (
         <BoxNotEntry>Belum Terdapat Penilaian!</BoxNotEntry>
       ) : (
         <TampilanComments>
-          {penilaian.slice(0, 5).map((data, idx) => {
-            return (
-              <CommentsPart key={idx}>
-                <CommentProfile profile>
-                  {typeof data.user.foto_profil === "undefined" ? (
-                    <UserPhoto />
-                  ) : (
-                    <UserPhoto img={data.user.foto_profil.url} />
-                  )}
-                  <UserName>{data.user.username}</UserName>
-                </CommentProfile>
-                <CommentProfile>
-                  <UserComment>{data.komentar}</UserComment>
-                  <UserRate>
-                    <StarUserRate />
-                    {data.rating} / 5.0
-                  </UserRate>
-                </CommentProfile>
-              </CommentsPart>
-            );
-          })}
+          <CommentsPartHeight>
+            {penilaian.map((data, idx) => {
+              return (
+                <CommentsPart key={idx}>
+                  <CommentProfile profile>
+                    {typeof data.user.foto_profil === "undefined" ? (
+                      <UserPhoto />
+                    ) : (
+                      <UserPhoto img={data.user.foto_profil.url} />
+                    )}
+                    <UserName>{data.user.nama_lengkap}</UserName>
+                  </CommentProfile>
+                  <CommentProfile>
+                    <UserComment>{data.komentar}</UserComment>
+                    <UserRate>
+                      <StarUserRate />
+                      {data.rating} / 5.0
+                    </UserRate>
+                  </CommentProfile>
+                </CommentsPart>
+              );
+            })}
+          </CommentsPartHeight>
         </TampilanComments>
       )}
     </>

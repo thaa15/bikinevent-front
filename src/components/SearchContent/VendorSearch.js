@@ -47,12 +47,10 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
   const { searched, setSearched } = useContext(searchContext);
   const Location = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi"];
   const [active, setActive] = useState(false);
-  const [totalRating, setTotalRating] = useState(0);
   const [getFilter, setGetFilter] = useState(searched.filter);
   const [getRangeFilter, setGetRangeFilter] = useState(searched.rangeFilter);
   const [filteredVendor, setFilteredVendor] = useState([]);
   const [searchedVendor, setSearchedVendor] = useState([]);
-  let tempTotal = 0;
 
   useEffect(() => {
     const filterData = (data) => {
@@ -273,14 +271,20 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
               ) : (
                 <GridTempVendor>
                   {filteredVendor.map((data, idx) => {
-                    if (data.comments.length !== 0) {
-                      setTimeout(() => {
-                        data.comments.forEach((comment) => {
-                          tempTotal = tempTotal + comment.rating;
+                    let totalUlasan = 0;
+                    let mean = 0
+                    const calculateTotalRating = () => {
+                      let tempTotal = 0;
+                      data.produks.forEach((prod) => {
+                        prod.penilaian.forEach((ulasan) => {
+                          tempTotal += ulasan.rating;
+                          totalUlasan += 1;
                         });
-                        setTotalRating(tempTotal / data.comments.length);
-                      }, 1);
-                    }
+                      });
+                      if(totalUlasan == 0) mean = 0;
+                      else mean = (tempTotal / totalUlasan).toFixed(2);
+                    };
+                    calculateTotalRating();
                     return (
                       <Link
                         to={`/vendor/${data.id}`}
@@ -293,7 +297,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                         <ShowedVendor key={idx}>
                           {typeof data.foto_profil == "undefined" ||
                             data.foto_profil == null ? (
-                            <VendorPhotos src={grey} /> ) : (
+                            <VendorPhotos src={grey} />) : (
                             <VendorPhotos src={data.foto_profil.url} />)}
 
                           <GetApart>
@@ -303,7 +307,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                             </BoxsExpVendor>
                             <BoxsExpVendor>
                               <Star />
-                              {totalRating} / 5.0 ({data.comments.length} Ulasan)
+                              {(mean)} / 5.0 ({totalUlasan} Ulasan)
                             </BoxsExpVendor>
                             <BoxsExpVendor>{data.location}</BoxsExpVendor>
                           </GetApart>

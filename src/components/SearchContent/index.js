@@ -128,7 +128,8 @@ const SearchContent = () => {
 
         if (Object.values(data).some((arr) => arr.length > 0)) {
           tempProds = productData.filter((product) => {
-            if (product.vendor != null) {
+            if (product.vendor != null &&
+              product.isArchived == false) {
               return filterKeys.some(() => {
                 if (Array.isArray(product["subcategory"])) {
                   return product["subcategory"].some((keyVal) => {

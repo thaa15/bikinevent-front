@@ -40,18 +40,31 @@ const TampilanProdukPage = ({ match }) => {
         </>
       ) : (
         <>
-          {productData.id == null || productData.vendor == null ? (
+          {(productData.id == null || productData.vendor == null)
+            || productData.isArchived == true ? (
             <GlobalTemplate>
               <ChatNotOpen>
                 <NoEntryContent>
                   <ImageNoEntry src={nochat} alt="No Entry" />
-                  <h4 style={{ fontSize: "18px", color: "#212B36" }}>
-                    Produk Tidak Ditemukan
-                  </h4>
-                  <p style={{ fontSize: "14px", color: "#909DAA" }}>
-                    Vendor tidak menjual produk ini / Pihak kami melakukan
-                    tindakan pada vendor pada produk ini
-                  </p>
+                  {productData.isArchived == true ? (
+                    <>
+                      <h4 style={{ fontSize: "18px", color: "#212B36" }}>
+                        Produk Tidak Dijual
+                      </h4>
+                      <p style={{ fontSize: "14px", color: "#909DAA" }}>
+                        Kemungkinan vendor sedang mengarsip produk ini
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h4 style={{ fontSize: "18px", color: "#212B36" }}>
+                        Produk Tidak Ditemukan
+                      </h4>
+                      <p style={{ fontSize: "14px", color: "#909DAA" }}>
+                        Kemungkinan vendor tidak menjual produk ini / Pihak kami melakukan tindakan pada vendor pada produk ini
+                      </p>
+                    </>
+                  )}
                 </NoEntryContent>
               </ChatNotOpen>
             </GlobalTemplate>
@@ -76,7 +89,7 @@ const TampilanProdukPage = ({ match }) => {
               />
               <>
                 {typeof productData.vendor.foto_profil === "undefined" ||
-                productData.vendor.foto_profil == null ? (
+                  productData.vendor.foto_profil == null ? (
                   <PenilaianVendor
                     fotovendor={grey}
                     vendor={productData.vendor}
@@ -106,6 +119,7 @@ const TampilanVendorPage = ({ match }) => {
   const [vendorData, setVendorData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [totalRating, setTotalRating] = useState(0);
+  const [totalUls,setTotalUls] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,14 +135,16 @@ const TampilanVendorPage = ({ match }) => {
             totalUlasan += 1;
           });
         });
-        setTotalRating((tempTotal / totalUlasan).toFixed(2));
+        if(totalUlasan == 0) setTotalRating(0)
+        else setTotalRating((tempTotal / totalUlasan).toFixed(2));
+        setTotalUls(totalUlasan)
       };
       calculateTotalRating();
       setIsLoading(false);
     };
     fetchData();
   }, [match.params.vendor]);
-  console.log(totalRating);
+
   return (
     <>
       {isLoading ? (
@@ -138,19 +154,19 @@ const TampilanVendorPage = ({ match }) => {
       ) : (
         <>
           {typeof vendorData.foto_profil === "undefined" ||
-          vendorData.foto_profil.url == null ? (
+            vendorData.foto_profil.url == null ? (
             <ShowAtTopVendor
               fotovendor={grey}
               vendor={vendorData.nama_vendor}
               ratingvendor={totalRating}
-              ulasanvendor={vendorData.comments.length}
+              ulasanvendor={totalUls}
             />
           ) : (
             <ShowAtTopVendor
               fotovendor={vendorData.foto_profil.url}
               vendor={vendorData.nama_vendor}
               ratingvendor={totalRating}
-              ulasanvendor={vendorData.comments.length}
+              ulasanvendor={totalUls}
             />
           )}
 
