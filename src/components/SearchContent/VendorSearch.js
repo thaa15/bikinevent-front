@@ -96,7 +96,21 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
     }
     if (getRangeFilter.rating !== "") {
       tempProds = tempProds.filter((vendor) => {
-        return vendor.rating > 3;
+        let totalUlasan = 0;
+        let mean = 0
+        const calculateTotalRating = () => {
+          let tempTotal = 0;
+          vendor.produks.forEach((prod) => {
+            prod.penilaian.forEach((ulasan) => {
+              tempTotal += ulasan.rating;
+              totalUlasan += 1;
+            });
+          });
+          if (totalUlasan == 0) mean = 0;
+          else mean = (tempTotal / totalUlasan).toFixed(2);
+        }
+        calculateTotalRating()
+        return parseFloat(mean) > parseFloat(3);
       });
     }
     setFilteredVendor(tempProds);
@@ -169,7 +183,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                       id="Three Up"
                       name="rating"
                       value="3 ke atas"
-                      onChange={(e) => {
+                      onClick={(e) => {
                         if (e.target.checked)
                           setGetRangeFilter({
                             ...getRangeFilter,
@@ -281,7 +295,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                           totalUlasan += 1;
                         });
                       });
-                      if(totalUlasan == 0) mean = 0;
+                      if (totalUlasan == 0) mean = 0;
                       else mean = (tempTotal / totalUlasan).toFixed(2);
                     };
                     calculateTotalRating();
