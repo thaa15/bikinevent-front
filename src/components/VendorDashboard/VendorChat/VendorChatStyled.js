@@ -6,15 +6,15 @@ export const TemplateChat = styled.div`
     display:flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+    column-gap: 2px;
 `;
 
 export const ChatList = styled.div`
-    flex-basis: 30%;
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
     height: 500px;
+    width: 250px;
     background: white;
     overflow-y: scroll;
     padding: 7px;
@@ -61,13 +61,13 @@ export const ChatListResp = styled.div`
 `;
 
 export const ChatContent = styled.div`
-    flex-basis: 69%;
+    flex: 1;
     border: 1px solid #E0E0E0;
     box-sizing: border-box;
     border-radius: 5px;
-    width: 100%;
     height: 500px;
     padding: 7px 10px;
+    width: 600px;
     background: white;
     display:flex;
     margin-left: 10px;
@@ -90,18 +90,22 @@ export const ChatContentResp = styled.div`
 `;
 
 export const ChatPerson = styled.div`
-    width: 100%;
     display: flex;
+    width: 100%;
     flex-direction: row;
+    flex:1;
     background: ${(props)=>props.active ? "#DAF3E5" : "white"};
     border-radius: 5px;
     min-height: 80px;
     margin-bottom: 4px;
-    justify-content: space-between;
     align-self: center;
     align-items:center;
     padding: 8px;
     cursor: pointer;
+    word-wrap:break-word;
+    white-space: pre-line;  
+    vertical-align: bottom;
+    column-gap: 4px;
     margin-top: 4px;
     &:hover{
         background: ${(props)=>props.active ? "#DAF3E5" : "#DAF3E5"};
@@ -120,11 +124,13 @@ export const ProfilePhoto = styled.div`
     margin-right: ${(props)=>props.content ? "10px" : "0"};
 `;
 
-export const ProfileName = styled.h6`
-    font-size: 14px;
+export const ProfileName = styled.div`
+    font-size: .9em;
+    font-weight: bold;
     line-height: 21px;
     color: #212B36;
     margin-bottom: 3px;
+    word-wrap:break-word;
 `;
 
 export const LastChatDisplay = styled.div`

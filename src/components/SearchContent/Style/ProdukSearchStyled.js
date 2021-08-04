@@ -284,11 +284,15 @@ export const ShowedVendor = styled.div`
     }
 `;
 
-export const VendorPhotos = styled.img`
+export const VendorPhotos = styled.div`
     border-radius: 100%;
     height: 84px;
     width: 84px;
-    object-fit: cover;
+    background-image: url(${(props) => props.src});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #F2994A;
     margin-right: 8px;
     @media screen and (max-width: 503px) {
         height: 60px;

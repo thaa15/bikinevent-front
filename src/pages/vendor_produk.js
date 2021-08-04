@@ -91,7 +91,7 @@ const TampilanProdukPage = ({ match }) => {
                 {typeof productData.vendor.foto_profil === "undefined" ||
                   productData.vendor.foto_profil == null ? (
                   <PenilaianVendor
-                    fotovendor={grey}
+                    fotovendor={null}
                     vendor={productData.vendor}
                     rating={productData.rating}
                     ulasan={productData.penilaian.length}
@@ -156,7 +156,7 @@ const TampilanVendorPage = ({ match }) => {
           {typeof vendorData.foto_profil === "undefined" ||
             vendorData.foto_profil.url == null ? (
             <ShowAtTopVendor
-              fotovendor={grey}
+              fotovendor={null}
               vendor={vendorData.nama_vendor}
               ratingvendor={totalRating}
               ulasanvendor={totalUls}

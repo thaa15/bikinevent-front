@@ -171,6 +171,7 @@ export const VendorPhoto = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-color: #F2994A;
     @media screen and (max-width: 550px) {
         margin-right: 0;
     }

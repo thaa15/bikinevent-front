@@ -45,6 +45,7 @@ const VendorChatContent = () => {
   const [currentChat, setCurrentChat] = useState();
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [act,setAct] = useState()
   const { loginInfo } = useContext(loginContext);
   let mkLocalData = localStorage.getItem("mk");
   const salt = "6d090796-ecdf-11ea-adc1-0242ac120003";
@@ -103,6 +104,7 @@ const VendorChatContent = () => {
       );
       newMsg.push(response.data);
       setMessages(newMsg);
+      setAct(0)
       setNewMessage("");
       return response;
     } catch (error) {
@@ -164,9 +166,10 @@ const VendorChatContent = () => {
                                       return null;
                                     }
                                     setCurrentChat(room);
+                                    setAct(idx)
                                     setMessages(room.messages);
                                   }}
-                                  active={currentChat == room}
+                                  active={act == idx}
                                 >
                                   {typeof room.userId.foto_profil ===
                                     "undefined" ||

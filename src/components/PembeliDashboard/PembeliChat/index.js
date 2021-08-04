@@ -46,6 +46,7 @@ const PembeliChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState();
   const [newMessage, setNewMessage] = useState("");
+  const [act,setAct] = useState();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const { chat } = useContext(chatContext);
   useEffect(() => {
@@ -115,6 +116,7 @@ const PembeliChatPage = () => {
       );
       newMsg.push(response.data);
       setMessages(newMsg);
+      setAct(0);
       setNewMessage("");
       return response;
     } catch (error) {
@@ -186,10 +188,11 @@ const PembeliChatPage = () => {
                                     if (currentChat === room) {
                                       return null;
                                     }
+                                    setAct(idx)
                                     setCurrentChat(room);
                                     setMessages(room.messages);
                                   }}
-                                  active={currentChat == room}
+                                  active={act == idx}
                                 >
                                   {typeof room.vendorId.vendor.foto_profil ===
                                   "undefined" ? (

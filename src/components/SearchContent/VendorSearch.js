@@ -311,7 +311,7 @@ const VendorSearch = ({ vendor, datas, searchResult }) => {
                         <ShowedVendor key={idx}>
                           {typeof data.foto_profil == "undefined" ||
                             data.foto_profil == null ? (
-                            <VendorPhotos src={grey} />) : (
+                            <VendorPhotos />) : (
                             <VendorPhotos src={data.foto_profil.url} />)}
 
                           <GetApart>
