@@ -10,7 +10,6 @@ const BotBanner = () => {
     const fetchData = async () => {
       const response = await homeService.getHome();
       const data = response.data;
-      console.log(data);
       setBannerBawah(data.bottom_banner);
     };
     fetchData();
