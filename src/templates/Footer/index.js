@@ -9,6 +9,7 @@ import {
   SocialIconLink,
   SocialIcons,
   ImageFooter,
+  FooterExpLinkA
 } from "./FooterStyled";
 import gambartest from "../../images/bikineventLogo.png";
 import {
@@ -56,9 +57,9 @@ const Footer = () => {
               <FooterExpLink to="/faq">FAQ</FooterExpLink>
               <FooterExpLink to="/tentangkami">Tentang Kami</FooterExpLink>
               <FooterExpLink to="/panduan">Panduan Pemesanan</FooterExpLink>
-              <FooterExpLink href={footerData.link_pelaporan}>
+              <FooterExpLinkA href={footerData.link_pelaporan}>
                 Pelaporan Kejahatan
-              </FooterExpLink>
+              </FooterExpLinkA>
             </FooterBox>
 
             <FooterBox>

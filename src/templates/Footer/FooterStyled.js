@@ -69,6 +69,18 @@ export const FooterExpLink = styled(Link)`
     }
 `;
 
+export const FooterExpLinkA = styled.a`
+    display:block;
+    font-size: 14px;
+    margin: 3px 0 0;
+    letter-spacing: -0.2px;
+    color: #212B36;
+    text-decoration: none;
+    &:hover{
+        color: #E30045;
+    }
+`;
+
 export const CopyWright = styled.div`
     max-width: 90%;
     margin: 0 auto;
