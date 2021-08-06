@@ -2,8 +2,7 @@ import axios from "axios";
 export const gatewayHelper = {
   http,
 };
-const BASE_URL =
-  process.env.REACT_APP_DEVELOPMENT_URL || "https://bikinevent.id/api";
+const BASE_URL = "https://bikinevent.id/api";
 
 async function http(method, endpoint, token = null, body = null) {
   const headers = {

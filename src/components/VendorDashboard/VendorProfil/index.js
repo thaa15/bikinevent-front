@@ -111,8 +111,7 @@ const VendorProfileContent = ({
       portfolioId,
       loginInfo.token
     );
-    console.log(response);
-    portofolio = portofolio.filter((item) => item._id !== portfolioId);
+    window.location.reload("/");
     return response;
   };
 
